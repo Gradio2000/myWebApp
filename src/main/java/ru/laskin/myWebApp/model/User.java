@@ -1,4 +1,4 @@
-package model;
+package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 
