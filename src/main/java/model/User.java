@@ -1,12 +1,10 @@
 package model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class Users {
+@Table(name = "users", schema = "public", catalog = "postgres")
+public class User {
     private int userId;
     private String login;
     private String email;
@@ -68,13 +66,13 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Users users = (Users) o;
+        User user = (User) o;
 
-        if (userId != users.userId) return false;
-        if (adminRole != users.adminRole) return false;
-        if (userRole != users.userRole) return false;
-        if (login != null ? !login.equals(users.login) : users.login != null) return false;
-        if (email != null ? !email.equals(users.email) : users.email != null) return false;
+        if (userId != user.userId) return false;
+        if (adminRole != user.adminRole) return false;
+        if (userRole != user.userRole) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
 
         return true;
     }
