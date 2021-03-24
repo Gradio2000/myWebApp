@@ -6,7 +6,6 @@ import ru.laskin.myWebApp.dao.UserDao;
 import ru.laskin.myWebApp.model.User;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
@@ -19,5 +18,9 @@ public class Main {
             System.out.println(user.getUserId() + " " + user.getLogin() +
                     " " + user.getEmail());
         }
+
+        User user = new User(0, "sss", "ss@ss.ss", true);
+        UserDao.saveUser(user);
     }
+    
 }

@@ -13,7 +13,6 @@ public class User {
     @NotBlank(message = "not empty")
     private String email;
     private boolean adminRole;
-    private boolean userRole;
 
     public User() {
     }
@@ -66,15 +65,6 @@ public class User {
         this.adminRole = adminRole;
     }
 
-    @Basic
-    @Column(name = "user_role", nullable = false)
-    public boolean isUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(boolean userRole) {
-        this.userRole = userRole;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -85,7 +75,6 @@ public class User {
 
         if (userId != user.userId) return false;
         if (adminRole != user.adminRole) return false;
-        if (userRole != user.userRole) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
 
@@ -98,7 +87,6 @@ public class User {
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (adminRole ? 1 : 0);
-        result = 31 * result + (userRole ? 1 : 0);
         return result;
     }
 }

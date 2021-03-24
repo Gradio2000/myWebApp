@@ -3,6 +3,7 @@ package ru.laskin.myWebApp.dao;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
 
+import javax.management.Query;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +11,11 @@ import java.util.List;
 public class UserDao {
    private static Connection connection;
 
-
     static {
         try {
             connection = JdbsConnectionUtils.getConnection();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
     }
 
@@ -37,5 +35,18 @@ public class UserDao {
             }
         }
         return users;
+    }
+
+    public static void saveUser(User user) throws SQLException {
+
+        String login = user.getLogin();
+        String email = user.getEmail();
+        Boolean adminRole = user.isAdminRole();
+
+        PreparedStatement statement = connection.prepareStatement("insert into users (login, email, admin_role) VALUES (?, ?, ?)");
+        statement.setString(1, login);
+        statement.setString(2, email);
+        statement.setBoolean(3, adminRole);
+        statement.execute();
     }
 }
