@@ -1,7 +1,9 @@
 package ru.laskin.myWebApp.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +23,16 @@ public class MainController {
     }
 
     @GetMapping("/add_user")
-    public String addUser(){
+    public String addUser(Model model){
+        model.addAttribute("user", new User());
         return"add_user";
     }
 
     @PostMapping("/new_user")
-    public String formUser (@ModelAttribute User user){
+    public String formUser (@ModelAttribute @Valid User user, BindingResult result){
+        if (result.hasErrors()){
+            return "add_user";
+        }
         users.add(user);
         return "redirect:/main";
     }

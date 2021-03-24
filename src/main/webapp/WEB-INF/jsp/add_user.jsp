@@ -7,17 +7,38 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"      prefix="c"   %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"       prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql"       prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
+
 <html>
 <head>
     <title>Add user</title>
 </head>
 <body>
-    <form action="/new_user" method="post">
-        <input type="text" size="20" name="login">
-        <input type="email" size="20" name="email">
-        <input type="checkbox" name="adminRole">
-        <input type="checkbox" name="userRole">
+    <sf:form action="/new_user" method="post" modelAttribute="user">
+        <div>
+            <sf:label path="login">Логин</sf:label>
+            <sf:input path="login"/>
+            <sf:errors path="login"/>
+        </div>
+
+        <div>
+            <sf:label path="email">E-mail</sf:label>
+            <sf:input path="email"/>
+            <sf:errors path="email"/>
+        </div>
+
+        <div>
+            <sf:label path="adminRole">Администратор</sf:label>
+            <sf:checkbox path="adminRole"/>
+            <sf:errors path="adminRole"/>
+        </div>
         <input type="submit">
-    </form>
+    </sf:form>
+
 </body>
 </html>
