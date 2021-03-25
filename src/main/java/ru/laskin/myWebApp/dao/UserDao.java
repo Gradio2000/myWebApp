@@ -20,9 +20,6 @@ public class UserDao {
         }
     }
 
-    public UserDao() {
-    }
-
     public List<User> getAllUsers () throws SQLException {
         Statement statement = connection.createStatement();
 

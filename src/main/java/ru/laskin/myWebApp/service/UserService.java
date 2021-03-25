@@ -27,7 +27,7 @@ public class UserService {
         }
     }
 
-    public void saveUser() {
-
+    public void saveUser(User user) throws SQLException {
+        userDao.saveUser(user);
     }
 }

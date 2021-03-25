@@ -13,7 +13,6 @@
     <c:out value="${user.login}"></c:out>
     <c:out value="${user.email}"></c:out>
     <c:out value="${user.adminRole}"></c:out>
-    <c:out value="${user.adminRole}"></c:out>
     <br/>
 </c:forEach>
 </body>

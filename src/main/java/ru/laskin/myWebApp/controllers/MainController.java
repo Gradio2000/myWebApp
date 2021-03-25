@@ -41,7 +41,7 @@ public class MainController {
 
     @PostMapping("/new_user")
     public String formUser (@ModelAttribute User user) throws SQLException {
-        service.getAllUsers();
+        service.saveUser(user);
         return "redirect:/main";
     }
 }
