@@ -1,24 +1,35 @@
 package ru.laskin.myWebApp.controllers;
 
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import ru.laskin.myWebApp.dao.UserDao;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.service.UserService;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
+
 
 @Controller
 public class MainController {
-    static List<User> users = new ArrayList<>();
+
+    private UserService service;
+
+    @Autowired
+    public MainController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping("/main")
-    public String getStart(Model model){
-        model.addAttribute("users", users);
+    public String getStart(Model model) throws SQLException {
+        model.addAttribute("users", service.getAllUsers());
         return "index";
     }
 
@@ -29,11 +40,8 @@ public class MainController {
     }
 
     @PostMapping("/new_user")
-    public String formUser (@ModelAttribute @Valid User user, BindingResult result){
-        if (result.hasErrors()){
-            return "add_user";
-        }
-        users.add(user);
+    public String formUser (@ModelAttribute User user) throws SQLException {
+        service.getAllUsers();
         return "redirect:/main";
     }
 }

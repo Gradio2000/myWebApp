@@ -1,13 +1,14 @@
 package ru.laskin.myWebApp.dao;
 
+import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
 
-import javax.management.Query;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserDao {
    private static Connection connection;
 
@@ -19,7 +20,10 @@ public class UserDao {
         }
     }
 
-    public static List<User> getAllUsers () throws SQLException {
+    public UserDao() {
+    }
+
+    public List<User> getAllUsers () throws SQLException {
         Statement statement = connection.createStatement();
 
         List<User> users = new ArrayList<>();
@@ -37,7 +41,7 @@ public class UserDao {
         return users;
     }
 
-    public static void saveUser(User user) throws SQLException {
+    public void saveUser(User user) throws SQLException {
 
         String login = user.getLogin();
         String email = user.getEmail();

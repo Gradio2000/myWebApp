@@ -1,6 +1,5 @@
 package ru.laskin.myWebApp.model;
 
-import jakarta.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 
@@ -8,9 +7,7 @@ import javax.persistence.*;
 @Table(name = "users", schema = "public", catalog = "postgres")
 public class User {
     private int userId;
-    @NotBlank(message = "Not empty")
     private String login;
-    @NotBlank(message = "not empty")
     private String email;
     private boolean adminRole;
 
