@@ -7,13 +7,27 @@
 <h2>Hello Alex!</h2>
 <a href="/add_user">Добавить пользователя</a>
 <br/>
-<h2>Список пользователей</h2>
+<h2>Список зарегистрированных пользователей</h2>
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>id</th>
+        <th>Логин</th>
+        <th>email</th>
+        <th>Администратор</th>
+    </tr>
+    <c:forEach var='user' items='${users}'>
+        <tr>
+            <td><c:out value="${user.userId}"></c:out></td>
+            <td><c:out value="${user.login}"></c:out></td>
+            <td><c:out value="${user.email}"></c:out></td>
+            <td><c:out value="${user.adminRole}"></c:out></td>
+            <td><a href="users/update?id=${user.userId}"/>Редактировать</td>
+            <td><a href="users/delete?id=${user.userId}"/>Удалить</td>
+        </tr>
+    </c:forEach>
+</table>
 
-<c:forEach var='user' items='${users}'>
-    <c:out value="${user.login}"></c:out>
-    <c:out value="${user.email}"></c:out>
-    <c:out value="${user.adminRole}"></c:out>
-    <br/>
-</c:forEach>
+
+
 </body>
 </html>

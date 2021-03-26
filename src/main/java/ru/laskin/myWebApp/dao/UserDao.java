@@ -22,24 +22,11 @@ public class UserDao {
 
     public List<User> getAllUsers () throws SQLException {
         Statement statement = connection.createStatement();
-
-        List<User> users = new ArrayList<>();
-
-        try (ResultSet rs = statement.executeQuery("select * from users")) {
-            while (rs.next()) {
-                int id = rs.getInt("user_id");
-                String login = rs.getString("login");
-                String email = rs.getString("email");
-                Boolean adminRole = rs.getBoolean("admin_role");
-
-                users.add(new User(id, login, email, adminRole));
-            }
-        }
-        return users;
+        ResultSet rs = statement.executeQuery("select * from users");
+        return createUserList(rs);
     }
 
     public void saveUser(User user) throws SQLException {
-
         String login = user.getLogin();
         String email = user.getEmail();
         Boolean adminRole = user.isAdminRole();
@@ -50,4 +37,47 @@ public class UserDao {
         statement.setBoolean(3, adminRole);
         statement.execute();
     }
+
+    public User getUserById(int id) {
+        List<User> users = null;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from users where user_id = " + id;
+            ResultSet resultSet = statement.executeQuery(sql);
+            users = createUserList(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users.get(0);
+    }
+
+    public void deleteUser(int id){
+        try {
+            PreparedStatement statement = connection.prepareStatement("delete from users where user_id=?");
+            statement.setInt(1, id);
+            statement.executeQuery();
+            connection.commit();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public List<User> createUserList(ResultSet rs){
+        List<User> users = null;
+        try {
+            users = new ArrayList<>();
+            while (rs.next()) {
+                int id = rs.getInt("user_id");
+                String login = rs.getString("login");
+                String email = rs.getString("email");
+                Boolean adminRole = rs.getBoolean("admin_role");
+                users.add(new User(id, login, email, adminRole));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
+    }
+
+
 }
