@@ -21,6 +21,9 @@
 <body>
     <sf:form action="/new_user" method="post" modelAttribute="user">
         <div>
+            <sf:hidden path="userId"/>
+        </div>
+        <div>
             <sf:label path="login">Логин</sf:label>
             <sf:input path="login"/>
             <sf:errors path="login"/>

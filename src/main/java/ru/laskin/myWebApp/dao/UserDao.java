@@ -22,7 +22,7 @@ public class UserDao {
 
     public List<User> getAllUsers () throws SQLException {
         Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("select * from users");
+        ResultSet rs = statement.executeQuery("select * from users order by user_id");
         return createUserList(rs);
     }
 
@@ -80,4 +80,18 @@ public class UserDao {
     }
 
 
+    public void updateUser(User user) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("update users set login = ?, email = ?, admin_role = ? where user_id = ?");
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getEmail());
+            statement.setBoolean(3, user.isAdminRole());
+            statement.setInt(4, user.getUserId());
+            statement.executeQuery();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 }

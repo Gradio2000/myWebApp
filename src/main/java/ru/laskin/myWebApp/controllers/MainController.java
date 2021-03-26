@@ -37,6 +37,11 @@ public class MainController {
 
     @PostMapping("/new_user")
     public String formUser (@ModelAttribute User user, HttpServletRequest request, Model model) throws SQLException {
+        if (request.getParameter("userId") != null){
+            service.updateUser(user);
+            return "redirect:/main";
+        }
+
         service.saveUser(user);
         return "redirect:/main";
     }
