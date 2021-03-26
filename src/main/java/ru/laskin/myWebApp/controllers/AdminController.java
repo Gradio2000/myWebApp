@@ -30,9 +30,10 @@ public class AdminController {
             service.updateUser(user);
             return "redirect:/allUsers";
         }
-
         service.saveUser(user);
-        return "redirect:/allUsers";
+
+        model.addAttribute("user", user);
+        return user.isAdminRole() ? "redirect:/allUsers" : "greeting";
     }
 
     @GetMapping("/users/update")
