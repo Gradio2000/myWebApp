@@ -7,20 +7,23 @@ import javax.persistence.*;
 @Table(name = "users", schema = "public", catalog = "postgres")
 public class User {
     private int userId;
+    private String name;
     private String login;
+    private String password;
     private String email;
     private boolean adminRole;
 
     public User() {
     }
 
-    public User(int userId, String login, String email, boolean adminRole) {
+    public User(int userId, String name, String login, String password, String email, boolean adminRole) {
         this.userId = userId;
+        this.name = name;
         this.login = login;
+        this.password = password;
         this.email = email;
         this.adminRole = adminRole;
     }
-
 
     @Id
     @Column(name = "user_id", nullable = false)
@@ -58,10 +61,26 @@ public class User {
         return adminRole;
     }
 
+
     public void setAdminRole(boolean adminRole) {
         this.adminRole = adminRole;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
     public boolean equals(Object o) {

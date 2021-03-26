@@ -27,14 +27,18 @@ public class UserDao {
     }
 
     public void saveUser(User user) throws SQLException {
+        String name = user.getName();
         String login = user.getLogin();
+        String password = user.getPassword();
         String email = user.getEmail();
         Boolean adminRole = user.isAdminRole();
 
-        PreparedStatement statement = connection.prepareStatement("insert into users (login, email, admin_role) VALUES (?, ?, ?)");
-        statement.setString(1, login);
-        statement.setString(2, email);
-        statement.setBoolean(3, adminRole);
+        PreparedStatement statement = connection.prepareStatement("insert into users (name, login, password, email, admin_role) VALUES (?, ?, ?, ?, ?)");
+        statement.setString(1, name);
+        statement.setString(2, login);
+        statement.setString(3, password);
+        statement.setString(4, email);
+        statement.setBoolean(5, adminRole);
         statement.execute();
     }
 
@@ -68,10 +72,12 @@ public class UserDao {
             users = new ArrayList<>();
             while (rs.next()) {
                 int id = rs.getInt("user_id");
+                String name = rs.getString("name");
                 String login = rs.getString("login");
+                String password = rs.getString("password");
                 String email = rs.getString("email");
                 Boolean adminRole = rs.getBoolean("admin_role");
-                users.add(new User(id, login, email, adminRole));
+                users.add(new User(id, name, login, password, email, adminRole));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

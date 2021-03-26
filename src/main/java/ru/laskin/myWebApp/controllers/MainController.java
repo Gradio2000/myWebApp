@@ -25,40 +25,19 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String getStart(Model model) {
-        model.addAttribute("users", service.getAllUsers());
-        return "index";
+    public String main (){
+        return "main";
     }
 
-    @GetMapping("/add_user")
-    public String addUser(HttpServletRequest request, Model model){
+    @GetMapping("/login")
+    public String login(Model model){
         model.addAttribute("user", new User());
-        return"add_user";
+        return "login";
     }
 
-    @PostMapping("/new_user")
-    public String formUser (@ModelAttribute User user, HttpServletRequest request, Model model) throws SQLException {
-        if (!request.getParameter("userId").equals("0")){
-            service.updateUser(user);
-            return "redirect:/main";
-        }
-
-        service.saveUser(user);
-        return "redirect:/main";
-    }
-
-    @GetMapping("/users/update")
-    public String updateUser(HttpServletRequest request, Model model){
-        int id = Integer.parseInt(request.getParameter("id"));
-        User user1 = service.getUserById(id);
-        model.addAttribute("user", user1);
-        return"add_user";
-    }
-
-    @GetMapping("/users/delete")
-    public String deleteUser(HttpServletRequest request){
-        int id = Integer.parseInt(request.getParameter("id"));
-        service.deleteUser(id);
-        return "redirect:/main";
+    @GetMapping("/registration")
+    public String registration(Model model){
+        model.addAttribute("user", new User());
+        return "registration";
     }
 }
