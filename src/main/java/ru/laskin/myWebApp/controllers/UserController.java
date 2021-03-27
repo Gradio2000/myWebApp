@@ -11,4 +11,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @GetMapping("/greeting")
+    public String greeting(){
+        return "greeting";
+    }
+
 }

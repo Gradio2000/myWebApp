@@ -35,12 +35,15 @@ public class UserService {
         return userDao.getUserById(id);
     }
 
-
     public void deleteUser(int id) {
         userDao.deleteUser(id);
     }
 
     public void updateUser(User user) {
         userDao.updateUser(user);
+    }
+
+    public User getUserBylogin(String login) {
+       return userDao.getUserByLogin(login);
     }
 }

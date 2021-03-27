@@ -5,7 +5,7 @@
 <html>
 <body>
 <h2>Hello Alex!</h2>
-<a href="/add_user">Добавить пользователя</a>
+<a href="/new_user">Добавить пользователя</a>
 <br/>
 <h2>Список зарегистрированных пользователей</h2>
 <table border="1" cellpadding="8" cellspacing="0">

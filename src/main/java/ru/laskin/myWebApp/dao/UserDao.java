@@ -55,6 +55,19 @@ public class UserDao {
         return users.get(0);
     }
 
+    public User getUserByLogin(String login){
+        List<User> users = null;
+        try {
+            Statement statement = connection.createStatement();
+            String sql = "select * from users where login = " + "'" + login + "'";
+            ResultSet resultSet = statement.executeQuery(sql);
+            users = createUserList(resultSet);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users.get(0);
+    }
+
     public void deleteUser(int id){
         try {
             PreparedStatement statement = connection.prepareStatement("delete from users where user_id=?");

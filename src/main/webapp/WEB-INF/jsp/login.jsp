@@ -35,5 +35,8 @@
 
     <input type="submit">
 </sf:form>
+
+<a href="/allUsers">Все пользователи</a>
+
 </body>
 </html>

@@ -28,7 +28,7 @@ public class AdminController {
     public String formUser (@ModelAttribute User user, HttpServletRequest request, Model model) throws SQLException {
         if (!request.getParameter("userId").equals("0")){
             service.updateUser(user);
-            return "redirect:/allUsers";
+            return user.isAdminRole() ? "redirect:/allUsers" : "greeting";
         }
         service.saveUser(user);
 
@@ -36,12 +36,18 @@ public class AdminController {
         return user.isAdminRole() ? "redirect:/allUsers" : "greeting";
     }
 
+    @GetMapping("/new_user")
+    public String formUser(Model model){
+        model.addAttribute("user", new User());
+        return "registration";
+    }
+
     @GetMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
         User user1 = service.getUserById(id);
         model.addAttribute("user", user1);
-        return"add_user";
+        return"registration";
     }
 
     @GetMapping("/users/delete")
