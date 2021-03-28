@@ -37,7 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").anonymous()
                 .antMatchers("/allUsers", "/new_user").authenticated()
-//                .anyRequest().permitAll()
+                //редиректим залогированного пользователя на нужную страницу
+                // при его попытке попасть на страницу, к которой доступ запрещен
+                .and().exceptionHandling().accessDeniedPage("/greeting")
                 .and();
 
         http.formLogin()
@@ -52,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Указываем параметры логина и пароля с формы логина
                 .usernameParameter("login")
                 .passwordParameter("password");
+
                 // даем доступ к форме логина всем
 //                .permitAll();
 

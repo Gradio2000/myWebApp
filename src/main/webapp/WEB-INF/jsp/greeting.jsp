@@ -13,6 +13,8 @@
     <title>Приветствие</title>
 </head>
 <body>
-Привет, ${user.name}!
+Привет, ${authUser}!
+<br/>
+<a href="/logout">Выход</a>
 </body>
 </html>

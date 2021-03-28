@@ -39,10 +39,6 @@ public class AuthProvider implements AuthenticationProvider {
             throw new BadCredentialsException("Пароль не совпадает");
         }
 
-//        if (!password.equals(user.getPassword())){
-//            throw new BadCredentialsException("Пароль не совпадает");
-//        }
-
         List<GrantedAuthority> authorityList = new ArrayList<>();
         return new UsernamePasswordAuthenticationToken(user, null, authorityList);
     }

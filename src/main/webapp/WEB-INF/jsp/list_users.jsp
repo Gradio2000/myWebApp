@@ -11,6 +11,7 @@
 <table border="1" cellpadding="8" cellspacing="0">
     <tr>
         <th>id</th>
+        <th>Имя</th>
         <th>Логин</th>
         <th>email</th>
         <th>Администратор</th>
@@ -18,6 +19,7 @@
     <c:forEach var='user' items='${users}'>
         <tr>
             <td><c:out value="${user.userId}"></c:out></td>
+            <td><c:out value="${user.name}"></c:out></td>
             <td><c:out value="${user.login}"></c:out></td>
             <td><c:out value="${user.email}"></c:out></td>
             <td><c:out value="${user.adminRole}"></c:out></td>
