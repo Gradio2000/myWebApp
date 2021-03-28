@@ -1,6 +1,8 @@
 package ru.laskin.myWebApp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
@@ -21,6 +24,8 @@ public class AdminController {
     @GetMapping("/allUsers")
     public String getStart(Model model) {
         model.addAttribute("users", service.getAllUsers());
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("authUser", authUser.getName());
         return "list_users";
     }
 
@@ -28,12 +33,12 @@ public class AdminController {
     public String formUser (@ModelAttribute User user, HttpServletRequest request, Model model) throws SQLException {
         if (!request.getParameter("userId").equals("0")){
             service.updateUser(user);
-            return user.isAdminRole() ? "redirect:/allUsers" : "greeting";
+            return user.getAdminRole().equals("ADMIN") ? "redirect:/allUsers" : "greeting";
         }
         service.saveUser(user);
 
         model.addAttribute("user", user);
-        return user.isAdminRole() ? "redirect:/allUsers" : "greeting";
+        return user.getAdminRole().equals("ADMIN") ? "redirect:/allUsers" : "greeting";
     }
 
     @GetMapping("/new_user")
@@ -45,8 +50,8 @@ public class AdminController {
     @GetMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
-        User user1 = service.getUserById(id);
-        model.addAttribute("user", user1);
+        User user = service.getUserById(id);
+        model.addAttribute("user", user);
         return"registration";
     }
 

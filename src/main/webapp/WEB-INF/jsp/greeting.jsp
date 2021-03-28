@@ -18,3 +18,6 @@
 <a href="/logout">Выход</a>
 </body>
 </html>
+
+<br/>
+<a href="/allUsers">Все пользователи</a>

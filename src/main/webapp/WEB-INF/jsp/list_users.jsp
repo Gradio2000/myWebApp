@@ -4,7 +4,7 @@
 
 <html>
 <body>
-<h2>Hello Alex!</h2>
+<h2>Hello ${authUser}!</h2>
 <a href="/new_user">Добавить пользователя</a>
 <br/>
 <h2>Список зарегистрированных пользователей</h2>

@@ -31,14 +31,14 @@ public class UserDao {
         String login = user.getLogin();
         String password = user.getPassword();
         String email = user.getEmail();
-        Boolean adminRole = user.isAdminRole();
+        String adminRole = user.getAdminRole();
 
         PreparedStatement statement = connection.prepareStatement("insert into users (name, login, password, email, admin_role) VALUES (?, ?, ?, ?, ?)");
         statement.setString(1, name);
         statement.setString(2, login);
         statement.setString(3, password);
         statement.setString(4, email);
-        statement.setBoolean(5, adminRole);
+        statement.setString(5, adminRole);
         statement.execute();
     }
 
@@ -65,7 +65,12 @@ public class UserDao {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return users.get(0);
+        try {
+            User user = users.get(0);
+            return user;
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     public void deleteUser(int id){
@@ -89,7 +94,7 @@ public class UserDao {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
-                Boolean adminRole = rs.getBoolean("admin_role");
+                String adminRole = rs.getString("admin_role");
                 users.add(new User(id, name, login, password, email, adminRole));
             }
         } catch (SQLException throwables) {
@@ -104,7 +109,7 @@ public class UserDao {
             PreparedStatement statement = connection.prepareStatement("update users set login = ?, email = ?, admin_role = ? where user_id = ?");
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getEmail());
-            statement.setBoolean(3, user.isAdminRole());
+            statement.setString(3, user.getAdminRole());
             statement.setInt(4, user.getUserId());
             statement.executeQuery();
 

@@ -28,7 +28,7 @@ public class AuthProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String login = authentication.getName();
-        User user = service.getUserBylogin(login);
+        final User user = service.getUserBylogin(login);
         if (user == null){
             throw new UsernameNotFoundException("Пользователь не найден");
         }
@@ -40,6 +40,12 @@ public class AuthProvider implements AuthenticationProvider {
         }
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return user.getAdminRole();
+            }
+        });
         return new UsernamePasswordAuthenticationToken(user, null, authorityList);
     }
 
