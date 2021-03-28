@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.UserService;
@@ -21,6 +22,9 @@ public class AuthProvider implements AuthenticationProvider {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String login = authentication.getName();
@@ -31,9 +35,14 @@ public class AuthProvider implements AuthenticationProvider {
 
         String password = authentication.getCredentials().toString();
 
-        if (!password.equals(user.getPassword())){
+        if (!passwordEncoder.matches(password, user.getPassword())){
             throw new BadCredentialsException("Пароль не совпадает");
         }
+
+//        if (!password.equals(user.getPassword())){
+//            throw new BadCredentialsException("Пароль не совпадает");
+//        }
+
         List<GrantedAuthority> authorityList = new ArrayList<>();
         return new UsernamePasswordAuthenticationToken(user, null, authorityList);
     }

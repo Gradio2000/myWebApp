@@ -35,6 +35,9 @@
 
     <input type="submit">
 </sf:form>
+<c:if test="${error}">
+    <p>Ошибка входа</p>
+</c:if>
 
 <a href="/allUsers">Все пользователи</a>
 

@@ -1,6 +1,7 @@
 package ru.laskin.myWebApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.UserDao;
 import ru.laskin.myWebApp.model.User;
@@ -11,12 +12,12 @@ import java.util.List;
 @Service
 public class UserService {
 
+    @Autowired
     private UserDao userDao;
 
     @Autowired
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private PasswordEncoder passwordEncoder;
+
 
     public List<User> getAllUsers() {
         try {
@@ -28,6 +29,7 @@ public class UserService {
     }
 
     public void saveUser(User user) throws SQLException {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.saveUser(user);
     }
 

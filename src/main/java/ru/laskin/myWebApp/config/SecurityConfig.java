@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем action с формы логина
                 .loginProcessingUrl("/login/process")
                 // указываем URL при неудачном логине
-                .failureUrl("/login?error")
+                .failureUrl("/login?error=true")
                 //указываем URL при удачном логине
                 .defaultSuccessUrl("/greeting")
                 // Указываем параметры логина и пароля с формы логина
@@ -64,26 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout")
                 // делаем не валидной текущую сессию
                 .invalidateHttpSession(true);
-
-
-//
-//        http.authorizeRequests()
-//                .antMatchers("/login", "/registration").anonymous()
-//                .antMatchers("/greeting").authenticated()
-//                .and().csrf().disable()
-//                .formLogin()
-//                .loginPage("/login")
-//                .loginProcessingUrl("/login/process")
-//                .usernameParameter("login")
-//                .and().logout();
-
     }
 
-    // Указываем Spring контейнеру, что надо инициализировать ShaPasswordEncoder
-    // Это можно вынести в WebAppConfig, но для понимаемости оставил тут
-
-
-//    public ShaPasswordEncoder getShaPasswordEncoder(){
-//        return new ShaPasswordEncoder();
-//    }
 }

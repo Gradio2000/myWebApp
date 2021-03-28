@@ -3,10 +3,7 @@ package ru.laskin.myWebApp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.UserService;
 
@@ -30,7 +27,10 @@ public class MainController {
     }
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(@RequestParam(name = "error", required = false) Boolean error, Model model){
+        if (Boolean.TRUE.equals(error)){
+            model.addAttribute("error", true);
+        }
         model.addAttribute("user", new User());
         return "login";
     }
