@@ -19,20 +19,16 @@
 </head>
 <body>
 <h2>Войти</h2>
-<sf:form action="/login/process" method="post" modelAttribute="user">
+<sf:form action="/login/process" method="post">
+    <label>Логин</label>
+    <input type="text" name="login" size="50">
+    <br/>
+    <br/>
+    <label>Пароль</label>
+    <input type="password" name="password" size="20">
 
-    <div>
-        <sf:label path="login">Логин</sf:label>
-        <sf:input path="login"/>
-        <sf:errors path="login"/>
-    </div>
-
-    <div>
-        <sf:label path="password">Пароль</sf:label>
-        <sf:input path="password"/>
-        <sf:errors path="password"/>
-    </div>
-
+    <br/>
+    <br/>
     <input type="submit">
 </sf:form>
 <c:if test="${error}">

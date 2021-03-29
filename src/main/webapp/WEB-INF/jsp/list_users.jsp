@@ -29,7 +29,8 @@
     </c:forEach>
 </table>
 
-
+<br/>
+<a href="/logout">Выход</a>
 
 </body>
 </html>

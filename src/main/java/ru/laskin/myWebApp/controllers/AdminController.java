@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.UserService;
 
@@ -34,7 +35,7 @@ public class AdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = service.getUserById(id);
         model.addAttribute("user", user);
-        return"registration";
+        return"updateForm";
     }
 
     @GetMapping("/users/delete")
@@ -42,5 +43,20 @@ public class AdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         service.deleteUser(id);
         return "redirect:/allUsers";
+    }
+
+    @PostMapping("/updateUser")
+    public String formUser (@ModelAttribute User user,
+                            @RequestParam(defaultValue = "false") boolean admin,
+                            HttpServletRequest request,
+                            Model model) throws SQLException {
+         if (admin){
+                user.setAdminRole("ADMIN");
+            }
+         else {
+             user.setAdminRole("USER");
+         }
+            service.updateUser(user);
+            return "redirect:/allUsers";
     }
 }

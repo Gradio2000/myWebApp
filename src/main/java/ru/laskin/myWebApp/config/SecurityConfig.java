@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // по которым будет определятся доступ к ресурсам и остальным данным
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").anonymous()
-                .antMatchers("/allUsers").authenticated()
+                .antMatchers("/allUsers", "/greeting").authenticated()
                 //редиректим залогированного пользователя на нужную страницу
                 // при его попытке попасть на страницу, к которой доступ запрещен
                 .and().exceptionHandling().accessDeniedPage("/greeting")

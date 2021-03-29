@@ -106,11 +106,12 @@ public class UserDao {
 
     public void updateUser(User user) {
         try {
-            PreparedStatement statement = connection.prepareStatement("update users set login = ?, email = ?, admin_role = ? where user_id = ?");
-            statement.setString(1, user.getLogin());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getAdminRole());
-            statement.setInt(4, user.getUserId());
+            PreparedStatement statement = connection.prepareStatement("update users set name = ?, login = ?, email = ?, admin_role = ? where user_id = ?");
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getAdminRole());
+            statement.setInt(5, user.getUserId());
             statement.executeQuery();
 
         } catch (SQLException throwables) {
