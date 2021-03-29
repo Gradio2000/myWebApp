@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
@@ -14,10 +15,10 @@
 </head>
 <body>
 Привет, ${authUser}!
-<br/>
-<a href="/logout">Выход</a>
+    <br/>
+    <a href="/allUsers">Все пользователи</a>
+
+    <br/>
+    <a href="/logout">Выход</a>
 </body>
 </html>
-
-<br/>
-<a href="/allUsers">Все пользователи</a>

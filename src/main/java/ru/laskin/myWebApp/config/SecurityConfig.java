@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.laskin.myWebApp.sequrity.AuthProvider;
-import ru.laskin.myWebApp.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // по которым будет определятся доступ к ресурсам и остальным данным
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").anonymous()
-                .antMatchers("/allUsers", "/new_user").authenticated()
+                .antMatchers("/allUsers").authenticated()
                 //редиректим залогированного пользователя на нужную страницу
                 // при его попытке попасть на страницу, к которой доступ запрещен
                 .and().exceptionHandling().accessDeniedPage("/greeting")

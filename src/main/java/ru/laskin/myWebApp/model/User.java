@@ -75,7 +75,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "admin_role", nullable = true, length = -1)
+    @Column(name = "admin_role", length = -1)
     public String getAdminRole() {
         return adminRole;
     }

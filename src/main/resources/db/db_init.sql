@@ -8,7 +8,7 @@ create table users
     login VARCHAR not null,
     password VARCHAR not null,
     email VARCHAR not null,
-    admin_role VARCHAR
+    admin_role VARCHAR default 'USER'
 );
 
 

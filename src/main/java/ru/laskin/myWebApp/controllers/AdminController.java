@@ -29,24 +29,6 @@ public class AdminController {
         return "list_users";
     }
 
-    @PostMapping("/new_user")
-    public String formUser (@ModelAttribute User user, HttpServletRequest request, Model model) throws SQLException {
-        if (!request.getParameter("userId").equals("0")){
-            service.updateUser(user);
-            return user.getAdminRole().equals("ADMIN") ? "redirect:/allUsers" : "greeting";
-        }
-        service.saveUser(user);
-
-        model.addAttribute("user", user);
-        return user.getAdminRole().equals("ADMIN") ? "redirect:/allUsers" : "greeting";
-    }
-
-    @GetMapping("/new_user")
-    public String formUser(Model model){
-        model.addAttribute("user", new User());
-        return "registration";
-    }
-
     @GetMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));

@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
-
 
 @Controller
 public class MainController {
