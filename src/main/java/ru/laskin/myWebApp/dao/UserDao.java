@@ -10,6 +10,7 @@ import java.util.List;
 
 @Component
 public class UserDao {
+
    private static Connection connection;
 
     static {
@@ -32,13 +33,15 @@ public class UserDao {
         String password = user.getPassword();
         String email = user.getEmail();
         String adminRole = user.getAdminRole();
+        String position = user.getPosition();
 
-        PreparedStatement statement = connection.prepareStatement("insert into users (name, login, password, email, admin_role) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement statement = connection.prepareStatement("insert into users (name, login, password, email, admin_role, position) VALUES (?, ?, ?, ?, ?, ?)");
         statement.setString(1, name);
         statement.setString(2, login);
         statement.setString(3, password);
         statement.setString(4, email);
         statement.setString(5, adminRole);
+        statement.setString(6, position);
         statement.execute();
     }
 
@@ -106,12 +109,13 @@ public class UserDao {
 
     public void updateUser(User user) {
         try {
-            PreparedStatement statement = connection.prepareStatement("update users set name = ?, login = ?, email = ?, admin_role = ? where user_id = ?");
+            PreparedStatement statement = connection.prepareStatement("update users set name = ?, login = ?, email = ?, admin_role = ?, position = ? where user_id = ?");
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getAdminRole());
-            statement.setInt(5, user.getUserId());
+            statement.setString(5, user.getPosition());
+            statement.setInt(6, user.getUserId());
             statement.executeQuery();
 
         } catch (SQLException throwables) {

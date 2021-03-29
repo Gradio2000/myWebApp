@@ -1,8 +1,11 @@
 package ru.laskin.myWebApp.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 
 public class JdbsConnectionUtils {
     static String url = "jdbc:postgresql://localhost:5433/postgres";

@@ -42,6 +42,9 @@ public class UserService {
     }
 
     public void updateUser(User user) {
+        if (user.getAdminRole() == ""){
+            user.setAdminRole("USER");
+        }
         userDao.updateUser(user);
     }
 

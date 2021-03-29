@@ -11,6 +11,7 @@ public class User {
     private String password;
     private String email;
     private String adminRole;
+    private String position;
 
     public User() {
     }
@@ -65,7 +66,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email", nullable = false, length = -1)
+    @Column(name = "email", nullable = true, length = -1)
     public String getEmail() {
         return email;
     }
@@ -75,13 +76,23 @@ public class User {
     }
 
     @Basic
-    @Column(name = "admin_role", length = -1)
+    @Column(name = "admin_role", length = -1, nullable = true)
     public String getAdminRole() {
         return adminRole;
     }
 
     public void setAdminRole(String adminRole) {
         this.adminRole = adminRole;
+    }
+
+    @Basic
+    @Column(name = "position", nullable = true, length = -1)
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     @Override

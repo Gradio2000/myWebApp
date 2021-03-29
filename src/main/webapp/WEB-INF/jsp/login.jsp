@@ -19,18 +19,18 @@
 </head>
 <body>
 <h2>Войти</h2>
-<sf:form action="/login/process" method="post">
-    <label>Логин</label>
-    <input type="text" name="login" size="50">
-    <br/>
-    <br/>
-    <label>Пароль</label>
-    <input type="password" name="password" size="20">
+        <sf:form action="/login/process" method="post">
+            <label>Логин</label>
+            <input type="text" name="login" size="50">
+            <br/>
+            <br/>
+            <label>Пароль</label>
+            <input type="password" name="password" size="20">
 
-    <br/>
-    <br/>
-    <input type="submit">
-</sf:form>
+            <br/>
+            <br/>
+            <input type="submit">
+        </sf:form>
 <c:if test="${error}">
     <p>Ошибка входа</p>
 </c:if>
