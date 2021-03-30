@@ -13,6 +13,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 
+<jsp:useBean id="position" scope="request" class="ru.laskin.myWebApp.model.Position"/>
+
 <html>
 <head>
     <title>Login</title>
@@ -22,6 +24,8 @@
 <sf:form action="/updateUser" method="post" modelAttribute="user">
     <div>
         <sf:hidden path="userId"/>
+        <sf:hidden path="adminRole"/>
+        <sf:hidden path="login"/>
     </div>
     <div>
         <sf:label path="name">Ф.И.О.</sf:label>
@@ -29,26 +33,22 @@
         <sf:errors path="name"/>
     </div>
 
-    <div>
-        <sf:label path="login">Логин</sf:label>
-        <sf:input path="login"/>
-        <sf:errors path="login"/>
-    </div>
 
     <div>
         <sf:label path="email">E-mail</sf:label>
         <sf:input path="email"/>
         <sf:errors path="email"/>
     </div>
-    <div>
-        <sf:label path="adminRole">Admin</sf:label>
-        <c:if test="${user.adminRole.equals('ADMIN')}">
-            <input type="checkbox" name="admin" checked>
-        </c:if>
-        <c:if test="${!user.adminRole.equals('ADMIN')}">
-            <input type="checkbox" name="admin">
-        </c:if>
-    </div>
+
+<div>
+    <sf:label path="position">Должность</sf:label>
+    <sf:select path="position">
+    <c:forEach var="position" items="${posSet}">
+    <option>${position}</option>
+    </c:forEach>
+    </sf:select>
+    <div/>
+
 
     <input type="submit">
 </sf:form>

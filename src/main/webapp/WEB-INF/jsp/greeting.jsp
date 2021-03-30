@@ -22,13 +22,13 @@
 </head>
 <body>
 <h2>
-    Привет, ${authUser}!
+    Привет, ${authUser.name}!
 </h2>
 
 <h2>
     Заполните сведения о себе
 </h2>
-    <sf:form action="/reUpdate" method="post" modelAttribute="user">
+    <sf:form action="/reUpdate" method="post" modelAttribute="authUser">
     <div>
         <sf:hidden path="userId"/>
         <sf:hidden path="adminRole"/>

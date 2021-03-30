@@ -14,7 +14,6 @@ import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -31,18 +30,22 @@ public class UserController {
 
     @GetMapping("/greeting")
     public String greeting(Model model){
+
+        //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        //если авторизованный пользователь - админ, переходим на нужную страницу
         if (authUser.getAdminRole().equals("ADMIN")){
-            return "allUsers";
+            return "/allUsers";
         }
-        SecurityContextHolder.getContext().getAuthentication().getCredentials();
-        model.addAttribute("authUser", authUser.getName());
-        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("principal", principal);
+        //если авторизованный пользователь - USER,
+        //добавляем авторизованного пользователя в модель представления
+        model.addAttribute("authUser", authUser);
+
+        //получаем из бд список должностей и передаем в модель представления
         Set<String> posSet = positionService.getAllPosition();
         model.addAttribute("posSet", posSet);
-        User user = userService.getUserById(authUser.getUserId());
-        model.addAttribute("user", user);
+
         return "greeting";
     }
 

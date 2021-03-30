@@ -9,18 +9,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.Set;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
-    UserService service;
+    private UserService service;
+
+    @Autowired
+    private PositionService positionService;
 
     @GetMapping("/allUsers")
     public String getStart(Model model) {
@@ -35,6 +41,8 @@ public class AdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = service.getUserById(id);
         model.addAttribute("user", user);
+        Set<String> positionSet = positionService.getAllPosition();
+        model.addAttribute("posSet", positionSet);
         return"updateForm";
     }
 

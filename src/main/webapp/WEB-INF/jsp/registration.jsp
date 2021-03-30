@@ -22,6 +22,8 @@
 <sf:form action="/new_user" method="post" modelAttribute="user">
     <div>
         <sf:hidden path="userId"/>
+        <sf:hidden path="email"/>
+        <sf:hidden path="adminRole"/>
     </div>
     <div>
         <sf:label path="name">Ф.И.О.</sf:label>
@@ -37,14 +39,8 @@
 
     <div>
         <sf:label path="password">Пароль</sf:label>
-        <sf:input path="password"/>
+        <sf:password path="password"/>
         <sf:errors path="password"/>
-    </div>
-
-    <div>
-        <sf:label path="email">E-mail</sf:label>
-        <sf:input path="email"/>
-        <sf:errors path="email"/>
     </div>
 
     <input type="submit">

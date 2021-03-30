@@ -16,13 +16,14 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String name, String login, String password, String email, String adminRole) {
+    public User(int userId, String name, String login, String password, String email, String adminRole, String position) {
         this.userId = userId;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
         this.adminRole = adminRole;
+        this.position = position;
     }
 
     @Id
