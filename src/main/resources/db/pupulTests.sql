@@ -11,3 +11,4 @@ create unique index tests_test_id_uindex
 
 INSERT INTO tests (test_name) VALUES ('Для работы');
 INSERT INTO tests (test_name) VALUES ('Для ревизии');
+INSERT INTO tests (test_name) VALUES ('Совместный');

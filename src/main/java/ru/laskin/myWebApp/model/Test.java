@@ -8,6 +8,14 @@ public class Test {
     private int testId;
     private String testName;
 
+    public Test() {
+    }
+
+    public Test(int testId, String testName) {
+        this.testId = testId;
+        this.testName = testName;
+    }
+
     @Id
     @Column(name = "test_id", nullable = false)
     public int getTestId() {

@@ -7,9 +7,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.context.SecurityContextHolder;
+import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.sequrity.AuthProvider;
 
 @Configuration
@@ -49,11 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // указываем URL при неудачном логине
                 .failureUrl("/login?error=true")
                 //указываем URL при удачном логине
-                .defaultSuccessUrl("/greeting")
+                .defaultSuccessUrl("/allUsers")
                 // Указываем параметры логина и пароля с формы логина
                 .usernameParameter("login")
                 .passwordParameter("password");
-
                 // даем доступ к форме логина всем
 //                .permitAll();
 
@@ -67,5 +65,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // делаем не валидной текущую сессию
                 .invalidateHttpSession(true);
     }
-
 }
