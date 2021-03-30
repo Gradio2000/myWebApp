@@ -30,7 +30,9 @@ public class UserService {
 
     public void saveUser(User user) throws SQLException {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setAdminRole("USER");
+        if (!user.getAdminRole().equals("ADMIN")){
+            user.setAdminRole("USER");
+        }
         userDao.saveUser(user);
     }
 

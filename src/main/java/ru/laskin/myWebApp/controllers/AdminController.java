@@ -55,15 +55,8 @@ public class AdminController {
 
     @PostMapping("/updateUser")
     public String formUser (@ModelAttribute User user,
-                            @RequestParam(defaultValue = "false") boolean admin,
                             HttpServletRequest request,
                             Model model) throws SQLException {
-         if (admin){
-                user.setAdminRole("ADMIN");
-            }
-         else {
-             user.setAdminRole("USER");
-         }
             service.updateUser(user);
             return "redirect:/allUsers";
     }
