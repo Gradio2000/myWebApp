@@ -34,6 +34,6 @@
 <c:if test="${error}">
     <p>Ошибка входа</p>
 </c:if>
-
+<a href="/registration">Зарегистрироваться</a>
 </body>
 </html>

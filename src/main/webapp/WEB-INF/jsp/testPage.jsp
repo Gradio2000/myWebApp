@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
+
 <jsp:useBean id="tests" scope="request" class="ru.laskin.myWebApp.model.Test"/>
 
 
@@ -19,11 +20,16 @@
 <head>
     <title>Tests</title>
 </head>
-<c:forEach var='test' items='${allTest}'>
-    <tr>
-        <td><c:out value="${test.testName}"></c:out></td>
-        <br/>
-    </tr>
-</c:forEach>
+
+    <form action="/startTest" method="post"/>
+        <select name="testSelected">
+            <c:forEach var="test" items="${allTest}">
+                <option>${test.testName}</option>
+            </c:forEach>
+        </select>
+
+        <input type="submit" value="Начать"/>
+    <form/>
+
 </body>
 </html>

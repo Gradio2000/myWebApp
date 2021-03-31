@@ -11,16 +11,8 @@ import ru.laskin.myWebApp.service.UserService;
 @Controller
 public class MainController {
 
-    private UserService service;
-
     @Autowired
     public MainController(UserService service) {
-        this.service = service;
-    }
-
-    @GetMapping("/main")
-    public String main (){
-        return "main";
     }
 
     @GetMapping("/login")

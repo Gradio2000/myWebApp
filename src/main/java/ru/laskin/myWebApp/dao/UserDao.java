@@ -1,5 +1,7 @@
 package ru.laskin.myWebApp.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
@@ -11,7 +13,13 @@ import java.util.List;
 @Component
 public class UserDao {
 
-   private static Connection connection;
+    private JdbcTemplate jdbcTemplate;
+
+    public UserDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private static Connection connection;
 
     static {
         try {
@@ -22,106 +30,46 @@ public class UserDao {
     }
 
     public List<User> getAllUsers () throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet rs = statement.executeQuery("select * from users order by user_id");
-        return createUserList(rs);
+        return jdbcTemplate.query("SELECT * FROM users ORDER BY user_id", new BeanPropertyRowMapper<>(User.class));
     }
 
     public void saveUser(User user) throws SQLException {
-        String name = user.getName();
-        String login = user.getLogin();
-        String password = user.getPassword();
-        String email = user.getEmail();
-        String adminRole = user.getAdminRole();
-        String position = user.getPosition();
-
-        PreparedStatement statement = connection.prepareStatement("insert into users (name, login, password, email, admin_role, position) VALUES (?, ?, ?, ?, ?, ?)");
-        statement.setString(1, name);
-        statement.setString(2, login);
-        statement.setString(3, password);
-        statement.setString(4, email);
-        statement.setString(5, adminRole);
-        statement.setString(6, position);
-        statement.execute();
+        jdbcTemplate.update("INSERT INTO users (name, login, password, email, admin_role, position) " +
+                        "VALUES (?,?,?,?,?,?)",
+                user.getName(),
+                user.getLogin(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getAdminRole(),
+                user.getPosition()
+        );
     }
 
     public User getUserById(int id) {
-        List<User> users = null;
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "select * from users where user_id = " + id;
-            ResultSet resultSet = statement.executeQuery(sql);
-            users = createUserList(resultSet);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return users.get(0);
+        return jdbcTemplate.query("SELECT * FROM users WHERE user_id = ?", new BeanPropertyRowMapper<>(User.class), id)
+                .stream()
+                .findAny().orElse(null);
     }
 
     public User getUserByLogin(String login){
-        List<User> users = null;
-        try {
-            Statement statement = connection.createStatement();
-            String sql = "select * from users where login = " + "'" + login + "'";
-            ResultSet resultSet = statement.executeQuery(sql);
-            users = createUserList(resultSet);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        try {
-            User user = users.get(0);
-            return user;
-        } catch (IndexOutOfBoundsException e) {
-            return null;
-        }
+        return jdbcTemplate.query("SELECT * FROM users WHERE login = ?", new BeanPropertyRowMapper<>(User.class), login)
+                .stream().findAny().orElse(null);
     }
 
     public void deleteUser(int id){
-        try {
-            PreparedStatement statement = connection.prepareStatement("delete from users where user_id=?");
-            statement.setInt(1, id);
-            statement.executeQuery();
-            connection.commit();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
+        jdbcTemplate.update("DELETE FROM users WHERE user_id = ?", id);
 
-    public List<User> createUserList(ResultSet rs){
-        List<User> users = null;
-        try {
-            users = new ArrayList<>();
-            while (rs.next()) {
-                int id = rs.getInt("user_id");
-                String name = rs.getString("name");
-                String login = rs.getString("login");
-                String password = rs.getString("password");
-                String email = rs.getString("email");
-                String adminRole = rs.getString("admin_role");
-                String position = rs.getString("position");
-                users.add(new User(id, name, login, password, email, adminRole, position));
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return users;
     }
-
 
     public void updateUser(User user) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("update users set name = ?, login = ?, email = ?, admin_role = ?, position = ? where user_id = ?");
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getAdminRole());
-            statement.setString(5, user.getPosition());
-            statement.setInt(6, user.getUserId());
-            statement.executeQuery();
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        jdbcTemplate.update("UPDATE users set name=?, login=?, email=?, admin_role=?, position=? WHERE user_id=?",
+                user.getName(),
+                user.getLogin(),
+                user.getEmail(),
+                user.getAdminRole(),
+                user.getPosition(),
+                user.getUserId()
+        );
 
     }
 }

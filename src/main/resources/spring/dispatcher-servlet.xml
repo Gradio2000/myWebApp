@@ -9,6 +9,7 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="ru.laskin.myWebApp"/>
 
+    <context:property-placeholder location="classpath:app.properties"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
@@ -23,4 +24,16 @@
 
         <bean id="passwordEncoder" class=
                 "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
 </beans>

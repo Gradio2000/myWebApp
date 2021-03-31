@@ -4,9 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
@@ -14,6 +13,7 @@ import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -67,5 +67,14 @@ public class UserController {
 
         model.addAttribute("allTest", testService.getAllTests());
         return "testPage";
+    }
+
+    @PostMapping("/startTest")
+    public String testStart(@RequestParam("testSelected") String testSelected,
+                            Model model){
+        List<Question> questionList = testService.getAllQuestions();
+        model.addAttribute("questions", testService.getAllQuestions());
+        System.out.println(questionList.get(0).getAnswers());
+        return "/testProcessing";
     }
 }

@@ -43,9 +43,9 @@
 <div>
     <sf:label path="position">Должность</sf:label>
     <sf:select path="position">
-    <c:forEach var="position" items="${posSet}">
-    <option>${position}</option>
-    </c:forEach>
+        <c:forEach var="position" items="${posSet}">
+        <option>${position}</option>
+        </c:forEach>
     </sf:select>
     <div/>
 
