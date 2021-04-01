@@ -11,10 +11,6 @@ import ru.laskin.myWebApp.service.UserService;
 @Controller
 public class MainController {
 
-    @Autowired
-    public MainController(UserService service) {
-    }
-
     @GetMapping("/login")
     public String login(@RequestParam(name = "error", required = false) Boolean error, Model model){
         if (Boolean.TRUE.equals(error)){

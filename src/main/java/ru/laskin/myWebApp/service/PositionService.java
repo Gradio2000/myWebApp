@@ -2,8 +2,9 @@ package ru.laskin.myWebApp.service;
 
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.PositionDao;
+import ru.laskin.myWebApp.model.Position;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class PositionService {
@@ -14,7 +15,7 @@ public class PositionService {
         this.positionDao = positionDao;
     }
 
-    public Set<String> getAllPosition(){
+    public List<Position> getAllPosition(){
        return positionDao.getAllPosition();
     }
 }

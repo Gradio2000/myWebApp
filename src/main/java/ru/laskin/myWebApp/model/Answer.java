@@ -1,8 +1,5 @@
 package ru.laskin.myWebApp.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,11 +7,12 @@ import javax.persistence.*;
 public class Answer {
     private int answerId;
     private String answerName;
+    private boolean isRight;
+
+    @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "quest_id", referencedColumnName = "question_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     public Question getQuestion() {
         return question;
     }
@@ -43,6 +41,16 @@ public class Answer {
         this.answerName = answerName;
     }
 
+    @Basic
+    @Column(name = "is_right", nullable = false)
+    public boolean isRight() {
+        return isRight;
+    }
+
+    public void setRight(boolean right) {
+        isRight = right;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,4 +70,5 @@ public class Answer {
         result = 31 * result + (answerName != null ? answerName.hashCode() : 0);
         return result;
     }
+
 }

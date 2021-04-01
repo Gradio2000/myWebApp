@@ -1,47 +1,23 @@
 package ru.laskin.myWebApp.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Position;
-import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
 
-import javax.management.Query;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.List;
 
 @Component
 public class PositionDao {
 
-    private static Connection connection;
+    private JdbcTemplate jdbcTemplate;
+    private BeanPropertyRowMapper<Position> positionRowMapper = new BeanPropertyRowMapper(Position.class);
 
-    static {
-        try {
-            connection = JdbsConnectionUtils.getConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    public PositionDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Set<String> getAllPosition(){
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from positions");
-
-            Set<String> positionSet = new TreeSet<>();
-            while (resultSet.next()){
-                String pos = resultSet.getString("position");
-                positionSet.add(pos);
-            }
-            return positionSet;
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+    public List<Position> getAllPosition(){
+        return jdbcTemplate.query("SELECT * FROM positions", positionRowMapper);
     }
-
 }

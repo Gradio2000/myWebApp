@@ -7,19 +7,26 @@ import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TestService {
 
-    @Autowired
     private TestDao testDao;
 
+    public TestService(TestDao testDao) {
+        this.testDao = testDao;
+    }
+
     public List<Test> getAllTests(){
-       return testDao.getAllTests();
+        return testDao.getAllTests();
     }
 
     public List<Question> getAllQuestions(){
+        List<Question> questionList = testDao.getAllQuestions();
         return testDao.getAllQuestions();
+    }
+
+    public Question getQuestionById(int id){
+        return testDao.getQuestionById(id);
     }
 }

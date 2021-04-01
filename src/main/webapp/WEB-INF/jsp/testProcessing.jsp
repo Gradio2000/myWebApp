@@ -8,6 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
+<jsp:useBean id="answer" class="ru.laskin.myWebApp.model.Answer"/>
 <html>
 <head>
     <title>TestProcessing</title>
@@ -16,7 +17,9 @@
 <h3>Оппа!</h3>
         <c:forEach var="question" items="${questions}">
             <option>${question.questionName}</option>
-            <option>${question.answers}</option>
+                <c:forEach var="answer" items="${question.answers}">
+                    <option>${answer.answerName}</option>
+                </c:forEach>
         </c:forEach>
 </body>
 </html>

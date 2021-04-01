@@ -4,33 +4,22 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.User;
-import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserDao {
 
     private JdbcTemplate jdbcTemplate;
+    private BeanPropertyRowMapper<User> userRowMapper = new BeanPropertyRowMapper<>(User.class);
 
     public UserDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private static Connection connection;
-
-    static {
-        try {
-            connection = JdbsConnectionUtils.getConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<User> getAllUsers () throws SQLException {
-        return jdbcTemplate.query("SELECT * FROM users ORDER BY user_id", new BeanPropertyRowMapper<>(User.class));
+        return jdbcTemplate.query("SELECT * FROM users ORDER BY user_id", userRowMapper);
     }
 
     public void saveUser(User user) throws SQLException {
@@ -46,13 +35,13 @@ public class UserDao {
     }
 
     public User getUserById(int id) {
-        return jdbcTemplate.query("SELECT * FROM users WHERE user_id = ?", new BeanPropertyRowMapper<>(User.class), id)
+        return jdbcTemplate.query("SELECT * FROM users WHERE user_id = ?", userRowMapper, id)
                 .stream()
                 .findAny().orElse(null);
     }
 
     public User getUserByLogin(String login){
-        return jdbcTemplate.query("SELECT * FROM users WHERE login = ?", new BeanPropertyRowMapper<>(User.class), login)
+        return jdbcTemplate.query("SELECT * FROM users WHERE login = ?", userRowMapper, login)
                 .stream().findAny().orElse(null);
     }
 
@@ -70,6 +59,5 @@ public class UserDao {
                 user.getPosition(),
                 user.getUserId()
         );
-
     }
 }

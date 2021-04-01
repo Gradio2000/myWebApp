@@ -16,17 +16,20 @@ import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
-    @Autowired
     private UserService service;
-
-    @Autowired
     private PositionService positionService;
+
+    public AdminController(UserService service, PositionService positionService) {
+        this.service = service;
+        this.positionService = positionService;
+    }
 
     @GetMapping("/allUsers")
     public String getStart(Model model) {
@@ -41,7 +44,7 @@ public class AdminController {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = service.getUserById(id);
         model.addAttribute("user", user);
-        Set<String> positionSet = positionService.getAllPosition();
+        List<Position> positionSet = positionService.getAllPosition();
         model.addAttribute("posSet", positionSet);
         return"updateForm";
     }

@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
@@ -19,14 +20,15 @@ import java.util.Set;
 @Controller
 public class UserController {
 
-    @Autowired
     private UserService userService;
-
-    @Autowired
     private PositionService positionService;
-
-    @Autowired
     private TestService testService;
+
+    public UserController(UserService userService, PositionService positionService, TestService testService) {
+        this.userService = userService;
+        this.positionService = positionService;
+        this.testService = testService;
+    }
 
     @GetMapping("/greeting")
     public String greeting(Model model){
@@ -43,9 +45,8 @@ public class UserController {
         model.addAttribute("authUser", authUser);
 
         //получаем из бд список должностей и передаем в модель представления
-        Set<String> posSet = positionService.getAllPosition();
+        List<Position> posSet = positionService.getAllPosition();
         model.addAttribute("posSet", posSet);
-
         return "greeting";
     }
 

@@ -1,66 +1,51 @@
 package ru.laskin.myWebApp.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Answer;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
-import ru.laskin.myWebApp.utils.JdbsConnectionUtils;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 public class TestDao {
-    private static Connection connection;
 
-    static {
-        try {
-            connection = JdbsConnectionUtils.getConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    private JdbcTemplate jdbcTemplate;
+
+    private BeanPropertyRowMapper<Question> questionRowMapper = new BeanPropertyRowMapper(Question.class);
+    private BeanPropertyRowMapper<Answer> answerRowMapper = new BeanPropertyRowMapper<>(Answer.class);
+    private BeanPropertyRowMapper<Test> testRowMapper = new BeanPropertyRowMapper<>(Test.class);
+
+    public TestDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<Test> getAllTests(){
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from tests");
-            List<Test> testList = new ArrayList<>();
-            while (resultSet.next()){
-                int id = resultSet.getInt("test_id");
-                String testName = resultSet.getString("test_name");
-                Test test = new Test(id, testName);
-                testList.add(test);
-            }
-            return testList;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return null;
+        return jdbcTemplate.query("SELECT * FROM tests", testRowMapper);
     }
 
     public List<Question> getAllQuestions(){
-        Statement statement;
-        try {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from questions LEFT JOIN answers a on questions.question_id = a.quest_id");
-            List<Question> questionList = new ArrayList<>();
-            while (resultSet.next()){
-                int id = resultSet.getInt("question_id");
-                String testName = resultSet.getString("question_name");
-                Question question = new Question(id, testName);
-                questionList.add(question);
-            }
-            return questionList;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        return jdbcTemplate.query("SELECT * FROM questions", questionRowMapper)
+                .stream()
+                .map(this::setAnswersToQuestion)
+                .collect(Collectors.toList());
+    }
+
+    public Question getQuestionById(int id){
+        return setAnswersToQuestion(jdbcTemplate.query("SELECT * FROM questions WHERE question_id=?", questionRowMapper, id)
+                .stream()
+                .findAny().orElse(null));
+    }
+
+
+    public Question setAnswersToQuestion(Question question){
+        if (question != null){
+            List<Answer> answers = jdbcTemplate.query("SELECT * FROM answers WHERE question_ID = ?",
+                    answerRowMapper, question.getQuestionId());
+            question.setAnswers(answers);
         }
-        return null;
+       return question;
     }
 }
