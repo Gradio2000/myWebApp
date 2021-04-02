@@ -13,7 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
-<jsp:useBean id="tests" scope="request" class="ru.laskin.myWebApp.model.Test"/>
+<jsp:useBean id="test" scope="request" class="ru.laskin.myWebApp.model.Test"/>
 
 
 <html>
@@ -21,15 +21,22 @@
     <title>Tests</title>
 </head>
 
-    <form action="/startTest" method="post"/>
-        <select name="testSelected">
-            <c:forEach var="test" items="${allTest}">
-                <option>${test.testName}</option>
-            </c:forEach>
-        </select>
-
-        <input type="submit" value="Начать"/>
+    <form action="/startTest" method="post" modelAttribute="test"/>
+            <select name="testId">
+                <c:forEach var="test" items="${allTest}">
+                    <option value="${test.testId}">${test.testName}</option>
+                </c:forEach>
+            </select>
+        <input type="submit">
     <form/>
 
-</body>
+<%--<sf:form method="post" modelAttribute="test" action="startTest">--%>
+<%--    <sf:select path="testName">--%>
+<%--        <sf:option value="NONE" label="--- Select ---" />--%>
+<%--        <sf:options items="${allTest}" itemValue="testId" itemLabel="testName"/>--%>
+<%--    </sf:select>--%>
+<%--    <input type="submit" />--%>
+<%--</sf:form>--%>
+
+
 </html>

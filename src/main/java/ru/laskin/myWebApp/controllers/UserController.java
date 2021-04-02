@@ -1,6 +1,7 @@
 package ru.laskin.myWebApp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,6 +53,7 @@ public class UserController {
 
     @GetMapping("/new_user")
     public String formUser(Model model){
+        //передаем пустого пользователя, чтобы там его наполнить
         model.addAttribute("user", new User());
         return "registration";
     }
@@ -65,17 +67,22 @@ public class UserController {
     @PostMapping("/reUpdate")
     public String reUpdate(@ModelAttribute User user, Model model){
         userService.updateUser(user);
-
         model.addAttribute("allTest", testService.getAllTests());
+        model.addAttribute("test", new Test());
         return "testPage";
     }
 
     @PostMapping("/startTest")
-    public String testStart(@RequestParam("testSelected") String testSelected,
+    public String testStart(@RequestParam("testId") String testId,
                             Model model){
-        List<Question> questionList = testService.getAllQuestions();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("questions", testService.getAllQuestions());
-        System.out.println(questionList.get(0).getAnswers());
-        return "/testProcessing";
+        model.addAttribute("userId" , user.getUserId());
+//        int testIdPars = Integer.parseInt(testId);
+        model.addAttribute("testId", testId);
+
+
+        System.out.println(testId);
+        return "testProcessing";
     }
 }

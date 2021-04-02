@@ -3,13 +3,17 @@ package ru.laskin.myWebApp;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.laskin.myWebApp.model.Answer;
+import ru.laskin.myWebApp.model.AttemptTest;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Main {
@@ -29,6 +33,11 @@ public class Main {
             print(question.getAnswers());
         }
 
+        Timestamp timestamp = new Timestamp(new Date().getTime());
+        System.out.println(timestamp);
+
+        AttemptTestService attemptTestService = appCont.getBean("attemptTestService", AttemptTestService.class);
+        attemptTestService.saveAttemptTest(new AttemptTest(timestamp, 5,5));
 
     }
 
