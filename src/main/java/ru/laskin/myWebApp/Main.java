@@ -2,6 +2,8 @@ package ru.laskin.myWebApp;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.laskin.myWebApp.dao.AnswersDao;
+import ru.laskin.myWebApp.dao.AttemptTestDao;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.ResultTestService;
@@ -13,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -39,6 +42,9 @@ public class Main {
 
         ResultTestService resultTestService = appCont.getBean(ResultTestService.class);
         resultTestService.saveResultTest(new ResultTest(1, 1, 1));
+
+        AnswersDao answersDao = appCont.getBean(AnswersDao.class);
+
     }
 
     public static void print(List<Answer> list){

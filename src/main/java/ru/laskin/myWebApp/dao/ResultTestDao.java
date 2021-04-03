@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.ResultTest;
 
+import java.util.List;
+
 @Component
 public class ResultTestDao {
     private JdbcTemplate jdbcTemplate;
@@ -20,5 +22,9 @@ public class ResultTestDao {
                 resultTest.getQuestionId(),
                 resultTest.getAnswerId()
         );
+    }
+
+    public List<ResultTest> getAllResultByAttempt(int attemptId){
+        return jdbcTemplate.query("SELECT * FROM resulttests WHERE attempt_id = ?", resultTestRowMapper, attemptId);
     }
 }

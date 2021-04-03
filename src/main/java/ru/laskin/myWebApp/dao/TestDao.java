@@ -48,4 +48,10 @@ public class TestDao {
         }
        return question;
     }
+
+    public Test getTestById(int id){
+        return jdbcTemplate.query("SELECT * FROM tests WHERE test_id = ?", testRowMapper, id)
+                .stream()
+                .findAny().orElse(null);
+    }
 }
