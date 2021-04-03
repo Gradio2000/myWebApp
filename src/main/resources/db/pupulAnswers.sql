@@ -8,6 +8,7 @@ create table answers
     question_id int not null,
     is_right boolean not null default false,
     FOREIGN KEY (question_id) REFERENCES questions (question_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 create unique index answers_answer_id_uindex on answers (answer_id);

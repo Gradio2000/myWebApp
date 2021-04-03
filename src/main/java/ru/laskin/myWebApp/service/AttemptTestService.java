@@ -12,7 +12,7 @@ public class AttemptTestService {
         this.attemptTestDao = attemptTestDao;
     }
 
-    public void saveAttemptTest(AttemptTest attemptTest){
-        attemptTestDao.saveAttemptTest(attemptTest);
+    public Integer saveAttemptTest(AttemptTest attemptTest){
+       return attemptTestDao.saveAttemptTest(attemptTest);
     }
 }

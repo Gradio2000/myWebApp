@@ -2,11 +2,9 @@ package ru.laskin.myWebApp;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.laskin.myWebApp.model.Answer;
-import ru.laskin.myWebApp.model.AttemptTest;
-import ru.laskin.myWebApp.model.Question;
-import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
+import ru.laskin.myWebApp.service.ResultTestService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
@@ -37,8 +35,10 @@ public class Main {
         System.out.println(timestamp);
 
         AttemptTestService attemptTestService = appCont.getBean("attemptTestService", AttemptTestService.class);
-        attemptTestService.saveAttemptTest(new AttemptTest(timestamp, 5,5));
+        System.out.println("id = " + attemptTestService.saveAttemptTest(new AttemptTest(timestamp, 1,1)));
 
+        ResultTestService resultTestService = appCont.getBean(ResultTestService.class);
+        resultTestService.saveResultTest(new ResultTest(1, 1, 1));
     }
 
     public static void print(List<Answer> list){

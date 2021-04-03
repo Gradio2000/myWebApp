@@ -22,9 +22,9 @@
     <input type="hidden" name="userId" value="${userId}">
     <c:forEach var="question" items="${questions}">
         <option>${question.questionName}</option>
+        <input name="questionId" type="hidden" value="${question.questionId}">
             <c:forEach var="answer" items="${question.answers}">
-                <option>${answer.answerName} </option>
-                <input type="checkbox" name="check">
+                <input type="checkbox" name="check" value="${answer.answerId}">${answer.answerName}<br>
             </c:forEach>
         </c:forEach>
     <input type="submit">

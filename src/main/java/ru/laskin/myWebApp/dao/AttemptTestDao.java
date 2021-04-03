@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.AttemptTest;
 
+import java.util.List;
+
 @Component
 public class AttemptTestDao {
     private JdbcTemplate jdbcTemplate;
@@ -14,10 +16,12 @@ public class AttemptTestDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void saveAttemptTest(AttemptTest attemptTest){
-        jdbcTemplate.update("INSERT INTO attempttests (date_time, test_id, user_id) VALUES (?, ?, ?)",
-                attemptTest.getDateTime(),
-                attemptTest.getTestId(),
-                attemptTest.getUserId());
+    
+    //запись в таблицу с возвратом последнего id
+    public Integer saveAttemptTest(AttemptTest attemptTest){
+        String sql = "INSERT INTO attempttests (date_time, test_id, user_id) VALUES (?, ?, ?) RETURNING attempt_id";
+        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId()};
+        List<AttemptTest> attemptTests = jdbcTemplate.query(sql, objects, attemptTestyRowMapper);
+        return attemptTests.get(0).getAttemptId();
     }
 }
