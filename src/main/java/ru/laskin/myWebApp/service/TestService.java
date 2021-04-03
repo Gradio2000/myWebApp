@@ -22,7 +22,6 @@ public class TestService {
     }
 
     public List<Question> getAllQuestions(){
-        List<Question> questionList = testDao.getAllQuestions();
         return testDao.getAllQuestions();
     }
 

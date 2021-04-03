@@ -78,11 +78,8 @@ public class UserController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("questions", testService.getAllQuestions());
         model.addAttribute("userId" , user.getUserId());
-//        int testIdPars = Integer.parseInt(testId);
         model.addAttribute("testId", testId);
 
-
-        System.out.println(testId);
         return "testProcessing";
     }
 }

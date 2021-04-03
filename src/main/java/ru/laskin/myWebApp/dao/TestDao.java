@@ -29,6 +29,7 @@ public class TestDao {
     public List<Question> getAllQuestions(){
         return jdbcTemplate.query("SELECT * FROM questions", questionRowMapper)
                 .stream()
+                .filter(question -> question.getQuestionId() != 0)
                 .map(this::setAnswersToQuestion)
                 .collect(Collectors.toList());
     }
