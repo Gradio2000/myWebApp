@@ -28,25 +28,22 @@ public class AuthProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String login = authentication.getName();
-        final User user = service.getUserBylogin(login);
+        final User user = service.getUserByLogin(login);
+
         if (user == null){
             throw new UsernameNotFoundException("Пользователь не найден");
         }
 
         String password = authentication.getCredentials().toString();
 
+
         if (!passwordEncoder.matches(password, user.getPassword())){
             throw new BadCredentialsException("Пароль не совпадает");
         }
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return user.getAdminRole();
-            }
-        });
-        return new UsernamePasswordAuthenticationToken(user, null, authorityList);
+        authorityList.add((GrantedAuthority) () -> user.getAdminRole());
+        return new UsernamePasswordAuthenticationToken(user, password, authorityList);
     }
 
     @Override

@@ -3,7 +3,6 @@ package ru.laskin.myWebApp;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.laskin.myWebApp.dao.AnswersDao;
-import ru.laskin.myWebApp.dao.AttemptTestDao;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.ResultTestService;
@@ -12,10 +11,14 @@ import ru.laskin.myWebApp.service.UserService;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
@@ -23,16 +26,12 @@ public class Main {
         System.out.println("Bean definition names: " + Arrays.toString(appCont.getBeanDefinitionNames()));
 
         UserService service = appCont.getBean("userService", UserService.class);
-        User user = service.getUserBylogin("qqq");
+        User user = service.getUserByLogin("qqq");
         System.out.println(user.getUserId() + " " + user.getLogin() + " " + user.getPassword());
 
         TestService testService = appCont.getBean("testService", TestService.class);
         List<Question> list = testService.getAllQuestions();
 
-        for (Question question : list){
-            System.out.println(question.getQuestionName());
-            print(question.getAnswers());
-        }
 
         Timestamp timestamp = new Timestamp(new Date().getTime());
         System.out.println(timestamp);
@@ -43,14 +42,14 @@ public class Main {
         ResultTestService resultTestService = appCont.getBean(ResultTestService.class);
         resultTestService.saveResultTest(new ResultTest(1, 1, 1));
 
-        AnswersDao answersDao = appCont.getBean(AnswersDao.class);
+        Date date = new Date(timestamp.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+        String localDate = localDateTime.toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        String localTime = localDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm"));
 
+        System.out.println(localDate + " " + localTime);
     }
 
-    public static void print(List<Answer> list){
-        for (Answer answer : list){
-            System.out.println(answer.getAnswerName());
-        }
-    }
-    
+
+
 }

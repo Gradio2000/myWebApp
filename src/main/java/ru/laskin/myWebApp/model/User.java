@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "users", schema = "public", catalog = "postgres")
 public class User {
@@ -12,11 +13,14 @@ public class User {
     private String email;
     private String adminRole;
     private String position;
+    @Transient
+    private String confirmPassword;
 
     public User() {
     }
 
-    public User(int userId, String name, String login, String password, String email, String adminRole, String position) {
+    public User(int userId, String name, String login, String password, String email,
+                String adminRole, String position, String confirmPassword) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -24,7 +28,18 @@ public class User {
         this.email = email;
         this.adminRole = adminRole;
         this.position = position;
+        this.confirmPassword = confirmPassword;
     }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+
 
     @Id
     @Column(name = "user_id", nullable = false)

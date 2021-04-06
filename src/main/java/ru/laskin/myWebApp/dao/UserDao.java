@@ -22,7 +22,7 @@ public class UserDao {
         return jdbcTemplate.query("SELECT * FROM users ORDER BY user_id", userRowMapper);
     }
 
-    public void saveUser(User user) throws SQLException {
+    public void saveUser(User user) {
         jdbcTemplate.update("INSERT INTO users (name, login, password, email, admin_role, position) " +
                         "VALUES (?,?,?,?,?,?)",
                 user.getName(),

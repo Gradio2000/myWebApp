@@ -28,7 +28,7 @@ public class UserService {
         }
     }
 
-    public void saveUser(User user) throws SQLException {
+    public void saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (!user.getAdminRole().equals("ADMIN")){
             user.setAdminRole("USER");
@@ -51,7 +51,11 @@ public class UserService {
         userDao.updateUser(user);
     }
 
-    public User getUserBylogin(String login) {
+    public User getUserByLogin(String login) {
        return userDao.getUserByLogin(login);
+    }
+
+    public boolean checkUserRegistration(User user){
+        return getUserByLogin(user.getLogin()) != null;
     }
 }

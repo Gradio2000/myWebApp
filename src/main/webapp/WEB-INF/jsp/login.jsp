@@ -21,7 +21,8 @@
 <h2>Войти</h2>
         <sf:form action="/login/process" method="post">
             <label>Логин</label>
-            <input type="text" name="login" size="50">
+            <input type="text" name="login" size="10">
+            <span>${error}</span>
             <br/>
             <br/>
             <label>Пароль</label>

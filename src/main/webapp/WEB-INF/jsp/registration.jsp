@@ -24,11 +24,7 @@
         <sf:hidden path="userId"/>
         <sf:hidden path="email"/>
         <sf:hidden path="adminRole"/>
-    </div>
-    <div>
-        <sf:label path="name">Ф.И.О.</sf:label>
-        <sf:input path="name"/>
-        <sf:errors path="name"/>
+        <sf:hidden path="name"/>
     </div>
 
     <div>
@@ -41,6 +37,12 @@
         <sf:label path="password">Пароль</sf:label>
         <sf:password path="password"/>
         <sf:errors path="password"/>
+    </div>
+
+    <div>
+        <sf:label path="confirmPassword">Подтвердите пароль</sf:label>
+        <sf:password path="confirmPassword"/>
+        <sf:errors path="confirmPassword"/>
     </div>
 
     <input type="submit">

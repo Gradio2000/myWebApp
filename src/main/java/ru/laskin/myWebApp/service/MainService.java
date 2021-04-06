@@ -6,6 +6,7 @@ import ru.laskin.myWebApp.model.Answer;
 import ru.laskin.myWebApp.model.AttemptTest;
 import ru.laskin.myWebApp.model.ResultTest;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.utils.TimeUtils;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -15,31 +16,25 @@ import java.util.stream.Collectors;
 @Service
 public class MainService {
 
-    private AttemptTestDao attemptTestDao;
-    private PositionDao positionDao;
     private ResultTestDao resultTestDao;
     private TestDao testDao;
     private UserDao userDao;
     private AnswersDao answersDao;
+    private TimeUtils timeUtils;
 
-    public MainService(AttemptTestDao attemptTestDao,
-                       PositionDao positionDao,
-                       ResultTestDao resultTestDao,
-                       TestDao testDao,
-                       UserDao userDao,
-                       AnswersDao answersDao) {
-
-        this.attemptTestDao = attemptTestDao;
-        this.positionDao = positionDao;
+    public MainService(ResultTestDao resultTestDao, TestDao testDao,
+                       UserDao userDao, AnswersDao answersDao, TimeUtils timeUtils) {
         this.resultTestDao = resultTestDao;
         this.testDao = testDao;
         this.userDao = userDao;
         this.answersDao = answersDao;
+        this.timeUtils = timeUtils;
     }
 
+    //Этот метод формирует список из БД для отображения результата теста для пользователя
     public List<String> getResult(int attemptTestId, Timestamp timestamp, int testId, int userId){
         User user = userDao.getUserById(userId);
-        String dateAndTime = timestamp.toString();
+        String dateAndTime = timeUtils.timestampToDate(timestamp);
         String userName = user.getName();
         String userPosition = user.getPosition();
         String testName = testDao.getTestById(testId).getTestName();

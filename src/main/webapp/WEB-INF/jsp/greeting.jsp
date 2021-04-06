@@ -22,33 +22,41 @@
 </head>
 <body>
 <h2>
-    Привет, ${authUser.name}!
+    Окончание регистрации!
 </h2>
 
 <h2>
     Заполните сведения о себе
 </h2>
-    <sf:form action="/reUpdate" method="post" modelAttribute="authUser">
+    <sf:form action="/reUpdate" method="post" modelAttribute="user">
     <div>
         <sf:hidden path="userId"/>
         <sf:hidden path="adminRole"/>
-        <sf:hidden path="name"/>
         <sf:hidden path="password"/>
         <sf:hidden path="login"/>
+    </div>
+<br/>
+
+    <div>
+        <sf:label path="name">Фамилия, имя, отчество</sf:label>
+        <sf:input path="name"/>
+        <sf:errors path="name"/>
     </div>
 <br/>
     <div>
         <sf:label path="position">Должность</sf:label>
         <sf:select path="position">
-        <c:forEach var="position" items="${posSet}">
-        <option>${position.position}</option>
-        </c:forEach>
+            <sf:option value="">Выберете должность</sf:option>
+            <c:forEach var="position" items="${posSet}">
+                <option>${position.position}</option>
+            </c:forEach>
         </sf:select>
     <div/>
 <br/>
     <div>
         <sf:label path="email">E-mail</sf:label>
         <sf:input path="email"/>
+        <sf:errors path="email"/>
     </div>
         <br/>
 

@@ -16,27 +16,46 @@
 <jsp:useBean id="test" scope="request" class="ru.laskin.myWebApp.model.Test"/>
 
 
+
 <html>
 <head>
     <title>Tests</title>
 </head>
 
-    <form action="/startTest" method="post" modelAttribute="test"/>
-            <select name="testId">
-                <c:forEach var="test" items="${allTest}">
-                    <option value="${test.testId}">${test.testName}</option>
-                </c:forEach>
-            </select>
-        <input type="submit">
-    <form/>
+<SCRIPT type="text/javascript">
 
-<%--<sf:form method="post" modelAttribute="test" action="startTest">--%>
-<%--    <sf:select path="testName">--%>
-<%--        <sf:option value="NONE" label="--- Select ---" />--%>
-<%--        <sf:options items="${allTest}" itemValue="testId" itemLabel="testName"/>--%>
-<%--    </sf:select>--%>
-<%--    <input type="submit" />--%>
-<%--</sf:form>--%>
+    <!--
+
+    function validate_form ( )
+    {
+        valid = true;
+
+        if ( document.test_form.testId.selectedIndex == 0 )
+        {
+            alert ( "Пожалуйста, выберите тест." );
+            valid = false;
+        }
+
+        return valid;
+    }
+
+    //-->
+
+</SCRIPT>
+
+<body>
+    <p>Добый день, ${user.name}</p><br>
+    <p>Здесь будут описания задачи</p>
+        <form name="test_form" action="/startTest" method="post" modelAttribute="test" onsubmit="return validate_form()"/>
+        <select name="testId">
+            <option value="">Выберете тест</option>
+            <c:forEach var="test" items="${allTest}">
+                <option value="${test.testId}">${test.testName}</option>
+            </c:forEach>
+        </select>
+        <input type="submit" name="send" value="Начать тест">
+<form/>
+</body>
 
 
 </html>
