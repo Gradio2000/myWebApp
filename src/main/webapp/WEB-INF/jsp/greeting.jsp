@@ -46,11 +46,12 @@
     <div>
         <sf:label path="position">Должность</sf:label>
         <sf:select path="position">
-            <sf:option value="">Выберете должность</sf:option>
+            <sf:option value="">Выберите должность</sf:option>
             <c:forEach var="position" items="${posSet}">
                 <option>${position.position}</option>
             </c:forEach>
         </sf:select>
+            <sf:errors path="position"/>
     <div/>
 <br/>
     <div>

@@ -1,10 +1,6 @@
 package ru.laskin.myWebApp.controllers;
 
-import jakarta.validation.Valid;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,15 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
-import ru.laskin.myWebApp.sequrity.AuthProvider;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
+import ru.laskin.myWebApp.validation.UserDopRegistrationValidator;
 import ru.laskin.myWebApp.validation.UserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -30,18 +25,17 @@ public class UserController {
     private PositionService positionService;
     private TestService testService;
     private UserValidator userValidator;
-
-    private AuthProvider authProvider;
+    private UserDopRegistrationValidator userDopRegistrationValidator;
 
 
     public UserController(UserService userService, PositionService positionService,
                           TestService testService, UserValidator userValidator,
-                          AuthProvider authProvider) {
+                          UserDopRegistrationValidator userDopRegistrationValidator) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.userValidator = userValidator;
-        this.authProvider = authProvider;
+        this.userDopRegistrationValidator = userDopRegistrationValidator;
     }
 
     @GetMapping("/greeting")
@@ -102,7 +96,17 @@ public class UserController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user, Model model){
+    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, Model model){
+        userDopRegistrationValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()){
+            model.addAttribute("user", user);
+            //получаем из бд список должностей и передаем в модель представления
+            List<Position> posSet = positionService.getAllPosition();
+            model.addAttribute("posSet", posSet);
+            return "greeting";
+        }
+
         userService.updateUser(user);
         model.addAttribute("allTest", testService.getAllTests());
         model.addAttribute("test", new Test());
