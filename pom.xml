@@ -158,9 +158,17 @@
       <version>2.0.1.Final</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>jquery</artifactId>
+      <version>3.6.0</version>
+    </dependency>
 
-
-
+    <dependency>
+      <groupId>org.webjars</groupId>
+      <artifactId>bootstrap</artifactId>
+      <version>5.0.0-beta3</version>
+    </dependency>
 
   </dependencies>
 
@@ -176,10 +184,6 @@
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -203,6 +207,7 @@
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
+              <version>3.8.0</version>
               <configuration>
                   <source>8</source>
                   <target>8</target>

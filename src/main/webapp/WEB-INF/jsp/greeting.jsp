@@ -16,61 +16,247 @@
 <jsp:useBean id="user" scope="request" class="ru.laskin.myWebApp.model.User"/>
 <jsp:useBean id="position" scope="request" class="ru.laskin.myWebApp.model.Position"/>
 
+
 <html>
-<head>
-    <title>Приветствие</title>
-</head>
+<style>
+    body {font-family: Arial, Helvetica, sans-serif;}
+    * {box-sizing: border-box}
+
+     /*Full-width input fields*/
+    input[type=text], input[type=email] {
+        width: 100%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+    }
+
+    input[type=text]:focus, input[type=email]:focus {
+        background-color: #ddd;
+        outline: none;
+    }
+
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    /* Set a style for all buttons */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        opacity: 0.9;
+    }
+
+    button:hover {
+        opacity:1;
+    }
+
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #f44336;
+    }
+
+    /* Float cancel and signup buttons and add an equal width */
+    .cancelbtn, .signupbtn {
+        float: left;
+        width: 50%;
+    }
+
+    /* Add padding to container elements */
+    .container {
+        padding: 16px;
+    }
+
+    /* Clear floats */
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    /* Change styles for cancel button and signup button on extra small screens */
+    @media screen and (max-width: 300px) {
+        .cancelbtn, .signupbtn {
+            width: 100%;
+        }
+    }
+
+
+
+
+
+    /*the container must be positioned relative:*/
+    .custom-select {
+        position: relative;
+        font-family: Arial;
+    }
+    .custom-select select {
+        display: none; /*hide original SELECT element:*/
+    }
+    .select-selected {
+        background-color: darkgrey;
+    }
+    /*style the arrow inside the select element:*/
+    .select-selected:after {
+        position: absolute;
+        content: "";
+        top: 14px;
+        right: 10px;
+        width: 0;
+        height: 0;
+        border: 6px solid transparent;
+        border-color: #fff transparent transparent transparent;
+    }
+    /*point the arrow upwards when the select box is open (active):*/
+    .select-selected.select-arrow-active:after {
+        border-color: transparent transparent #fff transparent;
+        top: 7px;
+    }
+    /*style the items (options), including the selected item:*/
+    .select-items div,.select-selected {
+        color: #ffffff;
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+        cursor: pointer;
+        user-select: none;
+    }
+    /*style items (options):*/
+    .select-items {
+        position: absolute;
+        background-color: darkgray;
+        top: 100%;
+        left: 0;
+        right: 0;
+        z-index: 99;
+    }
+    /*hide the items when the select box is closed:*/
+    .select-hide {
+        display: none;
+    }
+    .select-items div:hover, .same-as-selected {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+</style>
 <body>
-<h2>
-    Окончание регистрации!
-</h2>
 
-<h2>
-    Заполните сведения о себе
-</h2>
-    <sf:form action="/reUpdate" method="post" modelAttribute="user">
-    <div>
-        <sf:hidden path="userId"/>
-        <sf:hidden path="adminRole"/>
-        <sf:hidden path="password"/>
-        <sf:hidden path="login"/>
-    </div>
-<br/>
+<sf:form action="/reUpdate" style="border:1px solid #ccc" method="post" modelAttribute="user">
+    <sf:hidden path="userId"/>
+    <sf:hidden path="login"/>
+    <sf:hidden path="adminRole"/>
+    <sf:hidden path="password"/>
+    <div class="container">
+        <h1>Завершение регистрации</h1>
+        <p>Пожалуйста, заполните все поля для завершения регистрации в системе.</p>
+        <hr>
 
-    <div>
-        <sf:label path="name">Фамилия, имя, отчество</sf:label>
-        <sf:input path="name"/>
-        <sf:errors path="name"/>
-    </div>
-<br/>
-    <div>
-        <sf:label path="position">Должность</sf:label>
-        <sf:select path="position">
-            <sf:option value="">Выберите должность</sf:option>
-            <c:forEach var="position" items="${posSet}">
-                <option>${position.position}</option>
-            </c:forEach>
-        </sf:select>
+        <div class="custom-select" style="width:200px;">
+            <sf:select path="position">
+                <sf:option value="">Выберите должность</sf:option>
+                <c:forEach var="position" items="${posSet}">
+                    <option>${position.position}</option>
+                </c:forEach>
+            </sf:select>
             <sf:errors path="position"/>
-    <div/>
-<br/>
-    <div>
-        <sf:label path="email">E-mail</sf:label>
-        <sf:input path="email"/>
-        <sf:errors path="email"/>
+        </div>
+
+        <br/>
+        <input type="text" placeholder="Фамилия Имя Отчество" name="name" required>
+        <input type="email" placeholder="Email" name="email" required>
+
+
+        <div class="clearfix">
+            <button type="button" class="cancelbtn" onclick="document.location='/logout'">Отмена</button>
+            <button type="submit" class="signupbtn">Зарегистрироваться</button>
+        </div>
     </div>
-        <br/>
+</sf:form>
 
 
-    <br/>
-    <br/>
+<script>
+    var x, i, j, selElmnt, a, b, c;
+    /*look for any elements with the class "custom-select":*/
+    x = document.getElementsByClassName("custom-select");
+    for (i = 0; i < x.length; i++) {
+        selElmnt = x[i].getElementsByTagName("select")[0];
+        /*for each element, create a new DIV that will act as the selected item:*/
+        a = document.createElement("DIV");
+        a.setAttribute("class", "select-selected");
+        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+        x[i].appendChild(a);
+        /*for each element, create a new DIV that will contain the option list:*/
+        b = document.createElement("DIV");
+        b.setAttribute("class", "select-items select-hide");
+        for (j = 0; j < selElmnt.length; j++) {
+            /*for each option in the original select element,
+            create a new DIV that will act as an option item:*/
+            c = document.createElement("DIV");
+            c.innerHTML = selElmnt.options[j].innerHTML;
+            c.addEventListener("click", function(e) {
+                /*when an item is clicked, update the original select box,
+                and the selected item:*/
+                var y, i, k, s, h;
+                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                h = this.parentNode.previousSibling;
+                for (i = 0; i < s.length; i++) {
+                    if (s.options[i].innerHTML == this.innerHTML) {
+                        s.selectedIndex = i;
+                        h.innerHTML = this.innerHTML;
+                        y = this.parentNode.getElementsByClassName("same-as-selected");
+                        for (k = 0; k < y.length; k++) {
+                            y[k].removeAttribute("class");
+                        }
+                        this.setAttribute("class", "same-as-selected");
+                        break;
+                    }
+                }
+                h.click();
+            });
+            b.appendChild(c);
+        }
+        x[i].appendChild(b);
+        a.addEventListener("click", function(e) {
+            /*when the select box is clicked, close any other select boxes,
+            and open/close the current select box:*/
+            e.stopPropagation();
+            closeAllSelect(this);
+            this.nextSibling.classList.toggle("select-hide");
+            this.classList.toggle("select-arrow-active");
+        });
+    }
+    function closeAllSelect(elmnt) {
+        /*a function that will close all select boxes in the document,
+        except the current select box:*/
+        var x, y, i, arrNo = [];
+        x = document.getElementsByClassName("select-items");
+        y = document.getElementsByClassName("select-selected");
+        for (i = 0; i < y.length; i++) {
+            if (elmnt == y[i]) {
+                arrNo.push(i)
+            } else {
+                y[i].classList.remove("select-arrow-active");
+            }
+        }
+        for (i = 0; i < x.length; i++) {
+            if (arrNo.indexOf(i)) {
+                x[i].classList.add("select-hide");
+            }
+        }
+    }
+    /*if the user clicks anywhere outside the select box,
+    then close all select boxes:*/
+    document.addEventListener("click", closeAllSelect);
+</script>
 
-        <input type="submit">
-    </sf:form>
 
-        <br/>
-        <br/>
-        <a href="/logout">Выход</a>
 
 </body>
 </html>
