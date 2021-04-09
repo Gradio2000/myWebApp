@@ -5,14 +5,14 @@
   Time: 17:37
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"      prefix="c"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"       prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql"       prefix="sql" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions"   prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
-
 
 <%--<!DOCTYPE html>--%>
 <html>
@@ -20,6 +20,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {font-family: Arial, Helvetica, sans-serif;}
+
+        #center {text-align: center;}
 
         /* Full-width input fields */
         input[type=text], input[type=password] {
@@ -51,6 +53,12 @@
             width: auto;
             padding: 10px 18px;
             background-color: #f44336;
+        }
+
+        .registration {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #0b7dda;
         }
 
         /* Center the image and position the close button */
@@ -135,43 +143,67 @@
             }
         }
 
+        .bg-img {
+            /* The image used */
+            background-image: url("zk.jpg");
 
+            min-height: 380px;
+
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+
+        .container_jpg {
+            text-align: center;
+        }
     </style>
+
+
 </head>
-<body>
+<body bgcolor="#d3d3d3">
+    <h1 id="center">Автоматизированная система "Зачётка"</h1>
 
-<h2>Вход в систему</h2>
-
-<button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>
-<a href="/registration">Зарегистрироваться</a>
-
-<div id="id01" class="modal">
-
-    <form class="modal-content animate" action="/login/process" method="post">
-        <div class="imgcontainer">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-<%--            <img src="img_avatar2.png" alt="Avatar" class="avatar">--%>
+        <div class="container_jpg">
+            <img src="zk.jpg" alt="Фото" style="width: 70%"/>
         </div>
 
-        <div class="container">
-            <label><b>Логин</b></label>
-            <input type="text" placeholder="Введите логин" name="login" required>
-
-            <label><b>Пароль</b></label>
-            <input type="password" placeholder="Введите пароль" name="password" required>
-
-            <button type="submit">Войти</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember">Запомнить меня
-            </label>
+        <div class="center">
+            <button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>
         </div>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
-            <span class="psw">Забыли <a href="#">пароль?</a></span>
+        <div id="id01" class="modal">
+            <form class="modal-content animate" action="/login/process" method="post">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                </div>
+
+                <div class="container">
+                    <label><b>Логин</b></label>
+                    <input type="text" placeholder="Введите логин" name="login" required>
+
+                    <label><b>Пароль</b></label>
+                    <input type="password" placeholder="Введите пароль" name="password" required>
+
+                    <button type="submit">Войти</button>
+                    <label>
+                        <input type="checkbox" checked="checked" name="remember">Запомнить меня
+                    </label>
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
+                    <a href="/registration">Зарегистрироваться</a>
+                    <span class="psw">Забыли <a href="#">пароль?</a></span>
+                </div>
+            </form>
         </div>
-    </form>
-    </div>
 
     <script>
         // Get the modal
@@ -185,20 +217,17 @@
         }
     </script>
 
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
 
-</div>
-
-<script>
-    // Get the modal
-    var modal = document.getElementById('id01');
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
 </html>

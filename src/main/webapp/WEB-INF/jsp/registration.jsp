@@ -13,43 +13,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
-<%--<html>--%>
-<%--<head>--%>
-<%--    <title>Login</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<h2>Регистрация нового пользователя</h2>--%>
-<%--<sf:form action="/new_user" method="post" modelAttribute="user">--%>
-<%--    <div>--%>
-<%--        <sf:hidden path="userId"/>--%>
-<%--        <sf:hidden path="email"/>--%>
-<%--        <sf:hidden path="adminRole"/>--%>
-<%--        <sf:hidden path="name"/>--%>
-<%--    </div>--%>
-
-<%--    <div>--%>
-<%--        <sf:label path="login">Логин</sf:label>--%>
-<%--        <sf:input path="login"/>--%>
-<%--        <sf:errors path="login"/>--%>
-<%--    </div>--%>
-
-<%--    <div>--%>
-<%--        <sf:label path="password">Пароль</sf:label>--%>
-<%--        <sf:password path="password"/>--%>
-<%--        <sf:errors path="password"/>--%>
-<%--    </div>--%>
-
-<%--    <div>--%>
-<%--        <sf:label path="confirmPassword">Подтвердите пароль</sf:label>--%>
-<%--        <sf:password path="confirmPassword"/>--%>
-<%--        <sf:errors path="confirmPassword"/>--%>
-<%--    </div>--%>
-
-<%--    <input type="submit">--%>
-<%--</sf:form>--%>
-<%--</body>--%>
-<%--</html>--%>
-
 
 <html>
 <style>
@@ -124,34 +87,34 @@
     }
 </style>
 <body>
+    <sf:form action="/new_user" style="border:1px solid #ccc" method="post" modelAttribute="user">
+        <sf:hidden path="userId"/>
+        <sf:hidden path="email"/>
+        <sf:hidden path="adminRole"/>
+        <sf:hidden path="name"/>
 
-<sf:form action="/new_user" style="border:1px solid #ccc" method="post" modelAttribute="user">
-            <sf:hidden path="userId"/>
-            <sf:hidden path="email"/>
-            <sf:hidden path="adminRole"/>
-            <sf:hidden path="name"/>
-    <div class="container">
-        <h1>Регистрация</h1>
-        <p>Пожалуйста, заполните все поля для регистрации в системе.</p>
-        <hr>
+        <div class="container">
+            <h1>Регистрация</h1>
+            <p>Пожалуйста, заполните все поля для регистрации в системе.</p>
+            <hr>
 
-        <label><b>Логин</b></label>
-        <input type="text" placeholder="Придумайте логин" name="login" required>
-        <sf:errors path="login"/><br/>
+            <label><b>Логин</b></label>
+            <input type="text" placeholder="Придумайте логин" name="login" required>
+            <sf:errors path="login"/><br/>
 
-        <label><b>Пароль</b></label>
-        <input type="password" placeholder="Придумайте пароль" name="password" required>
+            <label><b>Пароль</b></label>
+            <input type="password" placeholder="Придумайте пароль" name="password" required>
 
-        <label><b>Повторите пароль</b></label>
-        <input type="password" placeholder="Введите пароль ещё раз" name="confirmPassword" required>
-        <sf:errors path="confirmPassword"/>
+            <label><b>Повторите пароль</b></label>
+            <input type="password" placeholder="Введите пароль ещё раз" name="confirmPassword" required>
+            <sf:errors path="confirmPassword"/>
 
-        <div class="clearfix">
-            <button type="button" class="cancelbtn" onclick="document.location='/login'">Отмена</button>
-            <button type="submit" class="signupbtn">Зарегистрироваться</button>
+            <div class="clearfix">
+                <button type="button" class="cancelbtn" onclick="document.location='/login'">Отмена</button>
+                <button type="submit" class="signupbtn">Зарегистрироваться</button>
+            </div>
         </div>
-    </div>
-</sf:form>
+    </sf:form>
 
 </body>
 </html>
