@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.Main;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
@@ -14,9 +15,17 @@ import ru.laskin.myWebApp.service.UserService;
 import ru.laskin.myWebApp.validation.UserDopRegistrationValidator;
 import ru.laskin.myWebApp.validation.UserValidator;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
+import java.util.Properties;
 
 @Controller
 public class UserController {
@@ -107,7 +116,14 @@ public class UserController {
             return "greeting";
         }
 
+        //регистрируем пользователя
         userService.updateUser(user);
+
+        //отправляем письмо для подтверждения адреса email
+        String message = "привет";
+        sendEmail(message);
+
+        //добавляем атрибуты для отображения на представлении
         model.addAttribute("allTest", testService.getAllTests());
         model.addAttribute("test", new Test());
         model.addAttribute("user", user);
@@ -123,5 +139,25 @@ public class UserController {
         model.addAttribute("testId", testId);
 
         return "testProcessing";
+    }
+
+    public static void sendEmail(String textMessage) {
+        final Properties properties = new Properties();
+        try {
+            properties.load(Main.class.getClassLoader().getResourceAsStream("mail.properties"));
+            Session session = Session.getDefaultInstance(properties);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(properties.getProperty("mail.smtps.user"));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress("laskin999@gmail.com"));
+            message.setSubject("Test");
+            message.setText(textMessage);
+
+            Transport tr = session.getTransport();
+            tr.connect(null, properties.getProperty("mail.password"));
+            tr.sendMessage(message, message.getAllRecipients());
+            tr.close();
+        } catch (IOException | MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }

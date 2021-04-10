@@ -15,12 +15,15 @@ public class User {
     private String position;
     @Transient
     private String confirmPassword;
+    @Column
+    private Boolean registered;
 
     public User() {
     }
 
-    public User(int userId, String name, String login, String password, String email,
-                String adminRole, String position, String confirmPassword) {
+    public User(int userId, String name, String login, String password,
+                String email, String adminRole, String position,
+                String confirmPassword, Boolean registered) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -29,6 +32,7 @@ public class User {
         this.adminRole = adminRole;
         this.position = position;
         this.confirmPassword = confirmPassword;
+        this.registered = registered;
     }
 
     public String getConfirmPassword() {
@@ -39,7 +43,13 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
+    public Boolean getRegistered() {
+        return registered;
+    }
 
+    public void setRegistered(Boolean registered) {
+        this.registered = registered;
+    }
 
     @Id
     @Column(name = "user_id", nullable = false)

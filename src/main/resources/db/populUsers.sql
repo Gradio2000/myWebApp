@@ -1,5 +1,4 @@
-
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS users CASCADE ;
 
 create table users
 (
@@ -9,14 +8,15 @@ create table users
     password VARCHAR not null,
     email VARCHAR,
     admin_role VARCHAR,
-    position VARCHAR
+    position VARCHAR,
+    registered boolean default false
 );
 
 
 create unique index users_user_id_uindex on users ("user_id");
 
-INSERT INTO users (name, login, password, email, admin_role)
-    VALUES ('Ласкин', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN');
+INSERT INTO users (name, login, password, email, admin_role, registered)
+    VALUES ('Ласкин', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', true);
 
 
 

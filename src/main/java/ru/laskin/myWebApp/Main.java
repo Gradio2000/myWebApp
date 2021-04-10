@@ -1,19 +1,18 @@
 package ru.laskin.myWebApp;
 
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.laskin.myWebApp.dao.AnswersDao;
-import ru.laskin.myWebApp.model.*;
+import ru.laskin.myWebApp.controllers.UserController;import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.ResultTestService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
+
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -48,6 +47,7 @@ public class Main {
         String localTime = localDateTime.toLocalTime().format(DateTimeFormatter.ofPattern("hh:mm"));
 
         System.out.println(localDate + " " + localTime);
+
     }
 
 
