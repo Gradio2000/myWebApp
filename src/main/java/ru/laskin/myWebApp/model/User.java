@@ -1,6 +1,7 @@
 package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 
 @Entity
@@ -17,13 +18,15 @@ public class User {
     private String confirmPassword;
     @Column
     private Boolean registered;
+    @Column
+    private UUID key;
 
     public User() {
     }
 
     public User(int userId, String name, String login, String password,
                 String email, String adminRole, String position,
-                String confirmPassword, Boolean registered) {
+                String confirmPassword, Boolean registered, UUID key) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -33,6 +36,7 @@ public class User {
         this.position = position;
         this.confirmPassword = confirmPassword;
         this.registered = registered;
+        this.key = key;
     }
 
     public String getConfirmPassword() {
@@ -49,6 +53,14 @@ public class User {
 
     public void setRegistered(Boolean registered) {
         this.registered = registered;
+    }
+
+    public UUID getKey() {
+        return key;
+    }
+
+    public void setKey(UUID key) {
+        this.key = key;
     }
 
     @Id

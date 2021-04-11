@@ -23,14 +23,15 @@ public class UserDao {
     }
 
     public void saveUser(User user) {
-        jdbcTemplate.update("INSERT INTO users (name, login, password, email, admin_role, position) " +
-                        "VALUES (?,?,?,?,?,?)",
+        jdbcTemplate.update("INSERT INTO users (name, login, password, email, admin_role, position, key) " +
+                        "VALUES (?,?,?,?,?,?,?)",
                 user.getName(),
                 user.getLogin(),
                 user.getPassword(),
                 user.getEmail(),
                 user.getAdminRole(),
-                user.getPosition()
+                user.getPosition(),
+                user.getKey()
         );
     }
 
@@ -51,12 +52,13 @@ public class UserDao {
     }
 
     public void updateUser(User user) {
-        jdbcTemplate.update("UPDATE users set name=?, login=?, email=?, admin_role=?, position=? WHERE user_id=?",
+        jdbcTemplate.update("UPDATE users set name=?, login=?, email=?, admin_role=?, position=?, registered=? WHERE user_id=?",
                 user.getName(),
                 user.getLogin(),
                 user.getEmail(),
                 user.getAdminRole(),
                 user.getPosition(),
+                user.getRegistered(),
                 user.getUserId()
         );
     }

@@ -9,14 +9,15 @@ create table users
     email VARCHAR,
     admin_role VARCHAR,
     position VARCHAR,
-    registered boolean default false
+    registered boolean default false,
+    key uuid not null
 );
 
 
 create unique index users_user_id_uindex on users ("user_id");
 
-INSERT INTO users (name, login, password, email, admin_role, registered)
-    VALUES ('Ласкин', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', true);
+INSERT INTO users (name, login, password, email, admin_role, registered, key)
+    VALUES ('Ласкин', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', true, '36e88c7b-5bd2-4075-be86-f23eccf244b9');
 
 
 

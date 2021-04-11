@@ -53,20 +53,28 @@ public class UserController {
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //если авторизованный пользователь - админ, переходим на нужную страницу
-        if (authUser.getAdminRole().equals("ADMIN")){
+        //Получаем из БД юзера, того, кто принципал (это нужно для того, что
+        //у авторизированного пользователя не будут запрлнены поля имя и т.п.
+        User user = userService.getUserById(authUser.getUserId());
+
+        //если пользователь - админ, переходим на нужную страницу
+        if (user.getAdminRole().equals("ADMIN")){
             return "/allUsers";
         }
-        //если авторизованный пользователь - USER,
+
+        //если роль пользователя - USER,
         //добавляем авторизованного пользователя в модель представления
-        model.addAttribute("user", authUser);
+        model.addAttribute("user", user);
+
         //если у пользователя есть незаполненные поля - отправляем его дальше регистрироваться
-        if (authUser.getName() == null || authUser.getName().equals("") || authUser.getEmail() == null || authUser.getEmail().equals("")) {
+        if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
             //получаем из бд список должностей и передаем в модель представления
             List<Position> posSet = positionService.getAllPosition();
             model.addAttribute("posSet", posSet);
             return "greeting";
         }
+
+
 
         model.addAttribute("allTest", testService.getAllTests());
         model.addAttribute("test", new Test());
@@ -118,21 +126,15 @@ public class UserController {
 
         //регистрируем пользователя
         userService.updateUser(user);
+        //отправляем письмо
+        UserService.sendEmail(user);
 
-        //отправляем письмо для подтверждения адреса email
-        String message = "привет";
-        sendEmail(message);
+        return "confirmEmail";
 
-        //добавляем атрибуты для отображения на представлении
-        model.addAttribute("allTest", testService.getAllTests());
-        model.addAttribute("test", new Test());
-        model.addAttribute("user", user);
-        return "testPage";
     }
 
     @PostMapping("/startTest")
-    public String testStart(@RequestParam("testId") String testId,
-                            Model model){
+    public String testStart(@RequestParam("testId") String testId, Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("questions", testService.getAllQuestions());
         model.addAttribute("userId" , user.getUserId());
@@ -141,23 +143,14 @@ public class UserController {
         return "testProcessing";
     }
 
-    public static void sendEmail(String textMessage) {
-        final Properties properties = new Properties();
-        try {
-            properties.load(Main.class.getClassLoader().getResourceAsStream("mail.properties"));
-            Session session = Session.getDefaultInstance(properties);
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(properties.getProperty("mail.smtps.user"));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress("laskin999@gmail.com"));
-            message.setSubject("Test");
-            message.setText(textMessage);
-
-            Transport tr = session.getTransport();
-            tr.connect(null, properties.getProperty("mail.password"));
-            tr.sendMessage(message, message.getAllRecipients());
-            tr.close();
-        } catch (IOException | MessagingException e) {
-            e.printStackTrace();
+    @GetMapping("/confirmEmail")
+    public String confirmEmail(@RequestParam("userId") Integer userId, @RequestParam("key") String key, Model model){
+        //проверка uuid пользователя
+        if (userService.checkUuid(userId, key)){
+            model.addAttribute("user", userService.getUserById(userId));
+            return "confirmEmailSuccess";
         }
+        else return "confirmEmailNotSuccess";
     }
+
 }

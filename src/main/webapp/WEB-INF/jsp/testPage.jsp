@@ -55,7 +55,7 @@
         </select>
         <input type="submit" name="send" value="Начать тест">
 <form/>
+<br/>
+<a href="/logout">Выход</a>
 </body>
-
-
 </html>

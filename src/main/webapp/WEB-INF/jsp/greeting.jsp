@@ -153,6 +153,7 @@
     <sf:hidden path="login"/>
     <sf:hidden path="adminRole"/>
     <sf:hidden path="password"/>
+    <sf:hidden path="key"/>
     <div class="container">
         <h1>Завершение регистрации</h1>
         <p>Пожалуйста, заполните все поля для завершения регистрации в системе.</p>
