@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.laskin.myWebApp.Main;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
@@ -15,17 +14,9 @@ import ru.laskin.myWebApp.service.UserService;
 import ru.laskin.myWebApp.validation.UserDopRegistrationValidator;
 import ru.laskin.myWebApp.validation.UserValidator;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 @Controller
 public class UserController {
@@ -145,12 +136,27 @@ public class UserController {
 
     @GetMapping("/confirmEmail")
     public String confirmEmail(@RequestParam("userId") Integer userId, @RequestParam("key") String key, Model model){
-        //проверка uuid пользователя
-        if (userService.checkUuid(userId, key)){
-            model.addAttribute("user", userService.getUserById(userId));
-            return "confirmEmailSuccess";
+
+        if (userService.getUserById(userId) == null){
+            return "confirmEmailNotSuccess";
         }
-        else return "confirmEmailNotSuccess";
+
+        User user = userService.getUserById(userId);
+        //был ли адрес подтвержден?
+        if (user.isRegistered() == null){
+            //проверка uuid пользователя
+            if (userService.checkUuid(userId, key)){
+                model.addAttribute("user", user);
+                return "confirmEmailSuccess";
+            }
+            else {
+                return "confirmEmailNotSuccess";
+            }
+        }
+        else {
+            model.addAttribute("user", user);
+            return "confirmEmailAlready";
+        }
     }
 
 }

@@ -11,6 +11,8 @@
 
     <context:property-placeholder location="classpath:app.properties"/>
 
+    <mvc:resources location="/resources/" mapping="/resources/**"/>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp"/>
@@ -26,7 +28,7 @@
         <property name="fallbackToSystemLocale" value="false"/>
     </bean>
 
-        <bean id="passwordEncoder" class=
+    <bean id="passwordEncoder" class=
                 "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

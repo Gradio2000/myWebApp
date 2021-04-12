@@ -11,8 +11,9 @@ import ru.laskin.myWebApp.model.User;
 public class MainController {
 
     @GetMapping("/login")
-    public String login(Model model){
+    public String login(@RequestParam(required = false) Boolean error, Model model){
         model.addAttribute("user", new User());
+        model.addAttribute("error", error);
         return "login";
     }
 

@@ -15,9 +15,12 @@ import ru.laskin.myWebApp.sequrity.AuthProvider;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
+    
     private AuthProvider authProvider;
+
+    public SecurityConfig(AuthProvider authProvider) {
+        this.authProvider = authProvider;
+    }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth){
@@ -35,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login", "/registration").anonymous()
                 .antMatchers("/allUsers", "/greeting").authenticated()
-                //редиректим залогированного пользователя на нужную страницу
+                //редиректим залогиненного пользователя на нужную страницу
                 // при его попытке попасть на страницу, к которой доступ запрещен
                 .and().exceptionHandling().accessDeniedPage("/greeting")
                 .and();

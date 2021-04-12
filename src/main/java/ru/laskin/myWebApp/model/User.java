@@ -47,7 +47,7 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
-    public Boolean getRegistered() {
+    public Boolean isRegistered() {
         return registered;
     }
 

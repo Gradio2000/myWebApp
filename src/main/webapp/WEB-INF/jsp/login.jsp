@@ -143,36 +143,18 @@
             }
         }
 
-        .bg-img {
-            /* The image used */
-            background-image: url("zk.jpg");
-
-            min-height: 380px;
-
-            /* Center and scale the image nicely */
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
         .center {
             display: flex;
             justify-content: center;
         }
 
-        .container_jpg {
-            text-align: center;
-        }
     </style>
 
 
 </head>
+
 <body bgcolor="#d3d3d3">
     <h1 id="center">Автоматизированная система "Зачётка"</h1>
-
-        <div class="container_jpg">
-            <img src="zk.jpg" alt="Фото" style="width: 70%"/>
-        </div>
 
         <div class="center">
             <button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>
@@ -226,6 +208,10 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+        }
+
+        if(${error}){
+        alert('Ошибка логина или пароля. Повторите попытку!')
         }
     </script>
 

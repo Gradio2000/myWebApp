@@ -58,7 +58,7 @@ public class UserDao {
                 user.getEmail(),
                 user.getAdminRole(),
                 user.getPosition(),
-                user.getRegistered(),
+                user.isRegistered(),
                 user.getUserId()
         );
     }
