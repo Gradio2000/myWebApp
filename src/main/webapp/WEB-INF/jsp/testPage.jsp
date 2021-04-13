@@ -22,6 +22,7 @@
     <title>Tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -65,6 +66,7 @@
             margin-left: 200px; /* Same as the width of the sidenav */
             font-size: 20px; /* Increased text to enable scrolling */
             padding: 0px 10px;
+            color: #4a4a4a;
         }
 
         /* Add an active class to the active dropdown button */
@@ -131,14 +133,53 @@
 
         .show {display: block;}
 
+
+        .card {
+            box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+            background-color: antiquewhite;
+
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 14px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="sidenav">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#clients">Clients</a>
+        <a href="#eko">Эмиссионная и кассовая работа</a>
+        <a href="#ib">Информационная безопасность</a>
+        <a href="#od">Операционная деятельность</a>
         <a href="#contact">Contact</a>
         <button class="dropdown-btn">Dropdown
             <i class="fa fa-caret-down"></i>
@@ -152,18 +193,21 @@
     </div>
 
     <div class="main">
-        <h2>Добый день, ${user.name}!</h2>
+        <h2>Добрый день, ${user.name}!</h2>
         <p>На этой странице Вы можете выбрать тест.</p>
-        <form name="test_form" action="/startTest" method="post" modelAttribute="test" onsubmit="return validate_form()"/>
-        <select name="testId">
-            <option value="">Выберете тест</option>
+
+        <form name="test_form" action="/startTest" method="get" modelAttribute="test" onsubmit="return validate_form()">
             <c:forEach var="test" items="${allTest}">
-                <option value="${test.testId}">${test.testName}</option>
+                <div class="card">
+                        <%--        <img src="resources/ko.jpg" alt="kassa" style="width:100%">--%>
+                    <p>${test.testName}</p>
+                    <p><button name="testId" value="${test.testId}" type="submit">Начать тест</button></p>
+                </div>
             </c:forEach>
-        </select>
-        <input type="submit" name="send" value="Начать тест">
-        <form/>
+        </form>
+
     </div>
+
 
 
 <script>
