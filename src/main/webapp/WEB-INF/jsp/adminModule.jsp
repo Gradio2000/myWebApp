@@ -1,10 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
-  Date: 29.03.2021
-  Time: 21:45
+  Date: 14.04.2021
+  Time: 21:58
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"      prefix="c"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"       prefix="fmt" %>
@@ -13,25 +14,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
-<jsp:useBean id="test" scope="request" class="ru.laskin.myWebApp.model.Test"/>
-<jsp:useBean id="groupTest" scope="request" class="ru.laskin.myWebApp.model.GroupTest"/>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
 <html style="font-size: 16px;">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Все тесты">
+    <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="page_type" content="np-template-header-footer-from-plugin">
-    <title>Главная</title>
-    <link rel="stylesheet" href="resources/Site1/nicepage.css" media="screen">
-    <link rel="stylesheet" href="resources/Site1/Главная.css" media="screen">
-    <script class="u-script" type="text/javascript" src="resources/Site1/jquery.js" defer=""></script>
-    <script class="u-script" type="text/javascript" src="resources/Site1/nicepage.js" defer=""></script>
+    <title>Модуль администратора</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/Site2/nicepage.css" media="screen">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/Site2/Главная.css" media="screen">
+    <script class="u-script" type="text/javascript" src="${pageContext.request.contextPath}/resources/Site2/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="${pageContext.request.contextPath}/resources/Site2/nicepage.js" defer=""></script>
     <meta name="generator" content="Nicepage 3.12.0, nicepage.com">
     <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
-
 
 
     <script type="application/ld+json">{
@@ -39,7 +38,7 @@
         "@type": "Organization",
         "name": "",
         "url": "index.html",
-        "logo": "images/default-logo.png"
+        "logo": "images/horizontal_on_white_by_logaster.png"
     }</script>
     <meta property="og:title" content="Главная">
     <meta property="og:type" content="website">
@@ -47,9 +46,9 @@
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
 </head>
-<body class="u-body"><header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1032"><div class="u-clearfix u-sheet u-sheet-1">
-    <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="80" data-image-height="40">
-        <img src="images/default-logo.png" class="u-logo-image u-logo-image-1" data-image-width="64">
+<body data-home-page="Главная.html" data-home-page-title="Главная" class="u-body"><header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1274"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150">
+        <img src="${pageContext.request.contextPath}/resources/Site2/images/horizontal_on_white_by_logaster.png" class="u-logo-image u-logo-image-1" data-image-width="97">
     </a>
     <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -62,7 +61,7 @@
         </div>
         <div class="u-custom-menu u-nav-container">
             <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
-            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Личный-кабинет.html" style="padding: 10px 20px;">Личный кабинет</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="О-нас.html" style="padding: 10px 20px;">О нас</a>
             </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/logout" style="padding: 10px 20px;">Выход</a>
             </li></ul>
         </div>
@@ -71,7 +70,7 @@
                 <div class="u-sidenav-overflow">
                     <div class="u-menu-close"></div>
                     <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Главная.html" style="padding: 10px 20px;">Главная</a>
-                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Личный-кабинет.html" style="padding: 10px 20px;">Личный кабинет</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="О-нас.html" style="padding: 10px 20px;">О нас</a>
                     </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/logout" style="padding: 10px 20px;">Выход</a>
                     </li></ul>
                 </div>
@@ -80,43 +79,24 @@
         </div>
     </nav>
 </div></header>
-<section class="u-clearfix u-grey-10 u-section-1" id="sec-6192">
+<section class="u-clearfix u-section-1" id="sec-8947">
     <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-align-center u-container-style u-group u-group-1">
-            <div class="u-container-layout u-valign-middle u-container-layout-1">
-                <h2 class="u-text u-text-1">Все тесты</h2>
-                <p class="u-text u-text-2">На этой странице Вы можете выбрать тест</p>
+        <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/allUsers">
+            <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
+                <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
             </div>
         </div>
-        <form name="test_form" action="/startTest" method="get" modelAttribute="test" onsubmit="return validate_form()">
-            <c:forEach var="test" items="${allTest}">
-                <div class="u-clearfix u-expanded-width u-gutter-54 u-layout-wrap u-layout-wrap-1">
-                    <div class="u-gutter-0 u-layout">
-                        <div class="u-layout-row">
-                            <div class="u-size-60">
-                                <div class="u-layout-col">
-                                    <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-60 u-layout-cell-1">
-                                        <div class="u-container-layout u-container-layout-2">
-                                            <p class="u-text u-text-3">${test.testName}</p>
-                                            <p><button name="testId" value="${test.testId}" type="submit" class="u-btn u-button-style u-btn-1">Начать тест</button></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
-        </form>
+        <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-2" data-href="/allTests">
+            <div class="u-container-layout u-valign-middle u-container-layout-2">
+                <h4 class="u-text u-text-2">ТЕСТЫ</h4>
+            </div>
+        </div>
     </div>
 </section>
-<style class="u-overlap-style">.u-overlap:not(.u-sticky-scroll) .u-header {
-}</style>
 
 
-
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-2ad8"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-    <p class="u-small-text u-text u-text-variant u-text-1">Система автоматизированного тестирования сотрудников</p>
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3569"><div class="u-clearfix u-sheet u-sheet-1">
+    <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
 </div></footer>
 <section class="u-backlink u-clearfix u-grey-80">
     <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
@@ -125,8 +105,8 @@
     <p class="u-text">
         <span>created with</span>
     </p>
-    <a class="u-link" href="https://nicepage.com/" target="_blank">
-        <span>Website Builder Software</span>
+    <a class="u-link" href="https://nicepage.com/website-builder" target="_blank">
+        <span>Website Builder</span>
     </a>.
 </section>
 </body>

@@ -53,7 +53,7 @@ public class UserController {
 
         //если пользователь - админ, переходим на нужную страницу
         if (user.getAdminRole().equals("ADMIN")){
-            return "/allUsers";
+            return "adminModule";
         }
 
         //если роль пользователя - USER,
