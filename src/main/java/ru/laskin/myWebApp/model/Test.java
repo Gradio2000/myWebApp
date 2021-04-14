@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Test {
     private int testId;
     private String testName;
+    private GroupTest groupTestByGroupId;
 
     public Test() {
     }
@@ -54,5 +55,15 @@ public class Test {
         int result = testId;
         result = 31 * result + (testName != null ? testName.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "group_id", referencedColumnName = "id_groupTest", nullable = false)
+    public GroupTest getGroupTestByGroupId() {
+        return groupTestByGroupId;
+    }
+
+    public void setGroupTestByGroupId(GroupTest groupTestByGroupId) {
+        this.groupTestByGroupId = groupTestByGroupId;
     }
 }

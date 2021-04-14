@@ -14,219 +14,123 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
 <jsp:useBean id="test" scope="request" class="ru.laskin.myWebApp.model.Test"/>
+<jsp:useBean id="groupTest" scope="request" class="ru.laskin.myWebApp.model.GroupTest"/>
 
 
-
-<html>
+<!DOCTYPE html>
+<html style="font-size: 16px;">
 <head>
-    <title>Tests</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        body {
-            font-family: "Lato", sans-serif;
-        }
-
-        /* Fixed sidenav, full height */
-        .sidenav {
-            height: 100%;
-            width: 200px;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            padding-top: 20px;
-        }
-
-        /* Style the sidenav links and the dropdown button */
-        .sidenav a, .dropdown-btn {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 20px;
-            color: #818181;
-            display: block;
-            border: none;
-            background: none;
-            width: 100%;
-            text-align: left;
-            cursor: pointer;
-            outline: none;
-        }
-
-        /* On mouse-over */
-        .sidenav a:hover, .dropdown-btn:hover {
-            color: #f1f1f1;
-        }
-
-        /* Main content */
-        .main {
-            margin-left: 200px; /* Same as the width of the sidenav */
-            font-size: 20px; /* Increased text to enable scrolling */
-            padding: 0px 10px;
-            color: #4a4a4a;
-        }
-
-        /* Add an active class to the active dropdown button */
-        .active {
-            background-color: green;
-            color: white;
-        }
-
-        /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-        .dropdown-container {
-            display: none;
-            background-color: #262626;
-            padding-left: 8px;
-        }
-
-        /* Optional: Style the caret down icon */
-        .fa-caret-down {
-            float: right;
-            padding-right: 8px;
-        }
-
-        /* Some media queries for responsiveness */
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
-        }
-
-        .dropbtn {
-            background-color: #3498DB;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .dropbtn:hover, .dropbtn:focus {
-            background-color: #2980B9;
-        }
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            overflow: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown a:hover {background-color: #ddd;}
-
-        .show {display: block;}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Все тесты">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Главная</title>
+    <link rel="stylesheet" href="resources/1/nicepage.css" media="screen">
+    <link rel="stylesheet" href="resources/1/Главная.css" media="screen">
+    <script class="u-script" type="text/javascript" src="resources/1/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="resources/1/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.12.0, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
 
 
-        .card {
-            box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
-            max-width: 100%;
-            margin: auto;
-            text-align: center;
-            font-family: arial;
-            background-color: antiquewhite;
 
-        }
-
-        .title {
-            color: grey;
-            font-size: 18px;
-        }
-
-        button {
-            border: none;
-            outline: 0;
-            display: inline-block;
-            padding: 14px;
-            color: white;
-            background-color: #000;
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-        }
-
-        a {
-            text-decoration: none;
-            font-size: 22px;
-            color: black;
-        }
-
-        button:hover, a:hover {
-            opacity: 0.7;
-        }
-
-    </style>
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "url": "index.html",
+        "logo": "images/default-logo.png"
+    }</script>
+    <meta property="og:title" content="Главная">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
 </head>
-
-<body>
-    <div class="sidenav">
-        <a href="#eko">Эмиссионная и кассовая работа</a>
-        <a href="#ib">Информационная безопасность</a>
-        <a href="#od">Операционная деятельность</a>
-        <a href="#contact">Contact</a>
-        <button class="dropdown-btn">Dropdown
-            <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="dropdown-container">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+<body data-home-page="Главная.html" data-home-page-title="Главная" class="u-body"><header class="u-clearfix u-header u-sticky u-header" id="sec-1032"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <a href="https://nicepage.com" class="u-image u-logo u-image-1">
+        <img src="images/default-logo.png" class="u-logo-image u-logo-image-1">
+    </a>
+    <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+                </symbol>
+                </defs></svg>
+            </a>
         </div>
-        <a href="/logout">Выход</a>
-    </div>
-
-    <div class="main">
-        <h2>Добрый день, ${user.name}!</h2>
-        <p>На этой странице Вы можете выбрать тест.</p>
-
+        <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Личный-кабинет.html" style="padding: 10px 20px;">Личный кабинет</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/logout" style="padding: 10px 20px;">Выход</a>
+            </li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-sidenav-overflow">
+                    <div class="u-menu-close"></div>
+                    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Личный-кабинет.html" style="padding: 10px 20px;">Личный кабинет</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/logout" style="padding: 10px 20px;">Выход</a>
+                    </li></ul>
+                </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+    </nav>
+</div></header>
+<section class="u-clearfix u-section-1" id="sec-6192">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-align-center u-container-style u-group u-group-1">
+            <div class="u-container-layout u-valign-middle u-container-layout-1">
+                <h2 class="u-text u-text-1">Все тесты</h2>
+                <p class="u-text u-text-2">На этой странице Вы можете выбрать тест</p>
+            </div>
+        </div>
         <form name="test_form" action="/startTest" method="get" modelAttribute="test" onsubmit="return validate_form()">
             <c:forEach var="test" items="${allTest}">
-                <div class="card">
-                        <%--        <img src="resources/ko.jpg" alt="kassa" style="width:100%">--%>
-                    <p>${test.testName}</p>
-                    <p><button name="testId" value="${test.testId}" type="submit">Начать тест</button></p>
+
+                <div class="u-clearfix u-expanded-width u-gutter-54 u-layout-wrap u-layout-wrap-1">
+                    <div class="u-gutter-0 u-layout">
+                        <div class="u-layout-row">
+                            <div class="u-size-60">
+                                <div class="u-layout-col">
+                                    <div class="u-align-left u-container-style u-layout-cell u-left-cell u-size-60 u-layout-cell-1">
+                                        <div class="u-container-layout u-container-layout-2">
+                                            <p class="u-text u-text-3">${test.testName}</p>
+<%--                                            <a href="https://nicepage.com/ru/shablony-veb-saytov" class="u-btn u-button-style u-btn-1">Начать тест</a>--%>
+                                            <p><button name="testId" value="${test.testId}" type="submit" class="u-btn u-button-style u-btn-1">Начать тест</button></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </c:forEach>
         </form>
-
     </div>
+</section>
+<style class="u-overlap-style">.u-overlap:not(.u-sticky-scroll) .u-header {
+}</style>
 
 
 
-<script>
-    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-    var dropdown = document.getElementsByClassName("dropdown-btn");
-    var i;
-
-    for (i = 0; i < dropdown.length; i++) {
-        dropdown[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var dropdownContent = this.nextElementSibling;
-            if (dropdownContent.style.display === "block") {
-                dropdownContent.style.display = "none";
-            } else {
-                dropdownContent.style.display = "block";
-            }
-        });
-    }
-</script>
-
+<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-2ad8"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+    <p class="u-small-text u-text u-text-variant u-text-1">Система автоматизированного тестирования сотрудников</p>
+</div></footer>
+<section class="u-backlink u-clearfix u-grey-80">
+    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+    </a>
+    <p class="u-text">
+        <span>created with</span>
+    </p>
+    <a class="u-link" href="https://nicepage.com/" target="_blank">
+        <span>Website Builder Software</span>
+    </a>.
+</section>
 </body>
 </html>

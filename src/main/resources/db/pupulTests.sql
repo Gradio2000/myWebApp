@@ -1,17 +1,19 @@
 DROP TABLE IF EXISTS tests CASCADE ;
 
-create table tests
+CREATE TABLE tests
 (
     test_id serial not null primary key,
-    test_name VARCHAR not null
+    test_name VARCHAR not null,
+    group_id int not null constraint tests_group_test_id_grouptest_fk
+        references group_test
 );
 
-create unique index tests_test_id_uindex
+CREATE UNIQUE INDEX tests_test_id_uindex
     on tests ("test_id");
 
-INSERT INTO tests (test_name) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
+INSERT INTO tests (test_name, group_id) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
                                       'ведения эмиссионных и кассовых операций, хранения и перевозки ' ||
                                       'банкнот и монеты резервных фондов, наличных денег и ценностей, ' ||
-                                      'обслуживания банкоматов');
-INSERT INTO tests (test_name) VALUES ('Для ревизии');
-INSERT INTO tests (test_name) VALUES ('Совместный');
+                                      'обслуживания банкоматов', 1);
+INSERT INTO tests (test_name, group_id) VALUES ('Для ревизии', 2);
+INSERT INTO tests (test_name, group_id) VALUES ('Совместный', 3);
