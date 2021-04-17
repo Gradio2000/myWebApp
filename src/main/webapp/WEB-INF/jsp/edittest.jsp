@@ -24,10 +24,10 @@
     <sf:hidden path="testId"/>
     <label><br>Название теста<br></label>
     <sf:input path="testName" size="200"/>
-        <c:forEach var="ques" items="${questions}">
+        <c:forEach var="ques" items="${test.questions}">
             <label><br>Вопрос id = ${ques.questionId}<br></label>
-            <input name="map" value="${ques.questionName}"><br>
-            <c:forEach var="answer" items="${ques.answerList}">
+            <input value="${ques.questionName}"><br>
+            <c:forEach var="answer" items="${ques.answers}">
                 <input value="${answer.answerName}"><br>
             </c:forEach>
         </c:forEach>

@@ -17,17 +17,20 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
 
         TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
-        List<Test> allTests = testHiberDao.getAllTests();
-        for (Test test : allTests){
-            System.out.println(test.getTestName());
-            List<Question> questions = test.getQuestions();
-            for (Question question : questions){
-                System.out.println(question.getQuestionName());
-                List<Answer> answers = question.getAnswers();
-                for (Answer answer : answers){
-                    System.out.println(answer.getAnswerName());
-                }
-            }
-        }
+//        List<Test> allTests = testHiberDao.getAllTests();
+//        for (Test test : allTests){
+//            System.out.println(test.getTestName());
+//            List<Question> questions = test.getQuestions();
+//            for (Question question : questions){
+//                System.out.println(question.getQuestionName());
+//                List<Answer> answers = question.getAnswers();
+//                for (Answer answer : answers){
+//                    System.out.println(answer.getAnswerName());
+//                }
+//            }
+//        }
+
+        Test test = testHiberDao.getTestById(1);
+        System.out.println(test.getTestName());
     }
 }

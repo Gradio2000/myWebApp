@@ -7,9 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
+import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +24,12 @@ public class AdminController {
 
     private UserService service;
     private PositionService positionService;
+    private TestService testService;
 
-    public AdminController(UserService service, PositionService positionService) {
+    public AdminController(UserService service, PositionService positionService, TestService testService) {
         this.service = service;
         this.positionService = positionService;
+        this.testService = testService;
     }
 
     @GetMapping("/allUsers")
@@ -67,8 +71,14 @@ public class AdminController {
     }
 
     @GetMapping("/allTests")
-    public String showAllTests(){
+    public String showAllTests(Model model){
+        model.addAttribute("alltests", testService.getAllTests());
         return "list_tests";
     }
 
+    @GetMapping("/tests/update")
+    public String updateTest(@RequestParam Integer id, Model model){
+        model.addAttribute("test", testService.getTestById(id));
+        return "edittest";
+    }
 }
