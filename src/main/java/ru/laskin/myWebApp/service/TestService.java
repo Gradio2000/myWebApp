@@ -37,5 +37,13 @@ public class TestService {
         return testDao.getQuestionById(id);
     }
 
+    public void updateTest(Test test){
+        testHiberDao.updateTest(test);
+    }
+
+    public void saveTest(Test test){
+        testHiberDao.saveTest(test);
+    }
+
 
 }

@@ -1,5 +1,8 @@
 package ru.laskin.myWebApp.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,8 +14,8 @@ public class Question {
     private Test test;
     private List<Answer> answers;
 
-    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL,
-    fetch = FetchType.LAZY, mappedBy = "question", orphanRemoval = true)
+    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL, mappedBy = "question")
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<Answer> getAnswers() {
         return answers;
     }

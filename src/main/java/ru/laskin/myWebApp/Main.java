@@ -10,6 +10,7 @@ import ru.laskin.myWebApp.model.Test;
 
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -30,7 +31,14 @@ public class Main {
 //            }
 //        }
 
-        Test test = testHiberDao.getTestById(1);
+        Test test = testHiberDao.getTestById(2);
+        List<Question> questions = test.getQuestions();
+        Question question = questions.get(0);
+        System.out.println(question.getQuestionName());
+        question.setQuestionName("Новый вопрос");
+        questions.add(question);
         System.out.println(test.getTestName());
+        test.setTestName("xxx");
+        testHiberDao.updateTest(test);
     }
 }

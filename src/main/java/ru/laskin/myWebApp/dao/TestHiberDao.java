@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
@@ -21,6 +22,22 @@ public class TestHiberDao {
         Session session = SessionFactoryUtil.getSession();
         Query query = session.createQuery("FROM tests WHERE test_id = :id");
         query.setParameter("id", id);
-        return (Test) query.list().stream().findAny().orElse(null);
+        Test test = (Test) query.list().stream().findAny().orElse(null);
+        session.close();
+        return test;
+    }
+
+    public void updateTest(Test test){
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        session.saveOrUpdate(test);
+        session.getTransaction().commit();
+    }
+
+    public void saveTest(Test test){
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        session.save(test);
+        session.getTransaction().commit();
     }
 }

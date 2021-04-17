@@ -11,7 +11,7 @@ public class Test {
     private int groupId;
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "test", targetEntity = Question.class, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "test", targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     public List<Question> getQuestions() {
         return questions;
     }

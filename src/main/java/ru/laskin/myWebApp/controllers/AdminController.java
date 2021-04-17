@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.Position;
+import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
@@ -77,8 +78,14 @@ public class AdminController {
     }
 
     @GetMapping("/tests/update")
-    public String updateTest(@RequestParam Integer id, Model model){
+    public String showEditTestForm(@RequestParam Integer id, Model model){
         model.addAttribute("test", testService.getTestById(id));
         return "edittest";
+    }
+
+    @PostMapping("/updateTest")
+    public String updateTest(@ModelAttribute Test test){
+        testService.updateTest(test);
+        return "redirect:/allTests";
     }
 }
