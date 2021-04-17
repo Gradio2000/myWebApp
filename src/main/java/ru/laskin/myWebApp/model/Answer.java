@@ -2,17 +2,16 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "answers")
 @Table(name = "answers", schema = "public", catalog = "postgres")
 public class Answer {
     private int answerId;
     private String answerName;
     private boolean isRight;
-
-    @ManyToOne
-    @JoinColumn(name = "question_id")
     private Question question;
 
+    @ManyToOne(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "question_id")
     public Question getQuestion() {
         return question;
     }
@@ -59,6 +58,7 @@ public class Answer {
         Answer answer = (Answer) o;
 
         if (answerId != answer.answerId) return false;
+        if (isRight != answer.isRight) return false;
         if (answerName != null ? !answerName.equals(answer.answerName) : answer.answerName != null) return false;
 
         return true;
@@ -68,7 +68,7 @@ public class Answer {
     public int hashCode() {
         int result = answerId;
         result = 31 * result + (answerName != null ? answerName.hashCode() : 0);
+        result = 31 * result + (isRight ? 1 : 0);
         return result;
     }
-
 }

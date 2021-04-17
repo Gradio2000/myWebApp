@@ -2,24 +2,33 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
-
-@Entity
+@Entity(name = "questions")
 @Table(name = "questions", schema = "public", catalog = "postgres")
 public class Question {
     private int questionId;
     private String questionName;
-
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    private Test test;
     private List<Answer> answers;
 
+    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL,
+    fetch = FetchType.LAZY, mappedBy = "question", orphanRemoval = true)
     public List<Answer> getAnswers() {
         return answers;
     }
 
     public void setAnswers(List<Answer> answers) {
         this.answers = answers;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Test.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "test_id")
+    public Test getTest() {
+        return test;
+    }
+
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     @Id
@@ -50,7 +59,10 @@ public class Question {
         Question question = (Question) o;
 
         if (questionId != question.questionId) return false;
-        return Objects.equals(questionName, question.questionName);
+        if (questionName != null ? !questionName.equals(question.questionName) : question.questionName != null)
+            return false;
+
+        return true;
     }
 
     @Override

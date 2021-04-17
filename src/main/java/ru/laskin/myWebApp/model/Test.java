@@ -1,20 +1,23 @@
 package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Entity
+@Entity(name = "tests")
 @Table(name = "tests", schema = "public", catalog = "postgres")
 public class Test {
     private int testId;
     private String testName;
-    private GroupTest groupTestByGroupId;
+    private int groupId;
+    private List<Question> questions;
 
-    public Test() {
+    @OneToMany(mappedBy = "test", targetEntity = Question.class, fetch = FetchType.LAZY, orphanRemoval = true)
+    public List<Question> getQuestions() {
+        return questions;
     }
 
-    public Test(int testId, String testName) {
-        this.testId = testId;
-        this.testName = testName;
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Id
@@ -37,6 +40,16 @@ public class Test {
         this.testName = testName;
     }
 
+    @Basic
+    @Column(name = "group_id", nullable = false)
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,6 +58,7 @@ public class Test {
         Test test = (Test) o;
 
         if (testId != test.testId) return false;
+        if (groupId != test.groupId) return false;
         if (testName != null ? !testName.equals(test.testName) : test.testName != null) return false;
 
         return true;
@@ -54,16 +68,7 @@ public class Test {
     public int hashCode() {
         int result = testId;
         result = 31 * result + (testName != null ? testName.hashCode() : 0);
+        result = 31 * result + groupId;
         return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "group_id", referencedColumnName = "id_groupTest", nullable = false)
-    public GroupTest getGroupTestByGroupId() {
-        return groupTestByGroupId;
-    }
-
-    public void setGroupTestByGroupId(GroupTest groupTestByGroupId) {
-        this.groupTestByGroupId = groupTestByGroupId;
     }
 }

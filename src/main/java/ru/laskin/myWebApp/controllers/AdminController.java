@@ -66,4 +66,9 @@ public class AdminController {
         return "adminModule";
     }
 
+    @GetMapping("/allTests")
+    public String showAllTests(){
+        return "list_tests";
+    }
+
 }
