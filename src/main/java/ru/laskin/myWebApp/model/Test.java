@@ -22,7 +22,7 @@ public class Test {
 
     @OneToMany(
             targetEntity = Question.class,
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "test_id")
     public List<Question> getQuestions() {

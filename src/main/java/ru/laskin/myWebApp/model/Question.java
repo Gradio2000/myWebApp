@@ -23,7 +23,7 @@ public class Question {
 
 
     @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL)
-    @LazyCollection(LazyCollectionOption.TRUE)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "question_id")
     public List<Answer> getAnswers() {
         return answers;
@@ -33,7 +33,7 @@ public class Question {
         this.answers = answers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Test.class)
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Test.class)
     @JoinColumn(name = "test_id", referencedColumnName = "test_id")
     public Test getTest() {
         return test;

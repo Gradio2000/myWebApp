@@ -18,7 +18,7 @@ public class Answer {
         this.isRight = isRight;
     }
 
-    @ManyToOne(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     public Question getQuestion() {
         return question;
