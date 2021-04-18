@@ -14,8 +14,16 @@ public class Question {
     private Test test;
     private List<Answer> answers;
 
+    public Question() {
+    }
+
+    public Question(String questionName) {
+        this.questionName = questionName;
+    }
+
+
     @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL, mappedBy = "question")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.TRUE)
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -24,8 +32,8 @@ public class Question {
         this.answers = answers;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Test.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "test_id")
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Test.class)
+    @JoinColumn(name = "test_id", referencedColumnName = "test_id")
     public Test getTest() {
         return test;
     }
@@ -36,6 +44,8 @@ public class Question {
 
     @Id
     @Column(name = "question_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "questions_question_id_seq")
     public int getQuestionId() {
         return questionId;
     }

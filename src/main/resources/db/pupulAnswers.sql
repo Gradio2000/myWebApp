@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS answers;
+DROP TABLE IF EXISTS answers CASCADE ;
 
 create table answers
 

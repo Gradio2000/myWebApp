@@ -8,6 +8,9 @@
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="user"/>
         <property name="password"/>
+        <property name="hibernate.current_session_context_class">
+            thread
+        </property>
 
         <mapping class="ru.laskin.myWebApp.model.Test"/>
         <mapping class="ru.laskin.myWebApp.model.Question"/>

@@ -11,7 +11,20 @@ public class Test {
     private int groupId;
     private List<Question> questions;
 
-    @OneToMany(mappedBy = "test", targetEntity = Question.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public Test(String testName, int groupId, List<Question> questions) {
+        this.testName = testName;
+        this.groupId = groupId;
+        this.questions = questions;
+    }
+
+    public Test() {
+    }
+
+    @OneToMany(
+            targetEntity = Question.class,
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "test_id")
     public List<Question> getQuestions() {
         return questions;
     }
@@ -22,6 +35,8 @@ public class Test {
 
     @Id
     @Column(name = "test_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "tests_test_id_seq")
     public int getTestId() {
         return testId;
     }

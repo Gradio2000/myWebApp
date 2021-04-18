@@ -18,27 +18,31 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
 
         TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
-//        List<Test> allTests = testHiberDao.getAllTests();
-//        for (Test test : allTests){
-//            System.out.println(test.getTestName());
-//            List<Question> questions = test.getQuestions();
-//            for (Question question : questions){
-//                System.out.println(question.getQuestionName());
-//                List<Answer> answers = question.getAnswers();
-//                for (Answer answer : answers){
-//                    System.out.println(answer.getAnswerName());
-//                }
-//            }
-//        }
 
-        Test test = testHiberDao.getTestById(2);
-        List<Question> questions = test.getQuestions();
-        Question question = questions.get(0);
-        System.out.println(question.getQuestionName());
-        question.setQuestionName("Новый вопрос");
+        List<Question> questions = new ArrayList<>();
+        Question question = new Question("как дела?");
         questions.add(question);
-        System.out.println(test.getTestName());
-        test.setTestName("xxx");
-        testHiberDao.updateTest(test);
+        Test test = new Test( "asd", 1, questions);
+        testHiberDao.saveTest(test);
+        printTest();
+
+    }
+
+    public static void printTest(){
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
+        List<Test> tests = testHiberDao.getAllTests();
+        for (Test test : tests){
+            System.out.println(test.getTestName());
+            List<Question> questions = test.getQuestions();
+            for (Question question : questions){
+                System.out.println("\t" + question.getQuestionName());
+                List<Answer> answers = question.getAnswers();
+                for (Answer answer : answers){
+                    System.out.println("\t\t" + answer.getAnswerName());
+                }
+            }
+        }
     }
 }

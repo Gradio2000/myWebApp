@@ -5,7 +5,7 @@ CREATE TABLE tests
     test_id serial not null primary key,
     test_name VARCHAR not null,
     group_id int not null constraint tests_group_test_id_grouptest_fk
-        references group_test
+        references group_test on update cascade on delete cascade
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex
