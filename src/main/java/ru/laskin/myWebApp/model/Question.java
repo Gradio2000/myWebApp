@@ -22,8 +22,9 @@ public class Question {
     }
 
 
-    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL, mappedBy = "question")
+    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.TRUE)
+    @JoinColumn(name = "question_id")
     public List<Answer> getAnswers() {
         return answers;
     }

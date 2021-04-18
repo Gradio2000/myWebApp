@@ -10,6 +10,14 @@ public class Answer {
     private boolean isRight;
     private Question question;
 
+    public Answer() {
+    }
+
+    public Answer(String answerName, boolean isRight) {
+        this.answerName = answerName;
+        this.isRight = isRight;
+    }
+
     @ManyToOne(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     public Question getQuestion() {
@@ -22,6 +30,8 @@ public class Answer {
 
     @Id
     @Column(name = "answer_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "answers_answer_id_seq")
     public int getAnswerId() {
         return answerId;
     }

@@ -21,7 +21,12 @@ public class Main {
 
         List<Question> questions = new ArrayList<>();
         Question question = new Question("как дела?");
+        Answer answer = new Answer("отлично", true);
+        List<Answer> answers = new ArrayList<>();
+        answers.add(answer);
+        question.setAnswers(answers);
         questions.add(question);
+
         Test test = new Test( "asd", 1, questions);
         testHiberDao.saveTest(test);
         printTest();
