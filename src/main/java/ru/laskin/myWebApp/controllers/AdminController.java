@@ -8,16 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.laskin.myWebApp.model.Position;
-import ru.laskin.myWebApp.model.Test;
-import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -80,12 +81,49 @@ public class AdminController {
     @GetMapping("/tests/update")
     public String showEditTestForm(@RequestParam Integer id, Model model){
         model.addAttribute("test", testService.getTestById(id));
+        model.addAttribute("questions", testService.getTestById(id).getQuestions());
         return "edittest";
     }
 
     @PostMapping("/updateTest")
-    public String updateTest(@ModelAttribute Test test){
+    public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        //todo собрать answer, listanswer, question, listqustion  и добавить в test
+        String[] answersName = parameterMap.get("answer");
+        String[] answerId = parameterMap.get("answerId");
+        String[] isRight = parameterMap.get("isRight");
+
+        String[] questionName = parameterMap.get("question");
+        String[] questionId = parameterMap.get("questionId");
+//        String[] testIdInQuestion = parameterMap.get("testIdInQuestion");
+        String[] quesAnsId = parameterMap.get("quesAnsId");
+
+
+        List<Question> questionList = new ArrayList<>();
+        for (int i = 0; i < questionId.length; i++) {
+
+            List<Answer> answerList = new ArrayList<>();
+            for (int x = 0; x < answersName.length; x++) {
+                boolean right = false;
+                if (isRight[x].equals("isRight")){
+                    right = true;
+                }
+
+                if (quesAnsId[x].equals(questionId[i])){
+                    Answer answer = new Answer(Integer.parseInt(answerId[x]), answersName[x], right);
+                    answerList.add(answer);
+                }
+            }
+
+            Question question = new Question(Integer.parseInt(questionId[i]), questionName[i], answerList);
+            questionList.add(question);
+
+        }
+
+        test.setQuestions(questionList);
+
         testService.updateTest(test);
         return "redirect:/allTests";
     }
+
 }

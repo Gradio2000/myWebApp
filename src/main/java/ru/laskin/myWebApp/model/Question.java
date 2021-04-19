@@ -17,10 +17,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(String questionName) {
+    public Question(int questionId, String questionName, List<Answer> answers) {
+        this.questionId = questionId;
         this.questionName = questionName;
+        this.answers = answers;
     }
-
 
     @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)

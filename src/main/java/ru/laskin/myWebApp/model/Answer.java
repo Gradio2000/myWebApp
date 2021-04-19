@@ -18,6 +18,12 @@ public class Answer {
         this.isRight = isRight;
     }
 
+    public Answer(int answerId, String answerName, boolean isRight) {
+        this.answerId = answerId;
+        this.answerName = answerName;
+        this.isRight = isRight;
+    }
+
     @ManyToOne(targetEntity = Question.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "question_id")
     public Question getQuestion() {
