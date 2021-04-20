@@ -85,39 +85,33 @@ public class AdminController {
         return "edittest";
     }
 
+    /*  Этот контроллер собирает ListQuestion и ListAnswers для Test
+        и отправляет Test в БД для обновлнея                            */
     @PostMapping("/updateTest")
     public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
         Map<String, String[]> parameterMap = request.getParameterMap();
-        //todo собрать answer, listanswer, question, listqustion  и добавить в test
         String[] answersName = parameterMap.get("answer");
         String[] answerId = parameterMap.get("answerId");
         String[] isRight = parameterMap.get("isRight");
-
         String[] questionName = parameterMap.get("question");
         String[] questionId = parameterMap.get("questionId");
-//        String[] testIdInQuestion = parameterMap.get("testIdInQuestion");
         String[] quesAnsId = parameterMap.get("quesAnsId");
-
 
         List<Question> questionList = new ArrayList<>();
         for (int i = 0; i < questionId.length; i++) {
-
             List<Answer> answerList = new ArrayList<>();
             for (int x = 0; x < answersName.length; x++) {
                 boolean right = false;
                 if (isRight[x].equals("isRight")){
                     right = true;
                 }
-
                 if (quesAnsId[x].equals(questionId[i])){
                     Answer answer = new Answer(Integer.parseInt(answerId[x]), answersName[x], right);
                     answerList.add(answer);
                 }
             }
-
             Question question = new Question(Integer.parseInt(questionId[i]), questionName[i], answerList);
             questionList.add(question);
-
         }
 
         test.setQuestions(questionList);
