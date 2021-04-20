@@ -120,4 +120,9 @@ public class AdminController {
         return "redirect:/allTests";
     }
 
+    @GetMapping("/tests/delete")
+    public String deleteTest(@RequestParam Integer id){
+        testService.deleteTestById(id);
+        return "redirect:/allTests";
+    }
 }

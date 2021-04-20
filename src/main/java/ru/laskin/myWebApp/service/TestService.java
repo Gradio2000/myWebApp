@@ -45,5 +45,9 @@ public class TestService {
         testHiberDao.saveTest(test);
     }
 
+    public void deleteTestById(int id){
+        testHiberDao.deleteTestById(id);
+    }
+
 
 }

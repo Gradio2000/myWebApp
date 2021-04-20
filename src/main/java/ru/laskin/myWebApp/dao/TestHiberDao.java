@@ -40,4 +40,11 @@ public class TestHiberDao {
         session.save(test);
         session.getTransaction().commit();
     }
+
+    public void deleteTestById(int id){
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        session.delete(getTestById(id));
+        session.getTransaction().commit();
+    }
 }
