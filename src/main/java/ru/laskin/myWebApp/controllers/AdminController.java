@@ -125,4 +125,11 @@ public class AdminController {
         testService.deleteTestById(id);
         return "redirect:/allTests";
     }
+
+    @PostMapping("/addQuestion")
+        public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
+        Map<String, String[]> parameterMap = request.getParameterMap();
+
+        return "redirect:/allTests";
+    }
 }
