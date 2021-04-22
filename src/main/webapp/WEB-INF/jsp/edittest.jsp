@@ -223,8 +223,7 @@
                 <textarea placeholder="Введите ответ" rows="2" cols="25" id="textarea-6123" name="answerName" class="u-border-1 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white u-input-2"></textarea>
             </div>
             <div class="u-align-right u-form-group u-form-submit">
-<%--                <button class="u-btn u-btn-submit u-button-style" type="submit">Готово</button>--%>
-                <button class="btn" type="submit" onclick="closeform()">Готово</button>
+                <button class="btn" type="button" onclick="closeform()">Готово</button>
             </div>
         </form>
     </div>
