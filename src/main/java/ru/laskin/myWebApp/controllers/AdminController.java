@@ -130,8 +130,17 @@ public class AdminController {
         public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
         int testId = Integer.parseInt(request.getParameter("IDTest"));
         question.setTest(testService.getTestById(testId));
-        testService.saveQuestion(question);
+        String[] answersName = request.getParameterValues("answerName");
+        List<Answer> answers = new ArrayList<>();
+        for (int i = 0; i < answersName.length; i++) {
+            Answer answer = new Answer();
+            answer.setAnswerName(answersName[i]);
+            answers.add(answer);
+        }
+        question.setAnswers(answers);
 
+
+        testService.saveQuestion(question);
         return "redirect:/allTests";
     }
 }
