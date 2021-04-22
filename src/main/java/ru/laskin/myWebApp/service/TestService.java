@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.Question;
@@ -14,11 +15,13 @@ public class TestService {
 
     private TestDao testDao;
     private TestHiberDao testHiberDao;
+    private QuestionHiberDao questionHiberDao;
 
 
-    public TestService(TestDao testDao, TestHiberDao testHiberDao) {
+    public TestService(TestDao testDao, TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao) {
         this.testDao = testDao;
         this.testHiberDao = testHiberDao;
+        this.questionHiberDao = questionHiberDao;
     }
 
     public List<Test> getAllTests(){
@@ -47,6 +50,10 @@ public class TestService {
 
     public void deleteTestById(int id){
         testHiberDao.deleteTestById(id);
+    }
+
+    public void saveQuestion(Question question){
+        questionHiberDao.saveQuestion(question);
     }
 
 

@@ -129,6 +129,7 @@ public class AdminController {
     @PostMapping("/addQuestion")
         public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
         Map<String, String[]> parameterMap = request.getParameterMap();
+        testService.saveQuestion(question);
 
         return "redirect:/allTests";
     }
