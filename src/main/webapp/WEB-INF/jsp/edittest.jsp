@@ -216,14 +216,15 @@
             <input hidden name="IDTest" value="${IDTest}">
             <div class="u-form-group u-form-message">
                 <label for="message-9257" class="u-form-control-hidden u-label"></label>
-                <textarea placeholder="Введите вопрос" rows="2" cols="50" id="message-9257" name="questionName" class="u-border-1 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white u-input-1" required="required"></textarea>
+                <textarea  placeholder="Введите вопрос" rows="2" cols="50" id="message-9257" name="questionName" class="textArea u-border-1 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white u-input-1" required="required"></textarea>
             </div>
             <div class="u-form-group u-form-group-2">
                 <label for="textarea-6123" class="u-form-control-hidden u-label"></label>
-                <textarea placeholder="Введите ответ" rows="2" cols="25" id="textarea-6123" name="answerName" class="u-border-1 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white u-input-2"></textarea>
+                <textarea required="required" placeholder="Введите ответ" rows="2" cols="25" id="textarea-6123" name="answerName" class="textAreaAnswer u-border-1 u-border-grey-75 u-border-no-left u-border-no-right u-border-no-top u-input u-input-rectangle u-white u-input-2"></textarea>
+                <label><input type="checkbox" name="isRight"/>Правильный ответ</label>
             </div>
             <div class="u-align-right u-form-group u-form-submit">
-                <button class="btn" type="button" onclick="closeform()">Готово</button>
+                <button class="btn" type="button" onclick="validate()">Готово</button>
             </div>
         </form>
     </div>
@@ -257,9 +258,26 @@
         }
     }
 
-    function closeform(){
+    function validate(){
+        if(!validateForm()){
+            alert("You must check atleast one of the checkboxes");
+            return false;
+        }
         modal.style.display = "none"
         document.getElementById("modalForm").submit();
+    }
+
+
+    function validateForm()
+    {
+        var c=document.getElementsByTagName('input');
+        for (var i = 0; i<c.length; i++){
+            if (c[i].type=='checkbox')
+            {
+                if (c[i].checked){return true}
+            }
+        }
+        return false;
     }
 </script>
 

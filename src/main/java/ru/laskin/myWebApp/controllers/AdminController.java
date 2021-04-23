@@ -128,13 +128,19 @@ public class AdminController {
 
     @PostMapping("/addQuestion")
         public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
+        Map<String, String[]> parameterMap = request.getParameterMap();
+
         int testId = Integer.parseInt(request.getParameter("IDTest"));
         question.setTest(testService.getTestById(testId));
         String[] answersName = request.getParameterValues("answerName");
+        String[] rightAnswer = request.getParameterValues("isRight");
         List<Answer> answers = new ArrayList<>();
         for (int i = 0; i < answersName.length; i++) {
             Answer answer = new Answer();
             answer.setAnswerName(answersName[i]);
+            if (rightAnswer[i].equals("on")){
+                answer.setRight(true);
+            }
             answers.add(answer);
         }
         question.setAnswers(answers);
