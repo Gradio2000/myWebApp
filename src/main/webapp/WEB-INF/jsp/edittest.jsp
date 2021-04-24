@@ -29,10 +29,12 @@
     <title>Test</title>
 
 
+
 </head>
 <body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test">
     <c:set var="IDTest" value="${test.testId}"/>
@@ -86,6 +88,22 @@
 
                     <label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>
 
+
+
+                        <div id="DynamicExtraFieldsContainer">
+                            <div id="addDynamicField">
+                                <input type="button" id="addDynamicExtraFieldButton" value="Добавить динамическое поле">
+                            </div>
+                            <div class="DynamicExtraField">
+                                <br>
+                                <label for="DynamicExtraField">Доп. поле </label> <input value="Удаление" type="button" class="DeleteDynamicExtraField">
+                                <br>
+                                <textarea id="DynamicExtraField" name="DynamicExtraField[]" cols="50">test</textarea>
+                            </div>
+                        </div>
+
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         <button type="submit" class="btn btn-primary">Добавить</button>
@@ -118,7 +136,52 @@
         }
         return false;
     }
+
+    $('#addDynamicExtraFieldButton').click(function(e) {
+        //необходима только 1 переменная DIV в которую мы собираем все елементы
+        var div = $('<div/>', {
+            'class': 'DynamicExtraField'
+        });
+
+        $('<br/>').appendTo(div);
+        $('<label/>').html("Доп. поле ").appendTo(div);
+        $('<input/>', {
+            value: 'Удаление',
+            type: 'button',
+            'class': 'DeleteDynamicExtraField'
+        })
+            .appendTo(div)
+            .click(function(e) {
+                $(this).parent().remove();
+
+                e.preventDefault();
+                return false;
+            });
+
+        $('<br/>').appendTo(div);
+        $('<textarea/>', {
+            name: 'DynamicExtraField[]',
+            cols: '50',
+            rows: '3'
+        }).appendTo(div);
+
+        //Добавляем уже собранный DIV в DynamicExtraFieldsContainer
+        div.appendTo($('#DynamicExtraFieldsContainer'));
+
+        e.preventDefault();
+        return false;
+    });
+
+    //Для удаления первого поля
+    $('.DeleteDynamicExtraField').click(function(e) {
+        $(this).parent().remove();
+
+        e.preventDefault();
+        return false;
+    });
+
 </script>
+
 
 </body>
 </html>
