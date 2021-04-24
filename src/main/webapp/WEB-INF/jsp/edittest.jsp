@@ -74,37 +74,25 @@
             <div class="modal-body">
                 <form class="validForm" id="myForm" name="formName" action="/addQuestion" method="POST" onsubmit="return validateForm()">
                     <input hidden name="IDTest" value="${IDTest}">
+
                     <div class="form-floating">
                         <textarea name="questionName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 100px" required></textarea>
                         <label for="floatingTextarea2">Введите вопрос</label>
                     </div>
+
                     <br/>
-                    <div class="answer">
+
+                    <div class="answer" id="container">
                         <div class="form-floating">
                             <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
                             <label for="floatingTextarea2">Введите ответ</label>
                         </div>
+                        <label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>
                     </div>
-
-                    <label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>
-
-
-
-                        <div id="DynamicExtraFieldsContainer">
-                            <div id="addDynamicField">
-                                <input type="button" id="addDynamicExtraFieldButton" value="Добавить динамическое поле">
-                            </div>
-                            <div class="DynamicExtraField">
-                                <br>
-                                <label for="DynamicExtraField">Доп. поле </label> <input value="Удаление" type="button" class="DeleteDynamicExtraField">
-                                <br>
-                                <textarea id="DynamicExtraField" name="DynamicExtraField[]" cols="50">test</textarea>
-                            </div>
-                        </div>
-
 
 
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="addDynamicExtraFieldButton">Добавить ответ</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
@@ -114,7 +102,14 @@
     </div>
 </div>
 
-
+<style>
+    .add{
+        float: left;
+        color: #ffffff;
+        background-color: #fcdb04;
+        border-color: #af761b;
+    }
+</style>
 
 <script>
     function validate(){
@@ -140,33 +135,46 @@
     $('#addDynamicExtraFieldButton').click(function(e) {
         //необходима только 1 переменная DIV в которую мы собираем все елементы
         var div = $('<div/>', {
-            'class': 'DynamicExtraField'
+            'class': 'form-floating'
         });
 
-        $('<br/>').appendTo(div);
-        $('<label/>').html("Доп. поле ").appendTo(div);
+        // $('<br/>').appendTo(div);
+        // $('<label/>').html("Доп. поле ").appendTo(div);
         $('<input/>', {
-            value: 'Удаление',
+            value: 'Удалить ответ', <%--<button type="button" class="DeleteDynamicExtraField btn-danger">Удалить ответ</button>--%>
             type: 'button',
-            'class': 'DeleteDynamicExtraField'
-        })
-            .appendTo(div)
-            .click(function(e) {
+            class: 'DeleteDynamicExtraField btn-danger'
+        }).appendTo(div).click(function(e) {
                 $(this).parent().remove();
-
                 e.preventDefault();
                 return false;
             });
 
+        <%--<label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>--%>
+
+        $('<input/>', {
+            class: 'validCheck',
+            type: 'checkbox',
+            name: 'isRight'
+        }).appendTo(div);
+
+
+        // <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
+        // <label for="floatingTextarea2">Введите ответ</label>
+
+
         $('<br/>').appendTo(div);
         $('<textarea/>', {
-            name: 'DynamicExtraField[]',
+            name: 'answerName[]',
+            class: 'form-control',
+            style: 'height: 100px',
             cols: '50',
             rows: '3'
         }).appendTo(div);
 
+
         //Добавляем уже собранный DIV в DynamicExtraFieldsContainer
-        div.appendTo($('#DynamicExtraFieldsContainer'));
+        div.appendTo($('#container'));
 
         e.preventDefault();
         return false;
