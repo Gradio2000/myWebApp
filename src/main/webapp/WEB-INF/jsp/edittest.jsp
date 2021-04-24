@@ -70,21 +70,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form name="formName" action="/addQuestion" method="POST">
+                <form class="validForm" id="myForm" name="formName" action="/addQuestion" method="POST" onsubmit="return validateForm()">
                     <input hidden name="IDTest" value="${IDTest}">
                     <div class="form-floating">
                         <textarea name="questionName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 100px" required></textarea>
                         <label for="floatingTextarea2">Введите вопрос</label>
                     </div>
                     <br/>
-                    <div class="form-floating">
-                        <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
-                        <label for="floatingTextarea2">Введите ответ</label>
+                    <div class="answer">
+                        <div class="form-floating">
+                            <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
+                            <label for="floatingTextarea2">Введите ответ</label>
+                        </div>
                     </div>
-                    <label><input type="checkbox" name="isRight"/>Правильный ответ</label>
+
+                    <label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                        <input type="submit" class="btn btn-primary" onclick="validate()">
+                        <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
                 </form>
             </div>
@@ -92,19 +96,19 @@
     </div>
 </div>
 
-<script>
 
+
+<script>
     function validate(){
         if(!validateForm()){
             alert("You must check atleast one of the checkboxes");
             return false;
         }
-        else return true;
+        return true;
     }
 
-
     function validateForm() {
-        var c=document.getElementsByTagName('input');
+        var c = document.getElementsByTagName('input');
         for (var i = 0; i<c.length; i++){
             if (c[i].type ==='checkbox') {
                 if (c[i].checked) {
@@ -114,7 +118,6 @@
         }
         return false;
     }
-
 </script>
 
 </body>
