@@ -129,6 +129,8 @@
 
     $('#addAnswer').click(function(e) {
 
+        var num = document.getElementsByName("isRight").length;
+
         var divAnswer = $('<div/>', {
             'class': 'answer',
             'id': 'miniContainer'
@@ -143,18 +145,20 @@
             class: 'form-control',
             style: 'height: 100px',
             cols: '50',
-            rows: '3'
+            rows: '3',
+            required: ''
         }).appendTo(divForm);
 
         divForm.appendTo(divAnswer);
 
-        var check = $('<label/>').html("Правильный ответ").appendTo(divAnswer);
+        var check = $('<label/>').html("Правильный ответ ").appendTo(divAnswer);
 
         $('<input/>', {
             id: 'mycheck',
             class: 'validCheck',
             type: 'checkbox',
-            name: 'isRight'
+            name: 'isRight',
+            value: num
         }).appendTo(check);
 
         $('<br/>').appendTo(divAnswer);
@@ -175,6 +179,7 @@
 
         e.preventDefault();
         return false;
+
     });
 
     //Для удаления первого поля
