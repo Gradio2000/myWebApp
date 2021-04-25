@@ -140,41 +140,46 @@
 
         // $('<br/>').appendTo(div);
         // $('<label/>').html("Доп. поле ").appendTo(div);
-        $('<input/>', {
-            value: 'Удалить ответ', <%--<button type="button" class="DeleteDynamicExtraField btn-danger">Удалить ответ</button>--%>
-            type: 'button',
-            class: 'DeleteDynamicExtraField btn-danger'
-        }).appendTo(div).click(function(e) {
-                $(this).parent().remove();
-                e.preventDefault();
-                return false;
-            });
-
         <%--<label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>--%>
-
-        $('<input/>', {
-            class: 'validCheck',
-            type: 'checkbox',
-            name: 'isRight'
-        }).appendTo(div);
-
-
         // <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
         // <label for="floatingTextarea2">Введите ответ</label>
 
-
-        $('<br/>').appendTo(div);
         $('<textarea/>', {
-            name: 'answerName[]',
+            name: 'answerName',
             class: 'form-control',
             style: 'height: 100px',
             cols: '50',
             rows: '3'
         }).appendTo(div);
 
+        //
 
         //Добавляем уже собранный DIV в DynamicExtraFieldsContainer
         div.appendTo($('#container'));
+
+        $('<input/>', {
+            id: 'mycheck',
+            class: 'validCheck',
+            type: 'checkbox',
+            name: 'isRight'
+        }).appendTo($('#container'));
+
+        $('<label/>', {
+            for: 'mycheck'
+        }).html("Правильный ответ").appendTo($('#container'));
+
+        $('<br/>').appendTo($('#container'));
+
+        $('<input/>', {
+            value: 'Удалить ответ', <%--<button type="button" class="DeleteDynamicExtraField btn-danger">Удалить ответ</button>--%>
+            type: 'button',
+            class: 'DeleteDynamicExtraField btn-danger'
+        }).appendTo($('#container')).click(function(e) {
+            $(this).parent().remove();
+            e.preventDefault();
+            return false;
+        });
+
 
         e.preventDefault();
         return false;
