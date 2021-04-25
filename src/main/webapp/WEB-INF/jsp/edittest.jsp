@@ -77,22 +77,17 @@
 
                     <div class="form-floating">
                         <textarea name="questionName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 100px" required></textarea>
-                        <label for="floatingTextarea2">Введите вопрос</label>
+                        <label for="floatingTextarea1">Введите вопрос</label>
                     </div>
 
                     <br/>
 
-                    <div class="answer" id="container">
-                        <div class="form-floating">
-                            <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
-                            <label for="floatingTextarea2">Введите ответ</label>
-                        </div>
-                        <label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>
+                    <div class="answerContainer" id="container">
                     </div>
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning" id="addDynamicExtraFieldButton">Добавить ответ</button>
+                        <button type="button" class="btn btn-warning" id="addAnswer">Добавить ответ</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                         <button type="submit" class="btn btn-primary">Добавить</button>
                     </div>
@@ -132,17 +127,16 @@
         return false;
     }
 
-    $('#addDynamicExtraFieldButton').click(function(e) {
-        //необходима только 1 переменная DIV в которую мы собираем все елементы
-        var div = $('<div/>', {
-            'class': 'form-floating'
+    $('#addAnswer').click(function(e) {
+
+        var divAnswer = $('<div/>', {
+            'class': 'answer',
+            'id': 'miniContainer'
         });
 
-        // $('<br/>').appendTo(div);
-        // $('<label/>').html("Доп. поле ").appendTo(div);
-        <%--<label><input class="validCheck" type="checkbox" name="isRight"/>Правильный ответ</label><br/>--%>
-        // <textarea name="answerName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" required></textarea>
-        // <label for="floatingTextarea2">Введите ответ</label>
+        var divForm = $('<div/>', {
+           'class': 'form-floating'
+        });
 
         $('<textarea/>', {
             name: 'answerName',
@@ -150,36 +144,34 @@
             style: 'height: 100px',
             cols: '50',
             rows: '3'
-        }).appendTo(div);
+        }).appendTo(divForm);
 
-        //
+        divForm.appendTo(divAnswer);
 
-        //Добавляем уже собранный DIV в DynamicExtraFieldsContainer
-        div.appendTo($('#container'));
+        var check = $('<label/>').html("Правильный ответ").appendTo(divAnswer);
 
         $('<input/>', {
             id: 'mycheck',
             class: 'validCheck',
             type: 'checkbox',
             name: 'isRight'
-        }).appendTo($('#container'));
+        }).appendTo(check);
 
-        $('<label/>', {
-            for: 'mycheck'
-        }).html("Правильный ответ").appendTo($('#container'));
-
-        $('<br/>').appendTo($('#container'));
+        $('<br/>').appendTo(divAnswer);
 
         $('<input/>', {
-            value: 'Удалить ответ', <%--<button type="button" class="DeleteDynamicExtraField btn-danger">Удалить ответ</button>--%>
+            value: 'Удалить ответ',
             type: 'button',
             class: 'DeleteDynamicExtraField btn-danger'
-        }).appendTo($('#container')).click(function(e) {
+        }).appendTo(divAnswer).click(function(e) {
             $(this).parent().remove();
             e.preventDefault();
             return false;
         });
 
+        $('<br/>').appendTo(divAnswer);
+
+        divAnswer.appendTo($('#container'));
 
         e.preventDefault();
         return false;
