@@ -14,6 +14,8 @@ import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +87,7 @@ public class AdminController {
     }
 
     /*  Этот контроллер собирает ListQuestion и ListAnswers для Test
-        и отправляет Test в БД для обновлнея                            */
+        и отправляет Test в БД для обновления                            */
     @PostMapping("/updateTest")
     public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -126,7 +128,7 @@ public class AdminController {
     }
 
     @PostMapping("/addQuestion")
-        public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
+        public void addQuestion(@ModelAttribute Question question, HttpServletRequest request, HttpServletResponse response){
         Map<String, String[]> parameterMap = request.getParameterMap();
 
         //получаем из БД question по id
@@ -137,13 +139,13 @@ public class AdminController {
         String[] answersName = request.getParameterValues("answerName");
         String[] rightAnswer = request.getParameterValues("isRight");
 
-        //собираем list
+        //собираем list answers
         List<Answer> answers = new ArrayList<>();
         for (int i = 0; i < answersName.length; i++) {
             Answer answer = new Answer();
             answer.setAnswerName(answersName[i]);
 
-                //в цикле d answer добавляется отметка isRight
+                //в цикле в answer добавляется отметка isRight
             for (int j = 0; j < rightAnswer.length; j++) {
                 int count = Integer.parseInt(rightAnswer[j]);
                 if (i == count){
@@ -153,10 +155,14 @@ public class AdminController {
 
             answers.add(answer);
         }
+
         question.setAnswers(answers);
-
-
         testService.saveQuestion(question);
-        return "redirect:/allTests";
+
+        try {
+            response.sendRedirect("/tests/update?id=" + testId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
