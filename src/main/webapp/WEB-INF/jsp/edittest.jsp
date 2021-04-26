@@ -127,12 +127,14 @@
         return false;
     }
 
+    var count = 0;
+
     $('#addAnswer').click(function(e) {
 
-        var num = document.getElementsByName("isRight").length;
+        var num = document.getElementsByName("answerBlock").length;
 
         var divAnswer = $('<div/>', {
-            'class': 'answer',
+            'class': 'answerBlock',
             'id': 'miniContainer'
         });
 
@@ -158,7 +160,7 @@
             class: 'validCheck',
             type: 'checkbox',
             name: 'isRight',
-            value: num
+            value: count
         }).appendTo(check);
 
         $('<br/>').appendTo(divAnswer);
@@ -177,8 +179,12 @@
 
         divAnswer.appendTo($('#container'));
 
+        count = count + 1;
+
         e.preventDefault();
         return false;
+
+
 
     });
 
