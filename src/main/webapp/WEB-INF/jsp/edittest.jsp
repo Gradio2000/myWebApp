@@ -26,12 +26,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-    <title>Test</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/Site2/nicepage.css" media="screen">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/Site2/Все-тесты.css" media="screen">
+    <script class="u-script" type="text/javascript" src="/resources/Site2/jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="/resources/Site2/nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 3.12.0, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i">
 
 
+    <script type="application/ld+json">{
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "",
+        "url": "index.html",
+        "logo": "/resources/Site2/images/horizontal_on_white_by_logaster.png"
+    }</script>
+
+    <meta property="og:title" content="О нас">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#478ac9">
+    <link rel="canonical" href="index.html">
+    <meta property="og:url" content="index.html">
+
+
+    <title>Редактирование теста</title>
 
 </head>
-<body>
+
+<body class="u-body">
+<header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1274"><div class="u-clearfix u-sheet u-sheet-1">
+    <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150">
+        <img src="${pageContext.request.contextPath}/resources/Site2/images/horizontal_on_white_by_logaster.png" class="u-logo-image u-logo-image-1" data-image-width="97">
+    </a>
+    <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+        <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
+            <a class="u-button-style u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+                <svg><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><symbol id="menu-hamburger" viewBox="0 0 16 16" style="width: 16px; height: 16px;"><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+                </symbol>
+                </defs></svg>
+            </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="О-нас.html" style="padding: 10px 20px;">alltests</a>
+            </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
+            </li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+            <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+                <div class="u-sidenav-overflow">
+                    <div class="u-menu-close"></div>
+                    <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/allTests" style="padding: 10px 20px;">Все тесты</a>
+                    </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/logout" style="padding: 10px 20px;">Выход</a>
+                    </li></ul>
+                </div>
+            </div>
+            <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+    </nav>
+</div>
+</header>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -41,27 +103,32 @@
     <sf:hidden path="testId"/>
     <sf:hidden path="groupId"/>
 
-    <label><br>Название теста<br></label>
-    <sf:input path="testName" size="200"/>
+    <label for="textTestName"><h2>Название теста</h2></label>
+    <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
+
         <c:forEach var="ques" items="${test.questions}">
-            <label><br>Вопрос id = ${ques.questionId}<br></label>
-            <input name="question" value="${ques.questionName}"><br>
+            <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
+            <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+
             <input hidden name="questionId" value="${ques.questionId}">
+
+            <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
             <c:forEach var="answer" items="${ques.answers}">
-                <input name="answer" value="${answer.answerName}" ><br>
+                <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
+
                 <input hidden name="answerId" value="${answer.answerId}">
                 <input hidden name="isRight" value="${answer.right}">
                 <input hidden name="quesAnsId" value="${answer.question.questionId}">
             </c:forEach>
         </c:forEach>
-    <button class="btn" type="submit">Готово</button>
-
+    <button class="btn btn-success" type="submit">Готово</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        Добавить вопрос
+    </button>
 </sf:form>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-    Launch static backdrop modal
-</button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -96,15 +163,6 @@
         </div>
     </div>
 </div>
-
-<style>
-    .add{
-        float: left;
-        color: #ffffff;
-        background-color: #fcdb04;
-        border-color: #af761b;
-    }
-</style>
 
 <script>
 
@@ -208,6 +266,10 @@
     });
 
 </script>
-
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3569">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
+        </div>
+    </footer>
 </body>
 </html>
