@@ -129,17 +129,28 @@ public class AdminController {
         public String addQuestion(@ModelAttribute Question question, HttpServletRequest request){
         Map<String, String[]> parameterMap = request.getParameterMap();
 
+        //получаем из БД question по id
         int testId = Integer.parseInt(request.getParameter("IDTest"));
         question.setTest(testService.getTestById(testId));
+
+        //получаем из post запроса массивы значений полей
         String[] answersName = request.getParameterValues("answerName");
         String[] rightAnswer = request.getParameterValues("isRight");
+
+        //собираем list
         List<Answer> answers = new ArrayList<>();
         for (int i = 0; i < answersName.length; i++) {
             Answer answer = new Answer();
             answer.setAnswerName(answersName[i]);
-            if (rightAnswer[i].equals("on")){
-                answer.setRight(true);
+
+                //в цикле d answer добавляется отметка isRight
+            for (int j = 0; j < rightAnswer.length; j++) {
+                int count = Integer.parseInt(rightAnswer[j]);
+                if (i == count){
+                    answer.setRight(true);
+                }
             }
+
             answers.add(answer);
         }
         question.setAnswers(answers);
