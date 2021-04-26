@@ -107,6 +107,8 @@
 </style>
 
 <script>
+
+    // функции для проверки checkbox
     function validate(){
         if(!validateForm()){
             alert("You must check atleast one of the checkboxes");
@@ -127,21 +129,25 @@
         return false;
     }
 
+
+    //переменная для использования при создании checkbox
     var count = 0;
 
+    //функция динамического добавления полей формы
     $('#addAnswer').click(function(e) {
 
-        var num = document.getElementsByName("answerBlock").length;
-
+        //создаем div
         var divAnswer = $('<div/>', {
             'class': 'answerBlock',
             'id': 'miniContainer'
         });
 
+        //создаем div
         var divForm = $('<div/>', {
            'class': 'form-floating'
         });
 
+        //создаем поле и добавляем его в div
         $('<textarea/>', {
             name: 'answerName',
             class: 'form-control',
@@ -151,10 +157,13 @@
             required: ''
         }).appendTo(divForm);
 
+        //добавляем div в div
         divForm.appendTo(divAnswer);
 
+        //создаем label и добавляем его в div
         var check = $('<label/>').html("Правильный ответ ").appendTo(divAnswer);
 
+        //создаем checkbox и добавляем его в label
         $('<input/>', {
             id: 'mycheck',
             class: 'validCheck',
@@ -163,33 +172,35 @@
             value: count
         }).appendTo(check);
 
+        //перенос строки
         $('<br/>').appendTo(divAnswer);
 
+        //создаем кнопку отмены и добавляем ее в div и назначаем событие на клик
         $('<input/>', {
             value: 'Удалить ответ',
             type: 'button',
-            class: 'DeleteDynamicExtraField btn-danger'
+            class: 'deleteAnswer btn-danger'
         }).appendTo(divAnswer).click(function(e) {
             $(this).parent().remove();
             e.preventDefault();
             return false;
         });
 
+        //перенос строки
         $('<br/>').appendTo(divAnswer);
 
+        //добавляе div в div
         divAnswer.appendTo($('#container'));
 
+        //счетчик для right
         count = count + 1;
 
         e.preventDefault();
         return false;
-
-
-
     });
 
-    //Для удаления первого поля
-    $('.DeleteDynamicExtraField').click(function(e) {
+    //Функция удаления  поля
+    $('.deleteAnswer').click(function(e) {
         $(this).parent().remove();
 
         e.preventDefault();
@@ -197,7 +208,6 @@
     });
 
 </script>
-
 
 </body>
 </html>
