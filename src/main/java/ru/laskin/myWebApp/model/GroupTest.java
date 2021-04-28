@@ -2,14 +2,19 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "group_test")
 @Table(name = "group_test", schema = "public", catalog = "postgres")
 public class GroupTest {
     private int grouptestId;
     private String name;
 
+    public GroupTest() {
+    }
+
     @Id
     @Column(name = "grouptest_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "group_test_grouptest_id_seq")
     public int getGrouptestId() {
         return grouptestId;
     }

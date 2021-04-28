@@ -4,6 +4,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
+import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.SessionFactoryUtil;
@@ -16,6 +17,11 @@ public class TestHiberDao {
     public List<Test> getAllTests(){
        Session session = SessionFactoryUtil.getSession();
        return session.createQuery("FROM tests ORDER BY test_id").list();
+    }
+
+    public List<GroupTest> getAllGroup(){
+        Session session = SessionFactoryUtil.getSession();
+        return session.createQuery("FROM group_test").list();
     }
 
     public Test getTestById(int id){

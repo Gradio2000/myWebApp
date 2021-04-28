@@ -26,6 +26,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
@@ -54,12 +57,11 @@
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
 
-
     <title>Редактирование теста</title>
-
 </head>
 
-<body class="u-body">
+<body>
+
 <header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1274"><div class="u-clearfix u-sheet u-sheet-1">
     <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150">
         <img src="${pageContext.request.contextPath}/resources/Site2/images/horizontal_on_white_by_logaster.png" class="u-logo-image u-logo-image-1" data-image-width="97">
@@ -74,7 +76,7 @@
             </a>
         </div>
         <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/login" style="padding: 10px 20px;">Главная</a>
             </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="О-нас.html" style="padding: 10px 20px;">alltests</a>
             </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
             </li></ul>
@@ -95,40 +97,45 @@
 </div>
 </header>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
+<main class="u-body">
 <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test">
     <c:set var="IDTest" value="${test.testId}"/>
     <sf:hidden path="testId"/>
     <sf:hidden path="groupId"/>
 
-    <label for="textTestName"><h2>Название теста</h2></label>
-    <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
+    <div class="container-my-big">
+        <label for="textTestName"><h2>Название теста</h2></label>
+        <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
+            <div class="container-my-md">
+                <c:forEach var="ques" items="${test.questions}">
+                    <input hidden name="questionId" value="${ques.questionId}">
+                    <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
+                    <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+                        <div class="container-my-sm">
+                            <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
+                            <c:forEach var="answer" items="${ques.answers}">
+                                <input hidden name="answerId" value="${answer.answerId}">
+                                <input hidden name="isRight" value="${answer.right}">
+                                <input hidden name="quesAnsId" value="${answer.question.questionId}">
+                                <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
+                            </c:forEach>
 
-        <c:forEach var="ques" items="${test.questions}">
-            <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
-            <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+                            <div id="forAddAnswer"></div>
 
-            <input hidden name="questionId" value="${ques.questionId}">
-
-            <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
-            <c:forEach var="answer" items="${ques.answers}">
-                <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
-
-                <input hidden name="answerId" value="${answer.answerId}">
-                <input hidden name="isRight" value="${answer.right}">
-                <input hidden name="quesAnsId" value="${answer.question.questionId}">
-            </c:forEach>
-        </c:forEach>
-    <button class="btn btn-success" type="submit">Готово</button>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        Добавить вопрос
-    </button>
+                            <button type="button" class="btn-danger">-</button>
+                            <button type="button" class="btn-success" id="addAnswerMain">+</button>
+                        </div>
+                </c:forEach>
+            </div>
+        <button class="btn btn-success" type="submit">Готово</button>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Добавить вопрос
+        </button>
+    </div>
 </sf:form>
 
-
+</main>
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -162,8 +169,17 @@
             </div>
         </div>
     </div>
+    <div class="rasp"></div>
 </div>
 
+
+<footer class="footer u-align-center u-clearfix u-grey-80 " id="sec-3569">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
+    </div>
+</footer>
+
+</body>
 <script>
 
     // функции для проверки checkbox
@@ -187,11 +203,28 @@
         return false;
     }
 
+    //функция динамического добавления полей главной страницы
+    $('#addAnswerMain').click(function(e) {
+        //создаем поле
+        $('<textarea/>', {
+            name: 'answer',
+            class: 'form-control',
+            style: 'height: 100px',
+            id: 'textAnswerName',
+            placeholder: 'Введите ответ',
+            required: ''
+        }).appendTo($('#forAddAnswer'));
+
+        e.preventDefault();
+        console.log("ops");
+        return false;
+    });
+
 
     //переменная для использования при создании checkbox
     var count = 0;
 
-    //функция динамического добавления полей формы
+    //функция динамического добавления полей модальной формы
     $('#addAnswer').click(function(e) {
 
         //создаем div
@@ -266,10 +299,48 @@
     });
 
 </script>
-    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3569">
-        <div class="u-clearfix u-sheet u-sheet-1">
-            <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
-        </div>
-    </footer>
+
+<style>
+    .container-my-big {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 1080px;
+    }
+
+    .container-my-md {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        /*margin-right: 0;*/
+        margin-left: auto;
+        max-width: 960px;
+    }
+
+    .container-my-sm {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        /*margin-right: 0;*/
+        margin-left: auto;
+        max-width: 720px;
+    }
+
+    .footer{
+        position: relative;
+        left:0px;
+        bottom:0px;
+        height:100px;
+        width:100%;
+    }
+
+    .rasp{
+        height: 100px;
+    }
+
+</style>
+
 </body>
 </html>

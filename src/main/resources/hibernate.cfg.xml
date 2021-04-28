@@ -16,6 +16,15 @@
         <mapping class="ru.laskin.myWebApp.model.Question"/>
         <mapping class="ru.laskin.myWebApp.model.Answer"/>
         <mapping class="ru.laskin.myWebApp.model.Test"/>
+        <mapping class="ru.laskin.myWebApp.model.GroupTest"/>
+        <mapping class="ru.laskin.myWebApp.model.AttemptTest"/>
+        <mapping class="ru.laskin.myWebApp.model.Position"/>
+        <mapping class="ru.laskin.myWebApp.model.ResultTest"/>
+        <mapping class="ru.laskin.myWebApp.model.User"/>
+
+
+
+
 
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

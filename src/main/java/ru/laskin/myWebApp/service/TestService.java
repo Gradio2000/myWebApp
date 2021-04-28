@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
+import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 
@@ -54,6 +55,10 @@ public class TestService {
 
     public void saveQuestion(Question question){
         questionHiberDao.saveQuestion(question);
+    }
+
+    public List<GroupTest> getAllGroupTest(){
+        return testHiberDao.getAllGroup();
     }
 
 

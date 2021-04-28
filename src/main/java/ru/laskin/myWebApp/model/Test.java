@@ -11,12 +11,6 @@ public class Test {
     private int groupId;
     private List<Question> questions;
 
-//    public Test(String testName, int groupId, List<Question> questions) {
-//        this.testName = testName;
-//        this.groupId = groupId;
-//        this.questions = questions;
-//    }
-
     public Test() {
     }
 

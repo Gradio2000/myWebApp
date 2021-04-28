@@ -14,9 +14,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
 <jsp:useBean id="test" class="ru.laskin.myWebApp.model.Test"/>
+<jsp:useBean id="groppTest" class="ru.laskin.myWebApp.model.GroupTest"/>
 
 <html style="font-size: 16px;">
 <head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <meta name="keywords" content="">
@@ -59,7 +66,7 @@
             </a>
         </div>
         <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/login" style="padding: 10px 20px;">Главная</a>
             </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="О-нас.html" style="padding: 10px 20px;">alltests</a>
             </li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
             </li></ul>
@@ -105,6 +112,15 @@
             display: inline-block;
         }
 
+        .mybtn {
+            border: none;
+            background-color: inherit;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
         /* Green */
         .success {
             color: green;
@@ -122,6 +138,15 @@
 
         .info:hover {
             background: #2196F3;
+            color: white;
+        }
+
+        .close{
+            color: #81888b;
+        }
+
+        .close:hover {
+            background: #99a1a5;
             color: white;
         }
 
@@ -164,9 +189,19 @@
         }
         .cancelbtn:hover {background: #da190b;}
 
+        .footer{
+            position: relative;
+            left:0px;
+            bottom:0px;
+            height:100px;
+            width:100%;
+        }
+
 
     </style>
 </header>
+
+<main>
 <br>
     <table>
         <tr>
@@ -185,8 +220,47 @@
         </c:forEach>
     </table>
 
+    <!-- Button trigger modal -->
+    <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
+        Добавить тест
+    </button>
+</main>
 
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3569">
+<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Добавление теста</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <sf:form class="validForm" id="myForm" name="formName" action="/addTest" method="POST" modelAttribute="test">
+                    <div>
+                        <label>Группа тестов</label>
+                        <sf:select path="groupId">
+                            <c:forEach var="group" items="${allgrouptest}">
+                                <option value="${group.grouptestId}">${group.name}</option>
+                            </c:forEach>
+                        </sf:select>
+                    </div>
+                    <div class="form-floating">
+                        <textarea name="testName" class="form-control" placeholder="Введите название теста" id="floatingTextarea" style="height: 100px" required></textarea>
+                        <label for="floatingTextarea">Название теста</label>
+                    </div>
+
+                    <br/>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn close" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn info">Добавить</button>
+                    </div>
+                </sf:form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer u-align-center u-clearfix u-grey-80 " id="sec-3569">
     <div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
     </div>

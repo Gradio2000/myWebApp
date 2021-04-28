@@ -47,7 +47,7 @@
         <option>${position.position}</option>
         </c:forEach>
     </sf:select>
-    <div/>
+</div>
 
 
     <input type="submit">

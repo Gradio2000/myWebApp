@@ -76,6 +76,8 @@ public class AdminController {
     @GetMapping("/allTests")
     public String showAllTests(Model model){
         model.addAttribute("alltests", testService.getAllTests());
+        model.addAttribute("allgrouptest", testService.getAllGroupTest());
+        model.addAttribute("test", new Test());
         return "list_tests";
     }
 
@@ -165,4 +167,11 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
+    @PostMapping("/addTest")
+    public String addTest(@ModelAttribute Test test){
+        testService.saveTest(test);
+        return "redirect:/allTests";
+    }
+
 }
