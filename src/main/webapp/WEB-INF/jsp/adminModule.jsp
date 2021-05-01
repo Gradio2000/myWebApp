@@ -46,6 +46,7 @@
     <link rel="canonical" href="index.html">
     <meta property="og:url" content="index.html">
 </head>
+<section class="main-content">
 <body data-home-page="Главная.html" data-home-page-title="Главная" class="u-body"><header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1274"><div class="u-clearfix u-sheet u-sheet-1">
     <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150">
         <img src="${pageContext.request.contextPath}/resources/Site2/images/horizontal_on_white_by_logaster.png" class="u-logo-image u-logo-image-1" data-image-width="97">
@@ -93,21 +94,39 @@
         </div>
     </div>
 </section>
-
-
-<footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-3569"><div class="u-clearfix u-sheet u-sheet-1">
-    <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
-</div></footer>
-<section class="u-backlink u-clearfix u-grey-80">
-    <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
-        <span>Website Templates</span>
-    </a>
-    <p class="u-text">
-        <span>created with</span>
-    </p>
-    <a class="u-link" href="https://nicepage.com/website-builder" target="_blank">
-        <span>Website Builder</span>
-    </a>.
-</section>
 </body>
+</section>
+
+
+<footer class="footer u-align-center u-clearfix u-grey-80 " id="sec-3569">
+    <div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
+    </div>
+</footer>
+
+</body>
+
+<style>
+    html{
+        height: 100%;
+    }
+    body{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    header{
+        /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+        flex: 0 0 auto;
+    }
+    .main-content{
+        /* 1 flex-grow, 0 flex-shrink, auto flex-basis */
+        flex: 1 0 auto;
+    }
+    footer{
+        /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+        flex: 0 0 auto;
+    }
+</style>
 </html>
