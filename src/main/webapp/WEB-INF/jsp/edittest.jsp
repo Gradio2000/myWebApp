@@ -119,17 +119,12 @@
                                 <input hidden name="answerId" value="${answer.answerId}">
                                 <input hidden name="quesAnsId" value="${answer.question.questionId}">
                                 <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
-
                                 <cf:if test="${answer.right==true}">
-                                    <input type="checkbox" id="check" name="isRight" checked>
-                                    <label for="check"> Правильный ответ</label>
-
+                                    <label><input type="checkbox" name="isRight" value="${a}" checked> Правильный ответ</label>
                                 </cf:if>
                                 <cf:if test="${answer.right == false}">
-                                    <input type="checkbox" id="check" name="isRight">
-                                    <label for="check"> Правильный ответ</label>
+                                    <label><input type="checkbox" name="isRight" value=${a}> Правильный ответ</label>
                                 </cf:if>
-
                             </c:forEach>
 
                             <div id="forAddAnswer"></div>
@@ -139,7 +134,7 @@
                         </div>
                     </c:forEach>
                 </div>
-                <button class="btn btn-success" type="submit">Готово</button>
+                <button class="btn btn-success" type="submit" onclick="getCount()">Готово</button>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Добавить вопрос
@@ -314,6 +309,12 @@
 
     }
 
+    function getCount(){
+    var el = document.getElementsByName("isRight");
+        for (let i = 0; i < el.length ; i++) {
+            el[i].setAttribute("value", i)
+        }
+    }
 </script>
 
 <style>

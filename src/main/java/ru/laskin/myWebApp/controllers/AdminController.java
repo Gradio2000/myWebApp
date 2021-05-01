@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -105,7 +106,8 @@ public class AdminController {
             List<Answer> answerList = new ArrayList<>();
             for (int x = 0; x < answersName.length; x++) {
                 boolean right = false;
-                if (isRight[x].equals("isRight")){
+                String strX = String.valueOf(x);
+                if (isRight != null && isRight.length != 0 && Arrays.asList(isRight).contains(strX)){
                     right = true;
                 }
                 if (quesAnsId[x].equals(questionId[i])){
