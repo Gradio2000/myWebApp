@@ -100,7 +100,7 @@
 
 <section class="main-content">
     <main class="u-body">
-        <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test">
+        <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test" onsubmit="return getCount()">
             <c:set var="IDTest" value="${test.testId}"/>
             <sf:hidden path="testId"/>
             <sf:hidden path="groupId"/>
@@ -134,7 +134,7 @@
                         </div>
                     </c:forEach>
                 </div>
-                <button class="btn btn-success" type="submit" onclick="getCount()">Готово</button>
+                <button class="btn btn-success" type="submit">Готово</button>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Добавить вопрос
@@ -310,6 +310,11 @@
     }
 
     function getCount(){
+        if(document.getElementsByName("answer").length == 0){
+            alert("Добавьте ответ");
+            return false;
+        }
+
     var el = document.getElementsByName("isRight");
         for (let i = 0; i < el.length ; i++) {
             el[i].setAttribute("value", i)
