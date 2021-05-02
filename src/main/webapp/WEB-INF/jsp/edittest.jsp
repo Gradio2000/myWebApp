@@ -119,12 +119,14 @@
                                 <input hidden name="answerId" value="${answer.answerId}">
                                 <input hidden name="quesAnsId" value="${answer.question.questionId}">
                                 <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
+
                                 <cf:if test="${answer.right==true}">
                                     <label><input type="checkbox" name="isRight" value="${a}" checked> Правильный ответ</label>
                                 </cf:if>
                                 <cf:if test="${answer.right == false}">
                                     <label><input type="checkbox" name="isRight" value=${a}> Правильный ответ</label>
                                 </cf:if>
+
                             </c:forEach>
 
                             <div id="forAddAnswer"></div>
@@ -134,7 +136,7 @@
                         </div>
                     </c:forEach>
                 </div>
-                <button class="btn btn-success" type="submit">Готово</button>
+            <button class="btn btn-success" type="submit">Готово</button>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Добавить вопрос
@@ -199,6 +201,11 @@
     }
 
     function validateForm() {
+        if(document.getElementsByName("answerName").length === 0){
+            alert("Добавьте ответ");
+            return false;
+        }
+
         var c = document.getElementsByTagName('input');
         for (var i = 0; i<c.length; i++){
             if (c[i].type ==='checkbox') {
@@ -305,13 +312,10 @@
         return false;
     });
 
-    function isChecked(){
-
-    }
 
     function getCount(){
-        if(document.getElementsByName("answer").length == 0){
-            alert("Добавьте ответ");
+        if(document.getElementsByName("answer").length === 0){
+            alert("Добавьте вопрос");
             return false;
         }
 

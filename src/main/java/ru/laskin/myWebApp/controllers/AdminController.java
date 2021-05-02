@@ -4,10 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
@@ -86,6 +83,8 @@ public class AdminController {
     public String showEditTestForm(@RequestParam Integer id, Model model){
         model.addAttribute("test", testService.getTestById(id));
         model.addAttribute("questions", testService.getTestById(id).getQuestions());
+        List<Answer> newAnswerList = new ArrayList<>();
+        model.addAttribute("newAnswerList", newAnswerList);
         return "edittest";
     }
 
@@ -102,20 +101,28 @@ public class AdminController {
         String[] quesAnsId = parameterMap.get("quesAnsId");
 
         List<Question> questionList = new ArrayList<>();
+        List<Answer> answerList = new ArrayList<>();
+
         for (int i = 0; i < questionId.length; i++) {
-            List<Answer> answerList = new ArrayList<>();
-            for (int x = 0; x < answersName.length; x++) {
+            Question question = new Question();
+            question.setQuestionId(Integer.parseInt(questionId[i]));
+            question.setQuestionName(questionName[i]);
+            question.setTest(test);
+
+            for (int j = 0; j < answersName.length; j++) {
+                Answer answer = new Answer();
+                answer.setAnswerName(answersName[j]);
                 boolean right = false;
-                String strX = String.valueOf(x);
-                if (isRight != null && isRight.length != 0 && Arrays.asList(isRight).contains(strX)){
+                if (Arrays.asList(isRight).contains(String.valueOf(j))){
                     right = true;
                 }
-                if (quesAnsId[x].equals(questionId[i])){
-                    Answer answer = new Answer(Integer.parseInt(answerId[x]), answersName[x], right);
-                    answerList.add(answer);
+                if (j < answerId.length){
+                    answer.setAnswerId(Integer.parseInt(answerId[j]));
                 }
+                answer.setRight(right);
+                answerList.add(answer);
             }
-            Question question = new Question(Integer.parseInt(questionId[i]), questionName[i], answerList);
+            question.setAnswers(answerList);
             questionList.add(question);
         }
 
