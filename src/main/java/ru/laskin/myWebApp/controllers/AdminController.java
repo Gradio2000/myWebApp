@@ -101,27 +101,26 @@ public class AdminController {
         String[] quesAnsId = parameterMap.get("quesAnsId");
 
         List<Question> questionList = new ArrayList<>();
-        List<Answer> answerList = new ArrayList<>();
-
-        for (int i = 0; i < questionId.length; i++) {
+        for (int i = 0; i < questionName.length; i++) {
             Question question = new Question();
             question.setQuestionId(Integer.parseInt(questionId[i]));
             question.setQuestionName(questionName[i]);
-            question.setTest(test);
 
+            List<Answer> answerList = new ArrayList<>();
             for (int j = 0; j < answersName.length; j++) {
                 Answer answer = new Answer();
-                answer.setAnswerName(answersName[j]);
-                boolean right = false;
-                if (Arrays.asList(isRight).contains(String.valueOf(j))){
-                    right = true;
-                }
-                if (j < answerId.length){
+                if (j < answerId.length) {
                     answer.setAnswerId(Integer.parseInt(answerId[j]));
                 }
-                answer.setRight(right);
-                answerList.add(answer);
+                answer.setAnswerName(answersName[j]);
+                if (Arrays.asList(isRight).contains(String.valueOf(j))){
+                    answer.setRight(true);
+                }
+                if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
+                    answerList.add(answer);
+                }
             }
+
             question.setAnswers(answerList);
             questionList.add(question);
         }
