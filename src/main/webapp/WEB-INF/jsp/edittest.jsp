@@ -121,10 +121,10 @@
                                 <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
 
                                 <cf:if test="${answer.right==true}">
-                                    <label><input type="checkbox" name="isRight" value="${a}" checked> Правильный ответ</label>
+                                    <label><input type="checkbox" name="isRight" checked> Правильный ответ</label>
                                 </cf:if>
                                 <cf:if test="${answer.right == false}">
-                                    <label><input type="checkbox" name="isRight" value=${a}> Правильный ответ</label>
+                                    <label><input type="checkbox" name="isRight"> Правильный ответ</label>
                                 </cf:if>
 
                             </c:forEach>
@@ -132,7 +132,7 @@
                             <div id="forAddAnswer${ques.questionId}"></div>
 
                             <button type="button" class="btn-danger">-</button>
-                            <button type="button" class="btn-success" id="addAnswerMain" name="${ques.questionId}" onclick="addAnswer(${ques.questionId})">+</button>
+                            <button type="button" class="btn-success" onclick="addAnswer(${ques.questionId})">+</button>
                         </div>
                     </c:forEach>
                 </div>
@@ -221,17 +221,20 @@
     function addAnswer(id){
         //создаем поле
         $('<textarea/>', {
-            name: 'answer',
+            name: 'newAnswer',
             class: 'form-control',
-            style: 'height: 100px',
-            id: id,
+            style: 'height: 75px',
             placeholder: 'Введите ответ',
             required: ''
         }).appendTo($('#forAddAnswer'+id));
 
+        $('<label><input type="checkbox" name="isRight"> Правильный ответ</label>').appendTo($('#forAddAnswer'+id));
+        $('<input/>', {
+            hidden: '',
+            name: 'quesIdForNewAnswer',
+            value: id
+        }).appendTo($('#forAddAnswer'+id));
     }
-
-
 
     //переменная для использования при создании checkbox
     var count = 0;

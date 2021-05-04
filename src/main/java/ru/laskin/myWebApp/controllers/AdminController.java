@@ -13,7 +13,6 @@ import ru.laskin.myWebApp.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,9 +22,9 @@ import java.util.Map;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
-    private UserService service;
-    private PositionService positionService;
-    private TestService testService;
+    private final UserService service;
+    private final PositionService positionService;
+    private final TestService testService;
 
     public AdminController(UserService service, PositionService positionService, TestService testService) {
         this.service = service;
@@ -59,9 +58,7 @@ public class AdminController {
     }
 
     @PostMapping("/updateUser")
-    public String formUser (@ModelAttribute User user,
-                            HttpServletRequest request,
-                            Model model) throws SQLException {
+    public String formUser (@ModelAttribute User user){
             service.updateUser(user);
             return "redirect:/allUsers";
     }
@@ -99,6 +96,8 @@ public class AdminController {
         String[] questionName = parameterMap.get("question");
         String[] questionId = parameterMap.get("questionId");
         String[] quesAnsId = parameterMap.get("quesAnsId");
+        String[] newAnswer = parameterMap.get("newAnswer");
+        String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
 
         List<Question> questionList = new ArrayList<>();
         for (int i = 0; i < questionName.length; i++) {
@@ -121,6 +120,14 @@ public class AdminController {
                 }
             }
 
+            for (int j = 0; j < newAnswer.length; j++) {
+                Answer answer = new Answer();
+                answer.setAnswerName(newAnswer[j]);
+                if (questionId[i].equals(quesIdForNewAnswer[j])){
+                    answerList.add(answer);
+                }
+            }
+
             question.setAnswers(answerList);
             questionList.add(question);
         }
@@ -139,7 +146,6 @@ public class AdminController {
 
     @PostMapping("/addQuestion")
         public void addQuestion(@ModelAttribute Question question, HttpServletRequest request, HttpServletResponse response){
-        Map<String, String[]> parameterMap = request.getParameterMap();
 
         //получаем из БД question по id
         int testId = Integer.parseInt(request.getParameter("IDTest"));
@@ -156,9 +162,9 @@ public class AdminController {
             answer.setAnswerName(answersName[i]);
 
                 //в цикле в answer добавляется отметка isRight
-            for (int j = 0; j < rightAnswer.length; j++) {
-                int count = Integer.parseInt(rightAnswer[j]);
-                if (i == count){
+            for (String s : rightAnswer) {
+                int count = Integer.parseInt(s);
+                if (i == count) {
                     answer.setRight(true);
                 }
             }
