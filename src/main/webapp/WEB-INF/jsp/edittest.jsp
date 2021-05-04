@@ -129,10 +129,10 @@
 
                             </c:forEach>
 
-                            <div id="forAddAnswer"></div>
+                            <div id="forAddAnswer${ques.questionId}"></div>
 
                             <button type="button" class="btn-danger">-</button>
-                            <button type="button" class="btn-success" id="addAnswerMain">+</button>
+                            <button type="button" class="btn-success" id="addAnswerMain" name="${ques.questionId}" onclick="addAnswer(${ques.questionId})">+</button>
                         </div>
                     </c:forEach>
                 </div>
@@ -218,21 +218,19 @@
     }
 
     //функция динамического добавления полей главной страницы
-    $('#addAnswerMain').click(function(e) {
+    function addAnswer(id){
         //создаем поле
         $('<textarea/>', {
             name: 'answer',
             class: 'form-control',
             style: 'height: 100px',
-            id: 'textAnswerName',
+            id: id,
             placeholder: 'Введите ответ',
             required: ''
-        }).appendTo($('#forAddAnswer'));
+        }).appendTo($('#forAddAnswer'+id));
 
-        e.preventDefault();
-        console.log("ops");
-        return false;
-    });
+    }
+
 
 
     //переменная для использования при создании checkbox
