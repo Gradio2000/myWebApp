@@ -120,13 +120,16 @@ public class AdminController {
                 }
             }
 
-            for (int j = 0; j < newAnswer.length; j++) {
-                Answer answer = new Answer();
-                answer.setAnswerName(newAnswer[j]);
-                if (questionId[i].equals(quesIdForNewAnswer[j])){
-                    answerList.add(answer);
+            if (newAnswer != null){
+                for (int j = 0; j < newAnswer.length; j++) {
+                    Answer answer = new Answer();
+                    answer.setAnswerName(newAnswer[j]);
+                    if (questionId[i].equals(quesIdForNewAnswer[j])){
+                        answerList.add(answer);
+                    }
                 }
             }
+
 
             question.setAnswers(answerList);
             questionList.add(question);
