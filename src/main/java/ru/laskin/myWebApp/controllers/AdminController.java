@@ -1,5 +1,6 @@
 package ru.laskin.myWebApp.controllers;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -130,7 +131,6 @@ public class AdminController {
                 }
             }
 
-
             question.setAnswers(answerList);
             questionList.add(question);
         }
@@ -191,4 +191,39 @@ public class AdminController {
         return "redirect:/allTests";
     }
 
+    @GetMapping("/groupTests")
+    public String groupTests(Model model){
+        model.addAttribute("groupTests", testService.getAllGroupTest());
+        return "allGroup";
+    }
+
+    @GetMapping("/group/delete")
+    public String deleteGroup(@RequestParam Integer id){
+        testService.deleteGroupTest(id);
+        return "redirect:/groupTests";
+    }
+
+    @PostMapping("/addGroup")
+    public String addGroup(@ModelAttribute GroupTest groupTest){
+        testService.addGroup(groupTest);
+        return "redirect:/groupTests";
+    }
+
+    @PostMapping("/updateGroup")
+    public String updateGroup(HttpServletRequest request){
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] id = parameterMap.get("grouptestId");
+        String[] name = parameterMap.get("name");
+
+        List<GroupTest> groupTests = new ArrayList<>();
+        for (int i = 0; i < id.length; i++) {
+            GroupTest groupTest = new GroupTest();
+            groupTest.setGrouptestId(Integer.parseInt(id[i]));
+            groupTest.setName(name[i]);
+            groupTests.add(groupTest);
+        }
+
+        testService.updateAllGroup(groupTests);
+        return "redirect:/greeting";
+    }
 }

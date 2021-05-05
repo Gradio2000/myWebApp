@@ -87,7 +87,12 @@
                 <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
             </div>
         </div>
-        <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-2" data-href="/allTests">
+        <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/groupTests">
+            <div class="u-container-layout u-valign-middle u-container-layout-2">
+                <h4 class="u-text u-text-2">ГРУППЫ ТЕСТОВ</h4>
+            </div>
+        </div>
+        <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/allTests">
             <div class="u-container-layout u-valign-middle u-container-layout-2">
                 <h4 class="u-text u-text-2">ТЕСТЫ</h4>
             </div>

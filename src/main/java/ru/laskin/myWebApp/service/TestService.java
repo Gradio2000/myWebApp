@@ -62,4 +62,15 @@ public class TestService {
     }
 
 
+    public void deleteGroupTest(Integer id) {
+        testHiberDao.deleteGroupTest(id);
+    }
+
+    public void addGroup(GroupTest groupTest) {
+        testHiberDao.addGroup(groupTest);
+    }
+
+    public void updateAllGroup(List<GroupTest> groupTests) {
+        testHiberDao.updateAllGroup(groupTests);
+    }
 }

@@ -38,6 +38,7 @@ public class TestHiberDao {
         session.beginTransaction();
         session.saveOrUpdate(test);
         session.getTransaction().commit();
+        session.close();
     }
 
     public void saveTest(Test test){
@@ -45,6 +46,7 @@ public class TestHiberDao {
         session.beginTransaction();
         session.save(test);
         session.getTransaction().commit();
+        session.close();
     }
 
     public void deleteTestById(int id){
@@ -52,5 +54,41 @@ public class TestHiberDao {
         session.beginTransaction();
         session.delete(getTestById(id));
         session.getTransaction().commit();
+        session.close();
+    }
+
+    public void deleteGroupTest(Integer id) {
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        session.delete(getGroupById(id));
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    private Object getGroupById(Integer id) {
+        Session session = SessionFactoryUtil.getSession();
+        Query query = session.createQuery("FROM group_test WHERE grouptest_id = :id");
+        query.setParameter("id", id);
+        GroupTest groupTest = (GroupTest) query.list().stream().findAny().orElse(null);
+        session.close();
+        return groupTest;
+    }
+
+    public void addGroup(GroupTest groupTest) {
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        session.save(groupTest);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void updateAllGroup(List<GroupTest> groupTests) {
+        Session session = SessionFactoryUtil.getSession();
+        session.beginTransaction();
+        for (GroupTest groupTest : groupTests){
+            session.update(groupTest);
+        }
+        session.getTransaction().commit();
+        session.close();
     }
 }
