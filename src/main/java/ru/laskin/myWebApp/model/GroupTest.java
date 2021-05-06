@@ -1,15 +1,33 @@
 package ru.laskin.myWebApp.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "group_test")
 @Table(name = "group_test", schema = "public", catalog = "postgres")
 public class GroupTest {
     private int grouptestId;
     private String name;
+    private List<Test> testList;
 
     public GroupTest() {
     }
+
+
+    @OneToMany(targetEntity = Test.class, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "group_id")
+    public List<Test> getTestList() {
+        return testList;
+    }
+
+    public void setTestList(List<Test> testList) {
+        this.testList = testList;
+    }
+
 
     @Id
     @Column(name = "grouptest_id", nullable = false)

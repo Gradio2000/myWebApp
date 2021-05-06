@@ -208,7 +208,7 @@
                 s = this.parentNode.parentNode.getElementsByTagName("select")[0];
                 h = this.parentNode.previousSibling;
                 for (i = 0; i < s.length; i++) {
-                    if (s.options[i].innerHTML == this.innerHTML) {
+                    if (s.options[i].innerHTML === this.innerHTML) {
                         s.selectedIndex = i;
                         h.innerHTML = this.innerHTML;
                         y = this.parentNode.getElementsByClassName("same-as-selected");
@@ -240,7 +240,7 @@
         x = document.getElementsByClassName("select-items");
         y = document.getElementsByClassName("select-selected");
         for (i = 0; i < y.length; i++) {
-            if (elmnt == y[i]) {
+            if (elmnt === y[i]) {
                 arrNo.push(i)
             } else {
                 y[i].classList.remove("select-arrow-active");

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
-import ru.laskin.myWebApp.service.GroupTestService;
+
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
@@ -22,23 +22,22 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private UserService userService;
-    private PositionService positionService;
-    private TestService testService;
-    private UserValidator userValidator;
-    private UserDopRegistrationValidator userDopRegistrationValidator;
-    private GroupTestService groupTestService;
+    private final UserService userService;
+    private final PositionService positionService;
+    private final TestService testService;
+    private final UserValidator userValidator;
+    private final UserDopRegistrationValidator userDopRegistrationValidator;
+
 
 
     public UserController(UserService userService, PositionService positionService,
                           TestService testService, UserValidator userValidator,
-                          UserDopRegistrationValidator userDopRegistrationValidator, GroupTestService groupTestService) {
+                          UserDopRegistrationValidator userDopRegistrationValidator) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.userValidator = userValidator;
         this.userDopRegistrationValidator = userDopRegistrationValidator;
-        this.groupTestService = groupTestService;
     }
 
     @GetMapping("/greeting")
@@ -72,7 +71,7 @@ public class UserController {
 
         model.addAttribute("allTest", testService.getAllTests());
         model.addAttribute("test", new Test());
-        model.addAttribute("allTestGroup",groupTestService.getAllGroupTest());
+        model.addAttribute("allTestGroup",testService.getAllGroupTest());
         return "testPage";
     }
 

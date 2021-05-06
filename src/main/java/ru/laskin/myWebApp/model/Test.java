@@ -9,6 +9,18 @@ public class Test {
     private int testId;
     private String testName;
     private int groupId;
+    private GroupTest groupTest;
+
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = GroupTest.class)
+    @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id")
+    public GroupTest getGroupTest() {
+        return groupTest;
+    }
+
+    public void setGroupTest(GroupTest groupTest) {
+        this.groupTest = groupTest;
+    }
+
     private List<Question> questions;
 
     public Test() {
@@ -50,7 +62,7 @@ public class Test {
     }
 
     @Basic
-    @Column(name = "group_id", nullable = false)
+    @Column(name = "group_id", nullable = false, insertable = false, updatable = false)
     public int getGroupId() {
         return groupId;
     }

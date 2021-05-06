@@ -21,7 +21,7 @@ public class TestHiberDao {
 
     public List<GroupTest> getAllGroup(){
         Session session = SessionFactoryUtil.getSession();
-        return session.createQuery("FROM group_test").list();
+        return session.createQuery("FROM group_test ORDER BY grouptest_id").list();
     }
 
     public Test getTestById(int id){
