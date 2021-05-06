@@ -14,13 +14,11 @@ import java.util.List;
 @Service
 public class TestService {
 
-    private TestDao testDao;
     private TestHiberDao testHiberDao;
     private QuestionHiberDao questionHiberDao;
 
 
-    public TestService(TestDao testDao, TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao) {
-        this.testDao = testDao;
+    public TestService(TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao) {
         this.testHiberDao = testHiberDao;
         this.questionHiberDao = questionHiberDao;
     }
@@ -31,14 +29,6 @@ public class TestService {
 
     public Test getTestById(int testId){
         return testHiberDao.getTestById(testId);
-    }
-
-    public List<Question> getAllQuestions(){
-        return testDao.getAllQuestions();
-    }
-
-    public Question getQuestionById(int id){
-        return testDao.getQuestionById(id);
     }
 
     public void updateTest(Test test){

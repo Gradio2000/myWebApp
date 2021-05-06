@@ -98,7 +98,7 @@
                 <h1>${group.name}</h1>
                 <c:forEach var="test" items="${group.testList}">
                     <h3>${test.testName}</h3>
-                    <p><button name="testId" value="${test.testId}" type="submit" class="u-btn">Начать тест</button></p>
+                    <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
                 </c:forEach>
             </cf:if>
 

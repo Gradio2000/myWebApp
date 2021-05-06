@@ -24,24 +24,23 @@
 
 <html>
 <head>
-    <title>TestProcessing</title>
+    <title>Прохождение теста</title>
 </head>
 <body>
 
-<h3>Оппа!</h3>
-<form name="testResult" method="post" action="/testResult">
-    <input type="hidden" name="testId" value="${testId}">
-    <input type="hidden" name="userId" value="${userId}">
-    <c:forEach var="question" items="${questions}">
-        <p>${question.questionName}<p>
-        <input name="questionId" type="hidden" value="${question.questionId}">
-            <c:forEach var="answer" items="${question.answers}">
+
+<sf:form name="testResult" method="post" action="/testResult" modelAttribute="tests">
+    <input hidden name="testId" value="${tests.testId}">
+    <input hidden name="userId" value="${users.userId}">
+    <c:forEach var="ques" items="${tests.questions}">
+        <input hidden name="questionId" value="${ques.questionId}">
+        <p>${ques.questionName}</p>
+            <c:forEach var="answer" items="${ques.answers}">
                 <input type="checkbox" name="check" value="${answer.answerId}">${answer.answerName}<br>
             </c:forEach>
-        </c:forEach>
-    <br/>
+    </c:forEach>
     <input type="submit">
-</form>
+</sf:form>
 
 </body>
 </html>

@@ -36,10 +36,10 @@ public class TestController {
     public String testResult (@RequestParam("testId") int testId,
                               @RequestParam("userId") int userId,
                               @RequestParam("questionId") List<Integer> questionId,
-//                              @RequestParam("check") List<Integer> answerId,
                               HttpServletRequest request,
                               Model model){
 
+        //создаем попытку и сохраняем ее в БД
         Timestamp timestamp = new Timestamp(new Date().getTime());
         AttemptTest attemptTest = new AttemptTest(timestamp, testId, userId);
         int attemptId = attemptTestService.saveAttemptTest(attemptTest);
@@ -48,6 +48,7 @@ public class TestController {
         String[] answerId = request.getParameterValues("check");
 
 
+        //главноая логика проверки теста. Надо перенстии в сервис
             for (int i = 0; i < questionId.size(); i++) {
                 //это служебный questionId=0. Его просто игнорируем.
                 if (questionId.get(i) == 0) continue;

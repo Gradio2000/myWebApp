@@ -128,12 +128,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/startTest")
+    @GetMapping("/getTest")
     public String testStart(@RequestParam String testId, Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("questions", testService.getAllQuestions());
-        model.addAttribute("userId" , user.getUserId());
-        model.addAttribute("testId", testId);
+        model.addAttribute("tests", testService.getTestById(Integer.parseInt(testId)));
+        model.addAttribute("users", user);
         return "testProcessing";
     }
 
