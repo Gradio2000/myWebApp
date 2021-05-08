@@ -99,6 +99,8 @@ public class AdminController {
         String[] quesAnsId = parameterMap.get("quesAnsId");
         String[] newAnswer = parameterMap.get("newAnswer");
         String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
+        String[] groupId = parameterMap.get("groupId");
+
 
         List<Question> questionList = new ArrayList<>();
         for (int i = 0; i < questionName.length; i++) {
@@ -135,6 +137,7 @@ public class AdminController {
             questionList.add(question);
         }
 
+        test.setGroupId(Integer.parseInt(groupId[0]));
         test.setQuestions(questionList);
 
         testService.updateTest(test);

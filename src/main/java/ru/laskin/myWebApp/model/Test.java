@@ -12,7 +12,7 @@ public class Test {
     private GroupTest groupTest;
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = GroupTest.class)
-    @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id")
+    @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id", nullable = false, insertable = false, updatable = false)
     public GroupTest getGroupTest() {
         return groupTest;
     }
@@ -62,7 +62,7 @@ public class Test {
     }
 
     @Basic
-    @Column(name = "group_id", nullable = false, insertable = false, updatable = false)
+    @Column(name = "group_id")
     public int getGroupId() {
         return groupId;
     }
