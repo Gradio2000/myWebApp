@@ -20,9 +20,9 @@ import java.util.List;
 @Controller
 public class TestController {
 
-    private AttemptTestService attemptTestService;
-    private ResultTestService resultTestService;
-    private MainService mainService;
+    private final AttemptTestService attemptTestService;
+    private final ResultTestService resultTestService;
+    private final MainService mainService;
 
     public TestController(AttemptTestService attemptTestService,
                           ResultTestService resultTestService,
@@ -48,7 +48,7 @@ public class TestController {
         String[] answerId = request.getParameterValues("check");
 
 
-        //главноая логика проверки теста. Надо перенстии в сервис
+        //главная логика проверки теста. Надо перенести в сервис
             for (int i = 0; i < questionId.size(); i++) {
                 //это служебный questionId=0. Его просто игнорируем.
                 if (questionId.get(i) == 0) continue;
@@ -66,7 +66,5 @@ public class TestController {
             List<String> result = mainService.getResult(attemptId, timestamp, testId, userId);
             model.addAttribute("result", result);
             return "testResult";
-
-
     }
 }

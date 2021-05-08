@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class MainService {
 
-    private ResultTestDao resultTestDao;
-    private TestDao testDao;
-    private UserDao userDao;
-    private AnswersDao answersDao;
-    private TimeUtils timeUtils;
+    private final ResultTestDao resultTestDao;
+    private final TestDao testDao;
+    private final UserDao userDao;
+    private final AnswersDao answersDao;
+    private final TimeUtils timeUtils;
 
     public MainService(ResultTestDao resultTestDao, TestDao testDao,
                        UserDao userDao, AnswersDao answersDao, TimeUtils timeUtils) {

@@ -129,7 +129,7 @@
                                             <label><input type="checkbox" name="isRight"> Правильный ответ</label>
                                         </cf:if>
 
-                                        <button type="button" class="my-btn danger" onclick="deleteAnswerMain">Удалить ответ</button>
+                                        <button id="delete" type="button" class="my-btn danger" onclick="deleteAnswerMain">Удалить ответ</button>
 
                                     </div>
                                 </c:forEach>
@@ -245,12 +245,12 @@
 
     //функция удаления ответа
 
-        let li = document.querySelectorAll('#answerF');
+        let li = document.querySelectorAll('#delete');
         for (var i = 0, len = li.length; i < len; i++) {
             li[i].onclick = function() {
                 console.log('parentNode', this.parentNode);
                 console.log('element => this', this);
-                this.parentNode.removeChild(this);
+                this.parentNode.remove(this);
             }
         }
 
@@ -325,12 +325,12 @@
     });
 
     //Функция удаления  поля
-    $('.deleteAnswer').click(function(e) {
-        $(this).parent().remove();
-
-        e.preventDefault();
-        return false;
-    });
+    // $('.deleteAnswer').click(function(e) {
+    //     $(this).parent().remove();
+    //
+    //     e.preventDefault();
+    //     return false;
+    // });
 
 
     function getCount(){
