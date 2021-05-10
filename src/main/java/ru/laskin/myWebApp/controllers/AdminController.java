@@ -109,24 +109,30 @@ public class AdminController {
             question.setQuestionName(questionName[i]);
 
             List<Answer> answerList = new ArrayList<>();
-            for (int j = 0; j < answersName.length; j++) {
-                Answer answer = new Answer();
-                if (j < answerId.length) {
-                    answer.setAnswerId(Integer.parseInt(answerId[j]));
-                }
-                answer.setAnswerName(answersName[j]);
-                if (Arrays.asList(isRight).contains(String.valueOf(j))){
-                    answer.setRight(true);
-                }
-                if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
-                    answerList.add(answer);
+            if (answersName != null){
+                for (int j = 0; j < answersName.length; j++) {
+                    Answer answer = new Answer();
+                    if (j < answerId.length) {
+                        answer.setAnswerId(Integer.parseInt(answerId[j]));
+                    }
+                    answer.setAnswerName(answersName[j]);
+                    if (Arrays.asList(isRight).contains(String.valueOf(j))){
+                        answer.setRight(true);
+                    }
+                    if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
+                        answerList.add(answer);
+                    }
                 }
             }
+
 
             if (newAnswer != null){
                 for (int j = 0; j < newAnswer.length; j++) {
                     Answer answer = new Answer();
                     answer.setAnswerName(newAnswer[j]);
+                    if (Arrays.asList(isRight).contains(String.valueOf(j))){
+                        answer.setRight(true);
+                    }
                     if (questionId[i].equals(quesIdForNewAnswer[j])){
                         answerList.add(answer);
                     }

@@ -123,7 +123,7 @@
                                         <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
 
                                         <cf:if test="${answer.right==true}">
-                                            <label><input type="checkbox" name="isRight" checked> Правильный ответ</label>
+                                            <label><input class="checks" type="checkbox" name="isRight" checked> Правильный ответ</label>
                                         </cf:if>
                                         <cf:if test="${answer.right == false}">
                                             <label><input type="checkbox" name="isRight"> Правильный ответ</label>
@@ -143,7 +143,7 @@
                         </div>
                     </c:forEach>
                 </div>
-            <button class="btn btn-success" type="submit">Готово</button>
+            <button class="btn btn-success" type="submit" onclick="validCheck()">Готово</button>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Добавить вопрос
@@ -334,14 +334,31 @@
 
 
     function getCount(){
-        if(document.getElementsByName("answer").length === 0){
-            alert("Добавьте вопрос");
+        if(document.getElementsByName("answer").length === 0 && document.getElementsByName("newAnswer").length === 0 ){
+            alert("У вопроса должен быть хотя бы один ответ!");
             return false;
         }
 
-    var el = document.getElementsByName("isRight");
+        const el = document.getElementsByName("isRight");
         for (let i = 0; i < el.length ; i++) {
             el[i].setAttribute("value", i)
+        }
+
+
+        const questions = document.getElementsByClassName('container-my-sm');
+        for (const question of questions ) {
+            const checks = question.querySelectorAll('input[type=checkbox]');
+            let count = 0;
+            for (const check of checks ) {
+                if (check.checked){
+                    count++;
+                    break;
+                }
+            }
+            if (count === 0){
+                alert('Необходимо выбрать хоть один правильный ответ!');
+                return false;
+            }
         }
     }
 </script>
