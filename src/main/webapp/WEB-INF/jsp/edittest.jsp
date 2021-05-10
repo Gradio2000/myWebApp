@@ -198,29 +198,20 @@
 </body>
 <script>
 
-    // функции для проверки checkbox
-    function validate(){
-        if(!validateForm()){
-            alert("You must check atleast one of the checkboxes");
-            return false;
-        }
-        return true;
-    }
-
     function validateForm() {
         if(document.getElementsByName("answerName").length === 0){
             alert("Добавьте ответ");
             return false;
         }
 
-        var c = document.getElementsByTagName('input');
-        for (var i = 0; i<c.length; i++){
-            if (c[i].type ==='checkbox') {
-                if (c[i].checked) {
-                    return true;
-                }
+        const form = document.getElementById('staticBackdrop');
+        const checks = form.querySelectorAll('input[type=checkbox]');
+        for (const check of checks ) {
+            if (check.checked){
+                return true;
             }
         }
+        alert('Отметьте правильный ответ!')
         return false;
     }
 
@@ -235,7 +226,7 @@
             required: ''
         }).appendTo($('#forAddAnswer'+id));
 
-        $('<label><input type="checkbox" name="isRight"> Правильный ответ</label>').appendTo($('#forAddAnswer'+id));
+        $('<label><input class="modalCheck" type="checkbox" name="isRight"> Правильный ответ</label>').appendTo($('#forAddAnswer'+id));
         $('<input/>', {
             hidden: '',
             name: 'quesIdForNewAnswer',
@@ -323,14 +314,6 @@
         e.preventDefault();
         return false;
     });
-
-    //Функция удаления  поля
-    // $('.deleteAnswer').click(function(e) {
-    //     $(this).parent().remove();
-    //
-    //     e.preventDefault();
-    //     return false;
-    // });
 
 
     function getCount(){
