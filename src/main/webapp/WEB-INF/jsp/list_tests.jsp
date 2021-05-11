@@ -258,11 +258,11 @@
                 <sf:form class="validForm" id="myForm" name="formName" action="/addTest" method="POST" modelAttribute="test">
                     <div>
                         <label>Группа тестов</label>
-                        <sf:select path="groupId">
-                            <c:forEach var="group" items="${allgrouptest}">
-                                <option value="${group.grouptestId}">${group.name}</option>
-                            </c:forEach>
-                        </sf:select>
+<%--                        <sf:select path="groupId">--%>
+<%--                            <c:forEach var="group" items="${allgrouptest}">--%>
+<%--                                <option value="${group.groupTestId}">${group.name}</option>--%>
+<%--                            </c:forEach>--%>
+<%--                        </sf:select>--%>
                     </div>
                     <div class="form-floating">
                         <textarea name="testName" class="form-control" placeholder="Введите название теста" id="floatingTextarea" style="height: 100px" required></textarea>

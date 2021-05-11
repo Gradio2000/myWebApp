@@ -65,7 +65,7 @@ public class TestHiberDao {
         session.close();
     }
 
-    private Object getGroupById(Integer id) {
+    public GroupTest getGroupById(Integer id) {
         Session session = SessionFactoryUtil.getSession();
         Query query = session.createQuery("FROM group_test WHERE grouptest_id = :id");
         query.setParameter("id", id);

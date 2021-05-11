@@ -103,7 +103,7 @@
         <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test" onsubmit="return getCount()">
             <c:set var="IDTest" value="${test.testId}"/>
             <sf:hidden path="testId"/>
-            <sf:hidden path="groupId"/>
+            <input name="groupId" type="hidden" value="${test.groupTest.groupTestId}">
 
             <div class="container-my-big">
                 <label for="textTestName"><h2>Название теста</h2></label>

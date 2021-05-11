@@ -101,11 +101,11 @@
                     <th></th>
                 </tr>
                 <c:forEach var='group' items='${groupTests}'>
-                    <input hidden name="grouptestId" value="${group.grouptestId}"/>
+                    <input hidden name="grouptestId" value="${group.groupTestId}"/>
                     <tr>
-                        <td><c:out value="${group.grouptestId}"/></td>
+                        <td><c:out value="${group.groupTestId}"/></td>
                         <td width=100><textarea name="name">${group.name}</textarea></td>
-                        <td><button class="btn danger" onclick="document.location = 'group/delete?id=${group.grouptestId}'">Удалить</button></td>
+                        <td><button class="btn danger" onclick="document.location = 'group/delete?id=${group.groupTestId}'">Удалить</button></td>
                     </tr>
                 </c:forEach>
             </table>

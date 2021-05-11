@@ -8,22 +8,20 @@ import java.util.List;
 public class Test {
     private int testId;
     private String testName;
-    private int groupId;
     private GroupTest groupTest;
+    private List<Question> questions;
+
+    public Test() {
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = GroupTest.class)
-    @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id")
     public GroupTest getGroupTest() {
         return groupTest;
     }
 
     public void setGroupTest(GroupTest groupTest) {
         this.groupTest = groupTest;
-    }
-
-    private List<Question> questions;
-
-    public Test() {
     }
 
     @OneToMany(
@@ -61,35 +59,4 @@ public class Test {
         this.testName = testName;
     }
 
-    @Basic
-    @Column(name = "group_id")
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Test test = (Test) o;
-
-        if (testId != test.testId) return false;
-        if (groupId != test.groupId) return false;
-        if (testName != null ? !testName.equals(test.testName) : test.testName != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = testId;
-        result = 31 * result + (testName != null ? testName.hashCode() : 0);
-        result = 31 * result + groupId;
-        return result;
-    }
 }

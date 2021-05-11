@@ -1,6 +1,5 @@
 package ru.laskin.myWebApp.controllers;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -143,7 +142,8 @@ public class AdminController {
             questionList.add(question);
         }
 
-        test.setGroupId(Integer.parseInt(groupId[0]));
+//        test.setGroupId(Integer.parseInt(groupId[0]));
+        test.setGroupTest(testService.getGroupTestById(Integer.parseInt(groupId[0])));
         test.setQuestions(questionList);
 
         testService.updateTest(test);
@@ -227,7 +227,7 @@ public class AdminController {
         List<GroupTest> groupTests = new ArrayList<>();
         for (int i = 0; i < id.length; i++) {
             GroupTest groupTest = new GroupTest();
-            groupTest.setGrouptestId(Integer.parseInt(id[i]));
+            groupTest.setGroupTestId(Integer.parseInt(id[i]));
             groupTest.setName(name[i]);
             groupTests.add(groupTest);
         }

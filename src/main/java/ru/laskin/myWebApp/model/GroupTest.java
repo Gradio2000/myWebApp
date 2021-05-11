@@ -9,7 +9,7 @@ import java.util.List;
 @Entity(name = "group_test")
 @Table(name = "group_test", schema = "public", catalog = "postgres")
 public class GroupTest {
-    private int grouptestId;
+    private int groupTestId;
     private String name;
     private List<Test> testList;
 
@@ -33,12 +33,12 @@ public class GroupTest {
     @Column(name = "grouptest_id", nullable = false)
     @GeneratedValue(generator = "id")
     @SequenceGenerator(name = "id", sequenceName = "group_test_grouptest_id_seq")
-    public int getGrouptestId() {
-        return grouptestId;
+    public int getGroupTestId() {
+        return groupTestId;
     }
 
-    public void setGrouptestId(int grouptestId) {
-        this.grouptestId = grouptestId;
+    public void setGroupTestId(int grouptestId) {
+        this.groupTestId = grouptestId;
     }
 
     @Basic
@@ -58,7 +58,7 @@ public class GroupTest {
 
         GroupTest groupTest = (GroupTest) o;
 
-        if (grouptestId != groupTest.grouptestId) return false;
+        if (groupTestId != groupTest.groupTestId) return false;
         if (name != null ? !name.equals(groupTest.name) : groupTest.name != null) return false;
 
         return true;
@@ -66,7 +66,7 @@ public class GroupTest {
 
     @Override
     public int hashCode() {
-        int result = grouptestId;
+        int result = groupTestId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }

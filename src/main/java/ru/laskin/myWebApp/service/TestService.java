@@ -63,4 +63,8 @@ public class TestService {
     public void updateAllGroup(List<GroupTest> groupTests) {
         testHiberDao.updateAllGroup(groupTests);
     }
+
+    public GroupTest getGroupTestById(int groupId) {
+        return testHiberDao.getGroupById(groupId);
+    }
 }
