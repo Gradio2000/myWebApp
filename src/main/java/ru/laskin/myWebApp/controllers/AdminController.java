@@ -229,6 +229,9 @@ public class AdminController {
             GroupTest groupTest = new GroupTest();
             groupTest.setGroupTestId(Integer.parseInt(id[i]));
             groupTest.setName(name[i]);
+            groupTest.setTestList(testService.getTestsByGropId(Integer.parseInt(id[i])));
+
+
             groupTests.add(groupTest);
         }
 

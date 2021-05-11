@@ -86,9 +86,19 @@ public class TestHiberDao {
         Session session = SessionFactoryUtil.getSession();
         session.beginTransaction();
         for (GroupTest groupTest : groupTests){
-            session.update(groupTest);
+            session.saveOrUpdate(groupTest);
+            session.getTransaction().commit();
         }
-        session.getTransaction().commit();
+
         session.close();
+    }
+
+    public List<Test> getTestsByGroupId(int groupId) {
+        Session session = SessionFactoryUtil.getSession();
+        Query query = session.createQuery("FROM tests WHERE group_id =:id ORDER BY test_id");
+        query.setParameter("id", groupId);
+        List<Test> testList = query.list();
+        session.close();
+        return testList;
     }
 }

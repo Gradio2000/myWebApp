@@ -67,4 +67,8 @@ public class TestService {
     public GroupTest getGroupTestById(int groupId) {
         return testHiberDao.getGroupById(groupId);
     }
+
+    public List<Test> getTestsByGropId(int groupId) {
+        return testHiberDao.getTestsByGroupId(groupId);
+    }
 }
