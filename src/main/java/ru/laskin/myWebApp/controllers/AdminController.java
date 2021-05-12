@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -89,65 +88,7 @@ public class AdminController {
         и отправляет Test в БД для обновления                            */
     @PostMapping("/updateTest")
     public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String[] answersName = parameterMap.get("answer");
-        String[] answerId = parameterMap.get("answerId");
-        String[] isRight = parameterMap.get("isRight");
-        String[] questionName = parameterMap.get("question");
-        String[] questionId = parameterMap.get("questionId");
-        String[] quesAnsId = parameterMap.get("quesAnsId");
-        String[] newAnswer = parameterMap.get("newAnswer");
-        String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
-        String[] groupId = parameterMap.get("groupId");
-        String[] isRightForNewAnswer = parameterMap.get("isRightForNewAnswer");
-
-
-        List<Question> questionList = new ArrayList<>();
-        for (int i = 0; i < questionName.length; i++) {
-            Question question = new Question();
-            question.setQuestionId(Integer.parseInt(questionId[i]));
-            question.setQuestionName(questionName[i]);
-
-            List<Answer> answerList = new ArrayList<>();
-            if (answersName != null){
-                for (int j = 0; j < answersName.length; j++) {
-                    Answer answer = new Answer();
-                    if (j < answerId.length) {
-                        answer.setAnswerId(Integer.parseInt(answerId[j]));
-                    }
-                    answer.setAnswerName(answersName[j]);
-                    if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))){
-                        answer.setRight(true);
-                    }
-                    if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
-                        answerList.add(answer);
-                    }
-                }
-            }
-
-
-            if (newAnswer != null){
-                for (int j = 0; j < newAnswer.length; j++) {
-                    Answer answer = new Answer();
-                    answer.setAnswerName(newAnswer[j]);
-                    if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))){
-                        answer.setRight(true);
-                    }
-                    if (questionId[i].equals(quesIdForNewAnswer[j])){
-                        answerList.add(answer);
-                    }
-                }
-            }
-
-            question.setAnswers(answerList);
-            questionList.add(question);
-        }
-
-//        test.setGroupId(Integer.parseInt(groupId[0]));
-        test.setGroupTest(testService.getGroupTestById(Integer.parseInt(groupId[0])));
-        test.setQuestions(questionList);
-
-        testService.updateTest(test);
+        testService.updateTest(test, request.getParameterMap());
         return "redirect:/allTests";
     }
 
@@ -168,25 +109,7 @@ public class AdminController {
         String[] answersName = request.getParameterValues("answerName");
         String[] rightAnswer = request.getParameterValues("isRight");
 
-        //собираем list answers
-        List<Answer> answers = new ArrayList<>();
-        for (int i = 0; i < answersName.length; i++) {
-            Answer answer = new Answer();
-            answer.setAnswerName(answersName[i]);
-
-                //в цикле в answer добавляется отметка isRight
-            for (String s : rightAnswer) {
-                int count = Integer.parseInt(s);
-                if (i == count) {
-                    answer.setRight(true);
-                }
-            }
-
-            answers.add(answer);
-        }
-
-        question.setAnswers(answers);
-        testService.saveQuestion(question);
+        testService.saveQuestion(question, answersName, rightAnswer);
 
         try {
             response.sendRedirect("/tests/update?id=" + testId);
@@ -231,7 +154,7 @@ public class AdminController {
             GroupTest groupTest = new GroupTest();
             groupTest.setGroupTestId(Integer.parseInt(id[i]));
             groupTest.setName(name[i]);
-            groupTest.setTestList(testService.getTestsByGropId(Integer.parseInt(id[i])));
+            groupTest.setTestList(testService.getTestsByGroupId(Integer.parseInt(id[i])));
 
 
             groupTests.add(groupTest);
