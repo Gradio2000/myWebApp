@@ -99,6 +99,7 @@ public class AdminController {
         String[] newAnswer = parameterMap.get("newAnswer");
         String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
         String[] groupId = parameterMap.get("groupId");
+        String[] isRightForNewAnswer = parameterMap.get("isRightForNewAnswer");
 
 
         List<Question> questionList = new ArrayList<>();
@@ -115,7 +116,7 @@ public class AdminController {
                         answer.setAnswerId(Integer.parseInt(answerId[j]));
                     }
                     answer.setAnswerName(answersName[j]);
-                    if (Arrays.asList(isRight).contains(String.valueOf(j))){
+                    if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))){
                         answer.setRight(true);
                     }
                     if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
@@ -129,7 +130,7 @@ public class AdminController {
                 for (int j = 0; j < newAnswer.length; j++) {
                     Answer answer = new Answer();
                     answer.setAnswerName(newAnswer[j]);
-                    if (Arrays.asList(isRight).contains(String.valueOf(j))){
+                    if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))){
                         answer.setRight(true);
                     }
                     if (questionId[i].equals(quesIdForNewAnswer[j])){

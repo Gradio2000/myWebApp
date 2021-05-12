@@ -226,7 +226,7 @@
             required: ''
         }).appendTo($('#forAddAnswer'+id));
 
-        $('<label><input class="modalCheck" type="checkbox" name="isRight"> Правильный ответ</label>').appendTo($('#forAddAnswer'+id));
+        $('<label><input class="modalCheck" type="checkbox" name="isRightForNewAnswer"> Правильный ответ</label>').appendTo($('#forAddAnswer'+id));
         $('<input/>', {
             hidden: '',
             name: 'quesIdForNewAnswer',
@@ -325,6 +325,11 @@
         const el = document.getElementsByName("isRight");
         for (let i = 0; i < el.length ; i++) {
             el[i].setAttribute("value", i)
+        }
+
+        const el2 = document.getElementsByName("isRightForNewAnswer");
+        for (let i = 0; i < el2.length ; i++) {
+            el2[i].setAttribute("value", i)
         }
 
 
