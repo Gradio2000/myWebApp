@@ -105,7 +105,8 @@
                     <tr>
                         <td><c:out value="${group.groupTestId}"/></td>
                         <td width=100><textarea name="name">${group.name}</textarea></td>
-                        <td><button class="btn danger" onclick="document.location = 'group/delete?id=${group.groupTestId}'">Удалить</button></td>
+<%--                        <td><button class="btn danger" onclick="document.location = 'group/delete?id=${group.groupTestId}'">Удалить</button></td>--%>
+                        <td><a href="/group/delete?id=${group.groupTestId}" class="btn danger">Удалить</a> </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -119,7 +120,7 @@
     </form>
 </div>
 
-
+<%--модальная форма--%>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -148,31 +149,31 @@
 
 
 
-<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel1">Редактирование группы</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <sf:form class="validForm" id="myForm" name="formName" action="/addGroup" method="POST" modelAttribute="groupTests">
-                    <div class="form-floating">
-                        <textarea name="name" class="form-control" placeholder="Введите группу" id="floatingTextarea1" style="height: 100px" required></textarea>
-                        <label for="floatingTextarea">Наименование группы</label>
-                    </div>
+<%--<div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">--%>
+<%--    <div class="modal-dialog">--%>
+<%--        <div class="modal-content">--%>
+<%--            <div class="modal-header">--%>
+<%--                <h5 class="modal-title" id="staticBackdropLabel1">Редактирование группы</h5>--%>
+<%--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>--%>
+<%--            </div>--%>
+<%--            <div class="modal-body">--%>
+<%--                <sf:form class="validForm" id="myForm" name="formName" action="/addGroup" method="POST" modelAttribute="groupTests">--%>
+<%--                    <div class="form-floating">--%>
+<%--                        <textarea name="name" class="form-control" placeholder="Введите группу" id="floatingTextarea1" style="height: 100px" required></textarea>--%>
+<%--                        <label for="floatingTextarea">Наименование группы</label>--%>
+<%--                    </div>--%>
 
-                    <br/>
+<%--                    <br/>--%>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn close" data-bs-dismiss="modal">Закрыть</button>
-                        <button type="submit" class="btn info">Добавить</button>
-                    </div>
-                </sf:form>
-            </div>
-        </div>
-    </div>
-</div>
+<%--                    <div class="modal-footer">--%>
+<%--                        <button type="button" class="btn close" data-bs-dismiss="modal">Закрыть</button>--%>
+<%--                        <button type="submit" class="btn info">Добавить</button>--%>
+<%--                    </div>--%>
+<%--                </sf:form>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 
 <footer class="footer u-align-center u-clearfix u-grey-80 " id="sec-3569">
