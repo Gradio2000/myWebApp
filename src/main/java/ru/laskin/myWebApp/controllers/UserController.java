@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.model.AttemptTest;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 
+import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
@@ -17,6 +19,8 @@ import ru.laskin.myWebApp.validation.UserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -27,17 +31,20 @@ public class UserController {
     private final TestService testService;
     private final UserValidator userValidator;
     private final UserDopRegistrationValidator userDopRegistrationValidator;
+    private final AttemptTestService attemptTestService;
 
 
 
     public UserController(UserService userService, PositionService positionService,
                           TestService testService, UserValidator userValidator,
-                          UserDopRegistrationValidator userDopRegistrationValidator) {
+                          UserDopRegistrationValidator userDopRegistrationValidator,
+                          AttemptTestService attemptTestService) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.userValidator = userValidator;
         this.userDopRegistrationValidator = userDopRegistrationValidator;
+        this.attemptTestService = attemptTestService;
     }
 
     @GetMapping("/greeting")
@@ -129,10 +136,21 @@ public class UserController {
 
 
     @GetMapping("/getTest")
-    public String testStart(@RequestParam String testId, Model model){
+    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId, Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("tests", testService.getTestById(Integer.parseInt(testId)));
+        Test test = testService.getTestById(Integer.parseInt(testId));
+
+
+        //записываем в БД новую попытку
+        if (attemptId == null){
+            Timestamp timestamp = new Timestamp(new Date().getTime());
+            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), user.getUserId());
+            attemptId = attemptTestService.saveAttemptTest(attemptTest);
+        }
+
+        model.addAttribute("tests", test);
         model.addAttribute("user", user);
+        model.addAttribute("attemptId", attemptId);
         return "testProcessing";
     }
 

@@ -1,5 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
@@ -14,7 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
-<%@ taglib prefix="z" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
 
 <jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
@@ -67,7 +66,7 @@
         /* Style the tab content */
         .tabcontent {
             float: left;
-            padding: 0px 12px;
+            padding: 0 12px;
             border: 1px solid #ccc;
             width: 70%;
             border-left: none;
@@ -79,21 +78,6 @@
 </head>
 <body>
 
-
-<sf:form name="testResult" method="post" action="/testResult" modelAttribute="tests">
-    <input hidden name="testId" value="${tests.testId}">
-    <input hidden name="userId" value="${user.userId}">
-    <c:forEach var="ques" items="${tests.questions}">
-        <input hidden name="questionId" value="${ques.questionId}">
-        <p>${ques.questionName}</p>
-            <c:forEach var="answer" items="${ques.answers}">
-                <input type="checkbox" name="check" value="${answer.answerId}">${answer.answerName}<br>
-            </c:forEach>
-    </c:forEach>
-    <input type="submit">
-</sf:form>
-
-
 <div class="tab">
     <c:forEach var="quest" items="${tests.questions}" varStatus="count">
         <button id="${count.count}" class="tablinks" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
@@ -101,14 +85,20 @@
 </div>
 
 <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-    <div id="content${count.count}" class="tabcontent">
-        <h3>${quest.questionName}</h3>
-        <c:forEach var="answ" items="${quest.answers}">
-            <input type="checkbox" name="check" value="${answ.answerId}">${answ.answerName}<br>
-        </c:forEach>
-    </div>
+    <sf:form method="post" action="saveUserAnswer">
+        <input hidden name="questionId" value="${quest.questionId}">
+        <input hidden name="attemptId" value="${attemptId}">
+        <input hidden name="testId" value="${tests.testId}">
+        <div id="content${count.count}" class="tabcontent">
+            <h3>${quest.questionName}</h3>
+            <c:forEach var="answ" items="${quest.answers}">
+                <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                <br/>
+            </c:forEach>
+            <input type="submit">
+        </div>
+    </sf:form>
 </c:forEach>
-
 
 <script>
     function openCity(evt, count) {

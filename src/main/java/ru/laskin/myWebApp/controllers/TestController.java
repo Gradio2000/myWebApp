@@ -39,21 +39,17 @@ public class TestController {
     public String testResult (@RequestParam("testId") int testId,
                               @RequestParam("userId") int userId,
                               @RequestParam("questionId") List<Integer> questionId,
+                              @RequestParam("attemptId") Integer attemptId,
                               HttpServletRequest request,
                               Model model){
-
-        //создаем попытку и сохраняем ее в БД
-        Timestamp timestamp = new Timestamp(new Date().getTime());
-        AttemptTest attemptTest = new AttemptTest(timestamp, testId, userId);
-        int attemptId = attemptTestService.saveAttemptTest(attemptTest);
 
         //Это массив check из testProcessing (ответы пользователя)
         String[] userChecks = request.getParameterValues("check");
 
         //Создаем ResultTestы
-        for (int i = 0; i < questionId.size(); i++) {
-            for (int j = 0; j < userChecks.length; j++) {
-                ResultTest resultTest = new ResultTest(attemptId, questionId.get(i), Integer.parseInt(userChecks[j]));
+        for (Integer integer : questionId) {
+            for (String userCheck : userChecks) {
+                ResultTest resultTest = new ResultTest(attemptId, integer, Integer.parseInt(userCheck));
                 resultTestService.saveResultTest(resultTest);
             }
         }
@@ -66,5 +62,21 @@ public class TestController {
             return "testResult";
     }
 
+    @PostMapping("/saveUserAnswer")
+    public String saveUserAnswer(HttpServletRequest request,
+                                 @RequestParam String testId,
+                                 @RequestParam Integer questionId,
+                                 @RequestParam Integer attemptId){
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] checks = parameterMap.get("check");
+
+        //Создаем ResultTestы
+        for (int i = 0; i < checks.length; i++) {
+            ResultTest resultTest = new ResultTest(attemptId, questionId, Integer.parseInt(checks[i]));
+            resultTestService.saveResultTest(resultTest);
+        }
+
+        return "redirect:getTest?testId=" + testId + "&attemptId=" + attemptId;
+    }
 
 }
