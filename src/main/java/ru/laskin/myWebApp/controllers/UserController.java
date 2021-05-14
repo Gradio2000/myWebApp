@@ -132,7 +132,7 @@ public class UserController {
     public String testStart(@RequestParam String testId, Model model){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("tests", testService.getTestById(Integer.parseInt(testId)));
-        model.addAttribute("users", user);
+        model.addAttribute("user", user);
         return "testProcessing";
     }
 

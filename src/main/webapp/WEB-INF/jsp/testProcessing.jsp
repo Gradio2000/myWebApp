@@ -23,7 +23,58 @@
 <jsp:useBean id="user" class="ru.laskin.myWebApp.model.User"/>
 
 <html>
+
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {box-sizing: border-box}
+        body {font-family: "Lato", sans-serif;}
+
+        /* Style the tab */
+        .tab {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            width: 30%;
+            height: 300px;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            display: block;
+            background-color: inherit;
+            color: black;
+            padding: 22px 16px;
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current "tab button" class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            float: left;
+            padding: 0px 12px;
+            border: 1px solid #ccc;
+            width: 70%;
+            border-left: none;
+            height: 300px;
+        }
+    </style>
+
     <title>Прохождение теста</title>
 </head>
 <body>
@@ -31,7 +82,7 @@
 
 <sf:form name="testResult" method="post" action="/testResult" modelAttribute="tests">
     <input hidden name="testId" value="${tests.testId}">
-    <input hidden name="userId" value="${users.userId}">
+    <input hidden name="userId" value="${user.userId}">
     <c:forEach var="ques" items="${tests.questions}">
         <input hidden name="questionId" value="${ques.questionId}">
         <p>${ques.questionName}</p>
@@ -41,6 +92,43 @@
     </c:forEach>
     <input type="submit">
 </sf:form>
+
+
+<div class="tab">
+    <c:forEach var="quest" items="${tests.questions}" varStatus="count">
+        <button id="${count.count}" class="tablinks" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
+    </c:forEach>
+</div>
+
+<c:forEach var="quest" items="${tests.questions}" varStatus="count">
+    <div id="content${count.count}" class="tabcontent">
+        <h3>${quest.questionName}</h3>
+        <c:forEach var="answ" items="${quest.answers}">
+            <input type="checkbox" name="check" value="${answ.answerId}">${answ.answerName}<br>
+        </c:forEach>
+    </div>
+</c:forEach>
+
+
+<script>
+    function openCity(evt, count) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById("content" + count).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("1").click();
+
+</script>
 
 </body>
 </html>

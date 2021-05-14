@@ -31,38 +31,4 @@ public class MainService {
         this.timeUtils = timeUtils;
     }
 
-    //Этот метод формирует список из БД для отображения результата теста для пользователя
-    public List<String> getResult(int attemptTestId, Timestamp timestamp, int testId, int userId){
-        User user = userDao.getUserById(userId);
-        String dateAndTime = timeUtils.timestampToDate(timestamp);
-        String userName = user.getName();
-        String userPosition = user.getPosition();
-        String testName = testDao.getTestById(testId).getTestName();
-
-        List<ResultTest> resultTests = resultTestDao.getAllResultByAttempt(attemptTestId);
-        String countQuestions = String.valueOf(resultTests.size());
-
-        List<Integer> answerTrueList = answersDao.getAllAnswers()
-                .stream()
-                .map(Answer::getAnswerId)
-                .collect(Collectors.toList());
-
-        int count = 0;
-        for (int i = 0; i < resultTests.size(); i++) {
-            if (answerTrueList.contains(resultTests.get(i).getAnswerId())){
-                count++;
-            }
-        }
-        String answerTrueCount = String.valueOf(count);
-
-        List<String> stringList = new ArrayList<>();
-        stringList.add(dateAndTime);
-        stringList.add(userName);
-        stringList.add(userPosition);
-        stringList.add(testName);
-        stringList.add(countQuestions);
-        stringList.add(answerTrueCount);
-
-        return stringList;
-    }
 }
