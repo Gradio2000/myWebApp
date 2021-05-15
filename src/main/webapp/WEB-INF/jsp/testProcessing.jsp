@@ -72,6 +72,20 @@
             border-left: none;
             height: 300px;
         }
+
+        .tab button.green {
+            background-color: #41de77;
+            color: #2c652f;
+        }
+
+        .tab button.green:hover{
+            background-color: #2c9751;
+        }
+
+        .tab button.green.active {
+            background-color: #278648;
+            color: #0f0f0f;
+        }
     </style>
 
     <title>Прохождение теста</title>
@@ -95,7 +109,7 @@
                         <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
                         <br/>
                     </c:forEach>
-                    <input name="next" onclick=iNext() type="button" value="Далее"/>
+                    <input name="next" onclick=iNext(${count.count}) type="button" value="Далее"/>
                 </div>
         </c:forEach>
         <input type="submit" value="Ответить">
@@ -118,18 +132,36 @@
         evt.currentTarget.className += " active";
     }
 
-    function iNext(){
+    function iNext(divId){
+        // проверить отмечен ли checkbox?
+        const division = document.getElementById("content" + divId);
+        const checks = division.querySelectorAll('input[type=checkbox]');
+        let count = 0;
+        for (const check of checks ) {
+            if (check.checked){
+                count++;
+                break;
+            }
+        }
+        if (count === 0){
+            alert('Необходимо выбрать хоть один правильный ответ!');
+            return false;
+        }
+
+        //перейти к следующему вопросу
         const elem = document.getElementsByClassName("active");
         let id = elem[0].id;
         id++;
         const el = document.getElementById(id);
         el.click();
+
+        //пометить кнопку зеленым
+        document.getElementById(divId).className += " green";
+
     }
 
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("1").click();
-
-
 
 </script>
 
