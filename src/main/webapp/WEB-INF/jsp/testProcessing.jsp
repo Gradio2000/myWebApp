@@ -84,23 +84,26 @@
     </c:forEach>
 </div>
 
-<c:forEach var="quest" items="${tests.questions}" varStatus="count">
     <sf:form method="post" action="saveUserAnswer">
-        <input hidden name="questionId" value="${quest.questionId}">
-        <input hidden name="attemptId" value="${attemptId}">
-        <input hidden name="testId" value="${tests.testId}">
-        <div id="content${count.count}" class="tabcontent">
-            <h3>${quest.questionName}</h3>
-            <c:forEach var="answ" items="${quest.answers}">
-                <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
-                <br/>
-            </c:forEach>
-            <input type="submit">
-        </div>
+        <c:forEach var="quest" items="${tests.questions}" varStatus="count">
+                <input hidden name="questionId" value="${quest.questionId}">
+                <input hidden name="attemptId" value="${attemptId}">
+                <input hidden name="testId" value="${tests.testId}">
+                <div id="content${count.count}" class="tabcontent">
+                    <h3>${quest.questionName}</h3>
+                    <c:forEach var="answ" items="${quest.answers}">
+                        <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                        <br/>
+                    </c:forEach>
+                    <input name="next" onclick=iNext() type="button" value="Далее"/>
+                </div>
+        </c:forEach>
+        <input type="submit" value="Ответить">
     </sf:form>
-</c:forEach>
+
 
 <script>
+
     function openCity(evt, count) {
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -115,8 +118,18 @@
         evt.currentTarget.className += " active";
     }
 
+    function iNext(){
+        const elem = document.getElementsByClassName("active");
+        let id = elem[0].id;
+        id++;
+        const el = document.getElementById(id);
+        el.click();
+    }
+
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("1").click();
+
+
 
 </script>
 

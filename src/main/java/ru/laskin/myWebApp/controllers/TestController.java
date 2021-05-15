@@ -64,17 +64,20 @@ public class TestController {
 
     @PostMapping("/saveUserAnswer")
     public String saveUserAnswer(HttpServletRequest request,
-                                 @RequestParam String testId,
                                  @RequestParam Integer questionId,
                                  @RequestParam Integer attemptId){
         Map<String, String[]> parameterMap = request.getParameterMap();
         String[] checks = parameterMap.get("check");
+        String testId = parameterMap.get("testId")[0];
 
         //Создаем ResultTestы
-        for (int i = 0; i < checks.length; i++) {
-            ResultTest resultTest = new ResultTest(attemptId, questionId, Integer.parseInt(checks[i]));
-            resultTestService.saveResultTest(resultTest);
+        if (checks != null){
+            for (int i = 0; i < checks.length; i++) {
+                ResultTest resultTest = new ResultTest(attemptId, questionId, Integer.parseInt(checks[i]));
+                resultTestService.saveResultTest(resultTest);
+            }
         }
+
 
         return "redirect:getTest?testId=" + testId + "&attemptId=" + attemptId;
     }
