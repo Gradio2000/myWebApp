@@ -80,12 +80,31 @@
 
         .tab button.green:hover{
             background-color: #2c9751;
+            color: #0f0f0f;
+
         }
 
         .tab button.green.active {
             background-color: #278648;
             color: #0f0f0f;
         }
+
+        .tab button.yellow {
+            background-color: #eedd4b;
+            color: #83862b;
+        }
+
+        .tab button.yellow:hover{
+            background-color: #b8ab3a;
+            color: #0f0f0f
+        }
+
+        .tab button.yellow.active {
+            background-color: #b8ab3a;
+            color: #0f0f0f;
+        }
+
+
     </style>
 
     <title>Прохождение теста</title>
@@ -110,6 +129,7 @@
                         <br/>
                     </c:forEach>
                     <input name="next" onclick=iNext(${count.count}) type="button" value="Далее"/>
+                    <input name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
                 </div>
         </c:forEach>
         <input type="submit" value="Ответить">
@@ -152,12 +172,26 @@
         const elem = document.getElementsByClassName("active");
         let id = elem[0].id;
         id++;
-        const el = document.getElementById(id);
-        el.click();
+        document.getElementById(id).click();
 
         //пометить кнопку зеленым
+        console.log(divId);
+        document.getElementById(divId).className = document.getElementById(divId).className.replace(" yellow", "");
         document.getElementById(divId).className += " green";
 
+    }
+
+    function iSkip(divId) {
+        //перейти к следующему вопросу
+        const elem = document.getElementsByClassName("active");
+        let id = elem[0].id;
+        id++;
+        document.getElementById(id).click();
+
+
+        //пометить кнопку желтым
+
+        document.getElementById(divId).className += " yellow";
     }
 
     // Get the element with id="defaultOpen" and click on it
