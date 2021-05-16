@@ -62,7 +62,7 @@ public class TestController {
             return "testResult";
     }
 
-    @PostMapping("/saveUserAnswer")
+    @PostMapping("/oper")
     public String saveUserAnswer(HttpServletRequest request,
                                  @RequestParam Integer questionId,
                                  @RequestParam Integer attemptId){
@@ -77,9 +77,7 @@ public class TestController {
                 resultTestService.saveResultTest(resultTest);
             }
         }
-
-
-        return "redirect:getTest?testId=" + testId + "&attemptId=" + attemptId;
+        return "testProcessing";
     }
 
 }

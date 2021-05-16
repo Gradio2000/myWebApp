@@ -13,7 +13,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="z" uri="http://www.springframework.org/tags/form" %>
 
 
 <jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
@@ -24,10 +24,16 @@
 <html>
 
 <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {box-sizing: border-box}
-        body {font-family: "Lato", sans-serif;}
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: "Lato", sans-serif;
+        }
 
         /* Style the tab */
         .tab {
@@ -78,7 +84,7 @@
             color: #2c652f;
         }
 
-        .tab button.green:hover{
+        .tab button.green:hover {
             background-color: #2c9751;
             color: #0f0f0f;
 
@@ -94,7 +100,7 @@
             color: #83862b;
         }
 
-        .tab button.yellow:hover{
+        .tab button.yellow:hover {
             background-color: #b8ab3a;
             color: #0f0f0f
         }
@@ -117,24 +123,22 @@
     </c:forEach>
 </div>
 
-    <sf:form method="post" action="saveUserAnswer">
         <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-                <input hidden name="questionId" value="${quest.questionId}">
+            <sf:form name="fff" method="post" action="oper">
                 <input hidden name="attemptId" value="${attemptId}">
                 <input hidden name="testId" value="${tests.testId}">
                 <div id="content${count.count}" class="tabcontent">
                     <h3>${quest.questionName}</h3>
+                    <input hidden name="questionId" value="${quest.questionId}">
                     <c:forEach var="answ" items="${quest.answers}">
                         <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
                         <br/>
                     </c:forEach>
-                    <input name="next" onclick=iNext(${count.count}) type="button" value="Далее"/>
+                    <input type="submit"/>
                     <input name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
                 </div>
+            </sf:form>
         </c:forEach>
-        <input type="submit" value="Ответить">
-    </sf:form>
-
 
 <script>
 
@@ -152,34 +156,42 @@
         evt.currentTarget.className += " active";
     }
 
-    function iNext(divId){
-        // проверить отмечен ли checkbox?
-        const division = document.getElementById("content" + divId);
-        const checks = division.querySelectorAll('input[type=checkbox]');
-        let count = 0;
-        for (const check of checks ) {
-            if (check.checked){
-                count++;
-                break;
-            }
-        }
-        if (count === 0){
-            alert('Необходимо выбрать хоть один правильный ответ!');
-            return false;
-        }
+    // function iNext(divId){
+    //
+    //     if (!valid(divId)){
+    //         alert('Необходимо выбрать хоть один правильный ответ!');
+    //         iSkip(divId);
+    //     }
+    //     else {
+    //         //перейти к следующему вопросу
+    //         const elem = document.getElementsByClassName("active");
+    //         let id = elem[0].id;
+    //         id++;
+    //         document.getElementById(id).click();
+    //
+    //         //пометить кнопку зеленым
+    //         console.log(divId);
+    //         document.getElementById(divId).className = document.getElementById(divId).className.replace(" yellow", "");
+    //         document.getElementById(divId).className += " green";
+    //         document.forms["fff"].submit();
+    //     }
+    // }
 
-        //перейти к следующему вопросу
-        const elem = document.getElementsByClassName("active");
-        let id = elem[0].id;
-        id++;
-        document.getElementById(id).click();
 
-        //пометить кнопку зеленым
-        console.log(divId);
-        document.getElementById(divId).className = document.getElementById(divId).className.replace(" yellow", "");
-        document.getElementById(divId).className += " green";
+    $('form').on('submit', function(e) {
+        e.preventDefault();
 
-    }
+        $.ajax({
+            type: $(this).attr('method'),
+            url : $(this).attr('action'),
+            data: $(this).serialize()
+        }).done(function() {
+            console.log('success');
+        }).fail(function() {
+            console.log('fail');
+        });
+    });
+
 
     function iSkip(divId) {
         //перейти к следующему вопросу
@@ -192,6 +204,23 @@
         //пометить кнопку желтым
 
         document.getElementById(divId).className += " yellow";
+    }
+
+    function valid(divId){
+        // проверить отмечен ли checkbox?
+        const division = document.getElementById("content" + divId);
+        const checks = division.querySelectorAll('input[type=checkbox]');
+        let count = 0;
+        for (const check of checks ) {
+            if (check.checked){
+                count++;
+                break;
+            }
+        }
+        if (count === 0){
+            return false;
+        }
+        else return true;
     }
 
     // Get the element with id="defaultOpen" and click on it
