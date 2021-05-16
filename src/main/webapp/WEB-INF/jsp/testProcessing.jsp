@@ -186,7 +186,16 @@
             url : $(this).attr('action'),
             data: $(this).serialize()
         }).done(function() {
-            console.log('success');
+                    //перейти к следующему вопросу
+                    const elem = document.getElementsByClassName("active");
+                    let id = elem[0].id;
+                    id++;
+                    document.getElementById(id).click();
+
+                    //пометить кнопку зеленым
+                    id--;
+                    document.getElementById(id).className = document.getElementById(id).className.replace(" yellow", "");
+                    document.getElementById(id).className += " green";
         }).fail(function() {
             console.log('fail');
         });
