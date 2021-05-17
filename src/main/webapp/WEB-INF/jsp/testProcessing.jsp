@@ -131,11 +131,11 @@
                     <h3>${quest.questionName}</h3>
                     <input hidden name="questionId" value="${quest.questionId}">
                     <c:forEach var="answ" items="${quest.answers}">
-                        <label><input type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                        <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
                         <br/>
                     </c:forEach>
-                    <input type="submit"/>
-                    <input name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
+                    <input type="submit" class="butt"/>
+                    <input class="butt" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
                 </div>
             </sf:form>
         </c:forEach>
@@ -181,23 +181,41 @@
     $('form').on('submit', function(e) {
         e.preventDefault();
 
+        const elem = document.getElementsByClassName("active");
+        let id = elem[0].id;
+        if (!valid(id)){
+            alert('Необходимо выбрать хоть один ответ!');
+            return false;
+        }
+
         $.ajax({
             type: $(this).attr('method'),
             url : $(this).attr('action'),
             data: $(this).serialize()
         }).done(function() {
-                    //перейти к следующему вопросу
                     const elem = document.getElementsByClassName("active");
                     let id = elem[0].id;
-                    id++;
-                    document.getElementById(id).click();
 
-                    //пометить кнопку зеленым
-                    id--;
+                    //блокируем кнопки
+                    const divElem = document.getElementById("content" + id);
+                    const btnElem = divElem.getElementsByClassName("butt");
+                    for (let i = 0; i < btnElem.length; i++) {
+                        btnElem[i].setAttribute("disabled", "disabled");
+                    }
+                    const checkElem = divElem.getElementsByClassName("checkes");
+                    for (let i = 0; i < checkElem.length ; i++) {
+                        checkElem[i].setAttribute("disabled", "disabled");
+                    }
+
+                    //пометить кнопку с ввопросом зеленым
                     document.getElementById(id).className = document.getElementById(id).className.replace(" yellow", "");
                     document.getElementById(id).className += " green";
+
+                    //перейти к следующему вопросу
+                    id++;
+                    document.getElementById(id).click();
         }).fail(function() {
-            console.log('fail');
+            alert("Ответы не приняты. Обратитесь к администратору!");
         });
     });
 
@@ -209,9 +227,7 @@
         id++;
         document.getElementById(id).click();
 
-
         //пометить кнопку желтым
-
         document.getElementById(divId).className += " yellow";
     }
 
