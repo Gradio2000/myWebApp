@@ -10,6 +10,7 @@ import ru.laskin.myWebApp.service.ResultTestService;
 import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -22,34 +23,6 @@ public class TestController {
     public TestController(ResultTestService resultTestService, TestService testService) {
         this.resultTestService = resultTestService;
         this.testService = testService;
-    }
-
-    //первый вариант
-    @PostMapping("/testResult")
-    public String testResult (@RequestParam("testId") int testId,
-                              @RequestParam("userId") int userId,
-                              @RequestParam("questionId") List<Integer> questionId,
-                              @RequestParam("attemptId") Integer attemptId,
-                              HttpServletRequest request,
-                              Model model){
-
-        //Это массив check из testProcessing (ответы пользователя)
-        String[] userChecks = request.getParameterValues("check");
-
-        //Создаем ResultTestы
-        for (Integer integer : questionId) {
-            for (String userCheck : userChecks) {
-                ResultTest resultTest = new ResultTest(attemptId, integer, Integer.parseInt(userCheck));
-                resultTestService.saveResultTest(resultTest);
-            }
-        }
-
-
-
-            //Получаем из БД ResultTest для этой попытки и отправляем в представление
-//            List<String> result = mainService.getResult(attemptId, timestamp, testId, userId);
-//            model.addAttribute("result", result);
-            return "testResult";
     }
 
     @PostMapping("/oper")
@@ -71,7 +44,8 @@ public class TestController {
     }
 
     @GetMapping("/finish")
-    public String testFinish(@RequestParam Integer attemptId, @RequestParam Integer testId){
+    public String testFinish(@RequestParam Integer attemptId, @RequestParam Integer testId,
+                             HttpServletRequest request){
         List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
         Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
         for (ResultTest resultTest : resultTestList){
@@ -84,6 +58,7 @@ public class TestController {
         Test test = testService.getTestById(testId);
         List<Question> questionList = test.getQuestions();
 
+        Map<Integer, Boolean> falseAnswer = new HashMap<>();
         for (Question question : questionList){
             List<Answer> answerList = question.getAnswers();
             for (Answer answer : answerList){
@@ -93,15 +68,21 @@ public class TestController {
                     }
                     else {
                         System.out.println("на ответ " + answer.getAnswerId() + "нужно было ответить");
+                        falseAnswer.put(question.getQuestionId(), false);
+                        break;
                     }
                 }
                 else {
                    if (mapOfUserAnswers.get(question.getQuestionId()).contains(answer.getAnswerId())){
                        System.out.println("на ответ " + answer.getAnswerId() + "зря ответил. Это не правильный ответ");
+                       falseAnswer.put(question.getQuestionId(), false);
+                       break;
                    }
                 }
             }
         }
+        request.setAttribute("falseAnswer", falseAnswer.size());
+        request.setAttribute("trueAnswer", questionList.size() - falseAnswer.size());
 
         return "testResult";
     }

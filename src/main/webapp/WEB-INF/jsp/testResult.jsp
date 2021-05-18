@@ -27,12 +27,13 @@
         <th>Название теста</th>
         <th>Количество вопросов</th>
         <th>Количество правильных ответов</th>
+        <th>Количество неправильных ответов</th>
     </tr>
         <tr>
-            <c:forEach items="${result}" var="item">
-                <td><c:out value="${item}"></c:out></td>
-            </c:forEach>
+            <p>${trueAnswer}</p>
+            <p>${falseAnswer}</p>
         </tr>
+
 </table>
 
 <br/>
