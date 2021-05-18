@@ -139,6 +139,7 @@
                 </div>
             </sf:form>
         </c:forEach>
+<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}'">Завершить</button>
 
 <script>
 
@@ -155,27 +156,6 @@
         document.getElementById("content" + count).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
-    // function iNext(divId){
-    //
-    //     if (!valid(divId)){
-    //         alert('Необходимо выбрать хоть один правильный ответ!');
-    //         iSkip(divId);
-    //     }
-    //     else {
-    //         //перейти к следующему вопросу
-    //         const elem = document.getElementsByClassName("active");
-    //         let id = elem[0].id;
-    //         id++;
-    //         document.getElementById(id).click();
-    //
-    //         //пометить кнопку зеленым
-    //         console.log(divId);
-    //         document.getElementById(divId).className = document.getElementById(divId).className.replace(" yellow", "");
-    //         document.getElementById(divId).className += " green";
-    //         document.forms["fff"].submit();
-    //     }
-    // }
 
 
     $('form').on('submit', function(e) {
@@ -202,6 +182,7 @@
                     for (let i = 0; i < btnElem.length; i++) {
                         btnElem[i].setAttribute("disabled", "disabled");
                     }
+                    //БЛОКируем checks
                     const checkElem = divElem.getElementsByClassName("checkes");
                     for (let i = 0; i < checkElem.length ; i++) {
                         checkElem[i].setAttribute("disabled", "disabled");
@@ -248,7 +229,7 @@
         else return true;
     }
 
-    // Get the element with id="defaultOpen" and click on it
+    // Get the element with id="1" and click on it
     document.getElementById("1").click();
 
 </script>
