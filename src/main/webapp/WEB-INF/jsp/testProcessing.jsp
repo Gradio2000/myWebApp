@@ -139,9 +139,13 @@
                 </div>
             </sf:form>
         </c:forEach>
-<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}'">Завершить</button>
+<%--<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}'">Завершить</button>--%>
+<button name="finish" onclick="finish()">Завершить</button>
 
 <script>
+    function finish(){
+        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}";
+    }
 
     function openCity(evt, count) {
         var i, tabcontent, tablinks;
@@ -188,7 +192,7 @@
                         checkElem[i].setAttribute("disabled", "disabled");
                     }
 
-                    //пометить кнопку с ввопросом зеленым
+                    //пометить кнопку с вопросом зеленым
                     document.getElementById(id).className = document.getElementById(id).className.replace(" yellow", "");
                     document.getElementById(id).className += " green";
 
@@ -202,11 +206,13 @@
 
 
     function iSkip(divId) {
+
+        //пометить div как skipped
+        document.getElementById("content" + divId).className += " skipped";
+
         //перейти к следующему вопросу
-        const elem = document.getElementsByClassName("active");
-        let id = elem[0].id;
-        id++;
-        document.getElementById(id).click();
+        const nextId = divId + 1;
+        document.getElementById(nextId).click();
 
         //пометить кнопку желтым
         document.getElementById(divId).className += " yellow";

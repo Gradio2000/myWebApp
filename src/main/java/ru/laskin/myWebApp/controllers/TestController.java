@@ -1,5 +1,6 @@
 package ru.laskin.myWebApp.controllers;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import ru.laskin.myWebApp.service.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -65,30 +67,40 @@ public class TestController {
         List<Question> questionList = test.getQuestions();
 
         Map<Integer, Boolean> falseAnswer = new HashMap<>();
+        if (mapOfUserAnswers.size() != 0){
         for (Question question : questionList){
-            List<Answer> answerList = question.getAnswers();
-            for (Answer answer : answerList){
-                if (answer.isRight()){
-                    if (mapOfUserAnswers.get(question.getQuestionId()).contains(answer.getAnswerId())){
-                        System.out.println("на ответ " + answer.getAnswerId() + "дан правильный ответ");
+                List<Answer> answerList = question.getAnswers();
+                for (Answer answer : answerList){
+                    if (answer.isRight()){
+                        List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
+                        if (questionsIdList != null && questionsIdList.contains(answer.getAnswerId())){
+                            System.out.println("на ответ " + answer.getAnswerId() + "дан правильный ответ");
+                        }
+                        else {
+                            System.out.println("на ответ " + answer.getAnswerId() + "нужно было ответить");
+                            falseAnswer.put(question.getQuestionId(), false);
+                            break;
+                        }
                     }
                     else {
-                        System.out.println("на ответ " + answer.getAnswerId() + "нужно было ответить");
-                        falseAnswer.put(question.getQuestionId(), false);
-                        break;
+                        if (mapOfUserAnswers.get(question.getQuestionId()).contains(answer.getAnswerId())){
+                            System.out.println("на ответ " + answer.getAnswerId() + "зря ответил. Это не правильный ответ");
+                            falseAnswer.put(question.getQuestionId(), false);
+                            break;
+                        }
                     }
-                }
-                else {
-                   if (mapOfUserAnswers.get(question.getQuestionId()).contains(answer.getAnswerId())){
-                       System.out.println("на ответ " + answer.getAnswerId() + "зря ответил. Это не правильный ответ");
-                       falseAnswer.put(question.getQuestionId(), false);
-                       break;
-                   }
                 }
             }
         }
+        else {
+            for (Question question : questionList){
+                falseAnswer.put(question.getQuestionId(), false);
+            }
+        }
 
-        request.setAttribute("data", attemptTest.getDateTime());
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
         request.setAttribute("name", user.getName());
         request.setAttribute("position", user.getPosition());
         request.setAttribute("testName", test.getTestName());
