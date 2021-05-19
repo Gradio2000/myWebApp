@@ -24,4 +24,10 @@ public class AttemptTestDao {
         List<AttemptTest> attemptTests = jdbcTemplate.query(sql, objects, attemptTestyRowMapper);
         return attemptTests.get(0).getAttemptId();
     }
+
+    public AttemptTest getAttemptById(int id){
+        return jdbcTemplate.query("SELECT * FROM attempttests WHERE attempt_id = ?", attemptTestyRowMapper, id)
+                .stream()
+                .findAny().orElse(null);
+    }
 }

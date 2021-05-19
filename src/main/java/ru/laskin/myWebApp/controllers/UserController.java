@@ -149,7 +149,7 @@ public class UserController {
         }
 
         model.addAttribute("tests", test);
-        model.addAttribute("user", user);
+        model.addAttribute("users", user);
         model.addAttribute("attemptId", attemptId);
         return "testProcessing";
     }

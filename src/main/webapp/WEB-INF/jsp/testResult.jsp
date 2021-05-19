@@ -29,10 +29,14 @@
         <th>Количество правильных ответов</th>
         <th>Количество неправильных ответов</th>
     </tr>
-        <tr>
-            <p>${trueAnswer}</p>
-            <p>${falseAnswer}</p>
-        </tr>
+    <td>${data}</td>
+    <td>${name}</td>
+    <td>${position}</td>
+    <td>${testName}</td>
+    <td>${quesCount}</td>
+    <td>${trueAnswer}</td>
+    <td>${falseAnswer}</td>
+
 
 </table>
 

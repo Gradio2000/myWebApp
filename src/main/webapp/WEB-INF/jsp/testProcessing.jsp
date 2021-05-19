@@ -139,7 +139,7 @@
                 </div>
             </sf:form>
         </c:forEach>
-<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}'">Завершить</button>
+<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}'">Завершить</button>
 
 <script>
 

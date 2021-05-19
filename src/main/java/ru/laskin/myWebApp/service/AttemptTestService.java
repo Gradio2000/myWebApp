@@ -16,5 +16,7 @@ public class AttemptTestService {
        return attemptTestDao.saveAttemptTest(attemptTest);
     }
 
-
+    public AttemptTest getAttemptById(int id){
+        return attemptTestDao.getAttemptById(id);
+    }
 }
