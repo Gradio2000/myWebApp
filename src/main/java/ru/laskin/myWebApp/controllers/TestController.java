@@ -66,27 +66,30 @@ public class TestController {
         Test test = testService.getTestById(testId);
         List<Question> questionList = test.getQuestions();
 
-        Map<Integer, Boolean> falseAnswer = new HashMap<>();
+        Set<Integer> falseAnswer = new HashSet<>();
+        Set<Integer> trueAnswer = new HashSet<>();
+
         if (mapOfUserAnswers.size() != 0){
-        for (Question question : questionList){
+            for (Question question : questionList){
                 List<Answer> answerList = question.getAnswers();
                 for (Answer answer : answerList){
-                    if (answer.isRight()){
-                        List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
-                        if (questionsIdList != null && questionsIdList.contains(answer.getAnswerId())){
-                            System.out.println("на ответ " + answer.getAnswerId() + "дан правильный ответ");
-                        }
-                        else {
-                            System.out.println("на ответ " + answer.getAnswerId() + "нужно было ответить");
-                            falseAnswer.put(question.getQuestionId(), false);
-                            break;
-                        }
+                    List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
+                    if (questionsIdList == null){
+                        falseAnswer.add(question.getQuestionId());
                     }
                     else {
-                        if (mapOfUserAnswers.get(question.getQuestionId()).contains(answer.getAnswerId())){
-                            System.out.println("на ответ " + answer.getAnswerId() + "зря ответил. Это не правильный ответ");
-                            falseAnswer.put(question.getQuestionId(), false);
-                            break;
+                        if (answer.isRight()){
+                            if (!questionsIdList.contains(answer.getAnswerId())){
+                                falseAnswer.add(question.getQuestionId());
+                            }
+                            else {
+                                trueAnswer.add(question.getQuestionId());
+                            }
+                        }
+                        else {
+                            if (questionsIdList.contains(answer.getAnswerId())){
+                                falseAnswer.add(question.getQuestionId());
+                            }
                         }
                     }
                 }
@@ -94,7 +97,7 @@ public class TestController {
         }
         else {
             for (Question question : questionList){
-                falseAnswer.put(question.getQuestionId(), false);
+                falseAnswer.add(question.getQuestionId());
             }
         }
 
@@ -106,9 +109,8 @@ public class TestController {
         request.setAttribute("testName", test.getTestName());
         request.setAttribute("quesCount", test.getQuestions().size());
         request.setAttribute("falseAnswer", falseAnswer.size());
-        request.setAttribute("trueAnswer", questionList.size() - falseAnswer.size());
+        request.setAttribute("trueAnswer", trueAnswer.size());
 
         return "testResult";
     }
-
 }
