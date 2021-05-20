@@ -1,15 +1,11 @@
 package ru.laskin.myWebApp.controllers;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -66,7 +62,7 @@ public class TestController {
         Test test = testService.getTestById(testId);
         List<Question> questionList = test.getQuestions();
 
-        Set<Integer> falseAnswer = new HashSet<>();
+        Set<Integer> falseAnswerSet = new HashSet<>();
 
         if (mapOfUserAnswers.size() != 0){
             for (Question question : questionList){
@@ -74,18 +70,18 @@ public class TestController {
                 for (Answer answer : answerList){
                     List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
                     if (questionsIdList == null){
-                        falseAnswer.add(question.getQuestionId());
+                        falseAnswerSet.add(question.getQuestionId());
                     }
                     else {
                         if (answer.isRight()){
                             if (!questionsIdList.contains(answer.getAnswerId())){
-                                falseAnswer.add(question.getQuestionId());
+                                falseAnswerSet.add(question.getQuestionId());
                                 break;
                             }
                         }
                         else {
                             if (questionsIdList.contains(answer.getAnswerId())){
-                                falseAnswer.add(question.getQuestionId());
+                                falseAnswerSet.add(question.getQuestionId());
                             }
                         }
                     }
@@ -94,19 +90,18 @@ public class TestController {
         }
         else {
             for (Question question : questionList){
-                falseAnswer.add(question.getQuestionId());
+                falseAnswerSet.add(question.getQuestionId());
             }
         }
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
         request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
-        request.setAttribute("name", user.getName());
-        request.setAttribute("position", user.getPosition());
-        request.setAttribute("testName", test.getTestName());
-        request.setAttribute("quesCount", test.getQuestions().size());
-        request.setAttribute("falseAnswer", falseAnswer.size());
-        request.setAttribute("trueAnswer", questionList.size() - falseAnswer.size());
+        request.setAttribute("users", user);
+        request.setAttribute("tests", test);
+        request.setAttribute("questionList", questionList);
+        request.setAttribute("falseAnswerSet", falseAnswerSet);
+        request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
 
         return "testResult";
     }

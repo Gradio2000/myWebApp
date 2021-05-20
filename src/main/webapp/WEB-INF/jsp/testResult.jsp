@@ -1,11 +1,13 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Collections" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
   Date: 03.04.2021
   Time: 19:47
   To change this template use File | Settings | File Templates.
 --%>
+
+
+
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"          prefix="c"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"           prefix="fmt" %>
@@ -14,11 +16,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 
+<jsp:useBean id="user" class="ru.laskin.myWebApp.model.User"/>
+<jsp:useBean id="test" class="ru.laskin.myWebApp.model.Test"/>
+<jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
+<jsp:useBean id="falseAnswerSet" scope="request" type="java.util.Set"/>
+<jsp:useBean id="trueAnswer" scope="request" type="java.lang.Integer"/>
+<jsp:useBean id="questionList" scope="request" type="java.util.List"/>
+
+
 <html>
 <head>
     <title>Result</title>
 </head>
 <body>
+
 <table border="1" cellpadding="8" cellspacing="0">
     <tr>
         <th>Дата</th>
@@ -30,16 +41,40 @@
         <th>Количество неправильных ответов</th>
     </tr>
     <td>${data}</td>
-    <td>${name}</td>
-    <td>${position}</td>
-    <td>${testName}</td>
-    <td>${quesCount}</td>
+    <td>${users.name}</td>
+    <td>${users.position}</td>
+    <td>${tests.testName}</td>
+    <td>${questionList.size()}</td>
     <td>${trueAnswer}</td>
-    <td>${falseAnswer}</td>
+    <td>${falseAnswerSet.size()}</td>
 
 </table>
-<a href="/detail">Подробнее</a>
+
+<button id="detailBtn" onclick=detail(this.id)>Подробнее</button>
+<div hidden class="detail">
+    <table>
+        <c:forEach var="ques" items="${questionList}">
+            <p>${ques.questionName}</p>
+        </c:forEach>
+    </table>
+</div>
 <br/>
 <a href="/logout">Выход</a>
 </body>
+<script>
+    function detail(id){
+        if (id === 'detailBtn'){
+            document.getElementsByClassName("detail")[0].removeAttribute("hidden");
+            const button = document.getElementById("detailBtn");
+            button.innerText = 'Скрыть';
+            button.id = 'hide';
+        }
+        if (id === 'hide'){
+            document.getElementsByClassName("detail")[0].setAttribute("hidden", true);
+            const button = document.getElementById("hide");
+            button.innerText = 'Подробнее';
+            button.id = 'detailBtn';
+        }
+    }
+</script>
 </html>
