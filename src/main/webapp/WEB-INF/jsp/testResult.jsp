@@ -53,8 +53,23 @@
 <button id="detailBtn" onclick=detail(this.id)>Подробнее</button>
 <div hidden class="detail">
     <table>
-        <c:forEach var="ques" items="${questionList}">
-            <p>${ques.questionName}</p>
+        <c:forEach var="ques" items="${questionList}" varStatus="count">
+            <p>Вопрос № ${count.count} ${ques.questionName}</p>
+            <table border="1">
+                <tr>
+                    <th>Варианты ответов</th>
+                    <th>Ответы пользователя</th>
+                    <th>Правильные ответы</th>
+                </tr>
+                <c:forEach var="answ" items="${ques.answers}" varStatus="count">
+                    <tr>
+                        <td>${answ.answerName}</td>
+                        <td>1</td>
+                        <td>${answ.right}</td>
+                    </tr>
+
+                </c:forEach>
+            </table>
         </c:forEach>
     </table>
 </div>
@@ -62,6 +77,7 @@
 <a href="/logout">Выход</a>
 </body>
 <script>
+
     function detail(id){
         if (id === 'detailBtn'){
             document.getElementsByClassName("detail")[0].removeAttribute("hidden");
