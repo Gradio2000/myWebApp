@@ -37,9 +37,8 @@
     <td>${trueAnswer}</td>
     <td>${falseAnswer}</td>
 
-
 </table>
-
+<a href="/detail">Подробнее</a>
 <br/>
 <a href="/logout">Выход</a>
 </body>

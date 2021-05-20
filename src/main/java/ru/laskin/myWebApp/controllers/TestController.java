@@ -67,7 +67,6 @@ public class TestController {
         List<Question> questionList = test.getQuestions();
 
         Set<Integer> falseAnswer = new HashSet<>();
-        Set<Integer> trueAnswer = new HashSet<>();
 
         if (mapOfUserAnswers.size() != 0){
             for (Question question : questionList){
@@ -81,9 +80,7 @@ public class TestController {
                         if (answer.isRight()){
                             if (!questionsIdList.contains(answer.getAnswerId())){
                                 falseAnswer.add(question.getQuestionId());
-                            }
-                            else {
-                                trueAnswer.add(question.getQuestionId());
+                                break;
                             }
                         }
                         else {
@@ -109,7 +106,7 @@ public class TestController {
         request.setAttribute("testName", test.getTestName());
         request.setAttribute("quesCount", test.getQuestions().size());
         request.setAttribute("falseAnswer", falseAnswer.size());
-        request.setAttribute("trueAnswer", trueAnswer.size());
+        request.setAttribute("trueAnswer", questionList.size() - falseAnswer.size());
 
         return "testResult";
     }

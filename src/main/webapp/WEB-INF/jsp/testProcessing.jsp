@@ -186,7 +186,7 @@
                     for (let i = 0; i < btnElem.length; i++) {
                         btnElem[i].setAttribute("disabled", "disabled");
                     }
-                    //БЛОКируем checks
+                    //Блокируем checks
                     const checkElem = divElem.getElementsByClassName("checkes");
                     for (let i = 0; i < checkElem.length ; i++) {
                         checkElem[i].setAttribute("disabled", "disabled");
