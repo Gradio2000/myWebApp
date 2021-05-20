@@ -212,10 +212,15 @@
 
         //перейти к следующему вопросу
         const nextId = divId + 1;
-        document.getElementById(nextId).click();
 
         //пометить кнопку желтым
         document.getElementById(divId).className += " yellow";
+
+        //перейти к следующему элементу, если он не последний
+        if (divId < document.getElementsByClassName("tablinks").length) {
+            document.getElementById(nextId).click();
+        }
+
     }
 
     function valid(divId){
