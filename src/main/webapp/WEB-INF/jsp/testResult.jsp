@@ -28,6 +28,16 @@
 <head>
     <title>Result</title>
 </head>
+
+<style>
+    .false{
+        color: #da190b;
+    }
+
+    .true{
+        color: #2c9751;
+    }
+</style>
 <body>
 
 <table border="1" cellpadding="8" cellspacing="0">
@@ -55,6 +65,12 @@
     <table>
         <c:forEach var="ques" items="${questionList}" varStatus="count">
             <p>Вопрос № ${count.count} ${ques.questionName}</p>
+            <c:if test="${falseAnswerSet.contains(ques.questionId)}">
+                <p1 class="false">Не верно</p1>
+            </c:if>
+            <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
+                <p2 class="true">Верно</p2>
+            </c:if>
             <table border="1">
                 <tr>
                     <th>Варианты ответов</th>
@@ -63,20 +79,19 @@
                 </tr>
                 <c:forEach var="answ" items="${ques.answers}" varStatus="count">
                     <jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
-
-                
                     <tr>
                         <td>${answ.answerName}</td>
                         <td>
                             <c:if test="${listOfUsersAnswers.contains(answ.answerId)}">
                                 <p>V</p>
                             </c:if>
-
-
                         </td>
-                        <td>${answ.right}</td>
+                        <td>
+                            <c:if test="${answ.right}">
+                                <p>V</p>
+                            </c:if>
+                        </td>
                     </tr>
-
                 </c:forEach>
             </table>
         </c:forEach>

@@ -107,6 +107,7 @@ public class TestController {
         for (Integer key : mapOfUserAnswers.keySet()){
             listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
         }
+
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
 
         return "testResult";
