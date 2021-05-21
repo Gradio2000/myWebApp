@@ -103,6 +103,12 @@ public class TestController {
         request.setAttribute("falseAnswerSet", falseAnswerSet);
         request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
 
+        List<Integer> listOfUsersAnswers = new ArrayList<>();
+        for (Integer key : mapOfUserAnswers.keySet()){
+            listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
+        }
+        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
+
         return "testResult";
     }
 }

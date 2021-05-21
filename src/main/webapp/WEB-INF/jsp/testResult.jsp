@@ -22,7 +22,7 @@
 <jsp:useBean id="falseAnswerSet" scope="request" type="java.util.Set"/>
 <jsp:useBean id="trueAnswer" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="questionList" scope="request" type="java.util.List"/>
-
+        
 
 <html>
 <head>
@@ -62,9 +62,18 @@
                     <th>Правильные ответы</th>
                 </tr>
                 <c:forEach var="answ" items="${ques.answers}" varStatus="count">
+                    <jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
+
+                
                     <tr>
                         <td>${answ.answerName}</td>
-                        <td>1</td>
+                        <td>
+                            <c:if test="${listOfUsersAnswers.contains(answ.answerId)}">
+                                <p>V</p>
+                            </c:if>
+
+
+                        </td>
                         <td>${answ.right}</td>
                     </tr>
 
@@ -78,6 +87,9 @@
 </body>
 <script>
 
+    function test(){
+        alert("aaa");
+    }
     function detail(id){
         if (id === 'detailBtn'){
             document.getElementsByClassName("detail")[0].removeAttribute("hidden");
