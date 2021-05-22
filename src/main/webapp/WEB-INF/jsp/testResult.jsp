@@ -64,13 +64,15 @@
 <div hidden class="detail">
     <table>
         <c:forEach var="ques" items="${questionList}" varStatus="count">
-            <p>Вопрос № ${count.count} ${ques.questionName}</p>
-            <c:if test="${falseAnswerSet.contains(ques.questionId)}">
-                <p1 class="false">Не верно</p1>
-            </c:if>
-            <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
-                <p2 class="true">Верно</p2>
-            </c:if>
+            <p>Вопрос № ${count.count} ${ques.questionName}
+                <c:if test="${falseAnswerSet.contains(ques.questionId)}">
+                    <p1 class="false">Не верно</p1>
+                </c:if>
+                <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
+                    <p2 class="true">Верно</p2>
+                </c:if>
+            </p>
+
             <table border="1">
                 <tr>
                     <th>Варианты ответов</th>

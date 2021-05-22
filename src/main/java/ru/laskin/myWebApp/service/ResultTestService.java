@@ -4,7 +4,9 @@ import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.ResultTestDao;
 import ru.laskin.myWebApp.model.ResultTest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ResultTestService {
@@ -15,11 +17,21 @@ public class ResultTestService {
         this.resultTestDao = resultTestDao;
     }
 
-    public void saveResultTest(ResultTest resultTest){
-        resultTestDao.saveResultTest(resultTest);
-    }
 
     public List<ResultTest> getResultTest(Integer attemptId) {
         return resultTestDao.getAllResultByAttempt(attemptId);
+    }
+
+    public void saveResultTest(HttpServletRequest request, Integer questionId, Integer attemptId) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] checks = parameterMap.get("check");
+
+        //Создаем ResultTestы
+        if (checks != null){
+            for (int i = 0; i < checks.length; i++) {
+                ResultTest resultTest = new ResultTest(attemptId, questionId, Integer.parseInt(checks[i]));
+                resultTestDao.saveResultTest(resultTest);
+            }
+        }
     }
 }

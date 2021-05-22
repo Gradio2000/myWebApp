@@ -3,26 +3,30 @@ package ru.laskin.myWebApp.service;
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
-import ru.laskin.myWebApp.model.Answer;
-import ru.laskin.myWebApp.model.GroupTest;
-import ru.laskin.myWebApp.model.Question;
-import ru.laskin.myWebApp.model.Test;
+import ru.laskin.myWebApp.model.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Service
 public class TestService {
 
     private final TestHiberDao testHiberDao;
     private final QuestionHiberDao questionHiberDao;
+    private final UserService userService;
+    private final AttemptTestService attemptTestService;
+    private final ResultTestService resultTestService;
 
 
-    public TestService(TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao) {
+    public TestService(TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao,
+                       UserService userService, AttemptTestService attemptTestService,
+                       ResultTestService resultTestService) {
         this.testHiberDao = testHiberDao;
         this.questionHiberDao = questionHiberDao;
+        this.userService = userService;
+        this.attemptTestService = attemptTestService;
+        this.resultTestService = resultTestService;
     }
 
     public List<Test> getAllTests(){
@@ -141,5 +145,70 @@ public class TestService {
 
         question.setAnswers(answers);
         questionHiberDao.saveQuestion(question);
+    }
+
+    public void mainCheck(HttpServletRequest request, Integer attemptId, Integer testId, Integer userId) {
+        User user = userService.getUserById(userId);
+        AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
+
+        List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
+        Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
+        for (ResultTest resultTest : resultTestList){
+            List<Integer> answersIdList = mapOfUserAnswers.get(resultTest.getQuestionId());
+            if (answersIdList == null) answersIdList = new ArrayList<>();
+            answersIdList.add(resultTest.getAnswerId());
+            mapOfUserAnswers.put(resultTest.getQuestionId(), answersIdList);
+        }
+
+        Test test = getTestById(testId);
+        List<Question> questionList = test.getQuestions();
+
+        Set<Integer> falseAnswerSet = new HashSet<>();
+
+        if (mapOfUserAnswers.size() != 0){
+            for (Question question : questionList){
+                List<Answer> answerList = question.getAnswers();
+                for (Answer answer : answerList){
+                    List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
+                    if (questionsIdList == null){
+                        falseAnswerSet.add(question.getQuestionId());
+                    }
+                    else {
+                        if (answer.isRight()){
+                            if (!questionsIdList.contains(answer.getAnswerId())){
+                                falseAnswerSet.add(question.getQuestionId());
+                                break;
+                            }
+                        }
+                        else {
+                            if (questionsIdList.contains(answer.getAnswerId())){
+                                falseAnswerSet.add(question.getQuestionId());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (Question question : questionList){
+                falseAnswerSet.add(question.getQuestionId());
+            }
+        }
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
+        request.setAttribute("users", user);
+        request.setAttribute("tests", test);
+        request.setAttribute("questionList", questionList);
+        request.setAttribute("falseAnswerSet", falseAnswerSet);
+        request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
+
+        List<Integer> listOfUsersAnswers = new ArrayList<>();
+        for (Integer key : mapOfUserAnswers.keySet()){
+            listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
+        }
+
+        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
     }
 }
