@@ -21,19 +21,19 @@ import java.util.Map;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
-    private final UserService service;
+    private final UserService userService;
     private final PositionService positionService;
     private final TestService testService;
 
-    public AdminController(UserService service, PositionService positionService, TestService testService) {
-        this.service = service;
+    public AdminController(UserService userService, PositionService positionService, TestService testService) {
+        this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
     }
 
     @GetMapping("/allUsers")
     public String getStart(Model model) {
-        model.addAttribute("users", service.getAllUsers());
+        model.addAttribute("users", userService.getAllUsers());
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("authUser", authUser.getName());
         return "list_users";
@@ -42,7 +42,7 @@ public class AdminController {
     @GetMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model){
         int id = Integer.parseInt(request.getParameter("id"));
-        User user = service.getUserById(id);
+        User user = userService.getUserById(id);
         model.addAttribute("user", user);
         List<Position> positionSet = positionService.getAllPosition();
         model.addAttribute("posSet", positionSet);
@@ -52,18 +52,19 @@ public class AdminController {
     @GetMapping("/users/delete")
     public String deleteUser(HttpServletRequest request){
         int id = Integer.parseInt(request.getParameter("id"));
-        service.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/allUsers";
     }
 
     @PostMapping("/updateUser")
     public String formUser (@ModelAttribute User user){
-            service.updateUser(user);
+            userService.updateUser(user);
             return "redirect:/allUsers";
     }
 
     @GetMapping("users/statistic")
-    public String statisticOfUser(@RequestParam Integer id){
+    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id){
+        testService.getStatistic(request, id);
         return "statistic";
     }
 

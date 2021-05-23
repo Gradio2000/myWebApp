@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS resultTests;
+DROP TABLE IF EXISTS resultTests CASCADE ;
 
 create table resulttests
 (

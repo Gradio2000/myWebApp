@@ -211,4 +211,23 @@ public class TestService {
 
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
     }
+
+    public void getStatistic(HttpServletRequest request, Integer id) {
+        User user = userService.getUserById(id);
+        List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
+
+        List<Statistic> statisticList = new ArrayList<>();
+        Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        for (AttemptTest attemptTest : attemptTestList){
+          String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
+          Test test = getTestById(attemptTest.getTestId());
+          statisticList.add(new Statistic(date, test));
+        }
+
+        request.setAttribute("user", user);
+        request.setAttribute("statisticList", statisticList);
+
+    }
 }

@@ -32,8 +32,13 @@
         border: 1px solid #ddd;
     }
 
-    th, td {
+    td {
         text-align: left;
+        padding: 16px;
+        width: revert;
+    }
+    th {
+        text-align: center;
         padding: 16px;
         width: revert;
     }

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS attemptTests;
+DROP TABLE IF EXISTS attemptTests CASCADE;
 
 create table attempttests (
     attempt_id serial not null constraint attempttests_pkey primary key,

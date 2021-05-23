@@ -28,7 +28,7 @@
 
 <html>
 <head>
-    <title>Result</title>
+    <title>Результат</title>
 </head>
 
 <style>

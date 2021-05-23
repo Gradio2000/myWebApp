@@ -5,7 +5,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.AttemptTest;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AttemptTestDao {
@@ -29,5 +31,9 @@ public class AttemptTestDao {
         return jdbcTemplate.query("SELECT * FROM attempttests WHERE attempt_id = ?", attemptTestyRowMapper, id)
                 .stream()
                 .findAny().orElse(null);
+    }
+
+    public List<AttemptTest> getAllAttemptByUserId(Integer id) {
+        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ?", attemptTestyRowMapper, id));
     }
 }

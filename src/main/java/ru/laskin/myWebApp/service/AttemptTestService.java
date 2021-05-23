@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.AttemptTestDao;
 import ru.laskin.myWebApp.model.AttemptTest;
 
+import java.util.List;
+
 @Service
 public class AttemptTestService {
     private AttemptTestDao attemptTestDao;
@@ -18,5 +20,9 @@ public class AttemptTestService {
 
     public AttemptTest getAttemptById(int id){
         return attemptTestDao.getAttemptById(id);
+    }
+
+    public List<AttemptTest> getAllAttemptByUserId(Integer id) {
+        return attemptTestDao.getAllAttemptByUserId(id);
     }
 }
