@@ -28,7 +28,7 @@
 
     <table>
         <tr>
-            <th>Дата</th>
+            <th>Дата и время</th>
             <th>Название теста</th>
             <th>Количество вопросов</th>
             <th>Количество правильных ответов</th>
@@ -39,6 +39,8 @@
                 <td>${statistic.date}</td>
                 <td>${statistic.test.testName}</td>
                 <td>${statistic.test.questions.size()}</td>
+                <td>${statistic.falseAnswerSet.size()}</td>
+                <td>${statistic.trueAnswer}</td>
             </tr>
         </c:forEach>
 

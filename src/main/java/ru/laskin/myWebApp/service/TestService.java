@@ -152,6 +152,52 @@ public class TestService {
         AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
 
         List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
+        Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+
+        Test test = getTestById(testId);
+        List<Question> questionList = test.getQuestions();
+        Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
+        request.setAttribute("users", user);
+        request.setAttribute("tests", test);
+        request.setAttribute("questionList", questionList);
+        request.setAttribute("falseAnswerSet", falseAnswerSet);
+        request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
+
+        List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
+    }
+
+    public void getStatistic(HttpServletRequest request, Integer id) {
+        User user = userService.getUserById(id);
+        List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
+
+        List<Statistic> statisticList = new ArrayList<>();
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        for (AttemptTest attemptTest : attemptTestList){
+          String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
+          Test test = getTestById(attemptTest.getTestId());
+
+            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
+            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, test.getQuestions());
+            List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+            int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
+
+            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer));
+        }
+
+        request.setAttribute("user", user);
+        request.setAttribute("statisticList", statisticList);
+
+    }
+
+    public Map<Integer, List<Integer>> getMapOfAnswers (List<ResultTest> resultTestList){
         Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
         for (ResultTest resultTest : resultTestList){
             List<Integer> answersIdList = mapOfUserAnswers.get(resultTest.getQuestionId());
@@ -159,12 +205,11 @@ public class TestService {
             answersIdList.add(resultTest.getAnswerId());
             mapOfUserAnswers.put(resultTest.getQuestionId(), answersIdList);
         }
+        return mapOfUserAnswers;
+    }
 
-        Test test = getTestById(testId);
-        List<Question> questionList = test.getQuestions();
-
+    public Set<Integer> getFalseAnswerSet(Map<Integer, List<Integer>> mapOfUserAnswers, List<Question> questionList){
         Set<Integer> falseAnswerSet = new HashSet<>();
-
         if (mapOfUserAnswers.size() != 0){
             for (Question question : questionList){
                 List<Answer> answerList = question.getAnswers();
@@ -194,40 +239,15 @@ public class TestService {
                 falseAnswerSet.add(question.getQuestionId());
             }
         }
+        return falseAnswerSet;
+    }
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
-        request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
-        request.setAttribute("users", user);
-        request.setAttribute("tests", test);
-        request.setAttribute("questionList", questionList);
-        request.setAttribute("falseAnswerSet", falseAnswerSet);
-        request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
-
+    public List<Integer> getListOfUsersAnswers(Map<Integer, List<Integer>> mapOfUserAnswers) {
         List<Integer> listOfUsersAnswers = new ArrayList<>();
         for (Integer key : mapOfUserAnswers.keySet()){
             listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
         }
-
-        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
+        return listOfUsersAnswers;
     }
 
-    public void getStatistic(HttpServletRequest request, Integer id) {
-        User user = userService.getUserById(id);
-        List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
-
-        List<Statistic> statisticList = new ArrayList<>();
-        Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
-        for (AttemptTest attemptTest : attemptTestList){
-          String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
-          Test test = getTestById(attemptTest.getTestId());
-          statisticList.add(new Statistic(date, test));
-        }
-
-        request.setAttribute("user", user);
-        request.setAttribute("statisticList", statisticList);
-
-    }
 }
