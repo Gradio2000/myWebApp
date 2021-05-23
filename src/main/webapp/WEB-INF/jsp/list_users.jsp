@@ -10,8 +10,6 @@
 <body>
     <jsp:include page="../includes/header.jsp"/>
         <div class="content">
-        <h2>Добрый день, ${authUser}!</h2><br/>
-        <h3>Список зарегистрированных пользователей</h3>
             <table>
                 <tr>
                     <th>id</th>
