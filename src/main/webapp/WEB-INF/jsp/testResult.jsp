@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
@@ -16,12 +17,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 
-<jsp:useBean id="user" class="ru.laskin.myWebApp.model.User"/>
-<jsp:useBean id="test" class="ru.laskin.myWebApp.model.Test"/>
+
 <jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
 <jsp:useBean id="falseAnswerSet" scope="request" type="java.util.Set"/>
 <jsp:useBean id="trueAnswer" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="questionList" scope="request" type="java.util.List"/>
+<jsp:useBean id="users" scope="request" type="ru.laskin.myWebApp.model.User"/>
+<jsp:useBean id="tests" scope="request" type="ru.laskin.myWebApp.model.Test"/>
         
 
 <html>
@@ -103,10 +105,6 @@
 <a href="/logout">Выход</a>
 </body>
 <script>
-
-    function test(){
-        alert("aaa");
-    }
     function detail(id){
         if (id === 'detailBtn'){
             document.getElementsByClassName("detail")[0].removeAttribute("hidden");

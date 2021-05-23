@@ -118,7 +118,7 @@
                 <td><c:out value="${user.name}"></c:out></td>
                 <td><c:out value="${user.email}"></c:out></td>
                 <td><c:out value="${user.adminRole}"></c:out></td>
-                <td><button class="btn info">Статистика</button></td>
+                <td><button class="btn info" onclick="document.location = 'users/statistic?id=${user.userId}'">Статистика</button></td>
                 <td><button class="btn warning" onclick="document.location = 'users/update?id=${user.userId}'">Редактировать</button></td>
                 <td><button class="btn danger" onclick="document.location = 'users/delete?id=${user.userId}'">Удалить</button></td>
             </tr>

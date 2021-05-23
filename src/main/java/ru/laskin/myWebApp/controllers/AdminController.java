@@ -62,6 +62,11 @@ public class AdminController {
             return "redirect:/allUsers";
     }
 
+    @GetMapping("users/statistic")
+    public String statisticOfUser(@RequestParam Integer id){
+        return "statistic";
+    }
+
     @GetMapping("/adminModule")
     public String openAdminModule(){
         return "adminModule";
