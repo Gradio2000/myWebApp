@@ -147,6 +147,7 @@ public class TestService {
         questionHiberDao.saveQuestion(question);
     }
 
+    //основной метод проверки ответов пользователя и вывода результата теста
     public void mainCheck(HttpServletRequest request, Integer attemptId, Integer testId, Integer userId) {
         User user = userService.getUserById(userId);
         AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
@@ -171,11 +172,13 @@ public class TestService {
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
     }
 
+    //метод для отображения статистики пользователя
     public void getStatistic(HttpServletRequest request, Integer id) {
         User user = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
         List<Statistic> statisticList = new ArrayList<>();
+        List<Integer> listOfUsersAnswers = new ArrayList<>();
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
@@ -186,7 +189,7 @@ public class TestService {
             List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
             Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
             Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, test.getQuestions());
-            List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
 
             statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer));
@@ -194,7 +197,7 @@ public class TestService {
 
         request.setAttribute("user", user);
         request.setAttribute("statisticList", statisticList);
-
+        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers (List<ResultTest> resultTestList){

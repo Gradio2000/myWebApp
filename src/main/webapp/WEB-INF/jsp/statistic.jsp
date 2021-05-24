@@ -27,7 +27,7 @@
             <p>Должность: ${user.position}</p>
         </div>
 
-        <table>
+        <table id="table">
             <tr>
                 <th>Дата и время</th>
                 <th>Название теста</th>
@@ -36,21 +36,50 @@
                 <th>Количество неправильных ответов</th>
             </tr>
             <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
-            <c:forEach var="statistic" items="${statisticList}">
+            <c:forEach var="statistic" items="${statisticList}" varStatus="count">
+
                 <tr>
                     <td>${statistic.date}</td>
                     <td>${statistic.test.testName}</td>
                     <td class="mytd">${statistic.test.questions.size()}</td>
                     <td class="mytd">${statistic.falseAnswerSet.size()}</td>
                     <td class="mytd">${statistic.trueAnswer}</td>
-                    <td><button class="btn info">Подробнее</button> </td>
+                    <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
+                </tr>
+
+                <tr id="hidden${count.count}" hidden>
+                    <th>Варианты ответов</th>
+                    <th>Ответы пользователя</th>
+                    <th>Правильные ответы</th>
                 </tr>
             </c:forEach>
+        </table>
+
+        <table id="table2" hidden>
+            <tr>
+                <td>KKK</td>
+            </tr>
+            <button id="forHide" class="btn warning" onclick="hideDetail()">Скрыть</button>
         </table>
     </div>
 </div>
 
 <jsp:include page="../includes/footer.jsp"/>
 </body>
+<script>
+    function openDetail(count){
+        const button = document.getElementById("btn" + count);
+        if (button.innerText === "Подробнее"){
+            document.getElementById("table").setAttribute("hidden", true);
+            document.getElementById("table2").removeAttribute("hidden");
+        }
+    }
+
+    function hideDetail(){
+        document.getElementById("table").removeAttribute("hidden");
+        document.getElementById("table2").setAttribute("hidden", true);
+    }
+
+</script>
 <jsp:include page="../includes/styles.jsp"/>
 </html>
