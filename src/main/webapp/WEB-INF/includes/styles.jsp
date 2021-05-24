@@ -17,6 +17,8 @@
     }
     .content {
         min-height: calc(100vh - 80px);
+        margin-left: 1%;
+        margin-right: 1%;
     }
 
     .content-inside {
@@ -159,6 +161,33 @@
     footer{
         /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
         flex: 0 0 auto;
+    }
+
+    .container-my-big {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 1080px;
+    }
+
+    .container-my-md {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        /*margin-right: 0;*/
+        margin-left: auto;
+        max-width: 960px;
+    }
+
+    .container-my-sm {
+        width: 100%;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        /*margin-right: 0;*/
+        margin-left: auto;
+        max-width: 720px;
     }
 
 </style>

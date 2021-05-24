@@ -21,33 +21,34 @@
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
-<div class="content">
-    <form method="post" action="${pageContext.request.contextPath}/updateGroup">
-        <div class="content-inside">
-            <table class="my-table">
-                <tr>
-                    <th>id группы</th>
-                    <th>Группа тестов</th>
-                    <th></th>
-                </tr>
-                <c:forEach var='group' items='${groupTests}'>
-                    <input hidden name="grouptestId" value="${group.groupTestId}"/>
+<div class="wrapper">
+    <div class="content">
+        <form method="post" action="${pageContext.request.contextPath}/updateGroup">
+            <table>
                     <tr>
-                        <td><c:out value="${group.groupTestId}"/></td>
-                        <td width=100><textarea name="name">${group.name}</textarea></td>
-                        <td><a href="${pageContext.request.contextPath}/group/delete?id=${group.groupTestId}" class="btn danger">Удалить</a> </td>
+                        <th>id группы</th>
+                        <th>Группа тестов</th>
+                        <th></th>
                     </tr>
-                </c:forEach>
+                    <c:forEach var='group' items='${groupTests}'>
+                        <input hidden name="grouptestId" value="${group.groupTestId}"/>
+                        <tr>
+                            <td><c:out value="${group.groupTestId}"/></td>
+                            <td width=100><textarea name="name">${group.name}</textarea></td>
+                            <td><a href="${pageContext.request.contextPath}/group/delete?id=${group.groupTestId}" class="btn danger">Удалить</a> </td>
+                        </tr>
+                    </c:forEach>
             </table>
-        </div>
 
             <!-- Button trigger modal -->
             <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Добавить новую группу
             </button>
-        <button class="btn info" type="submit">Сохранить и закрыть</button>
-    </form>
+            <button class="btn info" type="submit">Сохранить и закрыть</button>
+        </form>
+    </div>
 </div>
+
 
 <%--модальная форма--%>
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

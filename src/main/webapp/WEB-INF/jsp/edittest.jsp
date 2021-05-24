@@ -28,100 +28,105 @@
 
 <body>
 <jsp:include page="../includes/header.jsp"/>
-<div class="content">
-<section class="main-content">
-    <main class="u-body">
-        <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test" onsubmit="return getCount()">
-            <c:set var="IDTest" value="${test.testId}"/>
-            <sf:hidden path="testId"/>
-            <input name="groupId" type="hidden" value="${test.groupTest.groupTestId}">
+<div class="wrapper">
+    <div class="content">
+        <section class="main-content">
+            <main class="u-body">
+                <sf:form name="form1" action="/updateTest" method="post" modelAttribute="test" onsubmit="return getCount()">
+                    <c:set var="IDTest" value="${test.testId}"/>
+                    <sf:hidden path="testId"/>
+                    <input name="groupId" type="hidden" value="${test.groupTest.groupTestId}">
 
-            <div class="container-my-big">
-                <label for="textTestName"><h2>Название теста</h2></label>
-                <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
-                <div class="container-my-md">
-                    <c:forEach var="ques" items="${test.questions}">
-                        <input hidden name="questionId" value="${ques.questionId}">
-                        <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
-                        <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
-                        <div class="container-my-sm">
-                            <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
-                                <c:forEach var="answer" items="${ques.answers}">
-                                    <div id="answerF">
+                    <div class="container-my-big">
+                        <label for="textTestName"><h2>Название теста</h2></label>
+                        <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
+                        <div class="container-my-md">
+                            <c:forEach var="ques" items="${test.questions}">
+                                <input hidden name="questionId" value="${ques.questionId}">
+                                <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
+                                <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+                                <div class="container-my-sm">
+                                    <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
+                                    <c:forEach var="answer" items="${ques.answers}">
+                                        <div id="answerF">
 
-                                        <input hidden name="answerId" value="${answer.answerId}">
-                                        <input hidden name="quesAnsId" value="${answer.question.questionId}">
-                                        <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
+                                            <input hidden name="answerId" value="${answer.answerId}">
+                                            <input hidden name="quesAnsId" value="${answer.question.questionId}">
+                                            <textarea class="form-control" name="answer" id="textAnswerName" placeholder="Введите ответ" required>${answer.answerName}</textarea>
 
-                                        <cf:if test="${answer.right==true}">
-                                            <label><input class="checks" type="checkbox" name="isRight" checked> Правильный ответ</label>
-                                        </cf:if>
-                                        <cf:if test="${answer.right == false}">
-                                            <label><input type="checkbox" name="isRight"> Правильный ответ</label>
-                                        </cf:if>
+                                            <cf:if test="${answer.right==true}">
+                                                <label><input class="checks" type="checkbox" name="isRight" checked> Правильный ответ</label>
+                                            </cf:if>
+                                            <cf:if test="${answer.right == false}">
+                                                <label><input type="checkbox" name="isRight"> Правильный ответ</label>
+                                            </cf:if>
 
-                                        <button id="delete" type="button" class="my-btn danger" onclick="deleteAnswerMain">Удалить ответ</button>
+                                            <button id="delete" type="button" class="btn danger" onclick="deleteAnswerMain">Удалить ответ</button>
 
-                                    </div>
-                                </c:forEach>
-
-
-
-                            <div id="forAddAnswer${ques.questionId}"></div>
+                                        </div>
+                                    </c:forEach>
 
 
-                            <button type="button" class="btn-success" onclick="addAnswer(${ques.questionId})">Добавить ответ</button>
+
+                                    <div id="forAddAnswer${ques.questionId}"></div>
+
+
+                                    <button type="button" class="btn success" onclick="addAnswer(${ques.questionId})">Добавить ответ</button>
+                                </div>
+                            </c:forEach>
                         </div>
-                    </c:forEach>
+                        <button class="btn success" type="submit" onclick="validCheck()">Готово</button>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Добавить вопрос
+                        </button>
+                    </div>
+                </sf:form>
+
+            </main>
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Добавление вопроса</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="validForm" id="myForm" name="formName" action="/addQuestion" method="POST" onsubmit="return validateForm()">
+                                <input hidden name="IDTest" value="${IDTest}">
+
+                                <div class="form-floating">
+                                    <textarea name="questionName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 100px" required></textarea>
+                                    <label for="floatingTextarea1">Введите вопрос</label>
+                                </div>
+
+                                <br/>
+
+                                <div class="answerContainer" id="container">
+                                </div>
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" id="addAnswer">Добавить ответ</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            <button class="btn btn-success" type="submit" onclick="validCheck()">Готово</button>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                    Добавить вопрос
-                </button>
+                <div class="rasp"></div>
             </div>
-        </sf:form>
-
-    </main>
-
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Добавление вопроса</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="validForm" id="myForm" name="formName" action="/addQuestion" method="POST" onsubmit="return validateForm()">
-                        <input hidden name="IDTest" value="${IDTest}">
-
-                        <div class="form-floating">
-                            <textarea name="questionName" class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" style="height: 100px" required></textarea>
-                            <label for="floatingTextarea1">Введите вопрос</label>
-                        </div>
-
-                        <br/>
-
-                        <div class="answerContainer" id="container">
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-warning" id="addAnswer">Добавить ответ</button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            <button type="submit" class="btn btn-primary">Добавить</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="rasp"></div>
+        </section>
     </div>
-</section>
 </div>
+
 <jsp:include page="../includes/footer.jsp"/>
 
+</body>
+<jsp:include page="../includes/styles.jsp"/>
 </body>
 <script>
 
@@ -163,14 +168,14 @@
 
     //функция удаления ответа
 
-        let li = document.querySelectorAll('#delete');
-        for (var i = 0, len = li.length; i < len; i++) {
-            li[i].onclick = function() {
-                console.log('parentNode', this.parentNode);
-                console.log('element => this', this);
-                this.parentNode.remove(this);
-            }
+    let li = document.querySelectorAll('#delete');
+    for (var i = 0, len = li.length; i < len; i++) {
+        li[i].onclick = function() {
+            console.log('parentNode', this.parentNode);
+            console.log('element => this', this);
+            this.parentNode.remove(this);
         }
+    }
 
 
     //переменная для использования при создании checkbox
@@ -187,7 +192,7 @@
 
         //создаем div
         var divForm = $('<div/>', {
-           'class': 'form-floating'
+            'class': 'form-floating'
         });
 
         //создаем поле и добавляем его в div
@@ -277,8 +282,4 @@
         }
     }
 </script>
-
-<jsp:include page="../includes/styles.jsp"/>
-
-</body>
 </html>
