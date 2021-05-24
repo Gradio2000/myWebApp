@@ -35,6 +35,7 @@
                 <th>Количество правильных ответов</th>
                 <th>Количество неправильных ответов</th>
             </tr>
+            <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
             <c:forEach var="statistic" items="${statisticList}">
                 <tr>
                     <td>${statistic.date}</td>
@@ -43,14 +44,9 @@
                     <td class="mytd">${statistic.falseAnswerSet.size()}</td>
                     <td class="mytd">${statistic.trueAnswer}</td>
                     <td><button class="btn info">Подробнее</button> </td>
-
                 </tr>
             </c:forEach>
-
-
         </table>
-
-
     </div>
 </div>
 
