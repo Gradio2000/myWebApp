@@ -59,8 +59,8 @@
             <tr>
                 <td>KKK</td>
             </tr>
-            <button id="forHide" class="btn warning" onclick="hideDetail()">Скрыть</button>
         </table>
+        <button id="forHide" hidden class="btn warning" onclick="hideDetail()">Скрыть</button>
     </div>
 </div>
 
@@ -69,15 +69,15 @@
 <script>
     function openDetail(count){
         const button = document.getElementById("btn" + count);
-        if (button.innerText === "Подробнее"){
-            document.getElementById("table").setAttribute("hidden", true);
-            document.getElementById("table2").removeAttribute("hidden");
-        }
+        document.getElementById("forHide").removeAttribute("hidden")
+        document.getElementById("table").setAttribute("hidden", true);
+        document.getElementById("table2").removeAttribute("hidden");
     }
 
     function hideDetail(){
         document.getElementById("table").removeAttribute("hidden");
         document.getElementById("table2").setAttribute("hidden", true);
+        document.getElementById("forHide").setAttribute("hidden", true);
     }
 
 </script>
