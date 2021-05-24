@@ -9,6 +9,7 @@
 </head>
 <body>
     <jsp:include page="../includes/header.jsp"/>
+    <div class="wrapper">
         <div class="content">
             <table>
                 <tr>
@@ -33,9 +34,7 @@
                         </tr>
                     </c:forEach>
             </table><br/>
-            <div>
-                <button class="mybtn cancelbtn" onclick="document.location = '/logout'">Выход</button>
-            </div>
+        </div>
     </div>
     <jsp:include page="../includes/footer.jsp"/>
 </body>

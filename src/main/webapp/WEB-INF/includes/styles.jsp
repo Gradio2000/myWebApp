@@ -7,22 +7,21 @@
     textarea {
         width: -webkit-fill-available;
     }
+    .mytd{
+        text-align: center;
+    }
 
-
-    html, body {
-        height: 100%;
+    * {
         margin: 0;
+        padding: 0;
     }
     .content {
-        min-height: 100%;
+        min-height: calc(100vh - 80px);
     }
+
     .content-inside {
         padding: 20px;
         padding-bottom: 50px;
-    }
-    .footer {
-        height: 50px;
-        margin-top: -50px;
     }
 
     table {

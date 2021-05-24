@@ -20,35 +20,40 @@
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
-<div class="content">
-    <div>
-        <p>Имя пользователя: ${user.name}</p>
-        <p>Должность: ${user.position}</p>
-    </div>
+<div class="wrapper">
+    <div class="content">
+        <div>
+            <p>Имя пользователя: ${user.name}</p>
+            <p>Должность: ${user.position}</p>
+        </div>
 
-    <table>
-        <tr>
-            <th>Дата и время</th>
-            <th>Название теста</th>
-            <th>Количество вопросов</th>
-            <th>Количество правильных ответов</th>
-            <th>Количество неправильных ответов</th>
-        </tr>
-        <c:forEach var="statistic" items="${statisticList}">
+        <table>
             <tr>
-                <td>${statistic.date}</td>
-                <td>${statistic.test.testName}</td>
-                <td>${statistic.test.questions.size()}</td>
-                <td>${statistic.falseAnswerSet.size()}</td>
-                <td>${statistic.trueAnswer}</td>
+                <th>Дата и время</th>
+                <th>Название теста</th>
+                <th>Количество вопросов</th>
+                <th>Количество правильных ответов</th>
+                <th>Количество неправильных ответов</th>
             </tr>
-        </c:forEach>
+            <c:forEach var="statistic" items="${statisticList}">
+                <tr>
+                    <td>${statistic.date}</td>
+                    <td>${statistic.test.testName}</td>
+                    <td class="mytd">${statistic.test.questions.size()}</td>
+                    <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                    <td class="mytd">${statistic.trueAnswer}</td>
+                    <td><button class="btn info">Подробнее</button> </td>
+
+                </tr>
+            </c:forEach>
 
 
-    </table>
+        </table>
 
 
+    </div>
 </div>
+
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 <jsp:include page="../includes/styles.jsp"/>

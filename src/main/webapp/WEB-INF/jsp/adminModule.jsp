@@ -22,9 +22,10 @@
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
-<div class="content">
-    <section class="main-content">
-        <section class="u-clearfix u-section-1" id="sec-8947">
+<div class="wrapper">
+    <div class="content">
+        <section class="main-content">
+            <section class="u-clearfix u-section-1" id="sec-8947">
                 <div class="u-clearfix u-sheet u-sheet-1">
                     <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/allUsers">
                         <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
@@ -42,8 +43,9 @@
                         </div>
                     </div>
                 </div>
+            </section>
         </section>
-    </section>
+    </div>
 </div>
 
 <jsp:include page="../includes/footer.jsp"/>
