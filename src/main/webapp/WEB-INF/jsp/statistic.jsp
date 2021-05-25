@@ -53,21 +53,25 @@
                     <th>Правильные ответы</th>
                 </tr>
 
-                <tr id="table${count.count}" hidden>
+                <tr class="table${count.count}" hidden>
                     <td colspan="6">
                         <table>
-                            <tr>
-                                <th>Варианты ответов</th>
-                                <th>Ответы пользователя</th>
-                                <th>Правильные ответы</th>
-                            </tr>
-
-                            <c:forEach var="ques" items="${statistic.test.questions}">
+                            <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
                                 <tr>
-                                    <td>${ques.questionName}</td>
+                                    <td colspan="6">Вопрос № ${counter.count} ${ques.questionName}</td
+                                </tr>
+                                <tr>
+                                    <td colspan="6">
+                                        <table>
+                                            <tr>
+                                                <th>Варианты ответов</th>
+                                                <th>Ответы пользователя</th>
+                                                <th>Правильные ответы</th>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </c:forEach>
-
                         </table>
                     </td>
                 </tr>
@@ -84,12 +88,18 @@
         if (button.innerText === "Подробнее"){
             button.innerText = "Скрыть";
             button.className = button.className.replace("info", "warning");
-            document.getElementById("table" + count).removeAttribute("hidden");
+            const el = document.getElementsByClassName("table" + count);
+            for (let i = 0; i < el.length; i++) {
+                el[i].removeAttribute("hidden");
+            }
         }
         else if (button.innerText === "Скрыть"){
             button.innerText = "Подробнее";
             button.className = button.className.replace("warning", "info");
-            document.getElementById("table" + count).setAttribute("hidden", true);
+            const el = document.getElementsByClassName("table" + count);
+            for (let i = 0; i < el.length; i++) {
+                el[i].setAttribute("hidden", true);
+            }
         }
 
     }
