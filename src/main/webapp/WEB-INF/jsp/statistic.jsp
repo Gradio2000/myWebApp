@@ -27,7 +27,7 @@
             <p>Должность: ${user.position}</p>
         </div>
 
-        <table id="table">
+        <table id="table0">
             <tr>
                 <th>Дата и время</th>
                 <th>Название теста</th>
@@ -52,15 +52,20 @@
                     <th>Ответы пользователя</th>
                     <th>Правильные ответы</th>
                 </tr>
+
+                <tr id="table${count.count}" hidden>
+                    <td colspan="6">
+                        <table>
+                            <tr>
+                                <th>Варианты ответов</th>
+                                <th>Ответы пользователя</th>
+                                <th>Правильные ответы</th>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
-
-        <table id="table2" hidden>
-            <tr>
-                <td>KKK</td>
-            </tr>
-        </table>
-        <button id="forHide" hidden class="btn warning" onclick="hideDetail()">Скрыть</button>
     </div>
 </div>
 
@@ -69,9 +74,17 @@
 <script>
     function openDetail(count){
         const button = document.getElementById("btn" + count);
-        document.getElementById("forHide").removeAttribute("hidden")
-        document.getElementById("table").setAttribute("hidden", true);
-        document.getElementById("table2").removeAttribute("hidden");
+        if (button.innerText === "Подробнее"){
+            button.innerText = "Скрыть";
+            button.className = button.className.replace("info", "warning");
+            document.getElementById("table" + count).removeAttribute("hidden");
+        }
+        else if (button.innerText === "Скрыть"){
+            button.innerText = "Подробнее";
+            button.className = button.className.replace("warning", "info");
+            document.getElementById("table" + count).setAttribute("hidden", true);
+        }
+
     }
 
     function hideDetail(){
