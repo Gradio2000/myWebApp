@@ -61,6 +61,13 @@
                                 <th>Ответы пользователя</th>
                                 <th>Правильные ответы</th>
                             </tr>
+
+                            <c:forEach var="ques" items="${statistic.test.questions}">
+                                <tr>
+                                    <td>${ques.questionName}</td>
+                                </tr>
+                            </c:forEach>
+
                         </table>
                     </td>
                 </tr>
