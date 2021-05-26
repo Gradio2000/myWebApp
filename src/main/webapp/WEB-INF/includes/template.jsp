@@ -14,5 +14,4 @@
 </div>
 <jsp:include page="../includes/footer.jsp"/>
 </body>
-<jsp:include page="../includes/styles.jsp"/>
 </html>

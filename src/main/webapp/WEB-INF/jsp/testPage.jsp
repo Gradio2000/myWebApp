@@ -32,21 +32,17 @@
             <div class="u-clearfix u-sheet u-sheet-1">
                 <div class="u-align-center u-container-style u-group u-group-1">
                     <div class="u-container-layout u-valign-middle u-container-layout-1">
-                        <h2 class="u-text u-text-1">Все тесты</h2>
-                        <p class="u-text u-text-2">На этой странице Вы можете выбрать тест</p>
                     </div>
                 </div>
-
                 <c:forEach  var="group" items="${allTestGroup}">
                     <cf:if test="${group.testList.size() != 0}">
-                        <h1>${group.name}</h1>
+                        <h3>${group.name}</h3>
                         <c:forEach var="test" items="${group.testList}">
-                            <h3>${test.testName}</h3>
+                            <h4>${test.testName}</h4>
                             <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
                         </c:forEach>
                     </cf:if>
                 </c:forEach>
-                
             </div>
         </section>
     </div>

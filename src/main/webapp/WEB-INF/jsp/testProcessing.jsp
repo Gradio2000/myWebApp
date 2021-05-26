@@ -22,113 +22,32 @@
 <jsp:useBean id="user" class="ru.laskin.myWebApp.model.User"/>
 
 <html>
+<jsp:include page="../includes/settingsHeader.jsp"/>
 
 <head>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            box-sizing: border-box
-        }
-
-        body {
-            font-family: "Lato", sans-serif;
-        }
-
-        /* Style the tab */
-        .tab {
-            float: left;
-            border: 1px solid #ccc;
-            background-color: #f1f1f1;
-            width: 30%;
-            height: 300px;
-        }
-
-        /* Style the buttons inside the tab */
-        .tab button {
-            display: block;
-            background-color: inherit;
-            color: black;
-            padding: 22px 16px;
-            width: 100%;
-            border: none;
-            outline: none;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 17px;
-        }
-
-        /* Change background color of buttons on hover */
-        .tab button:hover {
-            background-color: #ddd;
-        }
-
-        /* Create an active/current "tab button" class */
-        .tab button.active {
-            background-color: #ccc;
-        }
-
-        /* Style the tab content */
-        .tabcontent {
-            float: left;
-            padding: 0 12px;
-            border: 1px solid #ccc;
-            width: 70%;
-            border-left: none;
-            height: 300px;
-        }
-
-        .tab button.green {
-            background-color: #41de77;
-            color: #2c652f;
-        }
-
-        .tab button.green:hover {
-            background-color: #2c9751;
-            color: #0f0f0f;
-
-        }
-
-        .tab button.green.active {
-            background-color: #278648;
-            color: #0f0f0f;
-        }
-
-        .tab button.yellow {
-            background-color: #eedd4b;
-            color: #83862b;
-        }
-
-        .tab button.yellow:hover {
-            background-color: #b8ab3a;
-            color: #0f0f0f
-        }
-
-        .tab button.yellow.active {
-            background-color: #b8ab3a;
-            color: #0f0f0f;
-        }
-
-
-    </style>
 
     <title>Прохождение теста</title>
 </head>
 <body>
+<jsp:include page="../includes/header.jsp"/>
 
-<div class="tab">
-    <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-        <button id="${count.count}" class="tablinks" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
-    </c:forEach>
-</div>
+<div class="wrapper">
+    <div class="content">
+        <div class="tab">
+            <c:forEach var="quest" items="${tests.questions}" varStatus="count">
+                <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
+            </c:forEach>
+        </div>
 
         <c:forEach var="quest" items="${tests.questions}" varStatus="count">
             <sf:form name="fff" method="post" action="oper">
                 <input hidden name="attemptId" value="${attemptId}">
                 <input hidden name="testId" value="${tests.testId}">
                 <div id="content${count.count}" class="tabcontent">
-                    <h3>${quest.questionName}</h3>
+                    <h4>Вопрос № ${count.count}</h4>
+                    <h4>${quest.questionName}</h4>
                     <input hidden name="questionId" value="${quest.questionId}">
                     <c:forEach var="answ" items="${quest.answers}">
                         <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
@@ -139,8 +58,15 @@
                 </div>
             </sf:form>
         </c:forEach>
-<%--<button name="finish" onclick="document.location='/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}'">Завершить</button>--%>
-<button name="finish" onclick="finish()">Завершить</button>
+
+        <button name="finish" onclick="finish()">Завершить</button>
+    </div>
+</div>
+
+<jsp:include page="../includes/footer.jsp"/>
+
+</body>
+<jsp:include page="../includes/styles.jsp"/>
 
 <script>
     function finish(){
@@ -148,7 +74,7 @@
     }
 
     function openCity(evt, count) {
-        var i, tabcontent, tablinks;
+        let i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
@@ -177,28 +103,30 @@
             url : $(this).attr('action'),
             data: $(this).serialize()
         }).done(function() {
-                    const elem = document.getElementsByClassName("active");
-                    let id = elem[0].id;
+            const elem = document.getElementsByClassName("active");
+            let id = elem[0].id;
 
-                    //блокируем кнопки
-                    const divElem = document.getElementById("content" + id);
-                    const btnElem = divElem.getElementsByClassName("butt");
-                    for (let i = 0; i < btnElem.length; i++) {
-                        btnElem[i].setAttribute("disabled", "disabled");
-                    }
-                    //Блокируем checks
-                    const checkElem = divElem.getElementsByClassName("checkes");
-                    for (let i = 0; i < checkElem.length ; i++) {
-                        checkElem[i].setAttribute("disabled", "disabled");
-                    }
+            //блокируем кнопки
+            const divElem = document.getElementById("content" + id);
+            const btnElem = divElem.getElementsByClassName("butt");
+            for (let i = 0; i < btnElem.length; i++) {
+                btnElem[i].setAttribute("disabled", "disabled");
+            }
+            //Блокируем checks
+            const checkElem = divElem.getElementsByClassName("checkes");
+            for (let i = 0; i < checkElem.length ; i++) {
+                checkElem[i].setAttribute("disabled", "disabled");
+            }
 
-                    //пометить кнопку с вопросом зеленым
-                    document.getElementById(id).className = document.getElementById(id).className.replace(" yellow", "");
-                    document.getElementById(id).className += " green";
+            //пометить кнопку с вопросом зеленым
+            const el = document.getElementById(id);
+            el.className = el.className.replace(" info", "");
+            el.className = el.className.replace(" warning", "");
+            el.className += " success";
 
-                    //перейти к следующему вопросу
-                    id++;
-                    document.getElementById(id).click();
+            //перейти к следующему вопросу
+            id++;
+            document.getElementById(id).click();
         }).fail(function() {
             alert("Ответы не приняты. Обратитесь к администратору!");
         });
@@ -214,7 +142,9 @@
         const nextId = divId + 1;
 
         //пометить кнопку желтым
-        document.getElementById(divId).className += " yellow";
+        const el = document.getElementById(divId);
+        el.className = el.className.replace(" info", "");
+        el.className += " warning";
 
         //перейти к следующему элементу, если он не последний
         if (divId < document.getElementsByClassName("tablinks").length) {
@@ -244,6 +174,4 @@
     document.getElementById("1").click();
 
 </script>
-
-</body>
 </html>
