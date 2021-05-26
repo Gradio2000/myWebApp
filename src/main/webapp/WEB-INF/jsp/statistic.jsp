@@ -59,14 +59,14 @@
 
                 <tr class="table${count.count}" hidden>
                     <td></td>
-                    <td colspan="3">
+                    <td colspan="4">
                         <table>
                             <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
                                 <tr>
                                     <td bgcolor="#a9a9a9">Вопрос № ${counter.count} ${ques.questionName}</td
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <table border>
                                             <tr>
                                                 <th>Варианты ответов</th>
