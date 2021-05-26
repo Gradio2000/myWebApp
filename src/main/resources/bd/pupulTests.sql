@@ -24,7 +24,9 @@ CREATE TABLE tests
     test_id serial not null primary key,
     test_name VARCHAR not null,
     group_id int  constraint tests_group_test_id_grouptest_fk
-        references group_test on update cascade on delete cascade
+        references group_test on update cascade on delete cascade,
+    way1 integer,
+    way2 integer
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex

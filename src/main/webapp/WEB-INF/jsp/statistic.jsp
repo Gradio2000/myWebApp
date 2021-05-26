@@ -13,6 +13,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 <jsp:useBean id="user" scope="request" type="ru.laskin.myWebApp.model.User"/>
+<jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
+
 <html>
 <head>
     <jsp:include page="../includes/settingsHeader.jsp"/>
@@ -54,26 +56,43 @@
                 </tr>
 
                 <tr class="table${count.count}" hidden>
-                    <td colspan="6">
+                    <td></td>
+                    <td colspan="3">
                         <table>
                             <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
                                 <tr>
-                                    <td colspan="6">Вопрос № ${counter.count} ${ques.questionName}</td
+                                    <td bgcolor="#a9a9a9">Вопрос № ${counter.count} ${ques.questionName}</td
                                 </tr>
                                 <tr>
                                     <td colspan="6">
-                                        <table>
+                                        <table border>
                                             <tr>
                                                 <th>Варианты ответов</th>
                                                 <th>Ответы пользователя</th>
                                                 <th>Правильные ответы</th>
                                             </tr>
+                                            <c:forEach var="answer" items="${ques.answers}">
+                                                <tr>
+                                                    <td>${answer.answerName}</td>
+                                                    <td class="mytd">
+                                                        <c:if test="${listOfUsersAnswers.contains(answer.answerId)}">
+                                                            <p>V</p>
+                                                        </c:if>
+                                                    </td>
+                                                    <td class="mytd">
+                                                        <c:if test="${answer.right}">
+                                                            <p>V</p>
+                                                        </c:if>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </table>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </table>
                     </td>
+                    <td colspan="2"></td>
                 </tr>
             </c:forEach>
         </table>

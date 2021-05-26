@@ -38,15 +38,35 @@
                     <input name="groupId" type="hidden" value="${test.groupTest.groupTestId}">
 
                     <div class="container-my-big">
-                        <label for="textTestName"><h2>Название теста</h2></label>
+                        <label for="textTestName"><h3>Название теста</h3></label>
                         <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
+                        <p>Зарегистрировано вопросов: ${test.questions.size()}</p>
+                        <table border="0">
+                            <tr class="mytr">
+                                <td>
+                                    <label><input id="check1" class="crit" name="criteria" type="radio" value="way1" onclick="check(this.id)" checked/> Результат определяется процентным соотношением правильных ответов</label>
+                                </td>
+                                <td>
+                                    <input id="way1"   name="way1" value="${test.way1}"> %</input>
+                                </td>
+                            </tr>
+                            <tr class="mytr">
+                                <td>
+                                    <label><input id="check2" class="crit" name="criteria" type="radio" value="way2" onclick="check(this.id)"/> Результат определяется количеством правильных ответов</label>
+                                </td>
+                                <td>
+                                    <input id="way2"  name="way2" value="${test.way2}" disabled> ответов</input>
+                                </td>
+                            </tr>
+
+                        </table>
                         <div class="container-my-md">
-                            <c:forEach var="ques" items="${test.questions}">
+                            <c:forEach var="ques" items="${test.questions}" varStatus="count">
                                 <input hidden name="questionId" value="${ques.questionId}">
-                                <label for="textQuestionName"><h3>Вопрос № ${ques.questionId}</h3></label>
+                                <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
                                 <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
                                 <div class="container-my-sm">
-                                    <label for="textAnswerName"><h4>Ответы на вопрос № ${ques.questionId}</h4></label>
+                                    <label for="textAnswerName"><h5>Ответы на вопрос № ${ques.questionId}</h5></label>
                                     <c:forEach var="answer" items="${ques.answers}">
                                         <div id="answerF">
 
@@ -279,6 +299,21 @@
                 alert('Необходимо выбрать хоть один правильный ответ!');
                 return false;
             }
+        }
+    }
+
+    function check (id){
+        if (id === "check1"){
+            const el = document.getElementById("way2");
+            el.setAttribute("disabled", "disabled");
+            el.setAttribute("value", "");
+            document.getElementById("way1").removeAttribute("disabled");
+        }
+        else if (id === "check2"){
+            const el = document.getElementById("way1");
+            el.setAttribute("disabled", "disabled");
+            el.setAttribute("value", "");
+            document.getElementById("way2").removeAttribute("disabled");
         }
     }
 </script>

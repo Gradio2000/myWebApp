@@ -30,7 +30,7 @@
         border-collapse: collapse;
         border-spacing: 0;
         width: 100%;
-        border: 1px solid #ddd;
+        /*border: 1px solid #ddd;*/
     }
 
     td {
@@ -46,6 +46,10 @@
 
     tr:nth-child(even) {
         background-color: #f2f2f2
+    }
+
+    .mytr{
+        background-color: antiquewhite;
     }
 
     .btn {
