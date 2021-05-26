@@ -6,6 +6,8 @@ import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -173,7 +175,7 @@ public class TestService {
         List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
 
-        String testResult = getTestResultWay1(trueAnswers, questionList.size(), test.getWay1())? "Зачет сдан" : "Зачет не сдан";
+        String testResult = getTestResultWay1(trueAnswers, questionList.size(), test.getWay1())? "Тест пройде" : "Тест не пройден";
         request.setAttribute("testResult", testResult);
     }
 
@@ -196,8 +198,14 @@ public class TestService {
             Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, test.getQuestions());
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
+            String testResult;
+            if (test.getWay1() != null){
+               testResult  = getTestResultWay1(trueAnswer, test.getQuestions().size(), test.getWay1()) ?
+                        "Тест пройден" : "Тест не пройден";
+            }
+            else testResult = "Не задан критерий в настройках теста";
 
-            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer));
+            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer, testResult));
         }
 
         request.setAttribute("user", user);
@@ -258,8 +266,10 @@ public class TestService {
         return listOfUsersAnswers;
     }
 
-    public  Boolean getTestResultWay1(int trueCountAnswers, int totalCountAnswers, int criteria){
-        return (trueCountAnswers / totalCountAnswers * 100) >= criteria;
+    public  Boolean getTestResultWay1(int trueCountAnswers, int totalCountAnswers, double criteria){
+        BigDecimal bigDecimal1 = new BigDecimal(trueCountAnswers);
+        BigDecimal bigDecimal2 = new BigDecimal(totalCountAnswers);
+        double result = bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
+        return  result >= criteria;
     }
-
 }

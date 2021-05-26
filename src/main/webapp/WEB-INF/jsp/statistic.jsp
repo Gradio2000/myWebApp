@@ -36,6 +36,7 @@
                 <th>Количество вопросов</th>
                 <th>Количество правильных ответов</th>
                 <th>Количество неправильных ответов</th>
+                <th>Результат</th>
             </tr>
             <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
             <c:forEach var="statistic" items="${statisticList}" varStatus="count">
@@ -44,8 +45,9 @@
                     <td>${statistic.date}</td>
                     <td>${statistic.test.testName}</td>
                     <td class="mytd">${statistic.test.questions.size()}</td>
-                    <td class="mytd">${statistic.falseAnswerSet.size()}</td>
                     <td class="mytd">${statistic.trueAnswer}</td>
+                    <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                    <td class="mytd">${statistic.testResult}</td>
                     <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
                 </tr>
 
@@ -120,7 +122,6 @@
                 el[i].setAttribute("hidden", true);
             }
         }
-
     }
 
     function hideDetail(){

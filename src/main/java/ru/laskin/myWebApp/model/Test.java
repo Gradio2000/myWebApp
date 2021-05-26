@@ -9,8 +9,8 @@ public class Test {
     private int testId;
     private String testName;
     private GroupTest groupTest;
-    private Integer way1;
-    private Integer way2;
+    private Double way1;
+    private Double way2;
     private List<Question> questions;
 
     public Test() {
@@ -27,20 +27,20 @@ public class Test {
     }
 
     @Column(name = "way1")
-    public Integer getWay1() {
+    public Double getWay1() {
         return way1;
     }
 
-    public void setWay1(Integer way1) {
+    public void setWay1(Double way1) {
         this.way1 = way1;
     }
 
     @Column(name = "way2")
-    public Integer getWay2() {
+    public Double getWay2() {
         return way2;
     }
 
-    public void setWay2(Integer way2) {
+    public void setWay2(Double way2) {
         this.way2 = way2;
     }
 
