@@ -51,6 +51,7 @@
         <th>Количество вопросов</th>
         <th>Количество правильных ответов</th>
         <th>Количество неправильных ответов</th>
+        <th>Результат</th>
     </tr>
     <td>${data}</td>
     <td>${users.name}</td>
@@ -59,6 +60,7 @@
     <td>${questionList.size()}</td>
     <td>${trueAnswer}</td>
     <td>${falseAnswerSet.size()}</td>
+    <td>${testResult}</td>
 
 </table>
 

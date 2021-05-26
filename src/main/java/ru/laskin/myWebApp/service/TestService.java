@@ -166,10 +166,15 @@ public class TestService {
         request.setAttribute("tests", test);
         request.setAttribute("questionList", questionList);
         request.setAttribute("falseAnswerSet", falseAnswerSet);
-        request.setAttribute("trueAnswer", questionList.size() - falseAnswerSet.size());
+
+        int trueAnswers = questionList.size() - falseAnswerSet.size();
+        request.setAttribute("trueAnswer", trueAnswers);
 
         List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
+
+        String testResult = getTestResultWay1(trueAnswers, questionList.size(), test.getWay1())? "Зачет сдан" : "Зачет не сдан";
+        request.setAttribute("testResult", testResult);
     }
 
     //метод для отображения статистики пользователя
@@ -251,6 +256,10 @@ public class TestService {
             listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
         }
         return listOfUsersAnswers;
+    }
+
+    public  Boolean getTestResultWay1(int trueCountAnswers, int totalCountAnswers, int criteria){
+        return (trueCountAnswers / totalCountAnswers * 100) >= criteria;
     }
 
 }
