@@ -14,6 +14,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 <jsp:useBean id="user" scope="request" type="ru.laskin.myWebApp.model.User"/>
 <jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
+<jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
 
 <html>
 <head>
@@ -29,6 +30,14 @@
             <p>Должность: ${user.position}</p>
         </div>
 
+        <div class="pagination">
+                <a href="#" onclick="stepLeft()">&laquo;</a>
+                <c:forEach var="f" items="${statisticList}" step="5" varStatus="count">
+                    <a class="pag" id="${count.count}" href="#" onclick="getActive(this.id)">${count.count}</a>
+                </c:forEach>
+                <a href="#" onclick="stepRight()">&raquo;</a>
+            </div>
+
         <table id="table0">
             <tr>
                 <th>Дата и время</th>
@@ -38,7 +47,6 @@
                 <th>Количество неправильных ответов</th>
                 <th>Результат</th>
             </tr>
-            <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
             <c:forEach var="statistic" items="${statisticList}" varStatus="count">
 
                 <tr>
@@ -104,6 +112,35 @@
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 <script>
+    document.addEventListener("DOMContentLoaded", ready);
+    function ready(){
+        document.getElementById("1").className += " active";
+    }
+
+    function getActive(id){
+        const el = document.getElementsByClassName("active")[0];
+        el.className = el.className.replace(" active", "");
+        document.getElementById(id).className += " active";
+    }
+
+    function stepLeft(){
+        let id = document.getElementsByClassName("active")[0].id;
+        id--;
+        if (id >= 1){
+            console.log(id);
+            document.getElementById(id).click();
+        }
+    }
+
+    function stepRight(){
+        let id = document.getElementsByClassName("active")[0].id;
+        id++;
+        if (id <= document.getElementsByClassName("pag").length){
+            console.log(id);
+            document.getElementById(id).click();
+        }
+    }
+
     function openDetail(count){
         const button = document.getElementById("btn" + count);
         if (button.innerText === "Подробнее"){
