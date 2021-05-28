@@ -63,11 +63,25 @@
 
     .mybtn {
         border: none;
-        background-color: inherit;
+        background-color: #929998;
         padding: 14px 28px;
         font-size: 16px;
         cursor: pointer;
         display: inline-block;
+    }
+
+    .my-format{
+        margin-left: 150px;
+        width: 700px;
+
+    }
+
+    .false{
+        color: #da190b;
+    }
+
+    .true{
+        color: #2c9751;
     }
 
     /* Green */

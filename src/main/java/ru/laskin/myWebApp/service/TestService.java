@@ -175,7 +175,10 @@ public class TestService {
         List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
         request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
 
-        String testResult = getTestResultWay1(trueAnswers, questionList.size(), test.getWay1())? "Тест пройде" : "Тест не пройден";
+        double result = getResult(trueAnswers, questionList.size());
+        request.setAttribute("result", result);
+
+        String testResult = getTestResult(result, test.getWay1())? "Тест пройден" : "Тест не пройден";
         request.setAttribute("testResult", testResult);
     }
 
@@ -185,7 +188,7 @@ public class TestService {
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
         List<Statistic> statisticList = new ArrayList<>();
-        List<Integer> listOfUsersAnswers = new ArrayList<>();
+        List<Integer> listOfUsersAnswers;
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
@@ -200,7 +203,8 @@ public class TestService {
             int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
             String testResult;
             if (test.getWay1() != null){
-               testResult  = getTestResultWay1(trueAnswer, test.getQuestions().size(), test.getWay1()) ?
+                double result = getResult(trueAnswer, test.getQuestions().size());
+                testResult  = getTestResult(result, test.getWay1()) ?
                         "Тест пройден" : "Тест не пройден";
             }
             else testResult = "Не задан критерий в настройках теста";
@@ -265,10 +269,13 @@ public class TestService {
         return listOfUsersAnswers;
     }
 
-    public  Boolean getTestResultWay1(int trueCountAnswers, int totalCountAnswers, double criteria){
+    public  Double getResult(int trueCountAnswers, int totalCountAnswers){
         BigDecimal bigDecimal1 = new BigDecimal(trueCountAnswers);
         BigDecimal bigDecimal2 = new BigDecimal(totalCountAnswers);
-        double result = bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
-        return  result >= criteria;
+        return bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
+    }
+
+    private boolean getTestResult(Double result, Double criteria) {
+        return result >= criteria;
     }
 }

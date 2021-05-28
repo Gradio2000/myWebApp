@@ -24,88 +24,105 @@
 <jsp:useBean id="questionList" scope="request" type="java.util.List"/>
 <jsp:useBean id="users" scope="request" type="ru.laskin.myWebApp.model.User"/>
 <jsp:useBean id="tests" scope="request" type="ru.laskin.myWebApp.model.Test"/>
-        
+<jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
+
 
 <html>
 <head>
+    <jsp:include page="../includes/settingsHeader.jsp"/>
     <title>Результат</title>
 </head>
 
-<style>
-    .false{
-        color: #da190b;
-    }
-
-    .true{
-        color: #2c9751;
-    }
-</style>
 <body>
+<jsp:include page="../includes/header.jsp"/>
 
-<table border="1" cellpadding="8" cellspacing="0">
-    <tr>
-        <th>Дата</th>
-        <th>Имя</th>
-        <th>Должность</th>
-        <th>Название теста</th>
-        <th>Количество вопросов</th>
-        <th>Количество правильных ответов</th>
-        <th>Количество неправильных ответов</th>
-        <th>Результат</th>
-    </tr>
-    <td>${data}</td>
-    <td>${users.name}</td>
-    <td>${users.position}</td>
-    <td>${tests.testName}</td>
-    <td>${questionList.size()}</td>
-    <td>${trueAnswer}</td>
-    <td>${falseAnswerSet.size()}</td>
-    <td>${testResult}</td>
-
-</table>
-
-<button id="detailBtn" onclick=detail(this.id)>Подробнее</button>
-<div hidden class="detail">
-    <table>
-        <c:forEach var="ques" items="${questionList}" varStatus="count">
-            <p>Вопрос № ${count.count} ${ques.questionName}
-                <c:if test="${falseAnswerSet.contains(ques.questionId)}">
-                    <p1 class="false">Не верно</p1>
-                </c:if>
-                <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
-                    <p2 class="true">Верно</p2>
-                </c:if>
-            </p>
-
-            <table border="1">
+    <div class="wrapper">
+        <div class="content">
+            <table cellpadding="8" cellspacing="0">
                 <tr>
-                    <th>Варианты ответов</th>
-                    <th>Ответы пользователя</th>
-                    <th>Правильные ответы</th>
+                    <th>Дата</th>
+                    <th>Имя</th>
+                    <th>Должность</th>
+                    <th>Название теста</th>
+                    <th>Результат</th>
                 </tr>
-                <c:forEach var="answ" items="${ques.answers}" varStatus="count">
-                    <jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
-                    <tr>
-                        <td>${answ.answerName}</td>
-                        <td>
-                            <c:if test="${listOfUsersAnswers.contains(answ.answerId)}">
-                                <p>V</p>
-                            </c:if>
-                        </td>
-                        <td>
-                            <c:if test="${answ.right}">
-                                <p>V</p>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <td class="mytd">${data}</td>
+                <td>${users.name}</td>
+                <td>${users.position}</td>
+                <td>${tests.testName}</td>
+                <td class="mytd">${testResult}</td>
+                <td>
+                    <button id="detailBtn" class="btn warning" onclick=detail(this.id)>Подробнее</button>
+                </td>
+
             </table>
-        </c:forEach>
-    </table>
-</div>
-<br/>
-<a href="/logout">Выход</a>
+
+            <div hidden class="detail">
+                <table style="width: 500px">
+                    <tr>
+                        <td>Количество заданных вопросов</td>
+                        <td class="mytd">${questionList.size()}</td>
+                    </tr>
+                    <tr>
+                        <td>Количество правильных ответов</td>
+                        <td class="mytd">${trueAnswer}</td>
+                    </tr>
+                    <tr>
+                        <td>Количество неправильных ответов</td>
+                        <td class="mytd">${falseAnswerSet.size()}</td>
+                    </tr>
+                    <tr>
+                        <td>Критерий прохождения теста</td>
+                        <td class="mytd">${tests.way1}%</td>
+                    </tr>
+                    <tr>
+                        <td>Результат</td>
+                        <td class="mytd">${result}%</td>
+                    </tr>
+                </table>
+                <table>
+                    <c:forEach var="ques" items="${questionList}" varStatus="count">
+                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${count.count} ${ques.questionName}
+                            <c:if test="${falseAnswerSet.contains(ques.questionId)}">
+                                <p1 class="false">Не правильный ответ</p1>
+                            </c:if>
+                            <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
+                                <p2 class="true">Правильный ответ</p2>
+                            </c:if>
+                        </h5>
+
+                            <table border="1" class="my-format">
+                                <tr>
+                                    <th>Варианты ответов</th>
+                                    <th>Ваши ответы</th>
+                                    <th>Правильные ответы</th>
+                                </tr>
+                                <c:forEach var="answ" items="${ques.answers}" varStatus="count">
+                                    <tr style="height: 90px">
+                                        <td>${answ.answerName}</td>
+                                        <td class="mytd">
+                                            <c:if test="${listOfUsersAnswers.contains(answ.answerId)}">
+                                                <p>V</p>
+                                            </c:if>
+                                        </td>
+                                        <td class="mytd">
+                                            <c:if test="${answ.right}">
+                                                <p>V</p>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+
+                    </c:forEach>
+                </table>
+            </div>
+            <br/>
+        </div>
+    </div>
+<jsp:include page="../includes/footer.jsp"/>
 </body>
+<jsp:include page="../includes/styles.jsp"/>
 <script>
     function detail(id){
         if (id === 'detailBtn'){

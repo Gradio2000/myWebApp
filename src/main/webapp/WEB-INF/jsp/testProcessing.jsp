@@ -45,21 +45,26 @@
             <sf:form name="fff" method="post" action="oper">
                 <input hidden name="attemptId" value="${attemptId}">
                 <input hidden name="testId" value="${tests.testId}">
-                <div id="content${count.count}" class="tabcontent">
+                <div align="center" id="content${count.count}" class="tabcontent">
                     <h4>Вопрос № ${count.count}</h4>
                     <h4>${quest.questionName}</h4>
                     <input hidden name="questionId" value="${quest.questionId}">
                     <c:forEach var="answ" items="${quest.answers}">
-                        <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                        <table>
+                            <tr>
+                                <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                            </tr>
+                        </table>
                         <br/>
                     </c:forEach>
-                    <input type="submit" class="butt"/>
-                    <input class="butt" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
+                    <input type="submit" class="btn success" value="Ответить"/>
+                    <input class="btn warning" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
                 </div>
             </sf:form>
         </c:forEach>
-
-        <button name="finish" onclick="finish()">Завершить</button>
+        <div>
+            <button class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish()">Завершить тест</button>
+        </div>
     </div>
 </div>
 
