@@ -34,6 +34,6 @@ public class AttemptTestDao {
     }
 
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
-        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ?", attemptTestyRowMapper, id));
+        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ? ORDER BY date_time DESC", attemptTestyRowMapper, id));
     }
 }

@@ -13,7 +13,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 <jsp:useBean id="user" scope="request" type="ru.laskin.myWebApp.model.User"/>
-<jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
 <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
 
 <html>
@@ -47,6 +46,7 @@
                 <th>Количество неправильных ответов</th>
                 <th>Результат</th>
             </tr>
+
             <c:forEach var="statistic" items="${statisticList}" varStatus="count">
 
                 <tr>
@@ -85,7 +85,7 @@
                                                 <tr>
                                                     <td>${answer.answerName}</td>
                                                     <td class="mytd">
-                                                        <c:if test="${listOfUsersAnswers.contains(answer.answerId)}">
+                                                        <c:if test="${statistic.listOfUserAnswer.contains(answer.answerId)}">
                                                             <p>V</p>
                                                         </c:if>
                                                     </td>
@@ -115,6 +115,8 @@
     document.addEventListener("DOMContentLoaded", ready);
     function ready(){
         document.getElementById("1").className += " active";
+        const begin = 0;
+        const end = 4;
     }
 
     function getActive(id){
@@ -127,7 +129,6 @@
         let id = document.getElementsByClassName("active")[0].id;
         id--;
         if (id >= 1){
-            console.log(id);
             document.getElementById(id).click();
         }
     }
@@ -136,7 +137,6 @@
         let id = document.getElementsByClassName("active")[0].id;
         id++;
         if (id <= document.getElementsByClassName("pag").length){
-            console.log(id);
             document.getElementById(id).click();
         }
     }

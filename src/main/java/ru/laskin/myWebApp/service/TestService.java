@@ -205,12 +205,11 @@ public class TestService {
             }
             else testResult = "Не задан критерий в настройках теста";
 
-            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer, testResult));
+            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer, testResult, listOfUsersAnswers));
         }
 
         request.setAttribute("user", user);
         request.setAttribute("statisticList", statisticList);
-        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers (List<ResultTest> resultTestList){

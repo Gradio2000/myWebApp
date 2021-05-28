@@ -1,6 +1,7 @@
 package ru.laskin.myWebApp.model;
 
 
+import java.util.List;
 import java.util.Set;
 
 public class Statistic {
@@ -9,13 +10,23 @@ public class Statistic {
     Set<Integer> falseAnswerSet;
     int trueAnswer;
     String testResult;
+    List<Integer> listOfUserAnswer;
 
-    public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer, String testResult) {
+    public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer, String testResult, List<Integer> listOfUserAnswer) {
         this.date = date;
         this.test = test;
         this.falseAnswerSet = falseAnswerSet;
         this.trueAnswer = trueAnswer;
         this.testResult = testResult;
+        this.listOfUserAnswer = listOfUserAnswer;
+    }
+
+    public List<Integer> getListOfUserAnswer() {
+        return listOfUserAnswer;
+    }
+
+    public void setListOfUserAnswer(List<Integer> listOfUserAnswer) {
+        this.listOfUserAnswer = listOfUserAnswer;
     }
 
     public String getTestResult() {
