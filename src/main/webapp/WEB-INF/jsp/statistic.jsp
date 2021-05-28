@@ -30,11 +30,11 @@
         </div>
 
         <div class="pagination">
-                <a href="#" onclick="stepLeft()">&laquo;</a>
+                <a onclick="stepLeft()">&laquo;</a>
                 <c:forEach var="f" items="${statisticList}" step="5" varStatus="count">
-                    <a class="pag" id="${count.count}" href="#" onclick="getActive(this.id)">${count.count}</a>
+                    <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
                 </c:forEach>
-                <a href="#" onclick="stepRight()">&raquo;</a>
+                <a onclick="stepRight()">&raquo;</a>
             </div>
 
         <table id="table0">
@@ -137,6 +137,14 @@
         for (let i = start; i <= end; i++) {
                 line[i].removeAttribute("hidden");
         }
+
+        const detailBtn = document.getElementsByClassName("detail-btn");
+        if (detailBtn.length !== 0){
+            for (let i = 0; i < detailBtn.length; i++) {
+                detailBtn[i].click();
+                detailBtn[i].className = detailBtn[i].className.replace(" detail-btn", "");
+            }
+        }
     }
 
     function stepLeft(){
@@ -160,6 +168,7 @@
         if (button.innerText === "Подробнее"){
             button.innerText = "Скрыть";
             button.className = button.className.replace("info", "warning");
+            button.className += " detail-btn";
             const el = document.getElementsByClassName("table" + count);
             for (let i = 0; i < el.length; i++) {
                 el[i].removeAttribute("hidden");
