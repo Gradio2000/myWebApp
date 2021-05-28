@@ -49,7 +49,7 @@
 
             <c:forEach var="statistic" items="${statisticList}" varStatus="count">
 
-                <tr>
+                <tr id="line${count.count}" class="line" hidden>
                     <td>${statistic.date}</td>
                     <td>${statistic.test.testName}</td>
                     <td class="mytd">${statistic.test.questions.size()}</td>
@@ -115,14 +115,28 @@
     document.addEventListener("DOMContentLoaded", ready);
     function ready(){
         document.getElementById("1").className += " active";
-        const begin = 0;
-        const end = 4;
+        const el = document.getElementsByClassName("line");
+        for (let i = 0; i < 5; i++) {
+            el[i].removeAttribute("hidden");
+        }
     }
 
     function getActive(id){
         const el = document.getElementsByClassName("active")[0];
         el.className = el.className.replace(" active", "");
         document.getElementById(id).className += " active";
+        const start = (id - 1) * 5;
+        const end = (id - 1) * 5 + 4;
+
+        const line = document.getElementsByClassName("line");
+
+        for (let i = 0; i < line.length; i++) {
+            line[i].setAttribute("hidden", true);
+        }
+
+        for (let i = start; i <= end; i++) {
+                line[i].removeAttribute("hidden");
+        }
     }
 
     function stepLeft(){
