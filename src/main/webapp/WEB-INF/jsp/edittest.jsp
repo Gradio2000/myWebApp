@@ -44,22 +44,22 @@
                         <table border="0">
                             <tr class="mytr">
                                 <td>
-                                    <label><input id="check1" class="crit" name="criteria" type="radio" value="way1" onclick="check(this.id)" checked/> Результат определяется процентным соотношением правильных ответов</label>
+                                    <label>Результат определяется процентным соотношением правильных ответов</label>
                                 </td>
                                 <td>
-                                    <input id="way1"   name="way1" value="${test.way1}"> %</input>
+                                    <input id="criteria" name="criteria" value="${test.criteria}"> %</input>
                                 </td>
                             </tr>
                             <tr class="mytr">
                                 <td>
-                                    <label><input id="check2" class="crit" name="criteria" type="radio" value="way2" onclick="check(this.id)"/> Результат определяется количеством правильных ответов</label>
+                                    <label><input id="check" class="crit" name="criteria" type="checkbox" onclick="findcheck(this.id)"/> Время для прохождения теста</label>
                                 </td>
                                 <td>
-                                    <input id="way2"  name="way2" value="${test.way2}" disabled> ответов</input>
+                                    <input id="time" name="time" value="${test.time}" disabled> минут</input>
                                 </td>
                             </tr>
-
                         </table>
+
                         <div class="container-my-md">
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
                                 <input hidden name="questionId" value="${ques.questionId}">
@@ -85,8 +85,6 @@
 
                                         </div>
                                     </c:forEach>
-
-
 
                                     <div id="forAddAnswer${ques.questionId}"></div>
 
@@ -302,19 +300,12 @@
         }
     }
 
-    function check (id){
-        if (id === "check1"){
-            const el = document.getElementById("way2");
-            el.setAttribute("disabled", "disabled");
-            el.setAttribute("value", "");
-            document.getElementById("way1").removeAttribute("disabled");
-        }
-        else if (id === "check2"){
-            const el = document.getElementById("way1");
-            el.setAttribute("disabled", "disabled");
-            el.setAttribute("value", "");
-            document.getElementById("way2").removeAttribute("disabled");
-        }
+    function findcheck(id){
+      const ch = document.getElementById(id);
+          if(ch.checked){
+              document.getElementById("time").removeAttribute("disabled");
+          }
+          else document.getElementById("time").setAttribute("disabled", true);
     }
 </script>
 </html>

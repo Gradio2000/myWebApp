@@ -73,7 +73,7 @@
                     </tr>
                     <tr>
                         <td>Критерий прохождения теста</td>
-                        <td class="mytd">${tests.way1}%</td>
+                        <td class="mytd">${tests.criteria}%</td>
                     </tr>
                     <tr>
                         <td>Результат</td>

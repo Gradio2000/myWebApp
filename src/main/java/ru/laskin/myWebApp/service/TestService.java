@@ -178,7 +178,7 @@ public class TestService {
         double result = getResult(trueAnswers, questionList.size());
         request.setAttribute("result", result);
 
-        String testResult = getTestResult(result, test.getWay1())? "Тест пройден" : "Тест не пройден";
+        String testResult = getTestResult(result, test.getCriteria())? "Тест пройден" : "Тест не пройден";
         request.setAttribute("testResult", testResult);
     }
 
@@ -202,9 +202,9 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
             String testResult;
-            if (test.getWay1() != null){
+            if (test.getCriteria() != null){
                 double result = getResult(trueAnswer, test.getQuestions().size());
-                testResult  = getTestResult(result, test.getWay1()) ?
+                testResult  = getTestResult(result, test.getCriteria()) ?
                         "Тест пройден" : "Тест не пройден";
             }
             else testResult = "Не задан критерий в настройках теста";

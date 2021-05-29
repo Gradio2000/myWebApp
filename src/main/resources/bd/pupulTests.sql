@@ -25,8 +25,8 @@ CREATE TABLE tests
     test_name VARCHAR not null,
     group_id int  constraint tests_group_test_id_grouptest_fk
         references group_test on update cascade on delete cascade,
-    way1 double precision,
-    way2 double precision
+    criteria double precision,
+    time double precision
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex

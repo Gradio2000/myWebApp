@@ -9,8 +9,8 @@ public class Test {
     private int testId;
     private String testName;
     private GroupTest groupTest;
-    private Double way1;
-    private Double way2;
+    private Double criteria;
+    private Double time;
     private List<Question> questions;
 
     public Test() {
@@ -26,22 +26,22 @@ public class Test {
         this.groupTest = groupTest;
     }
 
-    @Column(name = "way1")
-    public Double getWay1() {
-        return way1;
+    @Column(name = "criteria")
+    public Double getCriteria() {
+        return criteria;
     }
 
-    public void setWay1(Double way1) {
-        this.way1 = way1;
+    public void setCriteria(Double way1) {
+        this.criteria = way1;
     }
 
-    @Column(name = "way2")
-    public Double getWay2() {
-        return way2;
+    @Column(name = "time")
+    public Double getTime() {
+        return time;
     }
 
-    public void setWay2(Double way2) {
-        this.way2 = way2;
+    public void setTime(Double way2) {
+        this.time = way2;
     }
 
     @OneToMany(
