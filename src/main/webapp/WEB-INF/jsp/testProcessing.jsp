@@ -62,18 +62,26 @@
                 </div>
             </sf:form>
         </c:forEach>
+
+        <div id="countdown" class="countdown">
+                <span class="hours countdown-time"></span>
+                <span> : </span>
+                <span class="minutes countdown-time"></span>
+                <span> : </span>
+                <span class="seconds countdown-time"></span>
+        </div>
         <div>
-            <button class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish()">Завершить тест</button>
+            <button id="btnfinish" class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish()">Завершить тест</button>
         </div>
     </div>
 </div>
 
 <jsp:include page="../includes/footer.jsp"/>
-
 </body>
 <jsp:include page="../includes/styles.jsp"/>
 
 <script>
+
     function finish(){
         document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}";
     }
@@ -91,7 +99,6 @@
         document.getElementById("content" + count).style.display = "block";
         evt.currentTarget.className += " active";
     }
-
 
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -137,7 +144,6 @@
         });
     });
 
-
     function iSkip(divId) {
 
         //пометить div как skipped
@@ -174,6 +180,51 @@
         }
         else return true;
     }
+
+    function getTimeRemaining(endtime) {
+        var t = Date.parse(endtime) - Date.parse(new Date());
+        console.log(endtime);
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+        var days = Math.floor(t / (1000 * 60 * 60 * 24));
+        return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
+    }
+
+    function initializeClock(id, endtime) {
+        var clock = document.getElementById(id);
+        var daysSpan = clock.querySelector('.days');
+        var hoursSpan = clock.querySelector('.hours');
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
+
+        function updateClock() {
+            var t = getTimeRemaining(endtime);
+
+            // daysSpan.innerHTML = t.days;
+            hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+            minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+            secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+            if (t.total <= 0) {
+                // clearInterval(timeinterval);
+                document.getElementById("btnfinish").click();
+            }
+        }
+
+        updateClock();
+        var timeinterval = setInterval(updateClock, 1000);
+    }
+
+    // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
+    var deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
+    initializeClock('countdown', deadline);
 
     // Get the element with id="1" and click on it
     document.getElementById("1").click();

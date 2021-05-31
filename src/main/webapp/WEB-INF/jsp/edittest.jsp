@@ -282,7 +282,6 @@
             el2[i].setAttribute("value", i)
         }
 
-
         const questions = document.getElementsByClassName('container-my-sm');
         for (const question of questions ) {
             const checks = question.querySelectorAll('input[type=checkbox]');

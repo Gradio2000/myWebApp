@@ -221,6 +221,15 @@
         color: white;
     }
 
-    .pagination a:hover:not(.active) {background-color: #ddd;}
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+
+    .countdown{
+        color: #da190b;
+        font-size: x-large;
+        width: 175.75px;
+        text-align: center;
+    }
 
 </style>
