@@ -27,8 +27,6 @@ public class AttemptTestService {
     }
 
     public void saveTimeOfAttempt(int attemptId, Integer timeOfAttempt) {
-        AttemptTest attemptTest = attemptTestDao.getAttemptById(attemptId);
-        attemptTest.setTimeOfAttempt(timeOfAttempt);
-        attemptTestDao.updateAttemptTest(attemptTest);
+        attemptTestDao.updateAttemptTest(attemptId, timeOfAttempt);
     }
 }

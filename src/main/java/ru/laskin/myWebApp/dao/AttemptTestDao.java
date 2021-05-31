@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 @Component
 public class AttemptTestDao {
-    private JdbcTemplate jdbcTemplate;
-    private BeanPropertyRowMapper<AttemptTest> attemptTestyRowMapper = new BeanPropertyRowMapper<>(AttemptTest.class);
+    private final JdbcTemplate jdbcTemplate;
+    private final BeanPropertyRowMapper<AttemptTest> attemptTestyRowMapper = new BeanPropertyRowMapper<>(AttemptTest.class);
 
     public AttemptTestDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -29,10 +29,8 @@ public class AttemptTestDao {
         return attemptTests.get(0).getAttemptId();
     }
 
-    public void updateAttemptTest(AttemptTest attemptTest){
-        String sql = "INSERT INTO attempttests (date_time, test_id, user_id, time_attempt) VALUES (?, ?, ?, ?)";
-        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeOfAttempt()};
-        jdbcTemplate.update(sql, objects);
+    public void updateAttemptTest(int id, int time){
+        jdbcTemplate.update("UPDATE attempttests SET time_attempt = ? WHERE attempt_id = ?", time, id);
     }
 
     public AttemptTest getAttemptById(int id){
