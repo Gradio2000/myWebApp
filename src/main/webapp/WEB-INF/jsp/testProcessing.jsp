@@ -83,8 +83,12 @@
 <script>
 
     function finish(){
-        //to do
-        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=100";
+        var clock = document.getElementById("countdown");
+        var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
+            Number (clock.querySelector('.minutes').innerHTML) * 60 +
+            Number (clock.querySelector('.hours').innerHTML) * 3600);
+
+        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=" + time;
     }
 
     function openCity(evt, count) {
@@ -183,8 +187,7 @@
     }
 
     function getTimeRemaining(endtime) {
-        var t = Date.parse(endtime) - Date.parse(new Date());
-        console.log(endtime);
+        const t = Date.parse(endtime) - Date.parse(new Date());
         var seconds = Math.floor((t / 1000) % 60);
         var minutes = Math.floor((t / 1000 / 60) % 60);
         var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
@@ -207,15 +210,13 @@
 
         function updateClock() {
             var t = getTimeRemaining(endtime);
-
             // daysSpan.innerHTML = t.days;
             hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
             minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
             secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
             if (t.total <= 0) {
-                // clearInterval(timeinterval);
-                document.getElementById("btnfinish").click();
+                finish();
             }
         }
 
@@ -224,7 +225,7 @@
     }
 
     // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
-    var deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
+    const deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
     initializeClock('countdown', deadline);
 
     // Get the element with id="1" and click on it
