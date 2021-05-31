@@ -60,6 +60,10 @@
             <div hidden class="detail">
                 <table style="width: 500px">
                     <tr>
+                        <td>Затраченное время</td>
+                        <td class="mytd">${time}</td>
+                    </tr>
+                    <tr>
                         <td>Количество заданных вопросов</td>
                         <td class="mytd">${questionList.size()}</td>
                     </tr>
@@ -124,6 +128,7 @@
 </body>
 <jsp:include page="../includes/styles.jsp"/>
 <script>
+
     function detail(id){
         if (id === 'detailBtn'){
             document.getElementsByClassName("detail")[0].removeAttribute("hidden");

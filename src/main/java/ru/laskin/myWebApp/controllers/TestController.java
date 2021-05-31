@@ -37,6 +37,7 @@ public class TestController {
                              HttpServletRequest request){
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
         testService.mainCheck(request, attemptId, testId, userId);
+        request.setAttribute("time", attemptTestService.getTime(timeOfAttempt));
         return "testResult";
     }
 }

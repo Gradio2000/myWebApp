@@ -29,4 +29,16 @@ public class AttemptTestService {
     public void saveTimeOfAttempt(int attemptId, Integer timeOfAttempt) {
         attemptTestDao.updateAttemptTest(attemptId, timeOfAttempt);
     }
+
+    public String getTime(Integer timeOfAttempt) {
+        String seconds = "0" + (int) Math.floor(timeOfAttempt % 60);
+        String minutes = "0" + (int) Math.floor((timeOfAttempt / 60.0) % 60);
+        String hours = "0" + (int) Math.floor((timeOfAttempt / (60.0 * 60)) % 24);
+
+        seconds = seconds.substring(seconds.length() - 2);
+        minutes = minutes.substring(minutes.length() - 2);
+        hours = minutes.substring(hours.length() - 2);
+
+        return hours + " : " + minutes  + " : " + seconds;
+    }
 }
