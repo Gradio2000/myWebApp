@@ -83,7 +83,8 @@
 <script>
 
     function finish(){
-        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}";
+        //to do
+        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=100";
     }
 
     function openCity(evt, count) {

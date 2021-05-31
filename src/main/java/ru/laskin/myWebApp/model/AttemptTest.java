@@ -10,14 +10,24 @@ public class AttemptTest {
     private Timestamp dateTime;
     private int testId;
     private int userId;
+    private int timeOfAttempt;
+
+    public AttemptTest(int attemptId, Timestamp dateTime, int testId, int userId, int timeOfAttempt) {
+        this.attemptId = attemptId;
+        this.dateTime = dateTime;
+        this.testId = testId;
+        this.userId = userId;
+        this.timeOfAttempt = timeOfAttempt;
+    }
+
+    public AttemptTest() {
+    }
+
 
     public AttemptTest(Timestamp dateTime, int testId, int userId) {
         this.dateTime = dateTime;
         this.testId = testId;
         this.userId = userId;
-    }
-
-    public AttemptTest() {
     }
 
     @Id
@@ -60,27 +70,13 @@ public class AttemptTest {
         this.userId = userId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AttemptTest that = (AttemptTest) o;
-
-        if (attemptId != that.attemptId) return false;
-        if (testId != that.testId) return false;
-        if (userId != that.userId) return false;
-        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
-
-        return true;
+    @Basic
+    @Column(name = "time_attempt")
+    public int getTimeOfAttempt() {
+        return timeOfAttempt;
     }
 
-    @Override
-    public int hashCode() {
-        int result = attemptId;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-        result = 31 * result + testId;
-        result = 31 * result + userId;
-        return result;
+    public void setTimeOfAttempt(int timeOfAttempt) {
+        this.timeOfAttempt = timeOfAttempt;
     }
 }

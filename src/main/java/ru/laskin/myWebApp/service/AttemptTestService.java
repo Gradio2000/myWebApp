@@ -25,4 +25,10 @@ public class AttemptTestService {
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
         return attemptTestDao.getAllAttemptByUserId(id);
     }
+
+    public void saveTimeOfAttempt(int attemptId, Integer timeOfAttempt) {
+        AttemptTest attemptTest = attemptTestDao.getAttemptById(attemptId);
+        attemptTest.setTimeOfAttempt(timeOfAttempt);
+        attemptTestDao.updateAttemptTest(attemptTest);
+    }
 }

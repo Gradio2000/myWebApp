@@ -8,7 +8,9 @@ create table attempttests (
             ON DELETE CASCADE ON UPDATE CASCADE,
     user_id integer
         not null constraint attempttests_users_user_id_fk references users
-            ON DELETE CASCADE ON UPDATE CASCADE
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    time_attempt integer
+
 );
 
 create unique index attempttests_attempt_id_uindex

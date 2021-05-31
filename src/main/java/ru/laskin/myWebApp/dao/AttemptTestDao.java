@@ -1,5 +1,7 @@
 package ru.laskin.myWebApp.dao;
 
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -21,10 +23,16 @@ public class AttemptTestDao {
     
     //запись в таблицу с возвратом последнего id
     public Integer saveAttemptTest(AttemptTest attemptTest){
-        String sql = "INSERT INTO attempttests (date_time, test_id, user_id) VALUES (?, ?, ?) RETURNING attempt_id";
-        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId()};
+        String sql = "INSERT INTO attempttests (date_time, test_id, user_id, time_attempt) VALUES (?, ?, ?, ?) RETURNING attempt_id";
+        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeOfAttempt()};
         List<AttemptTest> attemptTests = jdbcTemplate.query(sql, objects, attemptTestyRowMapper);
         return attemptTests.get(0).getAttemptId();
+    }
+
+    public void updateAttemptTest(AttemptTest attemptTest){
+        String sql = "INSERT INTO attempttests (date_time, test_id, user_id, time_attempt) VALUES (?, ?, ?, ?)";
+        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeOfAttempt()};
+        jdbcTemplate.update(sql, objects);
     }
 
     public AttemptTest getAttemptById(int id){
@@ -36,4 +44,5 @@ public class AttemptTestDao {
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
         return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ? ORDER BY date_time DESC", attemptTestyRowMapper, id));
     }
+
 }
