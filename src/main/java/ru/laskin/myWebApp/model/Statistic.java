@@ -11,14 +11,19 @@ public class Statistic {
     int trueAnswer;
     String testResult;
     List<Integer> listOfUserAnswer;
+    double result;
+    double time;
 
-    public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer, String testResult, List<Integer> listOfUserAnswer) {
+    public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer,
+                     String testResult, List<Integer> listOfUserAnswer, double result, double time) {
         this.date = date;
         this.test = test;
         this.falseAnswerSet = falseAnswerSet;
         this.trueAnswer = trueAnswer;
         this.testResult = testResult;
         this.listOfUserAnswer = listOfUserAnswer;
+        this.result = result;
+        this.time = time;
     }
 
     public List<Integer> getListOfUserAnswer() {
@@ -67,5 +72,21 @@ public class Statistic {
 
     public void setTrueAnswer(int trueAnswer) {
         this.trueAnswer = trueAnswer;
+    }
+
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
+    }
+
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
     }
 }

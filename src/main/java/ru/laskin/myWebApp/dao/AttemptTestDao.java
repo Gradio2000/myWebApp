@@ -24,7 +24,7 @@ public class AttemptTestDao {
     //запись в таблицу с возвратом последнего id
     public Integer saveAttemptTest(AttemptTest attemptTest){
         String sql = "INSERT INTO attempttests (date_time, test_id, user_id, time_attempt) VALUES (?, ?, ?, ?) RETURNING attempt_id";
-        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeOfAttempt()};
+        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeAttempt()};
         List<AttemptTest> attemptTests = jdbcTemplate.query(sql, objects, attemptTestyRowMapper);
         return attemptTests.get(0).getAttemptId();
     }
@@ -41,6 +41,10 @@ public class AttemptTestDao {
 
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
         return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ? ORDER BY date_time DESC", attemptTestyRowMapper, id));
+    }
+
+    public List<AttemptTest> getAllAttempt(){
+        return jdbcTemplate.query("SELECT * FROM attempttests", attemptTestyRowMapper);
     }
 
 }

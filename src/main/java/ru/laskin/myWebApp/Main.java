@@ -3,11 +3,10 @@ package ru.laskin.myWebApp;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.laskin.myWebApp.dao.AttemptTestDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
-import ru.laskin.myWebApp.model.Answer;
-import ru.laskin.myWebApp.model.GroupTest;
-import ru.laskin.myWebApp.model.Question;
-import ru.laskin.myWebApp.model.Test;
+import ru.laskin.myWebApp.model.*;
+import ru.laskin.myWebApp.service.AttemptTestService;
 
 
 import java.sql.SQLException;
@@ -32,6 +31,10 @@ public class Main {
 //        testHiberDao.saveTest(test);
 //        printTest();
         printGroup();
+
+        AttemptTestDao service = appCont.getBean(AttemptTestDao.class);
+        List<AttemptTest> attemptTests = service.getAllAttempt();
+        System.out.println(attemptTests);
 
     }
 

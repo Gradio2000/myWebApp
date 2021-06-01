@@ -202,14 +202,16 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
             String testResult;
+            double result = 0;
             if (test.getCriteria() != null){
-                double result = getResult(trueAnswer, test.getQuestions().size());
+                result = getResult(trueAnswer, test.getQuestions().size());
                 testResult  = getTestResult(result, test.getCriteria()) ?
                         "Тест пройден" : "Тест не пройден";
             }
             else testResult = "Не задан критерий в настройках теста";
 
-            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer, testResult, listOfUsersAnswers));
+            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
+                    testResult, listOfUsersAnswers, result, attemptTest.getTimeAttempt()));
         }
 
         request.setAttribute("user", user);

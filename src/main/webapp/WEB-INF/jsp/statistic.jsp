@@ -59,6 +59,33 @@
                     <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
                 </tr>
 
+                <tr class="table${count.count}" hidden>
+                    <td colspan="7">
+                        <table>
+                            <tr>
+                                <td>Затраченное время</td>
+                                <td class="mytd">${statistic.time}</td>
+                            </tr>
+                            <tr>
+                                <td>Количество правильных ответов</td>
+                                <td class="mytd">${statistic.trueAnswer}</td>
+                            </tr>
+                            <tr>
+                                <td>Количество неправильных ответов</td>
+                                <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                            </tr>
+                            <tr>
+                                <td>Критерий прохождения теста</td>
+                                <td class="mytd">${statistic.test.criteria}%</td>
+                            </tr>
+                            <tr>
+                                <td>Результат</td>
+                                <td class="mytd">${statistic.result}%</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
                 <tr id="hidden${count.count}" hidden>
                     <th>Варианты ответов</th>
                     <th>Ответы пользователя</th>

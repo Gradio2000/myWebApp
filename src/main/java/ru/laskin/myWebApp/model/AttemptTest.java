@@ -4,30 +4,21 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "attempttests")
+@Table(name = "attempttests", schema = "public", catalog = "postgres")
 public class AttemptTest {
     private int attemptId;
-    private Timestamp dateTime;
     private int testId;
     private int userId;
-    private int timeOfAttempt;
-
-    public AttemptTest(int attemptId, Timestamp dateTime, int testId, int userId, int timeOfAttempt) {
-        this.attemptId = attemptId;
-        this.dateTime = dateTime;
-        this.testId = testId;
-        this.userId = userId;
-        this.timeOfAttempt = timeOfAttempt;
-    }
-
-    public AttemptTest() {
-    }
-
+    private Timestamp dateTime;
+    private Integer timeAttempt;
 
     public AttemptTest(Timestamp dateTime, int testId, int userId) {
         this.dateTime = dateTime;
         this.testId = testId;
         this.userId = userId;
+    }
+
+    public AttemptTest() {
     }
 
     @Id
@@ -51,7 +42,15 @@ public class AttemptTest {
     }
 
     @Basic
-    @Column(name = "test_id", nullable = false)
+    @Column(name = "time_attempt", nullable = true)
+    public Integer getTimeAttempt() {
+        return timeAttempt;
+    }
+
+    public void setTimeAttempt(Integer timeAttempt) {
+        this.timeAttempt = timeAttempt;
+    }
+
     public int getTestId() {
         return testId;
     }
@@ -60,8 +59,6 @@ public class AttemptTest {
         this.testId = testId;
     }
 
-    @Basic
-    @Column(name = "user_id", nullable = false)
     public int getUserId() {
         return userId;
     }
@@ -70,13 +67,25 @@ public class AttemptTest {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name = "time_attempt")
-    public int getTimeOfAttempt() {
-        return timeOfAttempt;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AttemptTest that = (AttemptTest) o;
+
+        if (attemptId != that.attemptId) return false;
+        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
+        if (timeAttempt != null ? !timeAttempt.equals(that.timeAttempt) : that.timeAttempt != null) return false;
+
+        return true;
     }
 
-    public void setTimeOfAttempt(int timeOfAttempt) {
-        this.timeOfAttempt = timeOfAttempt;
+    @Override
+    public int hashCode() {
+        int result = attemptId;
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        result = 31 * result + (timeAttempt != null ? timeAttempt.hashCode() : 0);
+        return result;
     }
 }
