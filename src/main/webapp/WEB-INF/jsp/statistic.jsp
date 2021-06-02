@@ -37,77 +37,69 @@
                 <a onclick="stepRight()">&raquo;</a>
             </div>
 
-        <table id="table0">
-            <tr>
-                <th>Дата и время</th>
-                <th>Название теста</th>
-                <th>Результат</th>
-            </tr>
 
-            <c:forEach var="statistic" items="${statisticList}" varStatus="count">
-
-                <tr id="line${count.count}" class="line" hidden>
-                    <td>${statistic.date}</td>
-                    <td>${statistic.test.testName}</td>
-                    <td class="mytd">${statistic.testResult}</td>
-                    <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
+            <table id="table0">
+                <tr>
+                    <th>Дата и время</th>
+                    <th>Название теста</th>
+                    <th>Результат</th>
                 </tr>
-
-                <tr class="table${count.count}" hidden>
-                    <td colspan="7">
-                        <table style="width: 500px">
-                            <tr>
-                                <td>Затраченное время</td>
-                                <td class="mytd">${statistic.time}</td>
-                            </tr>
-                            <tr>
-                                <td>Количество заданных вопросов</td>
-                                <td class="mytd">${statistic.test.questions.size()}</td>
-                            </tr>
-                            <tr>
-                                <td>Количество правильных ответов</td>
-                                <td class="mytd">${statistic.trueAnswer}</td>
-                            </tr>
-                            <tr>
-                                <td>Количество неправильных ответов</td>
-                                <td class="mytd">${statistic.falseAnswerSet.size()}</td>
-                            </tr>
-                            <tr>
-                                <td>Критерий прохождения теста</td>
-                                <td class="mytd">${statistic.test.criteria}%</td>
-                            </tr>
-                            <tr>
-                                <td>Результат</td>
-                                <td class="mytd">${statistic.result}%</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-
-                <tr id="hidden${count.count}" hidden>
-                    <th>Варианты ответов</th>
-                    <th>Ответы пользователя</th>
-                    <th>Правильные ответы</th>
-                </tr>
-
-                <tr class="table${count.count}" hidden>
-                    <td></td>
-                    <td colspan="4">
-                        <table>
-                            <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
-                                <tr>
-                                    <td bgcolor="#a9a9a9">Вопрос № ${counter.count} ${ques.questionName}</td
-                                </tr>
-                                <tr>
+                <c:forEach var="statistic" items="${statisticList}" varStatus="count">
+                    <tr id="line${count.count}" class="line" hidden>
+                        <td>${statistic.date}</td>
+                        <td>${statistic.test.testName}</td>
+                        <td class="mytd">${statistic.testResult}</td>
+                        <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
+                    </tr>
+                    <tr class="tr${count.count}" hidden>
+                        <td colspan="4">
+                            <table id="table1">
+                                <tr class="tr"${count.count}>
                                     <td colspan="7">
-                                        <table border>
+                                        <table style="width: 500px">
                                             <tr>
-                                                <th>Варианты ответов</th>
-                                                <th>Ответы пользователя</th>
-                                                <th>Правильные ответы</th>
+                                                <td>Затраченное время</td>
+                                                <td class="mytd">${statistic.time}</td>
                                             </tr>
-                                            <c:forEach var="answer" items="${ques.answers}">
-                                                <tr>
+                                            <tr>
+                                                <td>Количество заданных вопросов</td>
+                                                <td class="mytd">${statistic.test.questions.size()}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Количество правильных ответов</td>
+                                                <td class="mytd">${statistic.trueAnswer}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Количество неправильных ответов</td>
+                                                <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Критерий прохождения теста</td>
+                                                <td class="mytd">${statistic.test.criteria}%</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Результат</td>
+                                                <td class="mytd">${statistic.result}%</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr class="tr${count.count}" hidden>
+                        <td colspan="4">
+                            <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
+                                <table  style="width: 500px">
+                                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${counter.count}: ${ques.questionName}</h5>
+                                    <tr>
+                                        <th>Варианты ответов</th>
+                                        <th>Ответы пользователя</th>
+                                        <th>Правильные ответы</th>
+                                    </tr>
+                                    <tr>
+                                        <c:forEach var="answer" items="${ques.answers}">
+                                                <tr style="height: 90px">
                                                     <td>${answer.answerName}</td>
                                                     <td class="mytd">
                                                         <c:if test="${statistic.listOfUserAnswer.contains(answer.answerId)}">
@@ -121,16 +113,14 @@
                                                     </td>
                                                 </tr>
                                             </c:forEach>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                    </td>
-                    <td colspan="2"></td>
-                </tr>
-            </c:forEach>
-        </table>
+                                    </tr>
+                                </c:forEach>
+                            </table>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </table>
+
     </div>
 </div>
 
@@ -194,17 +184,17 @@
             button.innerText = "Скрыть";
             button.className = button.className.replace("info", "warning");
             button.className += " detail-btn";
-            const el = document.getElementsByClassName("table" + count);
-            for (let i = 0; i < el.length; i++) {
-                el[i].removeAttribute("hidden");
+            const eltr = document.getElementsByClassName("tr" + count);
+            for (let i = 0; i < eltr.length; i++) {
+                eltr[i].removeAttribute("hidden");
             }
         }
         else if (button.innerText === "Скрыть"){
             button.innerText = "Подробнее";
             button.className = button.className.replace("warning", "info");
-            const el = document.getElementsByClassName("table" + count);
-            for (let i = 0; i < el.length; i++) {
-                el[i].setAttribute("hidden", true);
+            const eltr = document.getElementsByClassName("tr" + count);
+            for (let i = 0; i < eltr.length; i++) {
+                eltr[i].setAttribute("hidden", true);
             }
         }
     }
