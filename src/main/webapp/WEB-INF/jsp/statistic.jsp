@@ -41,9 +41,6 @@
             <tr>
                 <th>Дата и время</th>
                 <th>Название теста</th>
-                <th>Количество вопросов</th>
-                <th>Количество правильных ответов</th>
-                <th>Количество неправильных ответов</th>
                 <th>Результат</th>
             </tr>
 
@@ -52,19 +49,20 @@
                 <tr id="line${count.count}" class="line" hidden>
                     <td>${statistic.date}</td>
                     <td>${statistic.test.testName}</td>
-                    <td class="mytd">${statistic.test.questions.size()}</td>
-                    <td class="mytd">${statistic.trueAnswer}</td>
-                    <td class="mytd">${statistic.falseAnswerSet.size()}</td>
                     <td class="mytd">${statistic.testResult}</td>
                     <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
                 </tr>
 
                 <tr class="table${count.count}" hidden>
                     <td colspan="7">
-                        <table>
+                        <table style="width: 500px">
                             <tr>
                                 <td>Затраченное время</td>
                                 <td class="mytd">${statistic.time}</td>
+                            </tr>
+                            <tr>
+                                <td>Количество заданных вопросов</td>
+                                <td class="mytd">${statistic.test.questions.size()}</td>
                             </tr>
                             <tr>
                                 <td>Количество правильных ответов</td>
