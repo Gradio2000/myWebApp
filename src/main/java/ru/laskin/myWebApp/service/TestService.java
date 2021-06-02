@@ -210,8 +210,10 @@ public class TestService {
             }
             else testResult = "Не задан критерий в настройках теста";
 
+            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
+
             statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
-                    testResult, listOfUsersAnswers, result, attemptTest.getTimeAttempt()));
+                    testResult, listOfUsersAnswers, result, time));
         }
 
         request.setAttribute("user", user);

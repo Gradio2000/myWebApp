@@ -12,10 +12,10 @@ public class Statistic {
     String testResult;
     List<Integer> listOfUserAnswer;
     double result;
-    double time;
+    String time;
 
     public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer,
-                     String testResult, List<Integer> listOfUserAnswer, double result, double time) {
+                     String testResult, List<Integer> listOfUserAnswer, double result, String time) {
         this.date = date;
         this.test = test;
         this.falseAnswerSet = falseAnswerSet;
@@ -82,11 +82,11 @@ public class Statistic {
         this.result = result;
     }
 
-    public double getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
