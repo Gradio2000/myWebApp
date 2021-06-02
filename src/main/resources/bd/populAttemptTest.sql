@@ -16,5 +16,5 @@ create table attempttests (
 create unique index attempttests_attempt_id_uindex
     on attempttests (attempt_id);
 
-INSERT INTO attemptTests (date_time, test_id, user_id) VALUES
-    ('01.01.2021 15:00', 1, 1);
+INSERT INTO attemptTests (date_time, test_id, user_id, time_attempt) VALUES
+    ('01.01.2021 15:00', 1, 1, 0);
