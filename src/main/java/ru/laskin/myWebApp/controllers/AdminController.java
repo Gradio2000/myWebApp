@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.*;
-import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
@@ -34,15 +33,19 @@ public class AdminController {
     }
 
     @GetMapping("/allUsers")
-    public String getStart(Model model) {
+    public String getStart(Model model, HttpServletRequest request) {
         model.addAttribute("users", userService.getAllUsers());
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("authUser", authUser.getName());
+        request.setAttribute("user", authUser);
         return "list_users";
     }
 
     @GetMapping("/users/update")
     public String updateUser(HttpServletRequest request, Model model){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         int id = Integer.parseInt(request.getParameter("id"));
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
@@ -53,30 +56,41 @@ public class AdminController {
 
     @GetMapping("/users/delete")
     public String deleteUser(HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int id = Integer.parseInt(request.getParameter("id"));
         userService.deleteUser(id);
+        request.setAttribute("user", authUser);
         return "redirect:/allUsers";
     }
 
     @PostMapping("/updateUser")
-    public String formUser (@ModelAttribute User user){
+    public String formUser (@ModelAttribute User user, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
             userService.updateUser(user);
             return "redirect:/allUsers";
     }
 
     @GetMapping("users/statistic")
     public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
         testService.getStatistic(request, id);
         return "statistic";
     }
 
     @GetMapping("/adminModule")
-    public String openAdminModule(){
+    public String openAdminModule(HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
         return "adminModule";
     }
 
     @GetMapping("/allTests")
-    public String showAllTests(Model model){
+    public String showAllTests(Model model, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         model.addAttribute("alltests", testService.getAllTests());
         model.addAttribute("allgrouptest", testService.getAllGroupTest());
         model.addAttribute("test", new Test());
@@ -84,7 +98,10 @@ public class AdminController {
     }
 
     @GetMapping("/tests/update")
-    public String showEditTestForm(@RequestParam Integer id, Model model){
+    public String showEditTestForm(@RequestParam Integer id, Model model, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         model.addAttribute("test", testService.getTestById(id));
         model.addAttribute("questions", testService.getTestById(id).getQuestions());
         List<Answer> newAnswerList = new ArrayList<>();
@@ -96,12 +113,18 @@ public class AdminController {
         и отправляет Test в БД для обновления                            */
     @PostMapping("/updateTest")
     public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         testService.updateTest(test, request.getParameterMap());
         return "redirect:/allTests";
     }
 
     @GetMapping("/tests/delete")
-    public String deleteTest(@RequestParam Integer id){
+    public String deleteTest(@RequestParam Integer id, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         testService.deleteTestById(id);
         return "redirect:/allTests";
     }
@@ -134,7 +157,10 @@ public class AdminController {
     }
 
     @GetMapping("/groupTests")
-    public String groupTests(Model model){
+    public String groupTests(Model model, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         model.addAttribute("groupTests", testService.getAllGroupTest());
         return "allGroup";
     }

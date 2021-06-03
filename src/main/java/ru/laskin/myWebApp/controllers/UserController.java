@@ -48,17 +48,18 @@ public class UserController {
     }
 
     @GetMapping("/greeting")
-    public String greeting(Model model){
+    public String greeting(Model model, HttpServletRequest request){
 
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //Получаем из БД юзера, того, кто принципал (это нужно для того, что
-        //у авторизированного пользователя не будут запрлнены поля имя и т.п.
+        //у авторизированного пользователя не будут заполнены поля имя и т.п.
         User user = userService.getUserById(authUser.getUserId());
 
         //если пользователь - админ, переходим на нужную страницу
         if (user.getAdminRole().equals("ADMIN")){
+            request.setAttribute("user", user);
             return "adminModule";
         }
 
@@ -73,8 +74,6 @@ public class UserController {
             model.addAttribute("posSet", posSet);
             return "greeting";
         }
-
-
 
         model.addAttribute("allTest", testService.getAllTests());
         model.addAttribute("test", new Test());
@@ -136,20 +135,22 @@ public class UserController {
 
 
     @GetMapping("/getTest")
-    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId, Model model){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId, Model model, HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         Test test = testService.getTestById(Integer.parseInt(testId));
 
 
         //записываем в БД новую попытку
         if (attemptId == null){
             Timestamp timestamp = new Timestamp(new Date().getTime());
-            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), user.getUserId());
+            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), authUser.getUserId());
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
         }
 
         model.addAttribute("tests", test);
-        model.addAttribute("users", user);
+        model.addAttribute("users", authUser);
         model.addAttribute("attemptId", attemptId);
         return "testProcessing";
     }
@@ -177,6 +178,13 @@ public class UserController {
             model.addAttribute("user", user);
             return "confirmEmailAlready";
         }
+    }
+
+    @GetMapping("/room")
+    public String enteringRoom(HttpServletRequest request){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", user);
+        return "userRoom";
     }
 
 }

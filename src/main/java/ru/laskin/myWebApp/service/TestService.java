@@ -184,7 +184,7 @@ public class TestService {
 
     //метод для отображения статистики пользователя
     public void getStatistic(HttpServletRequest request, Integer id) {
-        User user = userService.getUserById(id);
+        User userforStatisic = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
         List<Statistic> statisticList = new ArrayList<>();
@@ -216,7 +216,7 @@ public class TestService {
                     testResult, listOfUsersAnswers, result, time));
         }
 
-        request.setAttribute("user", user);
+        request.setAttribute("userForStatistic", userforStatisic);
         request.setAttribute("statisticList", statisticList);
     }
 

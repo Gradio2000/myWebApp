@@ -12,8 +12,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"           prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
-<jsp:useBean id="user" scope="request" type="ru.laskin.myWebApp.model.User"/>
 <jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
+<jsp:useBean id="userForStatistic" scope="request" type="ru.laskin.myWebApp.model.User"/>
+
 
 <html>
 <head>
@@ -25,8 +26,8 @@
 <div class="wrapper">
     <div class="content">
         <div>
-            <p>Имя пользователя: ${user.name}</p>
-            <p>Должность: ${user.position}</p>
+            <p>Имя пользователя: ${userForStatistic.name}</p>
+            <p>Должность: ${userForStatistic.position}</p>
         </div>
 
         <div class="pagination">

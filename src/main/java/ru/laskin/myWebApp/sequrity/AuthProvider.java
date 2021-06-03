@@ -42,7 +42,7 @@ public class AuthProvider implements AuthenticationProvider {
         }
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add((GrantedAuthority) () -> user.getAdminRole());
+        authorityList.add((GrantedAuthority) user::getAdminRole);
         return new UsernamePasswordAuthenticationToken(user, password, authorityList);
     }
 

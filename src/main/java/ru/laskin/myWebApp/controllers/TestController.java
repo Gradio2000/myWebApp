@@ -1,7 +1,9 @@
 package ru.laskin.myWebApp.controllers;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ public class TestController {
     public String saveUserAnswer(HttpServletRequest request,
                                  @RequestParam Integer questionId,
                                  @RequestParam Integer attemptId){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         resultTestService.saveResultTest(request, questionId, attemptId);
         return "testProcessing";
     }
@@ -35,6 +40,9 @@ public class TestController {
                              @RequestParam Integer userId,
                              @RequestParam Integer timeOfAttempt,
                              HttpServletRequest request){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
         testService.mainCheck(request, attemptId, testId, userId);
         request.setAttribute("time", attemptTestService.getTime(timeOfAttempt));
