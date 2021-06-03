@@ -181,10 +181,16 @@ public class UserController {
     }
 
     @GetMapping("/room")
-    public String enteringRoom(HttpServletRequest request){
+    public String enteringRoom(Model model, HttpServletRequest request){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        request.setAttribute("user", user);
+        model.addAttribute("user", user);
         return "userRoom";
+    }
+
+    @PostMapping("editUser")
+    public String editUser(@ModelAttribute User user){
+        userService.updateUser(user);
+        return "redirect:/logout";
     }
 
 }
