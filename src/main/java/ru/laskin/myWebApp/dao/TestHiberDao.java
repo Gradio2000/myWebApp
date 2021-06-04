@@ -58,14 +58,14 @@ public class TestHiberDao {
 
     }
 
-    public void saveTest(Test test){
+    public Integer saveTest(Test test){
         Session session = SessionFactoryUtil.getSession();
         session.beginTransaction();
         session.save(test);
         session.getTransaction().commit();
         session.flush();
         session.close();
-
+        return test.getTestId();
     }
 
     public void deleteTestById(int id){

@@ -29,6 +29,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Прохождение теста</title>
+
+
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
@@ -63,15 +65,18 @@
             </sf:form>
         </c:forEach>
 
-        <div id="countdown" class="countdown">
+        <c:if test="${tests.time != null || tests.time == 0}">
+            <div id="countdown" class="countdown">
                 <span class="hours countdown-time"></span>
                 <span> : </span>
                 <span class="minutes countdown-time"></span>
                 <span> : </span>
                 <span class="seconds countdown-time"></span>
-        </div>
+            </div>
+        </c:if>
+
         <div>
-            <button id="btnfinish" class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish()">Завершить тест</button>
+            <button id="btnfinish" class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>
         </div>
     </div>
 </div>
@@ -82,7 +87,8 @@
 
 <script>
 
-    function finish(){
+    function finish(timeTest){
+        console.log(timeTest);
         var clock = document.getElementById("countdown");
         var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
             Number (clock.querySelector('.minutes').innerHTML) * 60 +
@@ -180,10 +186,7 @@
                 break;
             }
         }
-        if (count === 0){
-            return false;
-        }
-        else return true;
+        return count !== 0;
     }
 
     function getTimeRemaining(endtime) {

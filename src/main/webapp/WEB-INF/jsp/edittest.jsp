@@ -125,12 +125,10 @@
                                 <div class="answerContainer" id="container">
                                 </div>
 
+                                    <button type="button" class="btn warning" id="addAnswer" style="margin-left: auto; text-align: center">Добавить ответ</button>
+                                    <button type="button" class="btn danger" data-bs-dismiss="modal">Отмена</button>
+                                    <button type="submit" class="btn success">Сохранить</button>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" id="addAnswer">Добавить ответ</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                    <button type="submit" class="btn btn-primary">Добавить</button>
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -213,6 +211,7 @@
             'class': 'form-floating'
         });
 
+        $('<h6>Ответ</h6>').appendTo(divForm);
         //создаем поле и добавляем его в div
         $('<textarea/>', {
             name: 'answerName',
@@ -220,6 +219,7 @@
             style: 'height: 100px',
             cols: '50',
             rows: '3',
+            placeholder: 'Введите ответ',
             required: ''
         }).appendTo(divForm);
 
@@ -245,7 +245,7 @@
         $('<input/>', {
             value: 'Удалить ответ',
             type: 'button',
-            class: 'deleteAnswer btn-danger'
+            class: 'deleteAnswer btn danger'
         }).appendTo(divAnswer).click(function(e) {
             $(this).parent().remove();
             e.preventDefault();
@@ -268,7 +268,7 @@
 
     function getCount(){
         if(document.getElementsByName("answer").length === 0 && document.getElementsByName("newAnswer").length === 0 ){
-            alert("У вопроса должен быть хотя бы один ответ!");
+            alert("У теста должен быть хотя бы один вопрос!");
             return false;
         }
 

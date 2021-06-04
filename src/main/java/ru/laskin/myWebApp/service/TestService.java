@@ -93,11 +93,25 @@ public class TestService {
 
         test.setGroupTest(getGroupTestById(Integer.parseInt(groupId[0])));
         test.setQuestions(questionList);
+
+        if (test.getCriteria() == null){
+            test.setCriteria(0.0);
+        }
+        if (test.getTime() == null){
+            test.setTime(0.0);
+        }
+
         testHiberDao.updateTest(test);
     }
 
-    public void saveTest(Test test){
-        testHiberDao.saveTest(test);
+    public Integer saveTest(Test test){
+        if (test.getCriteria() == null){
+            test.setCriteria(0.0);
+        }
+        if (test.getTime() == null){
+            test.setTime(0.0);
+        }
+        return testHiberDao.saveTest(test);
     }
 
     public void deleteTestById(int id){

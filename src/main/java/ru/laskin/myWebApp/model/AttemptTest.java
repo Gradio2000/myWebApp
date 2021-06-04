@@ -12,10 +12,11 @@ public class AttemptTest {
     private Timestamp dateTime;
     private Integer timeAttempt;
 
-    public AttemptTest(Timestamp dateTime, int testId, int userId) {
+    public AttemptTest(Timestamp dateTime, int testId, int userId, int timeAttempt) {
         this.dateTime = dateTime;
         this.testId = testId;
         this.userId = userId;
+        this.timeAttempt = timeAttempt;
     }
 
     public AttemptTest() {
@@ -42,7 +43,7 @@ public class AttemptTest {
     }
 
     @Basic
-    @Column(name = "time_attempt", nullable = true)
+    @Column(name = "time_attempt")
     public Integer getTimeAttempt() {
         return timeAttempt;
     }
@@ -66,6 +67,8 @@ public class AttemptTest {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

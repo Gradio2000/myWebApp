@@ -152,8 +152,8 @@ public class AdminController {
     @PostMapping("/addTest")
     public String addTest(@ModelAttribute Test test, @RequestParam String groupId){
         test.setGroupTest(testService.getGroupTestById(Integer.parseInt(groupId)));
-        testService.saveTest(test);
-        return "redirect:/allTests";
+        int id = testService.saveTest(test);
+        return "redirect:/tests/update?id=" + id;
     }
 
     @GetMapping("/groupTests")

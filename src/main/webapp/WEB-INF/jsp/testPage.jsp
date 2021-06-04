@@ -38,8 +38,10 @@
                     <cf:if test="${group.testList.size() != 0}">
                         <h3>${group.name}</h3>
                         <c:forEach var="test" items="${group.testList}">
-                            <h4>${test.testName}</h4>
-                            <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
+                            <c:if test="${test.questions.size() != 0}">
+                                <h4>${test.testName}</h4>
+                                <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
+                            </c:if>
                         </c:forEach>
                     </cf:if>
                 </c:forEach>
