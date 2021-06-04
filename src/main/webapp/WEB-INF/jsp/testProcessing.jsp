@@ -65,7 +65,7 @@
             </sf:form>
         </c:forEach>
 
-        <c:if test="${tests.time != null || tests.time == 0}">
+        <c:if test="${tests.time != 0}">
             <div id="countdown" class="countdown">
                 <span class="hours countdown-time"></span>
                 <span> : </span>
@@ -88,11 +88,14 @@
 <script>
 
     function finish(timeTest){
-        console.log(timeTest);
-        var clock = document.getElementById("countdown");
-        var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
-            Number (clock.querySelector('.minutes').innerHTML) * 60 +
-            Number (clock.querySelector('.hours').innerHTML) * 3600);
+
+        if (timeTest !== 0){
+            var clock = document.getElementById("countdown");
+            var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
+                Number (clock.querySelector('.minutes').innerHTML) * 60 +
+                Number (clock.querySelector('.hours').innerHTML) * 3600);
+        }
+        else time = 0;
 
         document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=" + time;
     }
@@ -229,7 +232,10 @@
 
     // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
     const deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
-    initializeClock('countdown', deadline);
+
+    if(${tests.time != 0}){
+        initializeClock('countdown', deadline);
+    }
 
     // Get the element with id="1" and click on it
     document.getElementById("1").click();
