@@ -227,7 +227,10 @@
         divForm.appendTo(divAnswer);
 
         //создаем label и добавляем его в div
-        var check = $('<label/>').html("Правильный ответ ").appendTo(divAnswer);
+        // var check = $('<label/>').html("Правильный ответ ").appendTo(divAnswer);
+        var check = $('<label/>', {
+            html: 'Правильный ответ ',
+        }).appendTo(divAnswer);
 
         //создаем checkbox и добавляем его в label
         $('<input/>', {

@@ -21,10 +21,10 @@
     <jsp:include page="../includes/settingsHeader.jsp"/>
     <title>Тесты</title>
 </head>
-<body class="u-body">
+<body>
 <jsp:include page="../includes/header.jsp"/>
-<div class="content">
-<section class="main-content">
+<div class="wrapper">
+    <div class="content">
 <main>
 <br>
     <table>
@@ -83,7 +83,8 @@
         </div>
     </div>
 </div>
-</section>
+
+</div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>
 </body>
