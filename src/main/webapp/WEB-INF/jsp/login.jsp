@@ -14,7 +14,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"   prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 
-<%--<!DOCTYPE html>--%>
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,6 +148,25 @@
             justify-content: center;
         }
 
+        .btn {
+            border: none;
+            background-color: inherit;
+            padding: 14px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* Blue */
+        .info {
+            color: dodgerblue;
+        }
+
+        .info:hover {
+            background: #2196F3;
+            color: white;
+        }
+
     </style>
 
 
@@ -182,7 +201,7 @@
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
                     <a href="/registration">Зарегистрироваться</a>
-                    <span class="psw">Забыли <a href="#">пароль?</a></span>
+                    <button class="btn info" style="width: auto; margin-left: auto; margin-right: 10px;" type="button" onclick="">Вспомнить пароль</button>
                 </div>
             </form>
         </div>
@@ -193,7 +212,7 @@
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-            if (event.target == modal) {
+            if (event.target === modal) {
                 modal.style.display = "none";
             }
         }
@@ -205,7 +224,7 @@
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
-            if (event.target == modal) {
+            if (event.target === modal) {
                 modal.style.display = "none";
             }
         }
@@ -217,8 +236,3 @@
 
 </body>
 </html>
-
-
-
-
-

@@ -64,16 +64,21 @@
     .mybtn {
         border: none;
         background-color: #929998;
-        padding: 14px 28px;
+        /*padding: 14px 28px;*/
         font-size: 16px;
         cursor: pointer;
         display: inline-block;
+    }
+    .my-btn {
+        padding-top: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 20px;
     }
 
     .my-format{
         margin-left: 150px;
         width: 700px;
-
     }
 
     .false{
@@ -230,6 +235,19 @@
         font-size: x-large;
         width: 175.75px;
         text-align: center;
+    }
+
+    .my-box {
+        -webkit-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
+        -moz-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
+        box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
+        margin-left: 40px;
+        margin-right: 40px;
+        background-color: #f8f6f6;
+        padding-top: 20px;
+        padding-left: 40px;
+        padding-right: 40px;
+        padding-bottom: 20px;
     }
 
 </style>

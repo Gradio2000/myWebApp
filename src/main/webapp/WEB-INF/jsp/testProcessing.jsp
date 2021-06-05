@@ -47,7 +47,7 @@
             <sf:form name="fff" method="post" action="oper">
                 <input hidden name="attemptId" value="${attemptId}">
                 <input hidden name="testId" value="${tests.testId}">
-                <div align="center" id="content${count.count}" class="tabcontent">
+                <div align="left" id="content${count.count}" class="tabcontent my-box">
                     <h4>Вопрос № ${count.count}</h4>
                     <h4>${quest.questionName}</h4>
                     <input hidden name="questionId" value="${quest.questionId}">
@@ -76,7 +76,7 @@
         </c:if>
 
         <div>
-            <button id="btnfinish" class="mybtn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>
+            <button id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>
         </div>
     </div>
 </div>

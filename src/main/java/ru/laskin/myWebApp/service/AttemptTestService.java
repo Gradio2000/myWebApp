@@ -31,14 +31,19 @@ public class AttemptTestService {
     }
 
     public String getTime(Integer timeOfAttempt) {
-        String seconds = "0" + (int) Math.floor(timeOfAttempt % 60);
-        String minutes = "0" + (int) Math.floor((timeOfAttempt / 60.0) % 60);
-        String hours = "0" + (int) Math.floor((timeOfAttempt / (60.0 * 60)) % 24);
+        if (timeOfAttempt == 0){
+            return "Не учитывалось";
+        }
+        else {
+            String seconds = "0" + (int) Math.floor(timeOfAttempt % 60);
+            String minutes = "0" + (int) Math.floor((timeOfAttempt / 60.0) % 60);
+            String hours = "0" + (int) Math.floor((timeOfAttempt / (60.0 * 60)) % 24);
 
-        seconds = seconds.substring(seconds.length() - 2);
-        minutes = minutes.substring(minutes.length() - 2);
-        hours = minutes.substring(hours.length() - 2);
+            seconds = seconds.substring(seconds.length() - 2);
+            minutes = minutes.substring(minutes.length() - 2);
+            hours = minutes.substring(hours.length() - 2);
 
-        return hours + " : " + minutes  + " : " + seconds;
+            return hours + " : " + minutes + " : " + seconds;
+        }
     }
 }
