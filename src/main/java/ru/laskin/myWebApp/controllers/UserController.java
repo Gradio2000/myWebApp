@@ -125,9 +125,6 @@ public class UserController {
 
     }
 
-
-
-
     @GetMapping("/confirmEmail")
     public String confirmEmail(@RequestParam("userId") Integer userId, @RequestParam("key") String key, Model model){
 
@@ -164,6 +161,19 @@ public class UserController {
     public String editUser(@ModelAttribute User user){
         userService.updateUser(user);
         return "redirect:/logout";
+    }
+
+    @GetMapping("changePassword")
+    public String changePassword(HttpServletRequest request){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return "changePassword";
+    }
+
+    @PostMapping("changePassword")
+    public String changePassword(@RequestParam String password){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userService.changePassword(user.getUserId(), password);
+        return "redirect:/room";
     }
 
 }

@@ -108,4 +108,9 @@ public class UserService {
         updateUser(user);
         return user.getKey().equals(uuid);
     }
+
+    public void changePassword(int id, String password) {
+        password = (passwordEncoder.encode(password));
+        userDao.changePassword(id, password);
+    }
 }

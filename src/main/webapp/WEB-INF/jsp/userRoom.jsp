@@ -28,7 +28,7 @@
             <sf:hidden path="userId"/>
             <sf:hidden path="email"/>
             <sf:hidden path="adminRole"/>
-            <table style="width: 1500px">
+            <table style="  width: 1500px">
                 <tr>
                     <td style="width: 300px">Фамилия Имя Отчество</td>
                     <td width=100><textarea id="nameInput" name="name" class="dis" disabled>${user.name}</textarea></td>
@@ -56,8 +56,8 @@
             <button id="3" type="button" onclick="antidisabled()" class="btn warning">Редактировать</button>
             <button id="4" type="button" onclick="document.location = '/adminModule'" class="btn danger" hidden>Отмена</button>
             <button id="submit" type="submit" class="btn success" hidden>Сохранить</button>
+            <button id="1" type="button" onclick="document.location = '/changePassword'" class="btn info">Изменить пароль</button>
         </sf:form>
-
     </div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>
@@ -74,4 +74,5 @@
         document.getElementById("submit").removeAttribute("hidden");
         document.getElementById("4").removeAttribute("hidden");
     }
+
 </script>

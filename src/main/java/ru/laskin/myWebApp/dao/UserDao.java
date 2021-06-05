@@ -62,4 +62,8 @@ public class UserDao {
                 user.getUserId()
         );
     }
+
+    public void changePassword(int id, String password) {
+        jdbcTemplate.update("UPDATE users set password=? WHERE user_id=?", password, id);
+    }
 }
