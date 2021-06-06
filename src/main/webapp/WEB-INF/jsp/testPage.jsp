@@ -28,19 +28,19 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-
-                <c:forEach  var="group" items="${allTestGroup}">
-                    <cf:if test="${group.testList.size() != 0}">
-                        <h3>${group.name}</h3>
-                        <c:forEach var="test" items="${group.testList}">
-                            <c:if test="${test.questions.size() != 0}">
-                                <h4>${test.testName}</h4>
-                                <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
-                            </c:if>
-                        </c:forEach>
-                    </cf:if>
-                </c:forEach>
-
+        <c:forEach  var="group" items="${allTestGroup}">
+            <cf:if test="${group.testList.size() != 0}">
+                <div class="my-box">
+                    <h4>${group.name}</h4>
+                    <c:forEach var="test" items="${group.testList}">
+                        <c:if test="${test.questions.size() != 0}">
+                            <p>${test.testName}</p>
+                            <p><button type="button" class="u-btn" data-href="/getTest?testId=${test.testId}">Начать тест</button></p>
+                        </c:if>
+                    </c:forEach>
+                </div>
+            </cf:if>
+        </c:forEach>
     </div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>
