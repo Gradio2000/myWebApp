@@ -28,12 +28,7 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-        <section class="u-clearfix u-grey-10 u-section-1" id="sec-6192">
-            <div class="u-clearfix u-sheet u-sheet-1">
-                <div class="u-align-center u-container-style u-group u-group-1">
-                    <div class="u-container-layout u-valign-middle u-container-layout-1">
-                    </div>
-                </div>
+
                 <c:forEach  var="group" items="${allTestGroup}">
                     <cf:if test="${group.testList.size() != 0}">
                         <h3>${group.name}</h3>
@@ -45,8 +40,7 @@
                         </c:forEach>
                     </cf:if>
                 </c:forEach>
-            </div>
-        </section>
+
     </div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>

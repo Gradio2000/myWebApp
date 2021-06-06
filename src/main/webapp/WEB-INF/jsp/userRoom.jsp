@@ -24,40 +24,27 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-        <sf:form action="editUser" method="post" modelAttribute="user">
-            <sf:hidden path="userId"/>
-            <sf:hidden path="email"/>
-            <sf:hidden path="adminRole"/>
-            <table style="  width: 1500px">
-                <tr>
-                    <td style="width: 300px">Фамилия Имя Отчество</td>
-                    <td width=100><textarea id="nameInput" name="name" class="dis" disabled>${user.name}</textarea></td>
-                </tr>
-                <tr>
-                    <td style="width: 300px">Должность</td>
-                    <td width=100><textarea id="position" name="position" class="dis"  disabled>${user.position}</textarea></td>
-                </tr>
-                <tr>
-                    <td style="width: 300px">Логин</td>
-                    <td width=100><textarea id="login" name="login" class="dis" disabled>${user.login}</textarea></td>
-                </tr>
+        <div class="my-box">
+            <sf:form action="editUser" method="post" modelAttribute="user">
+                <sf:hidden path="userId"/>
+                <sf:hidden path="email"/>
+                <sf:hidden path="adminRole"/>
+                <h5 style="width: 300px">Фамилия Имя Отчество</h5>
+                <input type="text" id="nameInput" name="name" class="dis" value="${user.name}" disabled>
 
-            <%--                <tr>--%>
-<%--                    <td style="width: 300px">Новый пароль</td>--%>
-<%--                    <td width=100><input id="password" name="password" type="password" placeholder="Введите пароль" disabled value="${user.password}"></td>--%>
-<%--                    <td><button id="3" type="button" onclick="antidisabled('password', this.id)" class="btn warning">Редактировать</button> </td>--%>
-<%--                </tr>--%>
-<%--                <tr>--%>
-<%--                    <td style="width: 300px">Подтвердите пароль</td>--%>
-<%--                    <td width=100><input type="password" name="confirmPassword" placeholder="Подтвердите пароль"></td>--%>
-<%--                    <sf:errors path="confirmPassword"/>--%>
-<%--                </tr>--%>
-            </table>
-            <button id="3" type="button" onclick="antidisabled()" class="btn warning">Редактировать</button>
-            <button id="4" type="button" onclick="document.location = '/adminModule'" class="btn danger" hidden>Отмена</button>
-            <button id="submit" type="submit" class="btn success" hidden>Сохранить</button>
-            <button id="1" type="button" onclick="document.location = '/changePassword'" class="btn info">Изменить пароль</button>
-        </sf:form>
+                <h5 style="width: 300px">Должность</h5>
+                <input type="text" id="position" name="position" class="dis" value="${user.position}" disabled>
+
+                <h5 style="width: 300px">Логин</h5>
+                <input type="text" id="login" name="login" class="dis" value="${user.login}" disabled>
+
+                <button id="3" type="button" onclick="antidisabled()" class="btn warning">Редактировать</button>
+                <button id="4" type="button" onclick="document.location = '/adminModule'" class="btn danger" hidden>Отмена</button>
+                <button id="submit" type="submit" class="btn success" hidden>Сохранить</button>
+                <button id="1" type="button" onclick="document.location = '/changePassword'" class="btn info">Изменить пароль</button>
+            </sf:form>
+        </div>
+
     </div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>

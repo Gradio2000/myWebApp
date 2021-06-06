@@ -241,13 +241,22 @@
         -webkit-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         -moz-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
-        /*margin-left: 40px;*/
-        /*margin-right: 40px;*/
         background-color: #f8f6f6;
         padding-top: 20px;
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 20px;
+    }
+
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 16px;
+        resize: vertical;
     }
 
 </style>
