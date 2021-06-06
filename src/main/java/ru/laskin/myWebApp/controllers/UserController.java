@@ -166,6 +166,7 @@ public class UserController {
     @GetMapping("changePassword")
     public String changePassword(HttpServletRequest request){
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", user);
         return "changePassword";
     }
 
