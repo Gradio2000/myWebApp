@@ -34,7 +34,7 @@
                         <input hidden name="grouptestId" value="${group.groupTestId}"/>
                         <tr>
                             <td><c:out value="${group.groupTestId}"/></td>
-                            <td width=100><textarea name="name">${group.name}</textarea></td>
+                            <td width=100><textarea class="my-input" name="name">${group.name}</textarea></td>
                             <td><a href="${pageContext.request.contextPath}/group/delete?id=${group.groupTestId}" class="btn danger">Удалить</a> </td>
                         </tr>
                     </c:forEach>

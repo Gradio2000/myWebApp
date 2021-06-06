@@ -24,27 +24,15 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-        <section class="main-content">
-            <section class="u-clearfix u-section-1" id="sec-8947">
-                <div class="u-clearfix u-sheet u-sheet-1">
-                    <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/allUsers">
-                        <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-container-layout-1">
-                            <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
-                        </div>
-                    </div>
-                    <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/groupTests">
-                        <div class="u-container-layout u-valign-middle u-container-layout-2">
-                            <h4 class="u-text u-text-2">ГРУППЫ ТЕСТОВ</h4>
-                        </div>
-                    </div>
-                    <div class="u-align-center u-container-style u-grey-5 u-group u-radius-17 u-shape-round u-group-1" data-href="/allTests">
-                        <div class="u-container-layout u-valign-middle u-container-layout-2">
-                            <h4 class="u-text u-text-2">ТЕСТЫ</h4>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </section>
+        <div class="my-box" data-href="/allUsers">
+            <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
+        </div>
+        <div class="my-box" data-href="/groupTests">
+            <h4 class="u-text u-text-2">ГРУППЫ ТЕСТОВ</h4>
+        </div>
+        <div class="my-box" data-href="/allTests">
+            <h4 class="u-text u-text-2">ТЕСТЫ</h4>
+        </div>
     </div>
 </div>
 

@@ -91,31 +91,33 @@
                     <tr class="tr${count.count}" hidden>
                         <td colspan="4">
                             <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
-                                <table  style="width: 500px">
-                                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${counter.count}: ${ques.questionName}</h5>
-                                    <tr>
-                                        <th>Варианты ответов</th>
-                                        <th>Ответы пользователя</th>
-                                        <th>Правильные ответы</th>
-                                    </tr>
-                                    <tr>
-                                        <c:forEach var="answer" items="${ques.answers}">
-                                                <tr style="height: 90px">
-                                                    <td>${answer.answerName}</td>
-                                                    <td class="mytd">
-                                                        <c:if test="${statistic.listOfUserAnswer.contains(answer.answerId)}">
-                                                            <p>V</p>
-                                                        </c:if>
-                                                    </td>
-                                                    <td class="mytd">
-                                                        <c:if test="${answer.right}">
-                                                            <p>V</p>
-                                                        </c:if>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                    </tr>
-                                </c:forEach>
+                                <table>
+
+                                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${counter.count}:
+                                            <br>${ques.questionName}</h5>
+                                        <tr>
+                                            <th>Варианты ответов</th>
+                                            <th>Ответы пользователя</th>
+                                            <th>Правильные ответы</th>
+                                        </tr>
+                                        <tr>
+                                            <c:forEach var="answer" items="${ques.answers}">
+                                        <tr style="height: 90px">
+                                            <td>${answer.answerName}</td>
+                                            <td class="mytd">
+                                                <c:if test="${statistic.listOfUserAnswer.contains(answer.answerId)}">
+                                                    <p>V</p>
+                                                </c:if>
+                                            </td>
+                                            <td class="mytd">
+                                                <c:if test="${answer.right}">
+                                                    <p>V</p>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                        </c:forEach>
+                                        </tr>
+                                        </c:forEach>
                             </table>
                         </td>
                     </tr>
