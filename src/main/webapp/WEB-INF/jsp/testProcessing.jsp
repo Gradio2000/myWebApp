@@ -66,7 +66,7 @@
         </c:forEach>
 
         <c:if test="${tests.time != 0}">
-            <div id="countdown" class="countdown">
+            <div id="countdown" class="countdown" style="margin-top: 20px">
                 <span class="hours countdown-time"></span>
                 <span> : </span>
                 <span class="minutes countdown-time"></span>
@@ -75,7 +75,7 @@
             </div>
         </c:if>
 
-        <div>
+        <div style="margin-top: 20px">
             <button id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>
         </div>
     </div>

@@ -17,8 +17,11 @@
     }
     .content {
         min-height: calc(100vh - 80px);
-        margin-left: 1%;
-        margin-right: 1%;
+        margin-left: 50px;
+        margin-right: 50px;
+        width: 70%;
+        padding: 10px;
+        margin: auto;
     }
 
     .content-inside {
@@ -238,11 +241,12 @@
     }
 
     .my-box {
+        margin-top: 20px;
         -webkit-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         -moz-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
-        margin-left: 40px;
-        margin-right: 40px;
+        /*margin-left: 40px;*/
+        /*margin-right: 40px;*/
         background-color: #f8f6f6;
         padding-top: 20px;
         padding-left: 40px;
