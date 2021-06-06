@@ -79,10 +79,6 @@
         padding-bottom: 20px;
     }
 
-    .my-format{
-        margin-left: 150px;
-        width: 700px;
-    }
 
     .false{
         color: #da190b;

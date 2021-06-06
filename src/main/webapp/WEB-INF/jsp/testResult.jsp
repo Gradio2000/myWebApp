@@ -41,14 +41,10 @@
             <table cellpadding="8" cellspacing="0">
                 <tr>
                     <th>Дата</th>
-                    <th>Имя</th>
-                    <th>Должность</th>
                     <th>Название теста</th>
                     <th>Результат</th>
                 </tr>
                 <td class="mytd">${data}</td>
-                <td>${users.name}</td>
-                <td>${users.position}</td>
                 <td>${tests.testName}</td>
                 <td class="mytd">${testResult}</td>
                 <td>
@@ -86,16 +82,21 @@
                 </table>
                 <table>
                     <c:forEach var="ques" items="${questionList}" varStatus="count">
-                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${count.count} ${ques.questionName}
+                        <h5>Вопрос № ${count.count}:
+                            <br/>
+                                ${ques.questionName}
+                            </br>
+                        </h5>
+                        <h5>
                             <c:if test="${falseAnswerSet.contains(ques.questionId)}">
-                                <p1 class="false">Не правильный ответ</p1>
+                                <p class="false">Не правильный ответ</p>
                             </c:if>
                             <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
-                                <p2 class="true">Правильный ответ</p2>
+                                <p class="true">Правильный ответ</p>
                             </c:if>
                         </h5>
 
-                            <table border="1" class="my-format">
+                            <table border="1">
                                 <tr>
                                     <th>Варианты ответов</th>
                                     <th>Ваши ответы</th>
