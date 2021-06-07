@@ -60,12 +60,12 @@
                             </tr>
                         </table>
 
-                        <div class="container-my-md">
+                        <div class="container-my-md my-box">
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
                                 <input hidden name="questionId" value="${ques.questionId}">
                                 <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
                                 <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
-                                <div class="container-my-sm">
+                                <div class="container-my-sm my-box">
                                     <label for="textAnswerName"><h5>Ответы на вопрос № ${ques.questionId}</h5></label>
                                     <c:forEach var="answer" items="${ques.answers}">
                                         <div id="answerF">

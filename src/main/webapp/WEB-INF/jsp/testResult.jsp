@@ -44,12 +44,15 @@
                     <th>Название теста</th>
                     <th>Результат</th>
                 </tr>
-                <td class="mytd">${data}</td>
-                <td>${tests.testName}</td>
-                <td class="mytd">${testResult}</td>
-                <td>
-                    <button id="detailBtn" class="btn warning" onclick=detail(this.id)>Подробнее</button>
-                </td>
+                <tr>
+                    <td class="mytd">${data}</td>
+                    <td>${tests.testName}</td>
+                    <td class="mytd">${testResult}</td>
+                    <td>
+                        <button id="detailBtn" class="btn warning" onclick=detail(this.id)>Подробнее</button>
+                    </td>
+                </tr>
+
 
             </table>
 
@@ -83,7 +86,7 @@
                 <table>
                     <c:forEach var="ques" items="${questionList}" varStatus="count">
                         <h5>Вопрос № ${count.count}:
-                            <br/>
+                            <br>
                                 ${ques.questionName}
                             </br>
                         </h5>
@@ -123,6 +126,7 @@
                 </table>
             </div>
             <br/>
+            <button type="button" class="btn danger" onclick="document.location = '/start'">Вперед</button>
         </div>
     </div>
 <jsp:include page="../includes/footer.jsp"/>

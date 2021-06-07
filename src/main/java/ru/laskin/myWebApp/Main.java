@@ -1,6 +1,10 @@
 package ru.laskin.myWebApp;
 
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.laskin.myWebApp.dao.AttemptTestDao;
@@ -9,33 +13,29 @@ import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+    public static void main(String[] args) throws SQLException, IOException, DocumentException {
+//        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+//        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
 
-        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+        Document document = new Document();
+        // Создаем writer для записи в pdf
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("pdf.pdf"));
+        // Открываем для чтения html страничку
+        document.open();
+        // Парсим её и записываем в PDF
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/webapp/WEB-INF/jsp/test.jsp"));
+        document.close();
 
-//        List<Question> questions = new ArrayList<>();
-//        Question question = new Question("как дела?");
-//        Answer answer = new Answer("отлично", true);
-//        List<Answer> answers = new ArrayList<>();
-//        answers.add(answer);
-//        question.setAnswers(answers);
-//        questions.add(question);
-//
-//        Test test = new Test( "asd", 1, questions);
-//        testHiberDao.saveTest(test);
-//        printTest();
-        printGroup();
-
-        AttemptTestDao service = appCont.getBean(AttemptTestDao.class);
-        List<AttemptTest> attemptTests = service.getAllAttempt();
-        System.out.println(attemptTests);
-
+        System.out.println( "Ваш PDF файл - Создан!" );
     }
 
     public static void printGroup(){

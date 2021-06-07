@@ -22,4 +22,5 @@ public class MainController {
         model.addAttribute("user", new User());
         return "registration";
     }
+
 }
