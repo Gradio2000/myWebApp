@@ -47,7 +47,11 @@
         background-color: whitesmoke;
     }
     .bigth{
-        width: 180mm;
+        width: 170mm;
+    }
+    .smallth{
+        width: 22mm;
+        text-align: center;
     }
 </style>
 <body>
@@ -109,7 +113,7 @@
                         </tr>
                         <table>
                             <tr>
-                                <td>${ques.questionName}</td>
+                                <td><h4>${ques.questionName}</h4></td>
                             </tr>
                         </table>
 
@@ -119,18 +123,18 @@
                     <table style="margin-top: 5mm" border="1">
                         <tr>
                             <th class="bigth">Варианты ответов</th>
-                            <th style="width: 9.5mm;">Ваши ответы</th>
-                            <th style="width: 9.5mm;">Правильные ответы</th>
+                            <th class="smallth">Ваши ответы</th>
+                            <th class="smallth">Правильные ответы</th>
                         </tr>
                         <c:forEach var="answ" items="${ques.answers}" varStatus="count">
                             <tr style="height: 90px">
                                 <td class="bigth">${answ.answerName}</td>
-                                <td style="text-align: center; width: 9.5mm;">
+                                <td class="smallth">
                                     <c:if test="${statistic.listOfUserAnswer.contains(answ.answerId)}">
                                         <p>V</p>
                                     </c:if>
                                 </td>
-                                <td style="text-align: center; width: 9.5mm;">
+                                <td class="smallth">
                                     <c:if test="${answ.right}">
                                         <p>V</p>
                                     </c:if>
