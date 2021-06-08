@@ -177,6 +177,8 @@ public class TestService {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
+
+
         request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
         request.setAttribute("users", user);
         request.setAttribute("tests", test);
@@ -194,6 +196,8 @@ public class TestService {
 
         String testResult = getTestResult(result, test.getCriteria())? "Тест пройден" : "Тест не пройден";
         request.setAttribute("testResult", testResult);
+
+        Statistic statistic = new Statistic();
     }
 
     //метод для отображения статистики пользователя

@@ -10,6 +10,7 @@ import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -60,18 +61,5 @@ public class TestController {
         return "testProcessing";
     }
 
-    @GetMapping("/finish")
-    public String testFinish(@RequestParam Integer attemptId,
-                             @RequestParam Integer testId,
-                             @RequestParam Integer userId,
-                             @RequestParam Integer timeOfAttempt,
-                             HttpServletRequest request){
-        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        request.setAttribute("user", authUser);
 
-        attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-        testService.mainCheck(request, attemptId, testId, userId);
-        request.setAttribute("time", attemptTestService.getTime(timeOfAttempt));
-        return "testResult";
-    }
 }

@@ -32,7 +32,7 @@ public class Main {
         // Открываем для чтения html страничку
         document.open();
         // Парсим её и записываем в PDF
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/webapp/WEB-INF/jsp/test.jsp"));
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/webapp/WEB-INF/jsp/userResult.jsp"));
         document.close();
 
         System.out.println( "Ваш PDF файл - Создан!" );

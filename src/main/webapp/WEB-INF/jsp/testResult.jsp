@@ -49,14 +49,12 @@
                     <td>${tests.testName}</td>
                     <td class="mytd">${testResult}</td>
                     <td>
-                        <button id="detailBtn" class="btn warning" onclick=detail(this.id)>Подробнее</button>
+                        <button id="detailBtn" class="btn warning" onclick="document.location = '/detailResult'">Подробнее</button>
                     </td>
                 </tr>
-
-
             </table>
 
-            <div hidden class="detail">
+
                 <table style="width: 500px">
                     <tr>
                         <td>Затраченное время</td>
@@ -83,70 +81,10 @@
                         <td class="mytd">${result}%</td>
                     </tr>
                 </table>
-                <table>
-                    <c:forEach var="ques" items="${questionList}" varStatus="count">
-                        <h5>Вопрос № ${count.count}:
-                            <br>
-                                ${ques.questionName}
-                            </br>
-                        </h5>
-                        <h5>
-                            <c:if test="${falseAnswerSet.contains(ques.questionId)}">
-                                <p class="false">Не правильный ответ</p>
-                            </c:if>
-                            <c:if test="${!falseAnswerSet.contains(ques.questionId)}">
-                                <p class="true">Правильный ответ</p>
-                            </c:if>
-                        </h5>
-
-                            <table border="1">
-                                <tr>
-                                    <th>Варианты ответов</th>
-                                    <th>Ваши ответы</th>
-                                    <th>Правильные ответы</th>
-                                </tr>
-                                <c:forEach var="answ" items="${ques.answers}" varStatus="count">
-                                    <tr style="height: 90px">
-                                        <td>${answ.answerName}</td>
-                                        <td class="mytd">
-                                            <c:if test="${listOfUsersAnswers.contains(answ.answerId)}">
-                                                <p>V</p>
-                                            </c:if>
-                                        </td>
-                                        <td class="mytd">
-                                            <c:if test="${answ.right}">
-                                                <p>V</p>
-                                            </c:if>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-
-                    </c:forEach>
-                </table>
-            </div>
             <br/>
-            <button type="button" class="btn danger" onclick="document.location = '/start'">Вперед</button>
         </div>
     </div>
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 <jsp:include page="../includes/styles.jsp"/>
-<script>
-
-    function detail(id){
-        if (id === 'detailBtn'){
-            document.getElementsByClassName("detail")[0].removeAttribute("hidden");
-            const button = document.getElementById("detailBtn");
-            button.innerText = 'Скрыть';
-            button.id = 'hide';
-        }
-        if (id === 'hide'){
-            document.getElementsByClassName("detail")[0].setAttribute("hidden", true);
-            const button = document.getElementById("hide");
-            button.innerText = 'Подробнее';
-            button.id = 'detailBtn';
-        }
-    }
-</script>
 </html>
