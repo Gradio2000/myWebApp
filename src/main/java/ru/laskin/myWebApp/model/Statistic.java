@@ -1,6 +1,8 @@
 package ru.laskin.myWebApp.model;
 
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Set;
 

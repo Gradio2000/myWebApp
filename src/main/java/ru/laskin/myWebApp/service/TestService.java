@@ -164,40 +164,31 @@ public class TestService {
     }
 
     //основной метод проверки ответов пользователя и вывода результата теста
-    public void mainCheck(HttpServletRequest request, Integer attemptId, Integer testId, Integer userId) {
-        User user = userService.getUserById(userId);
+    public Statistic mainCheck(Integer attemptId, Integer testId, Integer timeOfAttempt) {
         AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
 
         List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
         Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
+
         Test test = getTestById(testId);
+
         List<Question> questionList = test.getQuestions();
         Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
-
-
-        request.setAttribute("data", attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter));
-        request.setAttribute("users", user);
-        request.setAttribute("tests", test);
-        request.setAttribute("questionList", questionList);
-        request.setAttribute("falseAnswerSet", falseAnswerSet);
-
         int trueAnswers = questionList.size() - falseAnswerSet.size();
-        request.setAttribute("trueAnswer", trueAnswers);
-
-        List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-        request.setAttribute("listOfUsersAnswers", listOfUsersAnswers);
 
         double result = getResult(trueAnswers, questionList.size());
-        request.setAttribute("result", result);
 
         String testResult = getTestResult(result, test.getCriteria())? "Тест пройден" : "Тест не пройден";
-        request.setAttribute("testResult", testResult);
 
-        Statistic statistic = new Statistic();
+        List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+
+        String time = attemptTestService.getTime(timeOfAttempt);
+
+        return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time);
     }
 
     //метод для отображения статистики пользователя

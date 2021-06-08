@@ -2,17 +2,19 @@ package ru.laskin.myWebApp.controllers;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.laskin.myWebApp.model.Statistic;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @Controller
-@SessionAttributes("time")
 public class ResultController {
 
     private final TestService testService;
@@ -26,24 +28,25 @@ public class ResultController {
     @RequestMapping(value = "/finish", method = RequestMethod.GET)
     public String testFinish(@RequestParam Integer attemptId,
                              @RequestParam Integer testId,
-                             @RequestParam Integer userId,
                              @RequestParam Integer timeOfAttempt,
-                             HttpServletRequest request){
+                             HttpServletRequest request,
+                             HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-        testService.mainCheck(request, attemptId, testId, userId);
-        request.setAttribute("time", attemptTestService.getTime(timeOfAttempt));
-
+        Statistic statistic = testService.mainCheck(attemptId, testId, timeOfAttempt);
+        session.setAttribute("statistic", statistic);
         return "testResult";
     }
 
-    @RequestMapping(value = "detailResult", method = RequestMethod.GET)
-    public String detailResult(HttpServletRequest request, @ModelAttribute String time){
+    @RequestMapping(value = "detailResult", method = RequestMethod.POST)
+    public String detailResult(HttpSession session, HttpServletRequest request, Model model){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
-        request.getSession().getAttribute("time");
+
+        Statistic statistic = (Statistic) session.getAttribute("statistic");
+        model.addAttribute(statistic);
         return "detailResult";
     }
 

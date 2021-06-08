@@ -18,15 +18,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
 
 
-<jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
-<jsp:useBean id="falseAnswerSet" scope="request" type="java.util.Set"/>
-<jsp:useBean id="trueAnswer" scope="request" type="java.lang.Integer"/>
-<jsp:useBean id="questionList" scope="request" type="java.util.List"/>
-<jsp:useBean id="users" scope="request" type="ru.laskin.myWebApp.model.User"/>
-<jsp:useBean id="tests" scope="request" type="ru.laskin.myWebApp.model.Test"/>
-<jsp:useBean id="listOfUsersAnswers" scope="request" type="java.util.List"/>
-
-
 <html>
 <head>
     <jsp:include page="../includes/settingsHeader.jsp"/>
@@ -38,49 +29,51 @@
 
     <div class="wrapper">
         <div class="content">
-            <table cellpadding="8" cellspacing="0">
-                <tr>
-                    <th>Дата</th>
-                    <th>Название теста</th>
-                    <th>Результат</th>
-                </tr>
-                <tr>
-                    <td class="mytd">${data}</td>
-                    <td>${tests.testName}</td>
-                    <td class="mytd">${testResult}</td>
-                    <td>
-                        <button id="detailBtn" class="btn warning" onclick="document.location = '/detailResult'">Подробнее</button>
-                    </td>
-                </tr>
-            </table>
-
-
+            <form method="post" action="/detailResult">
+                <table cellpadding="8" cellspacing="0">
+                    <tr>
+                        <th>Дата</th>
+                        <th>Название теста</th>
+                        <th>Результат</th>
+                    </tr>
+                    <tr>
+                        <td class="mytd">${statistic.date}</td>
+                        <td>${statistic.test.testName}</td>
+                        <td class="mytd">${statistic.testResult}</td>
+                        <td>
+                            <button type="submit" id="detailBtn" class="btn warning">Подробнее</button>
+                        </td>
+                    </tr>
+                </table>
                 <table style="width: 500px">
                     <tr>
                         <td>Затраченное время</td>
-                        <td class="mytd">${time}</td>
+                        <td class="mytd">${statistic.time}</td>
                     </tr>
                     <tr>
                         <td>Количество заданных вопросов</td>
-                        <td class="mytd">${questionList.size()}</td>
+                        <td class="mytd">${statistic.test.questions.size()}</td>
                     </tr>
                     <tr>
                         <td>Количество правильных ответов</td>
-                        <td class="mytd">${trueAnswer}</td>
+                        <td class="mytd">${statistic.trueAnswer}</td>
                     </tr>
                     <tr>
                         <td>Количество неправильных ответов</td>
-                        <td class="mytd">${falseAnswerSet.size()}</td>
+                        <td class="mytd">${statistic.falseAnswerSet.size()}</td>
                     </tr>
                     <tr>
                         <td>Критерий прохождения теста</td>
-                        <td class="mytd">${tests.criteria}%</td>
+                        <td class="mytd">${statistic.test.criteria}%</td>
                     </tr>
                     <tr>
                         <td>Результат</td>
-                        <td class="mytd">${result}%</td>
+                        <td class="mytd">${statistic.result}%</td>
                     </tr>
                 </table>
+            </form>
+
+
             <br/>
         </div>
     </div>
