@@ -66,6 +66,10 @@
                     <td>${user.name}</td>
                 </tr>
                 <tr>
+                    <td>Дата и время</td>
+                    <td>${statistic.date}</td>
+                </tr>
+                <tr>
                     <td>Наименование теста</td>
                     <td>${statistic.test.testName}</td>
                 </tr>

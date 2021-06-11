@@ -83,46 +83,18 @@
                                                 <td>Результат</td>
                                                 <td class="mytd">${statistic.result}%</td>
                                             </tr>
+                                            <tr>
+                                                <td>
+                                                    <button class="tr${count.count} btn info" type="submit" hidden>Еще подробнее</button>
+                                                </td>
+                                            </tr>
                                         </table>
-                                        <button class="tr${count.count}" type="submit" hidden>Еще подробнее</button>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr class="tr${count.count}" hidden>
-                        <td colspan="4">
-                            <c:forEach var="ques" items="${statistic.test.questions}" varStatus="counter">
-                                <table>
-
-                                        <h5 style="padding-top: 40px" class="my-format">Вопрос № ${counter.count}:
-                                            <br>${ques.questionName}</h5>
-                                        <tr>
-                                            <th>Варианты ответов</th>
-                                            <th>Ответы пользователя</th>
-                                            <th>Правильные ответы</th>
-                                        </tr>
-                                        <tr>
-                                            <c:forEach var="answer" items="${ques.answers}">
-                                        <tr style="height: 90px">
-                                            <td>${answer.answerName}</td>
-                                            <td class="mytd">
-                                                <c:if test="${statistic.listOfUserAnswer.contains(answer.answerId)}">
-                                                    <p>V</p>
-                                                </c:if>
-                                            </td>
-                                            <td class="mytd">
-                                                <c:if test="${answer.right}">
-                                                    <p>V</p>
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                        </c:forEach>
-                                        </tr>
-                                        </c:forEach>
-                            </table>
-                        </td>
-                    </tr>
+                    <tr></tr>
                 </c:forEach>
             </table>
         </form>
@@ -136,8 +108,15 @@
     function ready(){
         document.getElementById("1").className += " active";
         const el = document.getElementsByClassName("line");
-        for (let i = 0; i < 5; i++) {
-            el[i].removeAttribute("hidden");
+        if (el.length > 5){
+            for (let i = 0; i < 5; i++) {
+                el[i].removeAttribute("hidden");
+            }
+        }
+        else {
+            for (let i = 0; i < el.length; i++) {
+                el[i].removeAttribute("hidden");
+            }
         }
     }
 
