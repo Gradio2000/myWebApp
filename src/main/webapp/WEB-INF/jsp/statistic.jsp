@@ -12,8 +12,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"           prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
-<jsp:useBean id="statisticList" scope="request" type="java.util.List"/>
-<jsp:useBean id="userForStatistic" scope="request" type="ru.laskin.myWebApp.model.User"/>
+<jsp:useBean id="statisticList" scope="session" type="java.util.List"/>
+<jsp:useBean id="userForStatistic"  scope="session" type="ru.laskin.myWebApp.model.User"/>
 
 
 <html>
@@ -38,7 +38,8 @@
                 <a onclick="stepRight()">&raquo;</a>
             </div>
 
-
+        <form action="/detailResultForAdmin" method="post">
+            <input id="statisticId" hidden name="statisticId" />
             <table id="table0">
                 <tr>
                     <th>Дата и время</th>
@@ -50,7 +51,7 @@
                         <td>${statistic.date}</td>
                         <td>${statistic.test.testName}</td>
                         <td class="mytd">${statistic.testResult}</td>
-                        <td><button id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
+                        <td><button type="button" id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
                     </tr>
                     <tr class="tr${count.count}" hidden>
                         <td colspan="4">
@@ -83,6 +84,7 @@
                                                 <td class="mytd">${statistic.result}%</td>
                                             </tr>
                                         </table>
+                                        <button class="tr${count.count}" type="submit" hidden>Еще подробнее</button>
                                     </td>
                                 </tr>
                             </table>
@@ -123,7 +125,7 @@
                     </tr>
                 </c:forEach>
             </table>
-
+        </form>
     </div>
 </div>
 
@@ -181,7 +183,9 @@
         }
     }
 
+
     function openDetail(count){
+        document.getElementById("statisticId").setAttribute("value", count-1);
         const button = document.getElementById("btn" + count);
         if (button.innerText === "Подробнее"){
             button.innerText = "Скрыть";

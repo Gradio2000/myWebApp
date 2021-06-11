@@ -10,7 +10,6 @@ import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
 

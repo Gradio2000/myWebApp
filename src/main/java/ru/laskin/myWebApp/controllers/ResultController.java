@@ -4,6 +4,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.stringtemplate.v4.ST;
 import ru.laskin.myWebApp.model.Statistic;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.AttemptTestService;
@@ -11,6 +12,7 @@ import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 
@@ -50,6 +52,17 @@ public class ResultController {
         return "detailResult";
     }
 
+    @PostMapping("detailResultForAdmin")
+    public String detailResultForAdmin(Model model, HttpSession session, HttpServletRequest request){
+        List<Statistic> statisticList = (List<Statistic>) session.getAttribute("statisticList");
+        User user = (User) session.getAttribute("userForStatistic");
+        Map<String, String[]> map = request.getParameterMap();
+        String statisticId = map.get("statisticId")[0];
+        Statistic statistic = statisticList.get(Integer.parseInt(statisticId));
+        model.addAttribute(statistic);
+        model.addAttribute(user);
+        return "detailResult";
+    }
 }
 
 

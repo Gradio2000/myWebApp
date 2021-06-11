@@ -6,6 +6,7 @@ import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
@@ -192,7 +193,7 @@ public class TestService {
     }
 
     //метод для отображения статистики пользователя
-    public void getStatistic(HttpServletRequest request, Integer id) {
+    public void getStatistic(Integer id, HttpSession session) {
         User userforStatisic = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
@@ -225,8 +226,8 @@ public class TestService {
                     testResult, listOfUsersAnswers, result, time));
         }
 
-        request.setAttribute("userForStatistic", userforStatisic);
-        request.setAttribute("statisticList", statisticList);
+        session.setAttribute("userForStatistic", userforStatisic);
+        session.setAttribute("statisticList", statisticList);
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers (List<ResultTest> resultTestList){

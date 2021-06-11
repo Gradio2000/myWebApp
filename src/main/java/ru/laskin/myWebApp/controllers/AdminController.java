@@ -12,6 +12,7 @@ import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,10 +73,11 @@ public class AdminController {
     }
 
     @GetMapping("users/statistic")
-    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id){
+    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session, Model model){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
-        testService.getStatistic(request, id);
+
+        testService.getStatistic(id, session);
         return "statistic";
     }
 
