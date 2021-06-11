@@ -30,10 +30,12 @@
             <p>Должность: ${userForStatistic.position}</p>
         </div>
 
-        <div class="pagination">
+        <div class="pagination" style="display: block">
                 <a onclick="stepLeft()">&laquo;</a>
-                <c:forEach var="f" items="${statisticList}" step="5" varStatus="count">
-                    <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
+                <c:forEach var="f" items="${statisticList}" step="10" varStatus="count">
+                    <div class="div-pag">
+                        <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
+                    </div>
                 </c:forEach>
                 <a onclick="stepRight()">&raquo;</a>
             </div>
@@ -108,8 +110,8 @@
     function ready(){
         document.getElementById("1").className += " active";
         const el = document.getElementsByClassName("line");
-        if (el.length > 5){
-            for (let i = 0; i < 5; i++) {
+        if (el.length > 10){
+            for (let i = 0; i < 10; i++) {
                 el[i].removeAttribute("hidden");
             }
         }
@@ -120,12 +122,13 @@
         }
     }
 
+
     function getActive(id){
         const el = document.getElementsByClassName("active")[0];
         el.className = el.className.replace(" active", "");
         document.getElementById(id).className += " active";
-        const start = (id - 1) * 5;
-        const end = (id - 1) * 5 + 4;
+        const start = (id - 1) * 10;
+        const end = (id - 1) * 10 + 9;
 
         const line = document.getElementsByClassName("line");
 
