@@ -127,7 +127,7 @@
                             <th class="smallth">Правильные ответы</th>
                         </tr>
                         <c:forEach var="answ" items="${ques.answers}" varStatus="count">
-                            <tr style="height: 90px">
+                            <tr>
                                 <td class="bigth">${answ.answerName}</td>
                                 <td class="smallth">
                                     <c:if test="${statistic.listOfUserAnswer.contains(answ.answerId)}">
