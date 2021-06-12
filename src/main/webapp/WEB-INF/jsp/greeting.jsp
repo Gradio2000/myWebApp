@@ -72,6 +72,9 @@
 
     /* Add padding to container elements */
     .container {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
         padding: 16px;
     }
 
@@ -148,7 +151,7 @@
 </style>
 <body>
 
-<sf:form action="/reUpdate" style="border:1px solid #ccc" method="post" modelAttribute="user">
+<sf:form action="/reUpdate" method="post" modelAttribute="user">
     <sf:hidden path="userId"/>
     <sf:hidden path="login"/>
     <sf:hidden path="adminRole"/>
@@ -156,7 +159,7 @@
     <sf:hidden path="key"/>
     <div class="container">
         <h1>Завершение регистрации</h1>
-        <p>Пожалуйста, заполните все поля для завершения регистрации в системе.</p>
+        <p>Пожалуйста, заполните все поля для завершения регистрации в системе</p>
         <hr>
 
         <div class="custom-select" style="width:200px;">
@@ -166,15 +169,16 @@
                     <option>${position.position}</option>
                 </c:forEach>
             </sf:select>
-            <sf:errors path="position"/>
         </div>
-
+        <sf:errors id="err" path="position" cssStyle="color: red"/>
         <br/>
+        <label><b>Фамилия, имя, отчество</b></label>
         <input type="text" placeholder="Фамилия Имя Отчество" name="name" required>
+        <label><b>Email</b></label>
         <input type="email" placeholder="Email" name="email" required>
 
 
-        <div class="clearfix">
+        <div class="clearfix" style="margin-top: 10px">
             <button type="button" class="cancelbtn" onclick="document.location='/logout'">Отмена</button>
             <button type="submit" class="signupbtn">Зарегистрироваться</button>
         </div>

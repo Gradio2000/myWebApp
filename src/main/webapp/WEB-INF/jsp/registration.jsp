@@ -69,6 +69,9 @@
 
     /* Add padding to container elements */
     .container {
+        width: 50%;
+        margin-right: auto;
+        margin-left: auto;
         padding: 16px;
     }
 
@@ -87,7 +90,7 @@
     }
 </style>
 <body>
-    <sf:form action="/new_user" style="border:1px solid #ccc" method="post" modelAttribute="user">
+    <sf:form action="/new_user" method="post" modelAttribute="user">
         <sf:hidden path="userId"/>
         <sf:hidden path="email"/>
         <sf:hidden path="adminRole"/>
@@ -95,7 +98,7 @@
 
         <div class="container">
             <h1>Регистрация</h1>
-            <p>Пожалуйста, заполните все поля для регистрации в системе.</p>
+            <p>Пожалуйста, заполните все поля для регистрации в системе</p>
             <hr>
 
             <label><b>Логин</b></label>
@@ -109,7 +112,7 @@
             <input type="password" placeholder="Введите пароль ещё раз" name="confirmPassword" required>
             <sf:errors path="confirmPassword"/>
 
-            <div class="clearfix">
+            <div class="clearfix" style="margin-top: 10px">
                 <button type="button" class="cancelbtn" onclick="document.location='/login'">Отмена</button>
                 <button type="submit" class="signupbtn">Зарегистрироваться</button>
             </div>
