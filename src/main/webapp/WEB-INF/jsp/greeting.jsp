@@ -93,9 +93,6 @@
     }
 
 
-
-
-
     /*the container must be positioned relative:*/
     .custom-select {
         position: relative;

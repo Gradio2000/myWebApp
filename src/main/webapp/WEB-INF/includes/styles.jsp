@@ -17,9 +17,9 @@
     }
     .content {
         min-height: calc(100vh - 80px);
-        margin-left: 50px;
-        margin-right: 50px;
-        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        width: 60%;
         padding: 10px;
         margin: auto;
     }
@@ -237,7 +237,7 @@
     }
 
     .my-box {
-        margin-top: 20px;
+        margin-top: 30px;
         -webkit-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         -moz-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);

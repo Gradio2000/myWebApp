@@ -24,13 +24,13 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-        <div class="my-box" data-href="/allUsers">
+        <div class="my-box" style="text-align: center" data-href="/allUsers">
             <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
         </div>
-        <div class="my-box" data-href="/groupTests">
+        <div class="my-box" style="text-align: center" data-href="/groupTests">
             <h4 class="u-text u-text-2">ГРУППЫ ТЕСТОВ</h4>
         </div>
-        <div class="my-box" data-href="/allTests">
+        <div class="my-box" style="text-align: center" data-href="/allTests">
             <h4 class="u-text u-text-2">ТЕСТЫ</h4>
         </div>
     </div>
