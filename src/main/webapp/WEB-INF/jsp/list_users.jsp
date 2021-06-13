@@ -8,10 +8,11 @@
     <title>Пользователи</title>
 </head>
 <body>
-    <jsp:include page="../includes/header.jsp"/>
     <div class="wrapper">
-        <div class="content">
-            <table>
+        <div class="content" style="overflow-y: auto; width: 100%;">
+            <table   style="width: 60%;
+                       margin-left: auto;
+                       margin-right: auto;">
                 <tr>
                     <th>id</th>
                     <th>Должность</th>

@@ -59,8 +59,8 @@
                         </table>
                         <br/>
                     </c:forEach>
-                    <input type="submit" class="btn success" value="Ответить"/>
-                    <input class="btn warning" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
+                    <input id="answBtn${count.count}" type="submit" class="butt btn success" value="Ответить"/>
+                    <input id="skipBtn${count.count}" class="butt btn warning" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
                 </div>
             </sf:form>
         </c:forEach>
@@ -86,6 +86,7 @@
 <jsp:include page="../includes/styles.jsp"/>
 
 <script>
+
 
     function finish(timeTest){
 
