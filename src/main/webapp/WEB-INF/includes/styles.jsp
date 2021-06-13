@@ -248,6 +248,10 @@
         padding-bottom: 20px;
     }
 
+    .my-box-hover:hover{
+        background-color: #dcdcdc;
+    }
+
     input[type=text], select, textarea, password {
         width: 100%;
         padding: 12px;

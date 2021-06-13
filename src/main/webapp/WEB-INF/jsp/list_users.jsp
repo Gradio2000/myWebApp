@@ -8,6 +8,7 @@
     <title>Пользователи</title>
 </head>
 <body>
+<jsp:include page="../includes/header.jsp"/>
     <div class="wrapper">
         <div class="content" style="overflow-y: auto; width: 100%;">
             <table   style="width: 60%;
