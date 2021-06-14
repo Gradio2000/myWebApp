@@ -10,6 +10,7 @@ import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
@@ -30,7 +31,8 @@ public class TestController {
     }
 
     @GetMapping("/getTest")
-    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId, Model model, HttpServletRequest request){
+    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
+                            Model model, HttpServletRequest request, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
@@ -49,7 +51,7 @@ public class TestController {
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
         }
 
-        model.addAttribute("tests", test);
+        session.setAttribute("tests", test);
         model.addAttribute("users", authUser);
         model.addAttribute("attemptId", attemptId);
         return "testProcessing";

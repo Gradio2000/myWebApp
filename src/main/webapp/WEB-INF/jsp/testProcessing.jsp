@@ -37,47 +37,56 @@
 
 <div class="wrapper">
     <div class="content">
-        <div class="tab">
-            <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-                <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
-            </c:forEach>
-        </div>
 
-        <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-            <sf:form name="fff" method="post" action="oper">
-                <input hidden name="attemptId" value="${attemptId}">
-                <input hidden name="testId" value="${tests.testId}">
-                <div align="left" id="content${count.count}" class="tabcontent my-box">
-                    <h4>Вопрос № ${count.count}</h4>
-                    <h4>${quest.questionName}</h4>
-                    <input hidden name="questionId" value="${quest.questionId}">
-                    <c:forEach var="answ" items="${quest.answers}">
-                        <table>
-                            <tr>
-                                <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
-                            </tr>
-                        </table>
-                        <br/>
-                    </c:forEach>
-                    <input id="answBtn${count.count}" type="submit" class="butt btn success" value="Ответить"/>
-                    <input id="skipBtn${count.count}" class="butt btn warning" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
-                </div>
-            </sf:form>
-        </c:forEach>
-
-        <c:if test="${tests.time != 0}">
-            <div id="countdown" class="countdown" style="margin-top: 20px">
-                <span class="hours countdown-time"></span>
-                <span> : </span>
-                <span class="minutes countdown-time"></span>
-                <span> : </span>
-                <span class="seconds countdown-time"></span>
+            <div class="tab">
+                <c:forEach var="quest" items="${tests.questions}" varStatus="count">
+                    <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
+                </c:forEach>
             </div>
-        </c:if>
 
-        <div style="margin-top: 20px">
-            <button id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>
-        </div>
+            <c:forEach var="quest" items="${tests.questions}" varStatus="count">
+                <sf:form name="answForm" method="post" action="oper">
+                    <input hidden name="attemptId" value="${attemptId}">
+                    <input hidden name="testId" value="${tests.testId}">
+                    <div align="left" id="content${count.count}" class="tabcontent my-box">
+                        <h4>Вопрос № ${count.count}</h4>
+                        <h4>${quest.questionName}</h4>
+                        <input hidden name="questionId" value="${quest.questionId}">
+                        <c:forEach var="answ" items="${quest.answers}">
+                            <table>
+                                <tr>
+                                    <label class="checkes"><input class="checkes" type="checkbox" name="check" value="${answ.answerId}"> ${answ.answerName}</label>
+                                </tr>
+                            </table>
+                            <br/>
+                        </c:forEach>
+                        <input id="answBtn${count.count}" type="submit" class="butt btn success" value="Ответить"/>
+                        <input id="skipBtn${count.count}" class="butt btn warning" name="skip" onclick=iSkip(${count.count}) type="button" value="Пропустить"/>
+                    </div>
+                </sf:form>
+            </c:forEach>
+
+            <c:if test="${tests.time != 0}">
+                <div id="countdown" class="countdown" style="margin-top: 20px">
+                    <span class="hours countdown-time"></span>
+                    <span> : </span>
+                    <span class="minutes countdown-time"></span>
+                    <span> : </span>
+                    <span class="seconds countdown-time"></span>
+                </div>
+            </c:if>
+
+<%--        <div style="margin-top: 20px">--%>
+<%--            <button id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>--%>
+<%--        </div>--%>
+
+        <form name="testForm" method="post" action="/finish">
+            <div style="margin-top: 20px">
+                <input id="timeOfAttempt" hidden name="timeOfAttempt"/>
+                <input hidden name="attemptId" value="${attemptId}"/>
+                <button type="submit" id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke">Завершить тест</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -87,10 +96,10 @@
 
 <script>
 
+    $('[name="testForm"]').on('submit', function(e) {
+        // e.preventDefault();
 
-    function finish(timeTest){
-
-        if (timeTest !== 0){
+        if (${test.time != 0}){
             var clock = document.getElementById("countdown");
             var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
                 Number (clock.querySelector('.minutes').innerHTML) * 60 +
@@ -98,7 +107,12 @@
         }
         else time = 0;
 
-        document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=" + time;
+        document.getElementById("timeOfAttempt").setAttribute("value", time);
+
+    });
+
+    function finish(timeTest){
+        <%--document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=" + time;--%>
     }
 
     function openCity(evt, count) {
@@ -115,7 +129,7 @@
         evt.currentTarget.className += " active";
     }
 
-    $('form').on('submit', function(e) {
+    $('[name="answForm"]').on('submit', function(e) {
         e.preventDefault();
 
         const elem = document.getElementsByClassName("active");

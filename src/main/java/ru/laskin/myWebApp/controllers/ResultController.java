@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.stringtemplate.v4.ST;
+import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Statistic;
+import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
@@ -27,17 +29,17 @@ public class ResultController {
         this.attemptTestService = attemptTestService;
     }
 
-    @RequestMapping(value = "/finish", method = RequestMethod.GET)
+    @RequestMapping(value = "/finish", method = RequestMethod.POST)
     public String testFinish(@RequestParam Integer attemptId,
-                             @RequestParam Integer testId,
                              @RequestParam Integer timeOfAttempt,
                              HttpServletRequest request,
                              HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
+        Test test = (Test) session.getAttribute("tests");
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-        Statistic statistic = testService.mainCheck(attemptId, testId, timeOfAttempt);
+        Statistic statistic = testService.mainCheck(attemptId, test.getTestId(), timeOfAttempt);
         session.setAttribute("statistic", statistic);
         return "testResult";
     }
