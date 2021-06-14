@@ -166,7 +166,7 @@ public class TestService {
     }
 
     //основной метод проверки ответов пользователя и вывода результата теста
-    public Statistic mainCheck(Integer attemptId, Integer testId, Integer timeOfAttempt) {
+    public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) {
         AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
 
         List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
@@ -175,7 +175,7 @@ public class TestService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
 
-        Test test = getTestById(testId);
+//        Test test = getTestById(testId);
 
         List<Question> questionList = test.getQuestions();
         Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);

@@ -39,7 +39,7 @@ public class ResultController {
 
         Test test = (Test) session.getAttribute("tests");
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-        Statistic statistic = testService.mainCheck(attemptId, test.getTestId(), timeOfAttempt);
+        Statistic statistic = testService.mainCheck(attemptId, test, timeOfAttempt);
         session.setAttribute("statistic", statistic);
         return "testResult";
     }
