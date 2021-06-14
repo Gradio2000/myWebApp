@@ -17,6 +17,7 @@ import ru.laskin.myWebApp.validation.UserValidator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/greeting")
-    public String greeting(Model model, HttpServletRequest request){
+    public String greeting(Model model, HttpServletRequest request, HttpSession session){
 
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -67,9 +68,7 @@ public class UserController {
             return "greeting";
         }
 
-        model.addAttribute("allTest", testService.getAllTests());
-        model.addAttribute("test", new Test());
-        model.addAttribute("allTestGroup",testService.getAllGroupTest());
+        session.setAttribute("allTestGroup",testService.getAllGroupTest());
         return "testPage";
     }
 
@@ -176,7 +175,4 @@ public class UserController {
         userService.changePassword(user.getUserId(), password);
         return "redirect:/room";
     }
-
-
-
 }

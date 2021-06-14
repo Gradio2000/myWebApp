@@ -66,6 +66,10 @@
                     <td>${user.name}</td>
                 </tr>
                 <tr>
+                    <td>Должность</td>
+                    <td>${user.position}</td>
+                </tr>
+                <tr>
                     <td>Дата и время</td>
                     <td>${statistic.date}</td>
                 </tr>

@@ -12,6 +12,7 @@ public class Test {
     private Double criteria;
     private Double time;
     private List<Question> questions;
+    private Integer quesAmount;
 
     public Test() {
     }
@@ -79,4 +80,13 @@ public class Test {
         this.testName = testName;
     }
 
+    @Basic
+    @Column(name = "ques_amount")
+    public Integer getQuesAmount() {
+        return quesAmount;
+    }
+
+    public void setQuesAmount(Integer quesAmount) {
+        this.quesAmount = quesAmount;
+    }
 }

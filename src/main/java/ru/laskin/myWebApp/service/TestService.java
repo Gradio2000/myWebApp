@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class TestService {
@@ -291,5 +292,12 @@ public class TestService {
 
     private boolean getTestResult(Double result, Double criteria) {
         return result >= criteria;
+    }
+
+    public Test getShuffleTest(Test test) {
+        List<Question> questionList = test.getQuestions();
+        Collections.shuffle(questionList);
+        test.setQuestions(questionList.stream().limit(test.getQuesAmount()).collect(Collectors.toList()));
+        return test;
     }
 }

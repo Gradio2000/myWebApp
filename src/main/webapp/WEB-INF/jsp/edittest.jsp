@@ -58,6 +58,14 @@
                                     <input id="time" name="time" value="${test.time}" disabled> минут</input>
                                 </td>
                             </tr>
+                            <tr class="mytr">
+                                <td>
+                                    <label> Количество вопросов в тесте</label>
+                                </td>
+                                <td>
+                                    <input id="quesAcc" name="quesAmount" value="${test.quesAmount}"/>
+                                </td>
+                            </tr>
                         </table>
 
                         <div class="container-my-md my-box">

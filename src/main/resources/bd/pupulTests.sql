@@ -26,7 +26,8 @@ CREATE TABLE tests
     group_id int  constraint tests_group_test_id_grouptest_fk
         references group_test on update cascade on delete cascade,
     criteria double precision,
-    time double precision
+    time double precision,
+    ques_amount int
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex

@@ -14,10 +14,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
 <%@ taglib prefix="cf" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="test" scope="request" class="ru.laskin.myWebApp.model.Test"/>
-<jsp:useBean id="groupTest" scope="request" class="ru.laskin.myWebApp.model.GroupTest"/>
-<jsp:useBean id="question" class="ru.laskin.myWebApp.model.Question"/>
-<jsp:useBean id="answer" class="ru.laskin.myWebApp.model.Answer"/>
+<jsp:useBean id="groupTest" scope="session" class="ru.laskin.myWebApp.model.GroupTest"/>
 
 <html style="font-size: 16px;">
 <head>

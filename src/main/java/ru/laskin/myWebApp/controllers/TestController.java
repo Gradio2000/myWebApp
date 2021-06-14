@@ -12,6 +12,7 @@ import ru.laskin.myWebApp.service.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Map;
 
 
 @Controller
@@ -35,9 +36,14 @@ public class TestController {
 
         Test test = testService.getTestById(Integer.parseInt(testId));
 
+        if (test.getQuesAmount() != null){
+            //выбрать случайные вопросы в заданном в настройках теста количестве
+            test = testService.getShuffleTest(test);
+        }
 
+        Map<String, String[]> map = request.getParameterMap();
         //записываем в БД новую попытку
-        if (attemptId == null){
+        if (attemptId == null) {
             Timestamp timestamp = new Timestamp(new Date().getTime());
             AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), authUser.getUserId(), 0);
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
@@ -59,6 +65,4 @@ public class TestController {
         resultTestService.saveResultTest(request, questionId, attemptId);
         return "testProcessing";
     }
-
-
 }

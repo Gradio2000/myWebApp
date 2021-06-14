@@ -11,6 +11,7 @@ import ru.laskin.myWebApp.dao.AttemptTestDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
+import ru.laskin.myWebApp.service.TestService;
 
 
 import java.io.FileInputStream;
@@ -23,19 +24,27 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
-//        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
-//        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
 
-        Document document = new Document();
-        // Создаем writer для записи в pdf
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("pdf.pdf"));
-        // Открываем для чтения html страничку
-        document.open();
-        // Парсим её и записываем в PDF
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/webapp/WEB-INF/jsp/userResult.jsp"));
-        document.close();
+//        Document document = new Document();
+//        // Создаем writer для записи в pdf
+//        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("pdf.pdf"));
+//        // Открываем для чтения html страничку
+//        document.open();
+//        // Парсим её и записываем в PDF
+//        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream("src/main/webapp/WEB-INF/jsp/userResult.jsp"));
+//        document.close();
+//
+//        System.out.println( "Ваш PDF файл - Создан!" );
 
-        System.out.println( "Ваш PDF файл - Создан!" );
+        TestService testService = appCont.getBean(TestService.class);
+        Test test = testHiberDao.getTestById(14);
+        System.out.println(test.getQuestions());
+        testService.getShuffleTest(test);
+        System.out.println(test.getQuestions());
+        testService.getShuffleTest(test);
+        System.out.println(test.getQuestions());
     }
 
     public static void printGroup(){
