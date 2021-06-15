@@ -30,7 +30,7 @@ public class AttemptTestService {
         attemptTestDao.updateAttemptTest(attemptId, timeOfAttempt);
     }
 
-    public String getTime(Integer timeOfAttempt) {
+    public String getTime(int timeOfAttempt) {
         if (timeOfAttempt == 0){
             return "Не учитывалось";
         }
@@ -41,7 +41,7 @@ public class AttemptTestService {
 
             seconds = seconds.substring(seconds.length() - 2);
             minutes = minutes.substring(minutes.length() - 2);
-            hours = minutes.substring(hours.length() - 2);
+            hours = hours.substring(hours.length() - 2);
 
             return hours + " : " + minutes + " : " + seconds;
         }

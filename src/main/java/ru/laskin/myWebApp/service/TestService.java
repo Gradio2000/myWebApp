@@ -175,8 +175,6 @@ public class TestService {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
 
-//        Test test = getTestById(testId);
-
         List<Question> questionList = test.getQuestions();
         Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);
 

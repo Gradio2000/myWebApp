@@ -97,23 +97,16 @@
 <script>
 
     $('[name="testForm"]').on('submit', function(e) {
-        // e.preventDefault();
 
-        if (${test.time != 0}){
-            var clock = document.getElementById("countdown");
-            var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
+        var clock = document.getElementById("countdown");
+        var time = ${tests.time} * 60 - (Number (clock.querySelector('.seconds').innerHTML) +
                 Number (clock.querySelector('.minutes').innerHTML) * 60 +
                 Number (clock.querySelector('.hours').innerHTML) * 3600);
-        }
-        else time = 0;
 
         document.getElementById("timeOfAttempt").setAttribute("value", time);
 
     });
 
-    function finish(timeTest){
-        <%--document.location="/finish?attemptId=${attemptId}&testId=${tests.testId}&userId=${users.userId}&timeOfAttempt=" + time;--%>
-    }
 
     function openCity(evt, count) {
         let i, tabcontent, tablinks;
@@ -245,12 +238,11 @@
         var timeinterval = setInterval(updateClock, 1000);
     }
 
-    // var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000); // for endless timer
     const deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
 
-    if(${tests.time != 0}){
+    <%--if(${tests.time != 0}){--%>
         initializeClock('countdown', deadline);
-    }
+    // }
 
     // Get the element with id="1" and click on it
     document.getElementById("1").click();

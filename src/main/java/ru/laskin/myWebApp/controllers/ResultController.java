@@ -31,11 +31,18 @@ public class ResultController {
 
     @RequestMapping(value = "/finish", method = RequestMethod.POST)
     public String testFinish(@RequestParam Integer attemptId,
-                             @RequestParam Integer timeOfAttempt,
                              HttpServletRequest request,
                              HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
+
+        int timeOfAttempt;
+        if (request.getParameter("timeOfAttempt").equals("")){
+            timeOfAttempt = 0;
+        }
+        else {
+            timeOfAttempt = Integer.parseInt(request.getParameter("timeOfAttempt"));
+        }
 
         Test test = (Test) session.getAttribute("tests");
         attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);

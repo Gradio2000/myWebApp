@@ -38,13 +38,16 @@ public class Main {
 //
 //        System.out.println( "Ваш PDF файл - Создан!" );
 
-        TestService testService = appCont.getBean(TestService.class);
-        Test test = testHiberDao.getTestById(14);
-        System.out.println(test.getQuestions());
-        testService.getShuffleTest(test);
-        System.out.println(test.getQuestions());
-        testService.getShuffleTest(test);
-        System.out.println(test.getQuestions());
+//        TestService testService = appCont.getBean(TestService.class);
+//        Test test = testHiberDao.getTestById(14);
+//        System.out.println(test.getQuestions());
+//        testService.getShuffleTest(test);
+//        System.out.println(test.getQuestions());
+//        testService.getShuffleTest(test);
+//        System.out.println(test.getQuestions());
+
+        String hours = "0" + (int) Math.floor((70 / (60.0 * 60)) % 24);
+        System.out.println(hours);
     }
 
     public static void printGroup(){
