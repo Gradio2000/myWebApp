@@ -12,6 +12,7 @@ import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
+import ru.laskin.myWebApp.service.UserService;
 
 
 import java.io.FileInputStream;
@@ -25,7 +26,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
-        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+//        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+        UserService userService = appCont.getBean(UserService.class);
 
 //        Document document = new Document();
 //        // Создаем writer для записи в pdf
@@ -46,8 +48,12 @@ public class Main {
 //        testService.getShuffleTest(test);
 //        System.out.println(test.getQuestions());
 
-        String hours = "0" + (int) Math.floor((70 / (60.0 * 60)) % 24);
-        System.out.println(hours);
+//        String hours = "0" + (int) Math.floor((70 / (60.0 * 60)) % 24);
+//        System.out.println(hours);
+
+        User user = userService.getUserByEmail("laskin@gmail.com");
+        System.out.println(user.getName());
+
     }
 
     public static void printGroup(){

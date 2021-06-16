@@ -57,7 +57,7 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        if (user.getAdminRole() == ""){
+        if (user.getAdminRole().equals("")){
             user.setAdminRole("USER");
         }
         userDao.updateUser(user);
@@ -71,7 +71,7 @@ public class UserService {
         return getUserByLogin(user.getLogin()) != null;
     }
 
-    public static void sendEmail(User user) {
+    public static void sendEmail(User user, int kod) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Здравствуйте, ");
         stringBuilder.append(user.getName() + "!\n");
@@ -82,6 +82,18 @@ public class UserService {
         stringBuilder.append(user.getKey());
         String textMessage = stringBuilder.toString();
 
+        StringBuilder stringBuilder1 = new StringBuilder();
+        stringBuilder1.append("Здравствуйте, ");
+        stringBuilder1.append(user.getName() + "!\n");
+        stringBuilder1.append("Вы воспользовались процедурой восстановления логина в системе Тест\n" +
+                "\n" +
+                "Ваш логин: " + user.getLogin() + "\n" +
+                "\n" +
+                "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n");
+        stringBuilder1.append("http://localhost:8080/recovery/?userId=");
+        stringBuilder1.append(user.getUserId());
+        String textMessage1 = stringBuilder1.toString();
+
         final Properties properties = new Properties();
         try {
             properties.load(Main.class.getClassLoader().getResourceAsStream("mail.properties"));
@@ -90,7 +102,13 @@ public class UserService {
             message.setFrom(properties.getProperty("mail.smtps.user"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
             message.setSubject("Test");
-            message.setText(textMessage);
+
+            if (kod == 1) {
+                message.setText(textMessage);
+            }
+            if (kod == 2){
+                message.setText(textMessage1);
+            }
 
             Transport tr = session.getTransport();
             tr.connect(null, properties.getProperty("mail.password"));
@@ -112,5 +130,9 @@ public class UserService {
     public void changePassword(int id, String password) {
         password = (passwordEncoder.encode(password));
         userDao.changePassword(id, password);
+    }
+
+    public User getUserByEmail(String email) {
+       return userDao.getUserByEmail(email);
     }
 }

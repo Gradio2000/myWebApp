@@ -118,7 +118,7 @@ public class UserController {
         //регистрируем пользователя
         userService.updateUser(user);
         //отправляем письмо
-        UserService.sendEmail(user);
+        UserService.sendEmail(user, 1);
 
         return "confirmEmail";
 
@@ -174,5 +174,49 @@ public class UserController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userService.changePassword(user.getUserId(), password);
         return "redirect:/room";
+    }
+
+    @GetMapping("/rememberPassword")
+    public String rememberPassword(){
+        return "rememberPassword";
+    }
+
+    @GetMapping("/rememberPassProcess")
+    public String sendInfoForRememberUserPassword(@RequestParam String email, HttpServletRequest request){
+        User user = userService.getUserByEmail(email);
+        if (user == null){
+            String text = "Пользователь с email '" + email +"' не зарегистрирован!";
+            request.setAttribute("text", text);
+        }
+        else {
+            if (user.isRegistered() == null){
+                String text = "Пользователь с email '" + email +"' найден, но email не подтвержден! " +
+                        "Мы повторно отправили Вам письмо для подтверждения email. Перейдите по ссылке в письме " +
+                        "и после того, как подтвердите email повторно пройдите процедуру восстановления пароля!";
+                request.setAttribute("text", text);
+
+            }
+            else {
+                UserService.sendEmail(user, 2);
+                String text = "На адрес Вашей электронной почты отправлено письмо, содержащее дальнейшие инструкции";
+                request.setAttribute("text", text);
+            }
+        }
+
+        return "info";
+    }
+
+    @GetMapping("/recovery")
+    public String recoveryPassword(@RequestParam Integer userId, HttpSession session){
+        User user = userService.getUserById(userId);
+        session.setAttribute("user", user);
+        return "changePasswordForUser";
+    }
+
+    @PostMapping("changePasswordForUser")
+    public String changePasswordForUser(@RequestParam String password, HttpSession session){
+        User user = (User) session.getAttribute("user");
+        userService.changePassword(user.getUserId(), password);
+        return "login";
     }
 }

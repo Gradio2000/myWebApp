@@ -201,7 +201,7 @@
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
                     <a href="/registration">Зарегистрироваться</a>
-                    <button class="btn info" style="width: auto; margin-left: auto; margin-right: 10px;" type="button" onclick="">Вспомнить пароль</button>
+                    <button class="btn info" style="width: auto; margin-left: auto; margin-right: 10px;" type="button" onclick="document.location='/rememberPassword'">Вспомнить пароль</button>
                 </div>
             </form>
         </div>

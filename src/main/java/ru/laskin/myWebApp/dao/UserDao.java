@@ -66,4 +66,9 @@ public class UserDao {
     public void changePassword(int id, String password) {
         jdbcTemplate.update("UPDATE users set password=? WHERE user_id=?", password, id);
     }
+
+    public User getUserByEmail(String email) {
+        return jdbcTemplate.query("SELECT * FROM users WHERE email = ?", userRowMapper, email)
+                .stream().findAny().orElse(null);
+    }
 }
