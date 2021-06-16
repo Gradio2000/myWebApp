@@ -23,7 +23,7 @@
 <div class="wrapper">
   <div class="content">
     <div class="my-box">
-      <form id="form" action="${pageContext.request.contextPath}/changePasswordForUser" method="post" onsubmit="return confirmPass()">
+      <form id="form" action="/changePasswordForUser" method="post" onsubmit="return confirmPass()">
         <h5>Новый пароль</h5>
         <input class="my-input" id="password" name="password" type="password" placeholder="Введите пароль" required>
 

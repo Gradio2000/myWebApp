@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.Position;
-import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 
 import ru.laskin.myWebApp.service.PositionService;
