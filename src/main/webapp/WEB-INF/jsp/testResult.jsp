@@ -78,6 +78,10 @@
         </div>
     </div>
 <jsp:include page="../includes/footer.jsp"/>
+<script>
+
+</script>
+
 </body>
 <jsp:include page="../includes/styles.jsp"/>
 </html>

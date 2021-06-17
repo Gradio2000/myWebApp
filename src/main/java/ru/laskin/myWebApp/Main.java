@@ -15,10 +15,11 @@ import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
 //        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
-        UserService userService = appCont.getBean(UserService.class);
+//        UserService userService = appCont.getBean(UserService.class);
 
 //        Document document = new Document();
 //        // Создаем writer для записи в pdf
@@ -51,9 +52,67 @@ public class Main {
 //        String hours = "0" + (int) Math.floor((70 / (60.0 * 60)) % 24);
 //        System.out.println(hours);
 
-        User user = userService.getUserByEmail("laskin@gmail.com");
-        System.out.println(user.getName());
+//        User user = userService.getUserByEmail("laskin@gmail.com");
+//        System.out.println(user.getName());
 
+
+            String fileName = "/Users/aleksejlaskin/Documents/Книга2.csv";
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+
+            String line;
+            Question question;
+            Answer answer;
+            List<Question> questionList = new ArrayList<>();
+            List<Answer> answerList;
+
+            int i = 0;
+            while ((line = reader.readLine()) != null) {
+                String[] lineMass = line.split(";");
+
+                //проверяем первую ячейку
+                if (!lineMass[0].equals("")){
+                    question = new Question();
+                    question.setQuestionName(lineMass[0]);
+                    answerList = new ArrayList<>();
+                    i++;
+                }
+                else {
+                    if (questionList.size() != 0){
+                        question = questionList.remove(i - 1);
+                        answerList = question.getAnswers();
+                    }
+                    else {
+                        question = new Question();
+                        answerList = new ArrayList<>();
+                    }
+
+
+                }
+
+                answer = new Answer();
+
+                //проверяем вторую ячейку
+                if (!lineMass[1].equals("")){
+                    answer.setAnswerName(lineMass[1]);
+                }
+
+                //проверяем третью ячейку
+                if (lineMass.length == 3) {
+                    answer.setRight(true);
+                }
+
+                answerList.add(answer);
+                question.setAnswers(answerList);
+                questionList.add(question);
+            }
+            reader.close();
+
+            for(Question question1 : questionList){
+                System.out.println(question1.getQuestionName());
+                for (Answer answer1 : question1.getAnswers()){
+                    System.out.println(answer1.getAnswerName() + " " + answer1.isRight());
+                }
+            }
     }
 
     public static void printGroup(){

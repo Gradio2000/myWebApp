@@ -17,6 +17,11 @@ public class Test {
     public Test() {
     }
 
+    public Test(String testName, List<Question> questions) {
+        this.testName = testName;
+        this.questions = questions;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER, targetEntity = GroupTest.class)
     @JoinColumn(name = "group_id", referencedColumnName = "grouptest_id")
     public GroupTest getGroupTest() {
