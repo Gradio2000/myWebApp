@@ -76,11 +76,8 @@
                 </div>
             </c:if>
 
-<%--        <div style="margin-top: 20px">--%>
-<%--            <button id="btnfinish" class="mybtn my-btn success" style="color: whitesmoke" name="finish" onclick="finish(${tests.time})">Завершить тест</button>--%>
-<%--        </div>--%>
 
-        <form name="testForm" method="post" action="/finish">
+        <form id="testForm" name="testForm" method="post" action="/finish">
             <div style="margin-top: 20px">
                 <input id="timeOfAttempt" hidden name="timeOfAttempt"/>
                 <input hidden name="attemptId" value="${attemptId}"/>
@@ -230,7 +227,7 @@
             secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
             if (t.total <= 0) {
-                finish();
+                document.getElementById("btnfinish").click();
             }
         }
 
@@ -240,9 +237,9 @@
 
     const deadline = new Date(Date.parse(new Date()) + ${tests.time} * 60 * 1000); // for endless timer
 
-    <%--if(${tests.time != 0}){--%>
+    if(${tests.time != 0}){
         initializeClock('countdown', deadline);
-    // }
+    }
 
     // Get the element with id="1" and click on it
     document.getElementById("1").click();
