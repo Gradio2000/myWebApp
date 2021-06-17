@@ -298,4 +298,8 @@ public class TestService {
         test.setQuestions(questionList.stream().limit(test.getQuesAmount()).collect(Collectors.toList()));
         return test;
     }
+
+    public void updateTest(Test test) {
+        testHiberDao.updateTest(test);
+    }
 }

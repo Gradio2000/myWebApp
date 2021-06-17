@@ -11,7 +11,9 @@ import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.service.TestService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,13 +27,13 @@ public class FileController {
     }
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.GET)
-    public String uploadFile (){
+    public String uploadFile (@RequestParam Integer id, HttpServletRequest request){
+        request.setAttribute("id", id);
         return "loadFile";
     }
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam MultipartFile file, @RequestParam Integer id) throws IOException {
 
         File newFile = new File("/Users/aleksejlaskin/Documents/111.txt");
         file.transferTo(newFile);
@@ -84,10 +86,11 @@ public class FileController {
         }
         reader.close();
 
-        Test test = new Test("Загруженный тест", questionList);
-        testService.saveTest(test);
+        Test test = testService.getTestById(id);
+        test.setQuestions(questionList);
+        testService.updateTest(test);
 
-        return "You successfully uploaded file=" + file.getName();
+        return "redirect:/tests/update?id=" + id;
     }
 
 }

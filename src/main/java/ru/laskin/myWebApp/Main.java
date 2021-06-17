@@ -56,63 +56,63 @@ public class Main {
 //        System.out.println(user.getName());
 
 
-            String fileName = "/Users/aleksejlaskin/Documents/Книга2.csv";
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
-
-            String line;
-            Question question;
-            Answer answer;
-            List<Question> questionList = new ArrayList<>();
-            List<Answer> answerList;
-
-            int i = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] lineMass = line.split(";");
-
-                //проверяем первую ячейку
-                if (!lineMass[0].equals("")){
-                    question = new Question();
-                    question.setQuestionName(lineMass[0]);
-                    answerList = new ArrayList<>();
-                    i++;
-                }
-                else {
-                    if (questionList.size() != 0){
-                        question = questionList.remove(i - 1);
-                        answerList = question.getAnswers();
-                    }
-                    else {
-                        question = new Question();
-                        answerList = new ArrayList<>();
-                    }
-
-
-                }
-
-                answer = new Answer();
-
-                //проверяем вторую ячейку
-                if (!lineMass[1].equals("")){
-                    answer.setAnswerName(lineMass[1]);
-                }
-
-                //проверяем третью ячейку
-                if (lineMass.length == 3) {
-                    answer.setRight(true);
-                }
-
-                answerList.add(answer);
-                question.setAnswers(answerList);
-                questionList.add(question);
-            }
-            reader.close();
-
-            for(Question question1 : questionList){
-                System.out.println(question1.getQuestionName());
-                for (Answer answer1 : question1.getAnswers()){
-                    System.out.println(answer1.getAnswerName() + " " + answer1.isRight());
-                }
-            }
+//            String fileName = "/Users/aleksejlaskin/Documents/Книга2.csv";
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName)));
+//
+//            String line;
+//            Question question;
+//            Answer answer;
+//            List<Question> questionList = new ArrayList<>();
+//            List<Answer> answerList;
+//
+//            int i = 0;
+//            while ((line = reader.readLine()) != null) {
+//                String[] lineMass = line.split(";");
+//
+//                //проверяем первую ячейку
+//                if (!lineMass[0].equals("")){
+//                    question = new Question();
+//                    question.setQuestionName(lineMass[0]);
+//                    answerList = new ArrayList<>();
+//                    i++;
+//                }
+//                else {
+//                    if (questionList.size() != 0){
+//                        question = questionList.remove(i - 1);
+//                        answerList = question.getAnswers();
+//                    }
+//                    else {
+//                        question = new Question();
+//                        answerList = new ArrayList<>();
+//                    }
+//
+//
+//                }
+//
+//                answer = new Answer();
+//
+//                //проверяем вторую ячейку
+//                if (!lineMass[1].equals("")){
+//                    answer.setAnswerName(lineMass[1]);
+//                }
+//
+//                //проверяем третью ячейку
+//                if (lineMass.length == 3) {
+//                    answer.setRight(true);
+//                }
+//
+//                answerList.add(answer);
+//                question.setAnswers(answerList);
+//                questionList.add(question);
+//            }
+//            reader.close();
+//
+//            for(Question question1 : questionList){
+//                System.out.println(question1.getQuestionName());
+//                for (Answer answer1 : question1.getAnswers()){
+//                    System.out.println(answer1.getAnswerName() + " " + answer1.isRight());
+//                }
+//            }
     }
 
     public static void printGroup(){

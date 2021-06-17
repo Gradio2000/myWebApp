@@ -42,8 +42,6 @@
         </c:forEach>
     </table>
 
-        <a href="/uploadFile">Загузить файл</a>
-
     <!-- Button trigger modal -->
     <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#staticBackdrop1">
         Добавить тест

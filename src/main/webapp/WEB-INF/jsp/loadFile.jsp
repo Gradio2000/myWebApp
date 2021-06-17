@@ -14,6 +14,7 @@
 </head>
 <body>
 <form method="POST" action="uploadFile" enctype="multipart/form-data">
+    <input name="id" hidden value="${id}"/>
     File to upload: <input type="file" name="file"><br />
 
     <input type="submit" value="Upload">

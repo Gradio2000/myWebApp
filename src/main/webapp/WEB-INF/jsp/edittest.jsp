@@ -68,6 +68,8 @@
                             </tr>
                         </table>
 
+                        <button type="button" class="btn info" onclick="document.location = '/uploadFile?id=' + ${test.testId}">Загрузить вопросы</button>
+
                         <div class="container-my-md my-box">
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
                                 <input hidden name="questionId" value="${ques.questionId}">
