@@ -208,8 +208,6 @@
         padding-right: var(--bs-gutter-x, 0.75rem);
         padding-left: var(--bs-gutter-x, 0.75rem);
         /*margin-right: 0;*/
-        margin-left: auto;
-        max-width: 720px;
     }
 
     .pagination a {

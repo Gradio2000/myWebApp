@@ -68,15 +68,16 @@
                             </tr>
                         </table>
 
-<%--                        <button type="button" class="btn info" onclick="document.location = '/uploadFile?id=' + ${test.testId}">Загрузить вопросы</button>--%>
-                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Загрузить вопросы</button>
+                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="margin-top: 20px">Загрузить вопросы</button>
 
-                        <div class="container-my-md my-box">
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
-                                <input hidden name="questionId" value="${ques.questionId}">
-                                <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
-                                <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+
                                 <div class="container-my-sm my-box">
+
+                                    <input hidden name="questionId" value="${ques.questionId}">
+                                    <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
+                                    <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+
                                     <label for="textAnswerName"><h5>Ответы на вопрос № ${ques.questionId}</h5></label>
                                     <c:forEach var="answer" items="${ques.answers}">
                                         <div id="answerF">
@@ -99,12 +100,12 @@
 
                                     <div id="forAddAnswer${ques.questionId}"></div>
 
-
                                     <button type="button" class="btn success" onclick="addAnswer(${ques.questionId})">Добавить ответ</button>
                                 </div>
                             </c:forEach>
-                        </div>
                         <button class="btn success" type="submit" onclick="validCheck()">Готово</button>
+
+
                         <!-- Button trigger modal -->
                         <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             Добавить вопрос
