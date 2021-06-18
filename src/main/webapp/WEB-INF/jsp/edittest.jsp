@@ -52,15 +52,15 @@
                             </tr>
                             <tr class="mytr">
                                 <td>
-                                    <label><input id="check" class="crit" name="criteria" type="checkbox" onclick="findcheck(this.id)"/> Время для прохождения теста</label>
+                                    <label>Время для прохождения теста (ноль - если не учитывать время)</label>
                                 </td>
                                 <td>
-                                    <input id="time" name="time" value="${test.time}" disabled> минут</input>
+                                    <input id="time" name="time" value="${test.time}"> минут</input>
                                 </td>
                             </tr>
                             <tr class="mytr">
                                 <td>
-                                    <label> Количество вопросов в тесте</label>
+                                    <label> Количество вопросов для тестирования</label>
                                 </td>
                                 <td>
                                     <input id="quesAcc" name="quesAmount" value="${test.quesAmount}"/>
@@ -68,7 +68,8 @@
                             </tr>
                         </table>
 
-                        <button type="button" class="btn info" onclick="document.location = '/uploadFile?id=' + ${test.testId}">Загрузить вопросы</button>
+<%--                        <button type="button" class="btn info" onclick="document.location = '/uploadFile?id=' + ${test.testId}">Загрузить вопросы</button>--%>
+                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">Загрузить вопросы</button>
 
                         <div class="container-my-md my-box">
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
@@ -147,6 +148,26 @@
             </div>
         </section>
     </div>
+</div>
+
+<%--modal2--%>
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel2">Загрузка файла</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/uploadFile" enctype="multipart/form-data">
+                    <input name="id" hidden value="${test.testId}"/>
+                    <input type="file" name="file"><br />
+                    <input type="submit" class="btn success" value="OK" style="margin-top: 10px; width: 100%">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="rasp"></div>
 </div>
 
 <jsp:include page="../includes/footer.jsp"/>
@@ -312,12 +333,5 @@
         }
     }
 
-    function findcheck(id){
-      const ch = document.getElementById(id);
-          if(ch.checked){
-              document.getElementById("time").removeAttribute("disabled");
-          }
-          else document.getElementById("time").setAttribute("disabled", true);
-    }
 </script>
 </html>
