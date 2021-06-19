@@ -38,7 +38,7 @@
                     <input name="groupId" type="hidden" value="${test.groupTest.groupTestId}">
 
                     <div class="container-my-big">
-                        <label for="textTestName"><h3>Название теста</h3></label>
+                        <label for="textTestName"><h4>Редактирование теста</h4></label>
                         <textarea class="form-control" name="testName" id="textTestName">${test.testName}</textarea>
                         <p>Зарегистрировано вопросов: ${test.questions.size()}</p>
                         <table border="0">
@@ -77,8 +77,9 @@
                                     <input hidden name="questionId" value="${ques.questionId}">
                                     <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
                                     <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+                                    <hr>
+                                    <label for="textAnswerName"><h5>Ответы на вопрос № ${count.count}</h5></label>
 
-                                    <label for="textAnswerName"><h5>Ответы на вопрос № ${ques.questionId}</h5></label>
                                     <c:forEach var="answer" items="${ques.answers}">
                                         <div id="answerF">
 
