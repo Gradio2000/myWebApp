@@ -15,8 +15,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>15.0.2</maven.compiler.source>
-    <maven.compiler.target>15.0.2</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
 
     <javax.servlet>3.0.1</javax.servlet>
     <mysql.version>5.1.29</mysql.version>
@@ -250,10 +250,10 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.8.1</version>
           <configuration>
-            <source>15.0.2</source>
-            <target>15.0.2</target>
+            <source>1.8</source>
+            <target>1.8</target>
           </configuration>
         </plugin>
       </plugins>
