@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar port=$PORT target/*.war
+web: j$ heroku run rails consoleava $JAVA_OPTS -jar target/dependency/webapp-runner.jar port=$PORT target/*.war
