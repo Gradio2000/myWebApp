@@ -5,9 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.url">jdbc:postgresql://localhost:5433/postgres</property>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="${db.username}"/>
-        <property name="password"/>
+<!--        <property name="connection.driver_class">org.postgresql.Driver</property>-->
+<!--        <property name="${db.username}"/>-->
+<!--        <property name="password"/>-->
         <property name="hibernate.current_session_context_class">
             thread
         </property>
@@ -22,11 +22,5 @@
         <mapping class="ru.laskin.myWebApp.model.ResultTest"/>
         <mapping class="ru.laskin.myWebApp.model.User"/>
 
-
-
-
-
-        <!-- DB schema will be updated if needed -->
-        <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
     </session-factory>
 </hibernate-configuration>
