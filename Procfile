@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar 4343 target/*.war
+web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar 6388 target/*.war
