@@ -28,6 +28,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
 //        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
 //        UserService userService = appCont.getBean(UserService.class);
 
 //        Document document = new Document();
@@ -113,6 +114,8 @@ public class Main {
 //                    System.out.println(answer1.getAnswerName() + " " + answer1.isRight());
 //                }
 //            }
+        printGroup();
+        printTest();
     }
 
     public static void printGroup(){
