@@ -33,12 +33,12 @@ CREATE TABLE tests
 CREATE UNIQUE INDEX tests_test_id_uindex
     on tests ("test_id");
 
-INSERT INTO tests (test_name, group_id) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
+INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
                                       'ведения эмиссионных и кассовых операций, хранения и перевозки ' ||
                                       'банкнот и монеты резервных фондов, наличных денег и ценностей, ' ||
-                                      'обслуживания банкоматов', 1);
-INSERT INTO tests (test_name, group_id) VALUES ('Для ревизии', 2);
-INSERT INTO tests (test_name, group_id) VALUES ('Совместный', 3);
+                                      'обслуживания банкоматов', 1, 30, 0);
+INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Для ревизии', 2, 30, 0);
+INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Совместный', 3, 30, 0);
 
 
 DROP TABLE IF EXISTS questions CASCADE ;

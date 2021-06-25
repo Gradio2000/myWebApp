@@ -104,11 +104,11 @@
                                     <button type="button" class="btn success" onclick="addAnswer(${ques.questionId})">Добавить ответ</button>
                                 </div>
                             </c:forEach>
-                        <button class="btn success" type="submit" onclick="validCheck()">Готово</button>
+                        <button class="btn success" type="submit" onclick="validCheck()" style="margin-top: 20px">Готово</button>
 
 
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="margin-top: 20px">
                             Добавить вопрос
                         </button>
                     </div>
