@@ -4,10 +4,10 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.url">${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5433/postgres}</property>
+        <property name="connection.url">ec2-34-254-69-72.eu-west-1.compute.amazonaws.com</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.username">${SPRING_DATASOURCE_USERNAME:user}</property>
-        <property name="connection.password">${SPRING_DATASOURCE_PASSWORD:password}</property>
+        <property name="connection.username">pohrbepygisbbd</property>
+        <property name="connection.password">892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a</property>
         <property name="hibernate.current_session_context_class">thread</property>
 
         <mapping class="ru.laskin.myWebApp.model.Test"/>
