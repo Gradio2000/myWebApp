@@ -3,15 +3,10 @@ package ru.laskin.myWebApp.utils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import ru.laskin.myWebApp.model.*;
 
-import java.rmi.registry.Registry;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 
@@ -75,7 +70,6 @@ public class SessionFactoryUtil {
 //    } catch (Throwable ex) {
 //            throw new ExceptionInInitializerError("Ищи проблему в SessionFactoryUtil");
 //        }
-
 
     }
 
