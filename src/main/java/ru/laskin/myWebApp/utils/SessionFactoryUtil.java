@@ -23,13 +23,13 @@ public class SessionFactoryUtil {
             Configuration configuration = new Configuration();
             Properties properties = new Properties();
 
-//            properties.put(Environment.URL, "jdbc:postgresql://localhost:5433/postgres");
-//            properties.put(Environment.USER, "user");
-//            properties.put(Environment.PASS, "password");
+            properties.put(Environment.URL, "jdbc:postgresql://localhost:5433/postgres");
+            properties.put(Environment.USER, "user");
+            properties.put(Environment.PASS, "password");
 
-            properties.put(Environment.URL, "jdbc:postgres://pohrbepygisbbd:892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a@ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh");
-            properties.put(Environment.USER, "pohrbepygisbbd");
-            properties.put(Environment.PASS, "892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a");
+//            properties.put(Environment.URL, "jdbc:postgres://pohrbepygisbbd:892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a@ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh");
+//            properties.put(Environment.USER, "pohrbepygisbbd");
+//            properties.put(Environment.PASS, "892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a");
 
 //            properties.put(Environment.URL, "${JDBC_DATABASE_URL}");
 //            properties.put(Environment.USER, "${SPRING_DATASOURCE_USERNAME}");
