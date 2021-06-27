@@ -27,7 +27,7 @@ public class SessionFactoryUtil {
 //            properties.put(Environment.USER, "user");
 //            properties.put(Environment.PASS, "password");
 
-            properties.put(Environment.URL, "postgres://pohrbepygisbbd:892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a@ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh");
+            properties.put(Environment.URL, "jdbc:postgres://pohrbepygisbbd:892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a@ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh");
             properties.put(Environment.USER, "pohrbepygisbbd");
             properties.put(Environment.PASS, "892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a");
 
