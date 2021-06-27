@@ -7,7 +7,7 @@
 <!--        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>-->
 <!--        <property name="connection.url">jdbc:postgresql://localhost:5433/postgres</property>-->
 
-        <property name="connection.url">jdbc:postgresql://ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh</property>
+        <property name="connection.url">//postgres://pohrbepygisbbd:892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a@ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh</property>
         <property name="connection.username">pohrbepygisbbd</property>
         <property name="connection.password">892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a</property>
 

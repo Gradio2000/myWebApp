@@ -22,7 +22,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
@@ -114,8 +116,14 @@ public class Main {
 //                    System.out.println(answer1.getAnswerName() + " " + answer1.isRight());
 //                }
 //            }
-        printGroup();
-        printTest();
+        Map<String,String> jdbcUrlSettings = new HashMap<>();
+        String jdbcDbUrl = System.getenv("JDBC_DATABASE_URL");
+        if (null != jdbcDbUrl) {
+            jdbcUrlSettings.put("hibernate.connection.url", System.getenv("JDBC_DATABASE_URL"));
+        }
+        System.out.println(jdbcUrlSettings.get("hibernate.connection.url"));
+//        printGroup();
+//        printTest();
     }
 
     public static void printGroup(){
