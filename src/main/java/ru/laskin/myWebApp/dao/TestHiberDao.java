@@ -1,11 +1,10 @@
 package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
-import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @Component
 public class TestHiberDao {
 
-    public List<Test> getAllTests(){
+    public List getAllTests(){
 //       Session session = SessionFactoryUtil.getSession();
 //       Query query = session.createQuery("FROM tests ORDER BY test_id");
 //       List<Test> testList = query.list();
@@ -23,7 +22,8 @@ public class TestHiberDao {
 //       return testList;
 
         Session session = SessionFactoryUtil.getSession();
-        return session.createQuery("FROM tests ORDER BY test_id").list();
+        Query query = session.createQuery("from tests");
+        return query.list();
     }
 
     public List<GroupTest> getAllGroup(){

@@ -117,7 +117,7 @@ public class Main {
 //                }
 //            }
 
-        printGroup();
+//        printGroup();
         printTest();
     }
 
