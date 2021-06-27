@@ -5,13 +5,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class EntityFactoryUtil {
-    private static EntityManagerFactory entityManagerFactory;
+    private static EntityManagerFactory entityManagerFactoryLocal;
+    private static EntityManagerFactory entityManagerFactoryHeroku;
 
     static {
-        entityManagerFactory = Persistence.createEntityManagerFactory("localConnect");
+        entityManagerFactoryLocal = Persistence.createEntityManagerFactory("localConnect");
+        entityManagerFactoryHeroku = Persistence.createEntityManagerFactory("herokuConnect");
     }
 
-    public static EntityManager getEntityManager(){
-        return entityManagerFactory.createEntityManager();
+    public static EntityManager getEntityManagerLocal(){
+        return entityManagerFactoryLocal.createEntityManager();
+    }
+
+    public static EntityManager getEntityManagerHeroku(){
+        return entityManagerFactoryHeroku.createEntityManager();
     }
 }

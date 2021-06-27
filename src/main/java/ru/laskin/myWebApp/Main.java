@@ -118,7 +118,15 @@ public class Main {
 //            }
 
 //        printGroup();
-        printTest();
+//        printTest();
+        printTestById(1);
+    }
+
+    public static void printTestById(int id){
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+        Test test = testHiberDao.getTestById(id);
+        System.out.println(test.getTestName());
     }
 
     public static void printGroup(){

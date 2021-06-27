@@ -1,7 +1,6 @@
 package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
@@ -10,8 +9,7 @@ import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
@@ -21,31 +19,20 @@ public class TestHiberDao {
 
 
     public List getAllTests(){
-        em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select t from tests t").getResultList();
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        return em.createQuery("select t from tests t order by testId", Test.class).getResultList();
     }
 
 
     public List<GroupTest> getAllGroup(){
-//        Session session = SessionFactoryUtil.getSession();
-//        Query query = session.createQuery("FROM group_test ORDER BY grouptest_id");
-//        List<GroupTest> groupTestList = query.list();
-//        session.getTransaction().commit();
-//        session.close();
-//        return groupTestList;
-
-        Session session = SessionFactoryUtil.getSession();
-        return session.createQuery("FROM group_test ORDER BY grouptest_id").list();
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        return em.createQuery("select t from group_test t order by groupTestId", GroupTest.class).getResultList();
     }
 
     public Test getTestById(int id){
-        Session session = SessionFactoryUtil.getSession();
-        Query query = session.createQuery("FROM tests WHERE test_id = :id");
-        query.setParameter("id", id);
-        Test test = (Test) query.list().stream().findAny().orElse(null);
-        session.flush();
-        session.close();
-        return test;
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        TypedQuery<Test> query = em.createQuery("select t from tests t where t.testId=:id", Test.class).setParameter("id", id);
+        return query.getResultList().get(0);
     }
 
     public void updateTest(Test test){
