@@ -9,20 +9,14 @@
       <jdbc-url>jdbc:postgresql://localhost:5433/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="heroku" uuid="8e16dc18-ca6b-4a54-a482-aa3138640bb3">
+    <data-source source="LOCAL" name="heroku" uuid="1e8577f9-7942-422e-8a53-0117f8dda184">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
-      <schema-control>AUTOMATIC</schema-control>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="SHOW_TEMPLATE_DATABASES" value="true" />
-      </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
       <driver-properties>
-        <property name="ssl" value="true" />
-        <property name="sslmode" value="disable" />
-        <property name="sslfactory" value="org.postgresql.ssl.NonValidatingFactory" />
+        <property name="sslmode" value="allow" />
       </driver-properties>
     </data-source>
   </component>
