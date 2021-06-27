@@ -6,25 +6,25 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
+import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
 public class TestHiberDao {
 
-    public List getAllTests(){
-//       Session session = SessionFactoryUtil.getSession();
-//       Query query = session.createQuery("FROM tests ORDER BY test_id");
-//       List<Test> testList = query.list();
-//       session.getTransaction().commit();
-//       session.close();
-//       return testList;
+    public EntityManager em;
 
-        Session session = SessionFactoryUtil.getSession();
-        Query query = session.createQuery("from tests");
-        return query.list();
+
+    public List getAllTests(){
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("select t from tests t").getResultList();
     }
+
 
     public List<GroupTest> getAllGroup(){
 //        Session session = SessionFactoryUtil.getSession();

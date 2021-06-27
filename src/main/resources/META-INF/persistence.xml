@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
+    <persistence-unit name="localConnect">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>
+<!--            <property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/postgres"/>
+            <property name="user" value="user"/>
+            <property name="password" value="password"/>
+        </properties>
+    </persistence-unit>
+</persistence>
