@@ -22,9 +22,9 @@ public class SessionFactoryUtil {
 //            properties.put(Environment.USER, "user");
 //            properties.put(Environment.PASS, "password");
 
-            properties.put(Environment.URL, "jdbc:postgresql://ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh");
-            properties.put(Environment.USER, "pohrbepygisbbd");
-            properties.put(Environment.PASS, "892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a");
+            properties.put(Environment.URL, "JDBC_DATABASE_URL");
+            properties.put(Environment.USER, "SPRING_DATASOURCE_USERNAME");
+            properties.put(Environment.PASS, "SPRING_DATASOURCE_PASSWORD");
 
             properties.put(Environment.DRIVER, "org.postgresql.Driver");
             properties.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQL82Dialect");
