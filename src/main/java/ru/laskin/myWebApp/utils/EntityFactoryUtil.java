@@ -13,11 +13,8 @@ public class EntityFactoryUtil {
         entityManagerFactoryHeroku = Persistence.createEntityManagerFactory("herokuConnect");
     }
 
-    public static EntityManager getEntityManagerLocal(){
+    public static EntityManager getEntityManager(){
         return entityManagerFactoryLocal.createEntityManager();
-    }
-
-    public static EntityManager getEntityManagerHeroku(){
-        return entityManagerFactoryHeroku.createEntityManager();
+//        return entityManagerFactoryHeroku.createEntityManager();
     }
 }

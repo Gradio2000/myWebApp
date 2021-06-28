@@ -17,23 +17,23 @@ public class TestHiberDao {
 
 
     public List getAllTests(){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         return em.createQuery("select t from tests t order by testId", Test.class).getResultList();
     }
 
 
     public List<GroupTest> getAllGroup(){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         return em.createQuery("select t from group_test t order by groupTestId", GroupTest.class).getResultList();
     }
 
     public Test getTestById(int id){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         return em.find(Test.class, id);
     }
 
     public void updateTest(Test test){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         Session session = em.unwrap(Session.class);
         session.beginTransaction();
         session.saveOrUpdate(test);
@@ -43,7 +43,7 @@ public class TestHiberDao {
     }
 
     public Integer saveTest(Test test){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         em.getTransaction().begin();
         em.persist(test);
         em.getTransaction().commit();
@@ -51,7 +51,7 @@ public class TestHiberDao {
     }
 
     public void deleteTestById(int id){
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         em.getTransaction().begin();
         Query query = em.createQuery("delete from tests where testId =:id");
         query.setParameter("id", id);
@@ -60,28 +60,28 @@ public class TestHiberDao {
     }
 
     public void deleteGroupTest(Integer id) {
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
 
     }
 
     public GroupTest getGroupById(Integer id) {
-       em = EntityFactoryUtil.getEntityManagerLocal();
+       em = EntityFactoryUtil.getEntityManager();
        return em.find(GroupTest.class, id);
     }
 
     public void addGroup(GroupTest groupTest) {
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
     }
 
     public void updateAllGroup(List<GroupTest> groupTests) {
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         for (GroupTest groupTest : groupTests){
             em.merge(groupTest);
         }
     }
 
     public List<Test> getTestsByGroupId(int groupId) {
-        em = EntityFactoryUtil.getEntityManagerLocal();
+        em = EntityFactoryUtil.getEntityManager();
         Query query = em.createQuery("from tests where groupTest.groupTestId =:id ORDER BY testId");
         query.setParameter ("id", groupId);
         return query.getResultList();
