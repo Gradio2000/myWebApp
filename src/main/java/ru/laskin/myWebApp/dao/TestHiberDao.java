@@ -1,6 +1,5 @@
 package ru.laskin.myWebApp.dao;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
@@ -9,6 +8,7 @@ import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -31,94 +31,56 @@ public class TestHiberDao {
 
     public Test getTestById(int id){
         em = EntityFactoryUtil.getEntityManagerLocal();
-        TypedQuery<Test> query = em.createQuery("select t from tests t where t.testId=:id", Test.class).setParameter("id", id);
-        return query.getResultList().get(0);
+        return em.find(Test.class, id);
     }
 
     public void updateTest(Test test){
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        session.saveOrUpdate(test);
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
-
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        em.merge(test);
     }
 
     public Integer saveTest(Test test){
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        session.save(test);
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        em.getTransaction().begin();
+        em.persist(test);
+        em.getTransaction().commit();
         return test.getTestId();
     }
 
     public void deleteTestById(int id){
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        session.delete(getTestById(id));
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
-
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        em.getTransaction().begin();
+        Query query = em.createQuery("delete from tests where testId =:id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
 
     public void deleteGroupTest(Integer id) {
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        GroupTest groupTest = getGroupById(id);
-        session.delete(groupTest);
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
+        em = EntityFactoryUtil.getEntityManagerLocal();
+
     }
 
     public GroupTest getGroupById(Integer id) {
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        Query query = session.createQuery("FROM group_test WHERE grouptest_id = :id");
-        query.setParameter("id", id);
-        GroupTest groupTest = (GroupTest) query.list().stream().findAny().orElse(null);
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
-
-        return groupTest;
+       em = EntityFactoryUtil.getEntityManagerLocal();
+       return em.find(GroupTest.class, id);
     }
 
     public void addGroup(GroupTest groupTest) {
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        session.save(groupTest);
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
-
+        em = EntityFactoryUtil.getEntityManagerLocal();
     }
 
     public void updateAllGroup(List<GroupTest> groupTests) {
+        em = EntityFactoryUtil.getEntityManagerLocal();
         for (GroupTest groupTest : groupTests){
-            Session session = SessionFactoryUtil.getSession();
-            session.beginTransaction();
-            session.saveOrUpdate(groupTest);
-            session.getTransaction().commit();
-            session.flush();
-            session.close();
+            em.merge(groupTest);
         }
     }
 
     public List<Test> getTestsByGroupId(int groupId) {
-        Session session = SessionFactoryUtil.getSession();
-        session.beginTransaction();
-        Query query = session.createQuery("FROM tests WHERE group_id =:id ORDER BY test_id");
-        query.setParameter("id", groupId);
-        List<Test> testList = query.list();
-        session.getTransaction().commit();
-        session.flush();
-        session.close();
-
-        return testList;
+        em = EntityFactoryUtil.getEntityManagerLocal();
+        Query query = em.createQuery("from tests where groupTest.groupTestId =:id ORDER BY testId");
+        query.setParameter ("id", groupId);
+        return query.getResultList();
     }
 }

@@ -118,8 +118,51 @@ public class Main {
 //            }
 
 //        printGroup();
+//        printGroupById(1);
 //        printTest();
-        printTestById(1);
+//        printTestById(10);
+        deletetest(10);
+//        saveTest();
+//        getTestByGroupId(1);
+    }
+
+    private static void getTestByGroupId(int id) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
+        List<Test> testList = testHiberDao.getTestsByGroupId(id);
+        for (Test test : testList){
+            System.out.println(test.getTestName());
+        }
+    }
+
+    private static void printGroupById(int i) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
+        GroupTest groupTest = testHiberDao.getGroupById(i);
+        System.out.println(groupTest.getName());
+        List<Test> list = groupTest.getTestList();
+        for (Test test : list){
+            System.out.println("\t" + test.getTestName());
+        }
+    }
+
+    private static void deletetest(int id) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
+        testHiberDao.deleteTestById(id);
+    }
+
+    private static void saveTest() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
+
+        List<Question> questionList = new ArrayList<>();
+        Test test = new Test("qqqqq", questionList);
+
+        testHiberDao.saveTest(test);
     }
 
     public static void printTestById(int id){
