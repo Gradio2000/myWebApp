@@ -53,7 +53,8 @@ public class Test {
     @OneToMany(
             targetEntity = Question.class,
             fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @JoinColumn(name = "test_id")
     public List<Question> getQuestions() {
         return questions;

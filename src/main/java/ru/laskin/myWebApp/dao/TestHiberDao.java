@@ -5,11 +5,9 @@ import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
-import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
@@ -36,7 +34,12 @@ public class TestHiberDao {
 
     public void updateTest(Test test){
         em = EntityFactoryUtil.getEntityManagerLocal();
-        em.merge(test);
+        Session session = em.unwrap(Session.class);
+        session.beginTransaction();
+        session.saveOrUpdate(test);
+        session.getTransaction().commit();
+        session.flush();
+        session.close();
     }
 
     public Integer saveTest(Test test){

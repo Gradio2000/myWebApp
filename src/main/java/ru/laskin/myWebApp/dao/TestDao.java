@@ -14,8 +14,6 @@ public class TestDao {
 
     private JdbcTemplate jdbcTemplate;
 
-    private BeanPropertyRowMapper<Question> questionRowMapper = new BeanPropertyRowMapper(Question.class);
-    private BeanPropertyRowMapper<Answer> answerRowMapper = new BeanPropertyRowMapper<>(Answer.class);
     private BeanPropertyRowMapper<Test> testRowMapper = new BeanPropertyRowMapper<>(Test.class);
 
     public TestDao(JdbcTemplate jdbcTemplate) {
@@ -26,33 +24,5 @@ public class TestDao {
         return jdbcTemplate.query("SELECT * FROM tests", testRowMapper);
     }
 
-    public List<Question> getAllQuestions(){
-        return jdbcTemplate.query("SELECT * FROM questions", questionRowMapper)
-                .stream()
-                .filter(question -> question.getQuestionId() != 0)
-                .map(this::setAnswersToQuestion)
-                .collect(Collectors.toList());
-    }
 
-    public Question getQuestionById(int id){
-        return setAnswersToQuestion(jdbcTemplate.query("SELECT * FROM questions WHERE question_id=?", questionRowMapper, id)
-                .stream()
-                .findAny().orElse(null));
-    }
-
-
-    public Question setAnswersToQuestion(Question question){
-        if (question != null){
-            List<Answer> answers = jdbcTemplate.query("SELECT * FROM answers WHERE question_ID = ?",
-                    answerRowMapper, question.getQuestionId());
-            question.setAnswers(answers);
-        }
-       return question;
-    }
-
-    public Test getTestById(int id){
-        return jdbcTemplate.query("SELECT * FROM tests WHERE test_id = ?", testRowMapper, id)
-                .stream()
-                .findAny().orElse(null);
-    }
 }
