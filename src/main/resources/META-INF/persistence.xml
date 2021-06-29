@@ -5,8 +5,8 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/postgres"/>
-            <property name="user" value="user"/>
-            <property name="password" value="password"/>
+            <property name="hibernate.connection.username" value="user"/>
+            <property name="hibernate.connection.password" value="password"/>
         </properties>
     </persistence-unit>
 
@@ -15,8 +15,8 @@
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh"/>
-            <property name="user" value="pohrbepygisbbd"/>
-            <property name="password" value="892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a"/>
+            <property name="hibernate.connection.username" value="pohrbepygisbbd"/>
+            <property name="hibernate.connection.password" value="892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a"/>
         </properties>
     </persistence-unit>
 </persistence>

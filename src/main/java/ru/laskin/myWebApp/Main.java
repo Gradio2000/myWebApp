@@ -119,9 +119,9 @@ public class Main {
 
 //        printGroup();
 //        printGroupById(1);
-//        printTest();
+        printTest();
 //        printTestById(10);
-        deletetest(10);
+//        deletetest(10);
 //        saveTest();
 //        getTestByGroupId(1);
     }
