@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
+import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -61,7 +62,11 @@ public class TestHiberDao {
 
     public void deleteGroupTest(Integer id) {
         em = EntityFactoryUtil.getEntityManager();
-
+        em.getTransaction().begin();
+        Query query = em.createQuery("delete from group_test where groupTestId =:id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
 
     public GroupTest getGroupById(Integer id) {
@@ -71,13 +76,23 @@ public class TestHiberDao {
 
     public void addGroup(GroupTest groupTest) {
         em = EntityFactoryUtil.getEntityManager();
+        Session session = em.unwrap(Session.class);
+        session.beginTransaction();
+        session.save(groupTest);
+        session.getTransaction().commit();
+        session.flush();
+        session.close();
     }
 
     public void updateAllGroup(List<GroupTest> groupTests) {
         em = EntityFactoryUtil.getEntityManager();
+        Session session = em.unwrap(Session.class);
         for (GroupTest groupTest : groupTests){
-            em.merge(groupTest);
+            session.getTransaction().begin();
+            session.merge(groupTest);
+            session.getTransaction().commit();
         }
+        session.close();
     }
 
     public List<Test> getTestsByGroupId(int groupId) {
