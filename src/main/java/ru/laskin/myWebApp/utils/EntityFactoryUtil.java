@@ -14,7 +14,7 @@ public class EntityFactoryUtil {
     }
 
     public static EntityManager getEntityManager(){
-//        return entityManagerFactoryLocal.createEntityManager();
-        return entityManagerFactoryHeroku.createEntityManager();
+        return entityManagerFactoryLocal.createEntityManager();
+//        return entityManagerFactoryHeroku.createEntityManager();
     }
 }
