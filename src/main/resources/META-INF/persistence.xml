@@ -14,9 +14,9 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-34-254-69-72.eu-west-1.compute.amazonaws.com:5432/d677pta579u9mh"/>
-            <property name="hibernate.connection.username" value="pohrbepygisbbd"/>
-            <property name="hibernate.connection.password" value="892707cfa40e14b18b0a66020cf206a96796a484d0d8abb5bdd99e8c7f3c509a"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://ec2-54-155-208-5.eu-west-1.compute.amazonaws.com:5432/d836vsrvqnr3t6"/>
+            <property name="hibernate.connection.username" value="zjxlhxvrbmpwca"/>
+            <property name="hibernate.connection.password" value="edc5f5b31a91fee384f7001d1fbeb774a351d5dc9704c6945ad40f93478107ec"/>
         </properties>
     </persistence-unit>
 </persistence>
