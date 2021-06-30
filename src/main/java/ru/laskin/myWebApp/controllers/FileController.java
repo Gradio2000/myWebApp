@@ -34,7 +34,7 @@ public class FileController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String uploadFile(@RequestParam MultipartFile file, @RequestParam Integer id) throws IOException {
 
-        File newFile = new File("/Users/aleksejlaskin/Documents/111.txt");
+        File newFile = File.createTempFile("temp", null, null);
         file.transferTo(newFile);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(newFile)));
@@ -88,6 +88,8 @@ public class FileController {
         Test test = testService.getTestById(id);
         test.setQuestions(questionList);
         testService.updateTest(test);
+
+        newFile.deleteOnExit();
 
         return "redirect:/tests/update?id=" + id;
     }
