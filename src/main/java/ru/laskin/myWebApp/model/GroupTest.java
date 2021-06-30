@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "group_test")
-@Table(name = "group_test", schema = "public", catalog = "postgres")
+@Table(name = "group_test")
 public class GroupTest {
     private int groupTestId;
     private String name;

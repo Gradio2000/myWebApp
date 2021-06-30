@@ -3,7 +3,7 @@ package ru.laskin.myWebApp.model;
 import javax.persistence.*;
 
 @Entity(name = "answers")
-@Table(name = "answers", schema = "public", catalog = "postgres")
+@Table(name = "answers")
 public class Answer {
     private int answerId;
     private String answerName;

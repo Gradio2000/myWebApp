@@ -5,7 +5,7 @@ import java.util.UUID;
 
 
 @Entity
-@Table(name = "users", schema = "public", catalog = "postgres")
+@Table(name = "users")
 public class User {
     private int userId;
     private String name;
