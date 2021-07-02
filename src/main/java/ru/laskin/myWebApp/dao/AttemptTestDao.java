@@ -6,45 +6,49 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.AttemptTest;
+import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class AttemptTestDao {
-    private final JdbcTemplate jdbcTemplate;
-    private final BeanPropertyRowMapper<AttemptTest> attemptTestyRowMapper = new BeanPropertyRowMapper<>(AttemptTest.class);
+    private EntityManager em;
 
-    public AttemptTestDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    
     //запись в таблицу с возвратом последнего id
     public Integer saveAttemptTest(AttemptTest attemptTest){
-        String sql = "INSERT INTO attempttests (date_time, test_id, user_id, time_attempt) VALUES (?, ?, ?, ?) RETURNING attempt_id";
-        Object[] objects = new Object[]{attemptTest.getDateTime(), attemptTest.getTestId(), attemptTest.getUserId(), attemptTest.getTimeAttempt()};
-        List<AttemptTest> attemptTests = jdbcTemplate.query(sql, objects, attemptTestyRowMapper);
-        return attemptTests.get(0).getAttemptId();
+        em = EntityFactoryUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.persist(attemptTest);
+        em.getTransaction().commit();
+        return attemptTest.getAttemptId();
     }
 
     public void updateAttemptTest(int id, int time){
-        jdbcTemplate.update("UPDATE attempttests SET time_attempt = ? WHERE attempt_id = ?", time, id);
+        em = EntityFactoryUtil.getEntityManager();
+        em.createNativeQuery("UPDATE attempttests SET time_attempt = ? WHERE attempt_id = ?")
+                .setParameter(1, id)
+                .setParameter(2, time)
+                .executeUpdate();
     }
 
     public AttemptTest getAttemptById(int id){
-        return jdbcTemplate.query("SELECT * FROM attempttests WHERE attempt_id = ?", attemptTestyRowMapper, id)
-                .stream()
-                .findAny().orElse(null);
+        em = EntityFactoryUtil.getEntityManager();
+        return em.find(AttemptTest.class, id);
     }
 
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
-        return new ArrayList<>(jdbcTemplate.query("SELECT * FROM attempttests WHERE user_id = ? ORDER BY date_time DESC", attemptTestyRowMapper, id));
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("select a from attempttests a where userId =: id")
+                .setParameter("id", id)
+                .getResultList();
     }
 
     public List<AttemptTest> getAllAttempt(){
-        return jdbcTemplate.query("SELECT * FROM attempttests", attemptTestyRowMapper);
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("select a from attempttests a").getResultList();
     }
 
 }

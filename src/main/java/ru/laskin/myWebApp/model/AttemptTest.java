@@ -3,7 +3,7 @@ package ru.laskin.myWebApp.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "attempttests")
 @Table(name = "attempttests")
 public class AttemptTest {
     private int attemptId;
@@ -24,6 +24,7 @@ public class AttemptTest {
 
     @Id
     @Column(name = "attempt_id", nullable = false)
+    @SequenceGenerator(name = "id", sequenceName = "attempttest_attempt_id_seq")
     public int getAttemptId() {
         return attemptId;
     }

@@ -1,10 +1,12 @@
 package ru.laskin.myWebApp.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.UUID;
 
 
-@Entity
+@Entity(name = "users")
 @Table(name = "users")
 public class User {
     private int userId;
@@ -14,11 +16,9 @@ public class User {
     private String email;
     private String adminRole;
     private String position;
-    @Transient
     private String confirmPassword;
     @Column
     private Boolean registered;
-    @Column
     private UUID key;
 
     public User() {
@@ -39,6 +39,7 @@ public class User {
         this.key = key;
     }
 
+    @Transient
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -55,6 +56,8 @@ public class User {
         this.registered = registered;
     }
 
+    @Column
+    @Type(type = "pg-uuid")
     public UUID getKey() {
         return key;
     }

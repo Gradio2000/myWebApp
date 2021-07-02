@@ -16,7 +16,7 @@ public class TestHiberDao {
     public EntityManager em;
 
 
-    public List getAllTests(){
+    public List<Test> getAllTests(){
         em = EntityFactoryUtil.getEntityManager();
         return em.createQuery("select t from tests t order by testId", Test.class).getResultList();
     }

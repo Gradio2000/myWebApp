@@ -1,30 +1,30 @@
 package ru.laskin.myWebApp.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.ResultTest;
+import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 @Component
 public class ResultTestDao {
-    private JdbcTemplate jdbcTemplate;
-    private BeanPropertyRowMapper<ResultTest> resultTestRowMapper = new BeanPropertyRowMapper(ResultTest.class);
 
-    public ResultTestDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    EntityManager em;
 
     public void saveResultTest(ResultTest resultTest){
-        jdbcTemplate.update("INSERT INTO resulttests (attempt_id, question_id, answer_id) VALUES (?,?,?)",
-                resultTest.getAttemptId(),
-                resultTest.getQuestionId(),
-                resultTest.getAnswerId()
-        );
+        em = EntityFactoryUtil.getEntityManager();
+        em.createNativeQuery("INSERT INTO resulttests (attempt_id, question_id, answer_id) VALUES (?,?,?)")
+                .setParameter(1, resultTest.getAttemptId())
+                .setParameter(2, resultTest.getQuestionId())
+                .setParameter(3, resultTest.getAnswerId());
     }
 
     public List<ResultTest> getAllResultByAttempt(int attemptId){
-        return jdbcTemplate.query("SELECT * FROM resulttests WHERE attempt_id = ?", resultTestRowMapper, attemptId);
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("SELECT r FROM resultTest r WHERE attempttests.attemptId = :attemptId")
+                .setParameter("attemptId", attemptId)
+                .getResultList();
     }
 }

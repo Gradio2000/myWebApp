@@ -4,20 +4,18 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Position;
+import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Component
 public class PositionDao {
 
-    private JdbcTemplate jdbcTemplate;
-    private BeanPropertyRowMapper<Position> positionRowMapper = new BeanPropertyRowMapper(Position.class);
-
-    public PositionDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+   private EntityManager em;
 
     public List<Position> getAllPosition(){
-        return jdbcTemplate.query("SELECT * FROM positions", positionRowMapper);
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("select p from positions p").getResultList();
     }
 }

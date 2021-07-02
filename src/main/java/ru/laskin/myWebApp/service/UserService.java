@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.Main;
-import ru.laskin.myWebApp.dao.UserDao;
+import ru.laskin.myWebApp.dao.UserHiberDao;
 import ru.laskin.myWebApp.model.User;
 
 import javax.mail.Message;
@@ -22,19 +22,16 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserDao userDao;
+    private final UserHiberDao userHiberDao;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
+    public UserService(UserHiberDao userHiberDao, PasswordEncoder passwordEncoder) {
+        this.userHiberDao = userHiberDao;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<User> getAllUsers() {
-        try {
-            return userDao.getAllUsers();
-        } catch (SQLException throwables) {
-            return null;
-        }
+        return userHiberDao.getAllUsers();
     }
 
     public void saveUser(User user){
@@ -45,26 +42,26 @@ public class UserService {
 
         //присваиваем пользователю ключ
         user.setKey(UUID.randomUUID());
-        userDao.saveUser(user);
+        userHiberDao.saveUser(user);
     }
 
     public User getUserById(int id){
-        return userDao.getUserById(id);
+        return userHiberDao.getUserById(id);
     }
 
     public void deleteUser(int id) {
-        userDao.deleteUser(id);
+        userHiberDao.deleteUser(id);
     }
 
     public void updateUser(User user) {
         if (user.getAdminRole().equals("")){
             user.setAdminRole("USER");
         }
-        userDao.updateUser(user);
+        userHiberDao.updateUser(user);
     }
 
     public User getUserByLogin(String login) {
-       return userDao.getUserByLogin(login);
+       return userHiberDao.getUserByLogin(login);
     }
 
     public boolean checkUserRegistration(User user){
@@ -72,27 +69,23 @@ public class UserService {
     }
 
     public static void sendEmail(User user, int kod) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Здравствуйте, ");
-        stringBuilder.append(user.getName() + "!\n");
-        stringBuilder.append("Для подтверждения адреса электронной почты перейдите по ссылке:\n");
-        stringBuilder.append("http://localhost:8080/confirmEmail/?userId=");
-        stringBuilder.append(user.getUserId());
-        stringBuilder.append("&key=");
-        stringBuilder.append(user.getKey());
-        String textMessage = stringBuilder.toString();
+        String textMessage = "Здравствуйте, " +
+                user.getName() + "!\n" +
+                "Для подтверждения адреса электронной почты перейдите по ссылке:\n" +
+                "http://localhost:8080/confirmEmail/?userId=" +
+                user.getUserId() +
+                "&key=" +
+                user.getKey();
 
-        StringBuilder stringBuilder1 = new StringBuilder();
-        stringBuilder1.append("Здравствуйте, ");
-        stringBuilder1.append(user.getName() + "!\n");
-        stringBuilder1.append("Вы воспользовались процедурой восстановления логина в системе Тест\n" +
+        String textMessage1 = "Здравствуйте, " +
+                user.getName() + "!\n" +
+                "Вы воспользовались процедурой восстановления логина в системе Тест\n" +
                 "\n" +
                 "Ваш логин: " + user.getLogin() + "\n" +
                 "\n" +
-                "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n");
-        stringBuilder1.append("http://localhost:8080/recovery/?userId=");
-        stringBuilder1.append(user.getUserId());
-        String textMessage1 = stringBuilder1.toString();
+                "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n" +
+                "http://localhost:8080/recovery/?userId=" +
+                user.getUserId();
 
         final Properties properties = new Properties();
         try {
@@ -129,10 +122,10 @@ public class UserService {
 
     public void changePassword(int id, String password) {
         password = (passwordEncoder.encode(password));
-        userDao.changePassword(id, password);
+        userHiberDao.changePassword(id, password);
     }
 
     public User getUserByEmail(String email) {
-       return userDao.getUserByEmail(email);
+       return userHiberDao.getUserByEmail(email);
     }
 }
