@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
-import ru.laskin.myWebApp.utils.SessionFactoryUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
