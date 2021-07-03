@@ -26,6 +26,8 @@ public class ResultTest {
 
     @Id
     @Column(name = "resulttest_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "resulttests_resulttest_id_seq")
     public int getResulttestId() {
         return resulttestId;
     }

@@ -24,7 +24,8 @@ public class AttemptTest {
 
     @Id
     @Column(name = "attempt_id", nullable = false)
-    @SequenceGenerator(name = "id", sequenceName = "attempttest_attempt_id_seq")
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "attempttests_attempt_id_seq")
     public int getAttemptId() {
         return attemptId;
     }

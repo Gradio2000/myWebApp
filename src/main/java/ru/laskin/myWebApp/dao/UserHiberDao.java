@@ -35,7 +35,10 @@ public class UserHiberDao {
 
     public User getUserByLogin(String login){
         em = EntityFactoryUtil.getEntityManager();
-        return (User) em.createQuery("select u from users u where login =:login").setParameter("login", login).getSingleResult();
+        return (User) em.createQuery("select u from users u where login =:login").setParameter("login", login)
+                .getResultList()
+                .stream()
+                .findAny().orElse(null);
     }
 
     public void deleteUser(int id){

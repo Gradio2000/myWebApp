@@ -13,6 +13,8 @@ public class Position {
 
     @Id
     @Column(name = "id_position", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "positions_id_position_seq")
     public int getIdPosition() {
         return idPosition;
     }

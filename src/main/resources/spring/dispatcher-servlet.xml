@@ -9,7 +9,8 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="ru.laskin.myWebApp"/>
 
-    <context:property-placeholder location="classpath:app.properties"/>
+<!--    оставил эту строчку для примера файла настоек и добавления в classpath-->
+<!--    <context:property-placeholder location="classpath:app.properties"/>-->
 
     <mvc:resources location="resources/" mapping="/resources/**"/>
 

@@ -68,6 +68,8 @@ public class User {
 
     @Id
     @Column(name = "user_id", nullable = false)
+    @GeneratedValue(generator = "id")
+    @SequenceGenerator(name = "id", sequenceName = "users_user_id_seq")
     public int getUserId() {
         return userId;
     }
