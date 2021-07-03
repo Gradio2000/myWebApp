@@ -23,7 +23,11 @@ public class Question {
         this.answers = answers;
     }
 
-    @OneToMany(targetEntity = Answer.class, cascade = CascadeType.ALL)
+
+    @OneToMany(
+            targetEntity = Answer.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "question_id")
     public List<Answer> getAnswers() {
@@ -66,24 +70,4 @@ public class Question {
         this.questionName = questionName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Question question = (Question) o;
-
-        if (questionId != question.questionId) return false;
-        if (questionName != null ? !questionName.equals(question.questionName) : question.questionName != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = questionId;
-        result = 31 * result + (questionName != null ? questionName.hashCode() : 0);
-        return result;
-    }
 }

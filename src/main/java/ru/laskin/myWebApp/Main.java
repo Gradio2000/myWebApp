@@ -7,9 +7,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.laskin.myWebApp.dao.AttemptTestDao;
-import ru.laskin.myWebApp.dao.TestHiberDao;
-import ru.laskin.myWebApp.dao.UserHiberDao;
+import ru.laskin.myWebApp.dao.*;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
@@ -22,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class Main {
@@ -41,7 +40,102 @@ public class Main {
 //        deleteUser(2);
 //        updateUser();
 //        changePassword(1, "ddd");
-        getUserByEmail("aa@aa.aa");
+//        getUserByEmail("aa@aa.aa");
+//        getAllAttempt();
+//        getAllAttemptByUserId(1);
+//        getAttemptById(1);
+//        updateAttemptTest();
+//        saveAttemptTest();
+//        getAllPosition();
+        saveQuestion();
+//        getAllResultByAttempt();
+//        saveResultTest();
+    }
+
+    private static void saveResultTest() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        ResultTestDao resultTestDao = appCont.getBean(ResultTestDao.class);
+
+        ResultTest resultTest = new ResultTest(1, 3, 3);
+        resultTestDao.saveResultTest(resultTest);
+    }
+
+    private static void getAllResultByAttempt() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        ResultTestDao resultTestDao = appCont.getBean(ResultTestDao.class);
+
+        List<ResultTest> resultTestList = resultTestDao.getAllResultByAttempt(1);
+        for (ResultTest resultTest : resultTestList){
+            System.out.println(resultTest.getAnswerId());
+        }
+    }
+
+    private static void saveQuestion() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        QuestionHiberDao questionHiberDao = appCont.getBean(QuestionHiberDao.class);
+
+        List<Answer> answerList = new ArrayList<>();
+        Question question = new Question(1, "aaa", answerList);
+        questionHiberDao.saveQuestion(question);
+    }
+
+    private static void getAllPosition() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        PositionDao positionDao = appCont.getBean(PositionDao.class);
+
+        List<Position> positionList = positionDao.getAllPosition();
+        for (Position position : positionList){
+            System.out.println(position.getPosition());
+        }
+    }
+
+
+    private static void saveAttemptTest() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
+
+        AttemptTest attemptTest = new AttemptTest(new Timestamp(new Date().getTime()), 1, 1, 222);
+        int i = attemptTestDao.saveAttemptTest(attemptTest);
+        System.out.println(i);
+    }
+
+
+    private static void updateAttemptTest() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
+
+        AttemptTest attemptTest = getAttemptById(1);
+        attemptTestDao.updateAttemptTest(1, 111);
+    }
+
+    private static AttemptTest getAttemptById(int i) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
+
+        AttemptTest attemptTest = attemptTestDao.getAttemptById(i);
+        System.out.println(attemptTest.getDateTime());
+        return attemptTest;
+    }
+
+    private static void getAllAttemptByUserId(int i) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
+
+        List<AttemptTest> attemptTests = attemptTestDao.getAllAttemptByUserId(i);
+        for (AttemptTest attemptTest : attemptTests){
+            System.out.println(attemptTest.getDateTime());
+        }
+
+    }
+
+    private static void getAllAttempt() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
+
+        List<AttemptTest> attemptTests = attemptTestDao.getAllAttempt();
+        for (AttemptTest attemptTest : attemptTests){
+            System.out.println(attemptTest.getDateTime());
+        }
     }
 
     private static void getUserByEmail(String s) {

@@ -53,6 +53,8 @@ public class AttemptTest {
         this.timeAttempt = timeAttempt;
     }
 
+    @Basic
+    @Column(name = "test_id")
     public int getTestId() {
         return testId;
     }
@@ -61,6 +63,8 @@ public class AttemptTest {
         this.testId = testId;
     }
 
+    @Basic
+    @Column(name = "user_id")
     public int getUserId() {
         return userId;
     }
@@ -69,27 +73,4 @@ public class AttemptTest {
         this.userId = userId;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        AttemptTest that = (AttemptTest) o;
-
-        if (attemptId != that.attemptId) return false;
-        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
-        if (timeAttempt != null ? !timeAttempt.equals(that.timeAttempt) : that.timeAttempt != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = attemptId;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-        result = 31 * result + (timeAttempt != null ? timeAttempt.hashCode() : 0);
-        return result;
-    }
 }

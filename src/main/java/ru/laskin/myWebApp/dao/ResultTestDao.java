@@ -15,15 +15,14 @@ public class ResultTestDao {
 
     public void saveResultTest(ResultTest resultTest){
         em = EntityFactoryUtil.getEntityManager();
-        em.createNativeQuery("INSERT INTO resulttests (attempt_id, question_id, answer_id) VALUES (?,?,?)")
-                .setParameter(1, resultTest.getAttemptId())
-                .setParameter(2, resultTest.getQuestionId())
-                .setParameter(3, resultTest.getAnswerId());
+        em.getTransaction().begin();
+        em.persist(resultTest);
+        em.getTransaction().commit();
     }
 
     public List<ResultTest> getAllResultByAttempt(int attemptId){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("SELECT r FROM resultTest r WHERE attempttests.attemptId = :attemptId")
+        return em.createQuery("SELECT r FROM resultTest r WHERE attemptId = :attemptId")
                 .setParameter("attemptId", attemptId)
                 .getResultList();
     }
