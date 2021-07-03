@@ -19,11 +19,13 @@ import java.util.List;
 @Component
 public class AuthProvider implements AuthenticationProvider {
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AuthProvider(UserService service, PasswordEncoder passwordEncoder) {
+        this.service = service;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

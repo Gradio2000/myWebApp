@@ -36,7 +36,7 @@ public class Main {
 //        printUser();
 //        getUserById(1);
 //        saveuser();
-//        getUserByLogin("login");
+        getUserByLogin("login");
 //        deleteUser(2);
 //        updateUser();
 //        changePassword(1, "ddd");
@@ -47,7 +47,7 @@ public class Main {
 //        updateAttemptTest();
 //        saveAttemptTest();
 //        getAllPosition();
-        saveQuestion();
+//        saveQuestion();
 //        getAllResultByAttempt();
 //        saveResultTest();
     }

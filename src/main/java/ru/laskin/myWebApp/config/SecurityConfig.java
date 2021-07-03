@@ -16,7 +16,7 @@ import ru.laskin.myWebApp.sequrity.AuthProvider;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
-    private AuthProvider authProvider;
+    private final AuthProvider authProvider;
 
     public SecurityConfig(AuthProvider authProvider) {
         this.authProvider = authProvider;

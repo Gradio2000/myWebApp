@@ -10,6 +10,11 @@ import ru.laskin.myWebApp.model.User;
 @Controller
 public class MainController {
 
+    @GetMapping("/")
+    public String enter(){
+        return "redirect:login";
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam(required = false) Boolean error, Model model){
         model.addAttribute("user", new User());

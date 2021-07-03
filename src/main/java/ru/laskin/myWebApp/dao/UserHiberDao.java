@@ -7,6 +7,7 @@ import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,7 +18,6 @@ public class UserHiberDao {
     public EntityManager em;
 
     public List<User> getAllUsers () {
-        em = EntityFactoryUtil.getEntityManager();
         return em.createQuery("select u from users u group by userId", User.class).getResultList();
     }
 
