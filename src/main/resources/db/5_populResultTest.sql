@@ -35,8 +35,6 @@ create table registr_test
     ques_id    integer
 );
 
-alter table registr_test
-    owner to "user";
 
 create unique index registr_test_registr_id_uindex
     on registr_test (registr_id);

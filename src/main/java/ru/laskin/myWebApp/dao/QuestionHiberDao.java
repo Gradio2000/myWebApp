@@ -15,10 +15,13 @@ public class QuestionHiberDao {
         em.getTransaction().begin();
         em.persist(question);
         em.getTransaction().commit();
+        em.close();
     }
 
     public Question getQuestionById(Integer questionId) {
         em = EntityFactoryUtil.getEntityManager();
-        return em.find(Question.class, questionId);
+        Question question = em.find(Question.class, questionId);
+        em.close();
+        return question;
     }
 }

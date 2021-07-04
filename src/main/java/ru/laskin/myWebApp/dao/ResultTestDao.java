@@ -18,19 +18,24 @@ public class ResultTestDao {
         em.getTransaction().begin();
         em.persist(resultTest);
         em.getTransaction().commit();
+        em.close();
     }
 
     public List<ResultTest> getAllResultByAttempt(int attemptId){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("SELECT r FROM resultTest r WHERE attemptId = :attemptId")
+        List<ResultTest> resultTestList = em.createQuery("SELECT r FROM resultTest r WHERE attemptId = :attemptId")
                 .setParameter("attemptId", attemptId)
                 .getResultList();
+        em.close();
+        return resultTestList;
     }
 
     public List<Integer> getRegistredQuestionByattempt(int attemptId) {
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select quesId from registrTest where attemptId = :a")
+        List<Integer> list = em.createQuery("select quesId from registrTest where attemptId = :a")
                 .setParameter("a", attemptId)
                 .getResultList();
+        em.close();
+        return list;
     }
 }

@@ -24,19 +24,24 @@ public class UserHiberDao {
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
+        em.close();
     }
 
     public User getUserById(int id) {
         em = EntityFactoryUtil.getEntityManager();
-        return em.find(User.class, id);
+        User user = em.find(User.class, id);
+        em.close();
+        return user;
     }
 
     public User getUserByLogin(String login){
         em = EntityFactoryUtil.getEntityManager();
-        return (User) em.createQuery("select u from users u where login =:login").setParameter("login", login)
+        User user = (User) em.createQuery("select u from users u where login =:login").setParameter("login", login)
                 .getResultList()
                 .stream()
                 .findAny().orElse(null);
+        em.close();
+        return user;
     }
 
     public void deleteUser(int id){
@@ -46,6 +51,7 @@ public class UserHiberDao {
         query.setParameter("id", id);
         query.executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 
     public void updateUser(User user) {
@@ -66,12 +72,15 @@ public class UserHiberDao {
         query.setParameter("id", id);
         query.executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 
     public User getUserByEmail(String email) {
         em = EntityFactoryUtil.getEntityManager();
-        return (User) em.createQuery("select u from users u where email = :email")
+        User user = (User) em.createQuery("select u from users u where email = :email")
                 .setParameter("email", email)
                 .getSingleResult();
+        em.close();
+        return user;
     }
 }

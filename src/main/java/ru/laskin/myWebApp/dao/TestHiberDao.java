@@ -15,21 +15,26 @@ public class TestHiberDao {
 
     public EntityManager em;
 
-
     public List<Test> getAllTests(){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select t from tests t order by testId", Test.class).getResultList();
+        List<Test> testList = em.createQuery("select t from tests t order by testId", Test.class).getResultList();
+        em.close();
+        return testList;
     }
 
 
     public List<GroupTest> getAllGroup(){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select t from group_test t order by groupTestId", GroupTest.class).getResultList();
+        List<GroupTest> groupTestList = em.createQuery("select t from group_test t order by groupTestId", GroupTest.class).getResultList();
+        em.close();
+        return groupTestList;
     }
 
     public Test getTestById(int id){
         em = EntityFactoryUtil.getEntityManager();
-        return em.find(Test.class, id);
+        Test test = em.find(Test.class, id);
+        em.close();
+        return test;
     }
 
     public void updateTest(Test test){
@@ -47,6 +52,7 @@ public class TestHiberDao {
         em.getTransaction().begin();
         em.persist(test);
         em.getTransaction().commit();
+        em.close();
         return test.getTestId();
     }
 
@@ -57,6 +63,7 @@ public class TestHiberDao {
         query.setParameter("id", id);
         query.executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 
     public void deleteGroupTest(Integer id) {
@@ -66,11 +73,14 @@ public class TestHiberDao {
         query.setParameter("id", id);
         query.executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 
     public GroupTest getGroupById(Integer id) {
        em = EntityFactoryUtil.getEntityManager();
-       return em.find(GroupTest.class, id);
+       GroupTest groupTest = em.find(GroupTest.class, id);
+       em.close();
+       return groupTest;
     }
 
     public void addGroup(GroupTest groupTest) {
@@ -81,6 +91,7 @@ public class TestHiberDao {
         session.getTransaction().commit();
         session.flush();
         session.close();
+
     }
 
     public void updateAllGroup(List<GroupTest> groupTests) {
@@ -98,7 +109,9 @@ public class TestHiberDao {
         em = EntityFactoryUtil.getEntityManager();
         Query query = em.createQuery("from tests where groupTest.groupTestId =:id ORDER BY testId");
         query.setParameter ("id", groupId);
-        return query.getResultList();
+        List<Test> testList = query.getResultList();
+        em.close();
+        return testList;
     }
 
     public void registerTest(int attemptId, int questionId) {
@@ -109,5 +122,6 @@ public class TestHiberDao {
                 .setParameter(2, questionId)
                 .executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 }

@@ -24,6 +24,7 @@ public class AttemptTestDao {
         em.getTransaction().begin();
         em.persist(attemptTest);
         em.getTransaction().commit();
+        em.close();
         return attemptTest.getAttemptId();
     }
 
@@ -35,23 +36,30 @@ public class AttemptTestDao {
                 .setParameter("id", id)
                 .executeUpdate();
         em.getTransaction().commit();
+        em.close();
     }
 
     public AttemptTest getAttemptById(int id){
         em = EntityFactoryUtil.getEntityManager();
-        return em.find(AttemptTest.class, id);
+        AttemptTest attemptTest = em.find(AttemptTest.class, id);
+        em.close();
+        return attemptTest;
     }
 
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select a from attempttests a where userId = :id")
+        List<AttemptTest> attemptTestList = em.createQuery("select a from attempttests a where userId = :id")
                 .setParameter("id", id)
                 .getResultList();
+        em.close();
+        return attemptTestList;
     }
 
     public List<AttemptTest> getAllAttempt(){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select a from attempttests a").getResultList();
+        List<AttemptTest> attemptTestList = em.createQuery("select a from attempttests a").getResultList();
+        em.close();
+        return attemptTestList;
     }
 
 }

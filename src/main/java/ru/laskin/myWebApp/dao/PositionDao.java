@@ -16,6 +16,8 @@ public class PositionDao {
 
     public List<Position> getAllPosition(){
         em = EntityFactoryUtil.getEntityManager();
-        return em.createQuery("select p from positions p").getResultList();
+        List<Position> positionList = em.createQuery("select p from positions p").getResultList();
+        em.close();
+        return positionList;
     }
 }
