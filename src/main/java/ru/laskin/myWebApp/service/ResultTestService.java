@@ -1,10 +1,13 @@
 package ru.laskin.myWebApp.service;
 
 import org.springframework.stereotype.Service;
+import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.ResultTestDao;
+import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.ResultTest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,11 +15,12 @@ import java.util.Map;
 public class ResultTestService {
 
     private ResultTestDao resultTestDao;
+    private QuestionHiberDao questionHiberDao;
 
-    public ResultTestService(ResultTestDao resultTestDao) {
+    public ResultTestService(ResultTestDao resultTestDao, QuestionHiberDao questionHiberDao) {
         this.resultTestDao = resultTestDao;
+        this.questionHiberDao = questionHiberDao;
     }
-
 
     public List<ResultTest> getResultTest(Integer attemptId) {
         return resultTestDao.getAllResultByAttempt(attemptId);
@@ -35,7 +39,12 @@ public class ResultTestService {
         }
     }
 
-    public List<Integer> getQuestionIdListByAttemptId(int attemptId) {
-        return resultTestDao.getQuestionIdByAttemptId(attemptId);
+    public List<Question> getRegistredQuestionByattempt(int attemptId) {
+        List<Integer> integerList = resultTestDao.getRegistredQuestionByattempt(attemptId);
+        List<Question> questionList = new ArrayList<>();
+        for (Integer questionId : integerList){
+            questionList.add(questionHiberDao.getQuestionById(questionId));
+        }
+        return questionList;
     }
 }

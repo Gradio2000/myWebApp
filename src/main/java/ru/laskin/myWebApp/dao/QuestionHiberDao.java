@@ -16,4 +16,9 @@ public class QuestionHiberDao {
         em.persist(question);
         em.getTransaction().commit();
     }
+
+    public Question getQuestionById(Integer questionId) {
+        em = EntityFactoryUtil.getEntityManager();
+        return em.find(Question.class, questionId);
+    }
 }

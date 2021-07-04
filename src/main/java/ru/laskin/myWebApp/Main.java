@@ -113,7 +113,7 @@ public class Main {
         AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
 
         AttemptTest attemptTest = attemptTestDao.getAttemptById(i);
-        System.out.println(attemptTest.getQuesAmount());
+
         return attemptTest;
     }
 

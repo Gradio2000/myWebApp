@@ -100,4 +100,14 @@ public class TestHiberDao {
         query.setParameter ("id", groupId);
         return query.getResultList();
     }
+
+    public void registerTest(int attemptId, int questionId) {
+        em = EntityFactoryUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.createNativeQuery("insert into registr_test (attempt_id, ques_id) values (?, ?)")
+                .setParameter(1, attemptId)
+                .setParameter(2, questionId)
+                .executeUpdate();
+        em.getTransaction().commit();
+    }
 }

@@ -22,3 +22,21 @@ create unique index resulttests_resulttest_id_uindex
 
 INSERT INTO resultTests (attempt_id, question_id, answer_id) VALUES
     (1, 1, 1);
+
+
+
+DROP TABLE IF EXISTS registr_test CASCADE ;
+create table registr_test
+(
+    registr_id serial not null
+        constraint registr_test_pk
+            primary key,
+    attempt_id integer,
+    ques_id    integer
+);
+
+alter table registr_test
+    owner to "user";
+
+create unique index registr_test_registr_id_uindex
+    on registr_test (registr_id);

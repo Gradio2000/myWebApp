@@ -51,6 +51,9 @@ public class TestController {
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
         }
 
+        //записываем в бд заданные юзеру вопросы
+        testService.registerTest(attemptId, test);
+
         session.setAttribute("tests", test);
         model.addAttribute("users", authUser);
         model.addAttribute("attemptId", attemptId);

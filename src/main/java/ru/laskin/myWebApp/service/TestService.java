@@ -187,10 +187,12 @@ public class TestService {
 
         String time = attemptTestService.getTime(timeOfAttempt);
 
-        return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time);
+        List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+
+        return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time, quesList);
     }
 
-    //метод для отображения статистики пользователя
+    //метод для отображения детализации теста пользователя
     public void getStatistic(Integer id, HttpSession session) {
         User userforStatisic = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
@@ -204,21 +206,8 @@ public class TestService {
           String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
           Test test = getTestById(attemptTest.getTestId());
 
-          //здесь надо собрать список заданных вопросов для попытки
-            //сначала собираем список id заданных вопросов
-            List<Integer> idAnswList = resultTestService.getQuestionIdListByAttemptId(attemptTest.getAttemptId());
-            //получаем список всех вопросов
-            List<Question> questionList = test.getQuestions();
-            //собираем список заданных вопросов
-            List<Question> quesList = new ArrayList<>();
-            for (Integer quesId : idAnswList){
-                for (Question question : questionList){
-                    if (question.getQuestionId() == quesId){
-                        quesList.add(question);
-                    }
-                }
-            }
-
+          //Это список заданных вопросов для попытки
+            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
 
             List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
             Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
@@ -284,6 +273,7 @@ public class TestService {
         else {
             for (Question question : questionList){
                 falseAnswerSet.add(question.getQuestionId());
+                falseAnswerSet.add(question.getQuestionId());
             }
         }
         return falseAnswerSet;
@@ -300,7 +290,7 @@ public class TestService {
     public  Double getResult(int trueCountAnswers, int totalCountAnswers){
         BigDecimal bigDecimal1 = new BigDecimal(trueCountAnswers);
         BigDecimal bigDecimal2 = new BigDecimal(totalCountAnswers);
-        return bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
+        return bigDecimal2.compareTo(BigDecimal.ZERO) == 0 ? 0 : bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
     }
 
     private boolean getTestResult(Double result, Double criteria) {
@@ -316,5 +306,12 @@ public class TestService {
 
     public void updateTest(Test test) {
         testHiberDao.updateTest(test);
+    }
+
+    public void registerTest(int attemptId, Test test) {
+        for (Question question : test.getQuestions()){
+            testHiberDao.registerTest(attemptId, question.getQuestionId());
+        }
+
     }
 }

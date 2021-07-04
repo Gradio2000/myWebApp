@@ -2,6 +2,7 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="1.0">
     <persistence-unit name="localConnect">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>ru.laskin.myWebApp.model.RegistrTest</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/postgres"/>
