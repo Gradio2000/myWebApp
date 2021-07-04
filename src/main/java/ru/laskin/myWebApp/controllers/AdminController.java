@@ -72,14 +72,6 @@ public class AdminController {
             return "redirect:/allUsers";
     }
 
-    @GetMapping("users/statistic")
-    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session, Model model){
-        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        request.setAttribute("user", authUser);
-
-        testService.getStatistic(id, session);
-        return "statistic";
-    }
 
     @GetMapping("/adminModule")
     public String openAdminModule(HttpServletRequest request){

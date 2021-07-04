@@ -83,7 +83,7 @@
                 </tr>
                 <tr>
                     <td>Количество заданных вопросов</td>
-                    <td class="mytd">${statistic.test.questions.size()}</td>
+                    <td class="mytd">${statistic.quesList.size()}</td>
                 </tr>
                 <tr>
                     <td>Количество правильных ответов</td>
@@ -104,7 +104,7 @@
             </table>
 
 
-                <c:forEach var="ques" items="${statistic.test.questions}" varStatus="count">
+                <c:forEach var="ques" items="${statistic.quesList}" varStatus="count">
                     <table style="margin-top: 15mm">
                         <tr>
                             <td style="width: 70mm"><h4>Вопрос № ${count.count}:</td>

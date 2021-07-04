@@ -70,6 +70,15 @@ public class ResultController {
         model.addAttribute(user);
         return "detailResult";
     }
+
+    @GetMapping("users/statistic")
+    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session, Model model){
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        request.setAttribute("user", authUser);
+
+        testService.getStatistic(id, session);
+        return "statistic";
+    }
 }
 
 

@@ -5,7 +5,6 @@ import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -205,15 +204,31 @@ public class TestService {
           String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
           Test test = getTestById(attemptTest.getTestId());
 
+          //здесь надо собрать список заданных вопросов для попытки
+            //сначала собираем список id заданных вопросов
+            List<Integer> idAnswList = resultTestService.getQuestionIdListByAttemptId(attemptTest.getAttemptId());
+            //получаем список всех вопросов
+            List<Question> questionList = test.getQuestions();
+            //собираем список заданных вопросов
+            List<Question> quesList = new ArrayList<>();
+            for (Integer quesId : idAnswList){
+                for (Question question : questionList){
+                    if (question.getQuestionId() == quesId){
+                        quesList.add(question);
+                    }
+                }
+            }
+
+
             List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
             Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
-            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, test.getQuestions());
+            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-            int trueAnswer = test.getQuestions().size() - falseAnswerSet.size();
+            int trueAnswer = quesList.size() - falseAnswerSet.size();
             String testResult;
             double result = 0;
             if (test.getCriteria() != null){
-                result = getResult(trueAnswer, test.getQuestions().size());
+                result = getResult(trueAnswer, quesList.size());
                 testResult  = getTestResult(result, test.getCriteria()) ?
                         "Тест пройден" : "Тест не пройден";
             }
@@ -222,7 +237,7 @@ public class TestService {
             String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
 
             statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
-                    testResult, listOfUsersAnswers, result, time));
+                    testResult, listOfUsersAnswers, result, time, quesList));
         }
 
         session.setAttribute("userForStatistic", userforStatisic);

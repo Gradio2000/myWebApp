@@ -36,14 +36,14 @@ public class Main {
 //        printUser();
 //        getUserById(1);
 //        saveuser();
-        getUserByLogin("login");
+//        getUserByLogin("login");
 //        deleteUser(2);
 //        updateUser();
 //        changePassword(1, "ddd");
 //        getUserByEmail("aa@aa.aa");
 //        getAllAttempt();
 //        getAllAttemptByUserId(1);
-//        getAttemptById(1);
+        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
 //        getAllPosition();
@@ -94,7 +94,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
 
-        AttemptTest attemptTest = new AttemptTest(new Timestamp(new Date().getTime()), 1, 1, 222);
+        AttemptTest attemptTest = new AttemptTest(new Timestamp(new Date().getTime()), 1, 1, 222, 333);
         int i = attemptTestDao.saveAttemptTest(attemptTest);
         System.out.println(i);
     }
@@ -113,7 +113,7 @@ public class Main {
         AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
 
         AttemptTest attemptTest = attemptTestDao.getAttemptById(i);
-        System.out.println(attemptTest.getDateTime());
+        System.out.println(attemptTest.getQuesAmount());
         return attemptTest;
     }
 

@@ -67,7 +67,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Количество заданных вопросов</td>
-                                                <td class="mytd">${statistic.test.questions.size()}</td>
+                                                <td class="mytd">${statistic.quesList.size()}</td>
                                             </tr>
                                             <tr>
                                                 <td>Количество правильных ответов</td>

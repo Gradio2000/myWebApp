@@ -15,9 +15,24 @@ public class Statistic {
     List<Integer> listOfUserAnswer;
     double result;
     String time;
+    List<Question> quesList; // список вопросов, заданных пользователю в тесте
 
     public Statistic(String date, Test test, Set<Integer> falseAnswerSet, int trueAnswer,
-                     String testResult, List<Integer> listOfUserAnswer, double result, String time) {
+                     String testResult, List<Integer> listOfUserAnswer, double result, String time, List<Question> quesList) {
+        this.date = date;
+        this.test = test;
+        this.falseAnswerSet = falseAnswerSet;
+        this.trueAnswer = trueAnswer;
+        this.testResult = testResult;
+        this.listOfUserAnswer = listOfUserAnswer;
+        this.result = result;
+        this.time = time;
+        this.quesList = quesList;
+    }
+
+    public Statistic(String date, Test test, Set<Integer> falseAnswerSet,
+                     int trueAnswers, String testResult, List<Integer> listOfUsersAnswers,
+                     double result, String time) {
         this.date = date;
         this.test = test;
         this.falseAnswerSet = falseAnswerSet;
@@ -90,5 +105,13 @@ public class Statistic {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public List<Question> getQuesList() {
+        return quesList;
+    }
+
+    public void setQuesList(List<Question> quesList) {
+        this.quesList = quesList;
     }
 }

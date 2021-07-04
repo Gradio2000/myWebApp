@@ -34,4 +34,8 @@ public class ResultTestService {
             }
         }
     }
+
+    public List<Integer> getQuestionIdListByAttemptId(int attemptId) {
+        return resultTestDao.getQuestionIdByAttemptId(attemptId);
+    }
 }

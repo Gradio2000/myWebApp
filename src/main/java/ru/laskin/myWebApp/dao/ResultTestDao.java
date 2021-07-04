@@ -26,4 +26,11 @@ public class ResultTestDao {
                 .setParameter("attemptId", attemptId)
                 .getResultList();
     }
+
+    public List<Integer> getQuestionIdByAttemptId(int attemptId) {
+        em = EntityFactoryUtil.getEntityManager();
+        return em.createQuery("select questionId from resultTest where attemptId = :attemptId")
+                .setParameter("attemptId", attemptId)
+                .getResultList();
+    }
 }

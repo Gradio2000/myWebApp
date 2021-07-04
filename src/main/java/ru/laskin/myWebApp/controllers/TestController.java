@@ -47,7 +47,7 @@ public class TestController {
         //записываем в БД новую попытку
         if (attemptId == null) {
             Timestamp timestamp = new Timestamp(new Date().getTime());
-            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), authUser.getUserId(), 0);
+            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), authUser.getUserId(), 0, test.getQuestions().size());
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
         }
 
