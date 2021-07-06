@@ -5,6 +5,7 @@ import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -40,7 +41,8 @@ public class TestService {
         return testHiberDao.getTestById(testId);
     }
 
-    public void updateTest(Test test, Map <String, String[]> parameterMap){
+    public void updateTest(Test test, HttpServletRequest request){
+        Map <String, String[]> parameterMap = request.getParameterMap();
         String[] answersName = parameterMap.get("answer");
         String[] answerId = parameterMap.get("answerId");
         String[] isRight = parameterMap.get("isRight");

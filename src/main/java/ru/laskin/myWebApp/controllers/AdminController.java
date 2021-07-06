@@ -110,7 +110,7 @@ public class AdminController {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
-        testService.updateTest(test, request.getParameterMap());
+        testService.updateTest(test, request);
         return "redirect:/allTests";
     }
 

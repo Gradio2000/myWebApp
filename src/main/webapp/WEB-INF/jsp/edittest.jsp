@@ -109,7 +109,7 @@
 
                                 </div>
                             </c:forEach>
-                        <button class="btn success" type="submit" onclick="validCheck()" style="margin-top: 20px">Готово</button>
+                        <button class="btn success" type="submit" style="margin-top: 20px">Готово</button>
 
 
                         <!-- Button trigger modal -->
