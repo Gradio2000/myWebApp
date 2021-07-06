@@ -77,6 +77,7 @@
                                     <input hidden name="questionId" value="${ques.questionId}">
                                     <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
                                     <textarea class="form-control" name="question" id="textQuestionName" placeholder="Введите вопрос" required>${ques.questionName}</textarea>
+                                    <button id="deleteQues" type="button" class="btn danger">Удалить вопрос</button>
                                     <hr>
                                     <label for="textAnswerName"><h5>Ответы на вопрос № ${count.count}</h5></label>
 
@@ -94,7 +95,8 @@
                                                 <label><input type="checkbox" name="isRight"> Правильный ответ</label>
                                             </cf:if>
 
-                                            <button id="delete" type="button" class="btn danger" onclick="deleteAnswerMain">Удалить ответ</button>
+                                            <button id="delete" type="button" class="btn danger">Удалить ответ</button>
+
 
                                         </div>
                                     </c:forEach>
@@ -102,6 +104,9 @@
                                     <div id="forAddAnswer${ques.questionId}"></div>
 
                                     <button type="button" class="btn success" onclick="addAnswer(${ques.questionId})">Добавить ответ</button>
+
+
+
                                 </div>
                             </c:forEach>
                         <button class="btn success" type="submit" onclick="validCheck()" style="margin-top: 20px">Готово</button>
@@ -220,6 +225,16 @@
     let li = document.querySelectorAll('#delete');
     for (var i = 0, len = li.length; i < len; i++) {
         li[i].onclick = function() {
+            console.log('parentNode', this.parentNode);
+            console.log('element => this', this);
+            this.parentNode.remove(this);
+        }
+    }
+
+    //функция удаления вопроса
+    let liq= document.querySelectorAll('#deleteQues');
+    for (var i = 0, len = liq.length; i < len; i++) {
+        liq[i].onclick = function() {
             console.log('parentNode', this.parentNode);
             console.log('element => this', this);
             this.parentNode.remove(this);

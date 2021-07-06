@@ -16,7 +16,10 @@ public class UserHiberDao {
     public EntityManager em;
 
     public List<User> getAllUsers () {
-        return em.createQuery("select u from users u order by userId").getResultList();
+        em = EntityFactoryUtil.getEntityManager();
+        List<User> userList = em.createQuery("select u from users u order by userId").getResultList();
+        em.close();
+        return userList;
     }
 
     public void saveUser(User user) {
