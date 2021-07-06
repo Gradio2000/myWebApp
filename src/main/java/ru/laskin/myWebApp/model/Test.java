@@ -13,6 +13,7 @@ public class Test {
     private Double time;
     private List<Question> questions;
     private Integer quesAmount;
+    private boolean deleted;
 
     public Test() {
     }
@@ -53,8 +54,7 @@ public class Test {
     @OneToMany(
             targetEntity = Question.class,
             fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            cascade = CascadeType.ALL)
     @JoinColumn(name = "test_id")
     public List<Question> getQuestions() {
         return questions;
@@ -94,5 +94,15 @@ public class Test {
 
     public void setQuesAmount(Integer quesAmount) {
         this.quesAmount = quesAmount;
+    }
+
+
+    @Column(name = "deleted")
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

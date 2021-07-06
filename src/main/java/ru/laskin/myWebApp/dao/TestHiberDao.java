@@ -17,7 +17,7 @@ public class TestHiberDao {
 
     public List<Test> getAllTests(){
         em = EntityFactoryUtil.getEntityManager();
-        List<Test> testList = em.createQuery("select t from tests t order by testId", Test.class).getResultList();
+        List<Test> testList = em.createQuery("select t from tests t where deleted=false order by testId", Test.class).getResultList();
         em.close();
         return testList;
     }
@@ -59,7 +59,7 @@ public class TestHiberDao {
     public void deleteTestById(int id){
         em = EntityFactoryUtil.getEntityManager();
         em.getTransaction().begin();
-        Query query = em.createQuery("delete from tests where testId =:id");
+        Query query = em.createQuery("update tests set deleted=true where testId =:id");
         query.setParameter("id", id);
         query.executeUpdate();
         em.getTransaction().commit();

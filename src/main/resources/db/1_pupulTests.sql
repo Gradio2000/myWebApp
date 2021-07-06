@@ -27,18 +27,19 @@ CREATE TABLE tests
         references group_test on update cascade on delete cascade,
     criteria double precision,
     time double precision,
-    ques_amount int
+    ques_amount int,
+    deleted boolean
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex
     on tests ("test_id");
 
-INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
+INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
                                       'ведения эмиссионных и кассовых операций, хранения и перевозки ' ||
                                       'банкнот и монеты резервных фондов, наличных денег и ценностей, ' ||
-                                      'обслуживания банкоматов', 1, 30, 0);
-INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Для ревизии', 2, 30, 0);
-INSERT INTO tests (test_name, group_id, criteria, time) VALUES ('Совместный', 3, 30, 0);
+                                      'обслуживания банкоматов', 1, 30, 0, false);
+INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Для ревизии', 2, 30, 0, false);
+INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Совместный', 3, 30, 0, false);
 
 
 DROP TABLE IF EXISTS questions CASCADE ;

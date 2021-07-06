@@ -18,8 +18,7 @@ public class GroupTest {
 
 
     @OneToMany(targetEntity = Test.class,
-               cascade = CascadeType.ALL,
-               orphanRemoval = true)
+               cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "group_id")
     public List<Test> getTestList() {

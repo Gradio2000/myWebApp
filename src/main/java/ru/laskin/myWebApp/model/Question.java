@@ -26,8 +26,7 @@ public class Question {
 
     @OneToMany(
             targetEntity = Answer.class,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
+            cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "question_id")
     public List<Answer> getAnswers() {
