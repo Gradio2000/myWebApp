@@ -235,7 +235,7 @@
     }
 
     .my-box {
-        margin-top: 30px;
+        margin-top: 40px;
         -webkit-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         -moz-box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);
         box-shadow: 7px 10px 11px -4px rgba(34, 60, 80, 0.18);

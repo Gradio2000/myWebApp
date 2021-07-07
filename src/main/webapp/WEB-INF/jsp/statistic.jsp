@@ -38,7 +38,7 @@
                     </div>
                 </c:forEach>
                 <a onclick="stepRight()">&raquo;</a>
-            </div>
+        </div>
 
         <form action="/detailResultForAdmin" method="post">
             <input id="statisticId" hidden name="statisticId" />

@@ -48,7 +48,7 @@ public class AttemptTestDao {
 
     public List<AttemptTest> getAllAttemptByUserId(Integer id) {
         em = EntityFactoryUtil.getEntityManager();
-        List<AttemptTest> attemptTestList = em.createQuery("select a from attempttests a where userId = :id")
+        List<AttemptTest> attemptTestList = em.createQuery("select a from attempttests a where userId = :id order by dateTime desc")
                 .setParameter("id", id)
                 .getResultList();
         em.close();

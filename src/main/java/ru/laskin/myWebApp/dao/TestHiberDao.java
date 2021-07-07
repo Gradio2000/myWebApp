@@ -1,7 +1,10 @@
 package ru.laskin.myWebApp.dao;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.postgresql.core.NativeQuery;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
@@ -25,7 +28,7 @@ public class TestHiberDao {
 
     public List<GroupTest> getAllGroup(){
         em = EntityFactoryUtil.getEntityManager();
-        List<GroupTest> groupTestList = em.createQuery("select t from group_test t order by groupTestId", GroupTest.class).getResultList();
+        List<GroupTest> groupTestList = em.createQuery("select g from group_test g order by groupTestId", GroupTest.class).getResultList();
         em.close();
         return groupTestList;
     }
@@ -56,13 +59,21 @@ public class TestHiberDao {
         return test.getTestId();
     }
 
+
     public void deleteTestById(int id){
         em = EntityFactoryUtil.getEntityManager();
+//        em.getTransaction().begin();
+//        Query query = em.createQuery("update tests t set deleted=true where testId =:id");
+//        query.setParameter("id", id);
+//        query.executeUpdate();
+//        em.getTransaction().commit();
+
         em.getTransaction().begin();
-        Query query = em.createQuery("update tests set deleted=true where testId =:id");
-        query.setParameter("id", id);
+        Query query = em.createNativeQuery("UPDATE postgres.public.tests SET group_id=null, deleted=true WHERE test_id = ?")
+                .setParameter(1, id);
         query.executeUpdate();
         em.getTransaction().commit();
+
         em.close();
     }
 

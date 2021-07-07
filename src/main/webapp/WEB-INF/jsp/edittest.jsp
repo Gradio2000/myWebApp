@@ -70,9 +70,25 @@
 
                         <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="margin-top: 20px">Загрузить вопросы</button>
 
+                        <div class="pagination">
+                            <a onclick="stepLeft()">&laquo;</a>
+                            <c:forEach var="f" items="${test.questions}" step="10" varStatus="count">
+                                <div class="div-pag">
+                                    <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
+                                </div>
+                            </c:forEach>
+                            <a onclick="stepRight()">&raquo;</a>
+                            <select style="width: auto; padding: 0px; margin-left: auto">
+                                <option>5</option>
+                                <option selected>10</option>
+                                <option>20</option>
+                                <option>все</option>
+                            </select>
+                        </div>
+
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
 
-                                <div class="container-my-sm my-box">
+                                <div class="container-my-sm my-box line" hidden>
 
                                     <input hidden name="questionId" value="${ques.questionId}">
                                     <label for="textQuestionName"><h4>Вопрос № ${count.count} (id ${ques.questionId})</h4></label>
@@ -183,6 +199,64 @@
 <jsp:include page="../includes/styles.jsp"/>
 </body>
 <script>
+
+    document.addEventListener("DOMContentLoaded", ready);
+    function ready(){
+        document.getElementById("1").className += " active";
+        const el = document.getElementsByClassName("line");
+        if (el.length > 10){
+            for (let i = 0; i < 10; i++) {
+                el[i].removeAttribute("hidden");
+            }
+        }
+        else {
+            for (let i = 0; i < el.length; i++) {
+                el[i].removeAttribute("hidden");
+            }
+        }
+    }
+
+    function getActive(id){
+        const el = document.getElementsByClassName("active")[0];
+        el.className = el.className.replace(" active", "");
+        document.getElementById(id).className += " active";
+        const start = (id - 1) * 10;
+        const end = (id - 1) * 10 + 9;
+
+        const line = document.getElementsByClassName("line");
+
+        for (let i = 0; i < line.length; i++) {
+            line[i].setAttribute("hidden", true);
+        }
+
+        for (let i = start; i <= end; i++) {
+            line[i].removeAttribute("hidden");
+        }
+
+        const detailBtn = document.getElementsByClassName("detail-btn");
+        if (detailBtn.length !== 0){
+            for (let i = 0; i < detailBtn.length; i++) {
+                detailBtn[i].click();
+                detailBtn[i].className = detailBtn[i].className.replace(" detail-btn", "");
+            }
+        }
+    }
+
+    function stepLeft(){
+        let id = document.getElementsByClassName("active")[0].id;
+        id--;
+        if (id >= 1){
+            document.getElementById(id).click();
+        }
+    }
+
+    function stepRight(){
+        let id = document.getElementsByClassName("active")[0].id;
+        id++;
+        if (id <= document.getElementsByClassName("pag").length){
+            document.getElementById(id).click();
+        }
+    }
 
     function validateForm() {
         if(document.getElementsByName("answerName").length === 0){
