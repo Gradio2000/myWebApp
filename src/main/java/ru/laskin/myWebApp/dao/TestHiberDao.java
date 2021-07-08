@@ -62,18 +62,11 @@ public class TestHiberDao {
 
     public void deleteTestById(int id){
         em = EntityFactoryUtil.getEntityManager();
-//        em.getTransaction().begin();
-//        Query query = em.createQuery("update tests t set deleted=true where testId =:id");
-//        query.setParameter("id", id);
-//        query.executeUpdate();
-//        em.getTransaction().commit();
-
         em.getTransaction().begin();
         Query query = em.createNativeQuery("UPDATE postgres.public.tests SET group_id=null, deleted=true WHERE test_id = ?")
                 .setParameter(1, id);
         query.executeUpdate();
         em.getTransaction().commit();
-
         em.close();
     }
 
@@ -102,7 +95,6 @@ public class TestHiberDao {
         session.getTransaction().commit();
         session.flush();
         session.close();
-
     }
 
     public void updateAllGroup(List<GroupTest> groupTests) {

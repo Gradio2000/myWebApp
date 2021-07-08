@@ -78,12 +78,14 @@
                                 </div>
                             </c:forEach>
                             <a onclick="stepRight()">&raquo;</a>
-                            <select style="width: auto; padding: 0px; margin-left: auto">
+                            <label for="sel" style="margin-left: auto; margin-top: auto; margin-bottom: auto; padding-right: 10px">Показывать по</label>
+                            <select id="sel" style="width: auto; padding: 0px; margin-bottom: auto" onchange="countOfQues(this.selectedIndex)">
                                 <option>5</option>
                                 <option selected>10</option>
                                 <option>20</option>
                                 <option>все</option>
                             </select>
+
                         </div>
 
                             <c:forEach var="ques" items="${test.questions}" varStatus="count">
@@ -216,12 +218,36 @@
         }
     }
 
+    let number = 10;
+    function countOfQues(selectedIndex){
+        console.log(selectedIndex);
+
+        if (selectedIndex === 0){
+            number = 5;
+        }
+        if (selectedIndex === 1){
+            number = 10;
+        }
+        if (selectedIndex === 2){
+            number = 20;
+        }
+        if (selectedIndex === 3){
+            number = ${test.questions.size()};
+        }
+        getActive(1);
+    }
+
+
     function getActive(id){
         const el = document.getElementsByClassName("active")[0];
         el.className = el.className.replace(" active", "");
         document.getElementById(id).className += " active";
-        const start = (id - 1) * 10;
-        const end = (id - 1) * 10 + 9;
+        const start = (id - 1) * number;
+        const end = (id - 1) * number + (number - 1);
+
+        console.log(number);
+        console.log(start);
+        console.log(end);
 
         const line = document.getElementsByClassName("line");
 
