@@ -70,21 +70,25 @@
 
                         <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="margin-top: 20px">Загрузить вопросы</button>
 
-                        <div class="pagination">
-                            <a onclick="stepLeft()">&laquo;</a>
-                            <c:forEach var="f" items="${test.questions}" step="10" varStatus="count">
-                                <div class="div-pag">
-                                    <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
-                                </div>
-                            </c:forEach>
-                            <a onclick="stepRight()">&raquo;</a>
-                            <label for="sel" style="margin-left: auto; margin-top: auto; margin-bottom: auto; padding-right: 10px">Показывать по</label>
+                        <div>
+                            <label for="sel" style="margin-left: auto; margin-top: 10px; margin-bottom: auto; padding-right: 10px">Показывать по</label>
                             <select id="sel" style="width: auto; padding: 0px; margin-bottom: auto" onchange="countOfQues(this.selectedIndex)">
                                 <option>5</option>
                                 <option selected>10</option>
                                 <option>20</option>
                                 <option>все</option>
                             </select>
+                        </div>
+
+
+                        <div class="pagination" style="margin-top: 10px">
+                            <a id="stepLeft" onclick="stepLeft()">&laquo;</a>
+                                    <c:forEach var="f" items="${test.questions}" step="10" varStatus="count">
+                                        <div class="div-pag">
+                                            <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
+                                        </div>
+                                    </c:forEach>
+                            <a id="stepRight" onclick="stepRight()">&raquo;</a>
 
                         </div>
 
@@ -199,7 +203,7 @@
 
 </body>
 <jsp:include page="../includes/styles.jsp"/>
-</body>
+
 <script>
 
     document.addEventListener("DOMContentLoaded", ready);
@@ -220,7 +224,6 @@
 
     let number = 10;
     function countOfQues(selectedIndex){
-        console.log(selectedIndex);
 
         if (selectedIndex === 0){
             number = 5;
@@ -234,20 +237,16 @@
         if (selectedIndex === 3){
             number = ${test.questions.size()};
         }
-        getActive(1);
+        changeButtonsOfPages();
     }
 
 
-    function getActive(id){
+    function getActive(id) {
         const el = document.getElementsByClassName("active")[0];
         el.className = el.className.replace(" active", "");
         document.getElementById(id).className += " active";
         const start = (id - 1) * number;
         const end = (id - 1) * number + (number - 1);
-
-        console.log(number);
-        console.log(start);
-        console.log(end);
 
         const line = document.getElementsByClassName("line");
 
@@ -260,12 +259,59 @@
         }
 
         const detailBtn = document.getElementsByClassName("detail-btn");
-        if (detailBtn.length !== 0){
+        if (detailBtn.length !== 0) {
             for (let i = 0; i < detailBtn.length; i++) {
                 detailBtn[i].click();
                 detailBtn[i].className = detailBtn[i].className.replace(" detail-btn", "");
             }
         }
+    }
+
+
+    //функция внедрения нового количество кнопок страничек
+    function changeButtonsOfPages(){
+
+        //удаляем старые кнопочки страниц
+        const elForDel = document.getElementsByClassName("div-pag");
+        for (let i = 0; i < elForDel.length; i++) {
+          const parent = elForDel.item(i).parentNode;
+          parent.removeChild(elForDel.item(i));
+          i--;
+        }
+
+        //вставляем на страницу новые кнопочки страниц
+
+        //создаем элементы
+        const countOfQues = ${test.questions.size()};
+        let countOfPages = 0;
+        if (number === countOfQues){
+            countOfPages = 1;
+        }
+        else {
+            countOfPages = Math.ceil(countOfQues/number);
+        }
+
+        for (let i = 0; i < countOfPages; i++) {
+            //создаем div
+            var div_pag = $('<div/>', {
+                'class': 'div-pag'
+            });
+
+            $('<a/>', {
+                class: 'pag',
+                id: i + 1,
+                onclick: 'getActive(this.id)',
+                html: i + 1,
+            }).appendTo(div_pag);
+
+            //добавляем div в div
+            // div_pag.appendTo($('#forInject'));
+            div_pag.insertBefore($('#stepRight'));
+
+        }
+
+        //делаем первую кнопочку активной
+        document.getElementById("1").className += " active";
     }
 
     function stepLeft(){
@@ -325,8 +371,6 @@
     let li = document.querySelectorAll('#delete');
     for (var i = 0, len = li.length; i < len; i++) {
         li[i].onclick = function() {
-            console.log('parentNode', this.parentNode);
-            console.log('element => this', this);
             this.parentNode.remove(this);
         }
     }
@@ -335,15 +379,13 @@
     let liq= document.querySelectorAll('#deleteQues');
     for (var i = 0, len = liq.length; i < len; i++) {
         liq[i].onclick = function() {
-            console.log('parentNode', this.parentNode);
-            console.log('element => this', this);
             this.parentNode.remove(this);
         }
     }
 
 
     //переменная для использования при создании checkbox
-    var count = 0;
+    let count = 0;
 
     //функция динамического добавления полей модальной формы
     $('#addAnswer').click(function(e) {
@@ -375,7 +417,6 @@
         divForm.appendTo(divAnswer);
 
         //создаем label и добавляем его в div
-        // var check = $('<label/>').html("Правильный ответ ").appendTo(divAnswer);
         var check = $('<label/>', {
             html: 'Правильный ответ ',
         }).appendTo(divAnswer);
@@ -415,7 +456,6 @@
         e.preventDefault();
         return false;
     });
-
 
     function getCount(){
         if(document.getElementsByName("answer").length === 0 && document.getElementsByName("newAnswer").length === 0 ){
