@@ -312,6 +312,7 @@
 
         //делаем первую кнопочку активной
         document.getElementById("1").className += " active";
+        document.getElementById("1").click();
     }
 
     function stepLeft(){
