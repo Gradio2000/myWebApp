@@ -150,7 +150,8 @@ public class UserController {
 
     @GetMapping("/room")
     public String enteringRoom(Model model, HttpServletRequest request){
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserById(principal.getUserId());
         model.addAttribute("user", user);
         return "userRoom";
     }
