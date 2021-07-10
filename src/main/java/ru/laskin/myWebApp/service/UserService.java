@@ -72,7 +72,7 @@ public class UserService {
         String textMessage = "Здравствуйте, " +
                 user.getName() + "!\n" +
                 "Для подтверждения адреса электронной почты перейдите по ссылке:\n" +
-                "http://localhost:8081/confirmEmail/?userId=" +
+                "https://qtests.herokuapp.com/confirmEmail/?userId=" +
                 user.getUserId() +
                 "&key=" +
                 user.getKey();
@@ -84,7 +84,7 @@ public class UserService {
                 "Ваш логин: " + user.getLogin() + "\n" +
                 "\n" +
                 "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n" +
-                "http://localhost:8081/recovery/?userId=" +
+                "https://qtests.herokuapp.com/recovery/?userId=" +
                 user.getUserId();
 
         final Properties properties = new Properties();
