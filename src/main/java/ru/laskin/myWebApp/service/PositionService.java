@@ -18,4 +18,8 @@ public class PositionService {
     public List<Position> getAllPosition(){
        return positionDao.getAllPosition();
     }
+
+    public Position getPositionById(Integer pos_id) {
+        return positionDao.getPositionById(pos_id);
+    }
 }

@@ -15,7 +15,7 @@ public class User {
     private String password;
     private String email;
     private String adminRole;
-    private String position;
+    private Position position;
     private String confirmPassword;
     @Column
     private Boolean registered;
@@ -24,9 +24,9 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String name, String login, String password,
-                String email, String adminRole, String position,
-                String confirmPassword, Boolean registered, UUID key) {
+    public User(int userId, String name, String login,
+                String password, String email, String adminRole,
+                Position position, String confirmPassword, Boolean registered, UUID key) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -128,15 +128,24 @@ public class User {
         this.adminRole = adminRole;
     }
 
-    @Basic
-    @Column(name = "position", nullable = true, length = -1)
-    public String getPosition() {
+    @ManyToOne(targetEntity = Position.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pos_id", referencedColumnName = "id_position")
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
+
+
+    @Basic
+    @Column(name = "registered")
+    public Boolean getRegistered() {
+        return registered;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {

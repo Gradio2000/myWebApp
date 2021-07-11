@@ -27,7 +27,7 @@
     <div class="content">
         <div>
             <p>Имя пользователя: ${userForStatistic.name}</p>
-            <p>Должность: ${userForStatistic.position}</p>
+            <p>Должность: ${userForStatistic.position.position}</p>
         </div>
 
         <div class="pagination" style="display: block">

@@ -62,8 +62,8 @@ public class UserController {
         //если у пользователя есть незаполненные поля - отправляем его дальше регистрироваться
         if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
             //получаем из бд список должностей и передаем в модель представления
-            List<Position> posSet = positionService.getAllPosition();
-            model.addAttribute("posSet", posSet);
+            List<Position> listPosition = positionService.getAllPosition();
+            model.addAttribute("listPosition", listPosition);
             return "greeting";
         }
 
@@ -103,16 +103,19 @@ public class UserController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, Model model){
+    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, Model model, HttpServletRequest request){
+       Integer pos_id = Integer.valueOf(request.getParameter("pos_id"));
+       Position position = positionService.getPositionById(pos_id);
+       user.setPosition(position);
         userDopRegistrationValidator.validate(user, bindingResult);
 
-        if (bindingResult.hasErrors()){
-            model.addAttribute("user", user);
-            //получаем из бд список должностей и передаем в модель представления
-            List<Position> posSet = positionService.getAllPosition();
-            model.addAttribute("posSet", posSet);
-            return "greeting";
-        }
+//        if (bindingResult.hasErrors()){
+//            model.addAttribute("user", user);
+//            //получаем из бд список должностей и передаем в модель представления
+//            List<Position> listPosition = positionService.getAllPosition();
+//            model.addAttribute("listPosition", listPosition);
+//            return "greeting";
+//        }
 
         //регистрируем пользователя
         userService.updateUser(user);
@@ -149,7 +152,7 @@ public class UserController {
     }
 
     @GetMapping("/room")
-    public String enteringRoom(Model model, HttpServletRequest request){
+    public String enteringRoom(Model model){
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(principal.getUserId());
         model.addAttribute("user", user);

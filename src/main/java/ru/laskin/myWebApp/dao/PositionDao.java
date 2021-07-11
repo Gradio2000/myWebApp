@@ -20,4 +20,11 @@ public class PositionDao {
         em.close();
         return positionList;
     }
+
+    public Position getPositionById(Integer pos_id) {
+        em = EntityFactoryUtil.getEntityManager();
+        Position position = em.find(Position.class, pos_id);
+        em.close();
+        return position;
+    }
 }

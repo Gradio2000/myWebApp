@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
@@ -154,18 +153,21 @@
     <sf:hidden path="adminRole"/>
     <sf:hidden path="password"/>
     <sf:hidden path="key"/>
+    <sf:hidden path="position"/>
     <div class="container">
         <h1>Завершение регистрации</h1>
         <p>Пожалуйста, заполните все поля для завершения регистрации в системе</p>
         <hr>
 
         <div class="custom-select" style="width:200px;">
-            <sf:select path="position">
-                <sf:option value="">Выберите должность</sf:option>
-                <c:forEach var="position" items="${posSet}">
-                    <option>${position.position}</option>
-                </c:forEach>
-            </sf:select>
+            <label>
+                <select name="pos_id">
+                    <option value="">Выберите должность</option>
+                    <c:forEach var="position" items="${listPosition}">
+                        <option value="${position.idPosition}">${position.position}</option>
+                    </c:forEach>
+                </select>
+            </label>
         </div>
         <sf:errors id="err" path="position" cssStyle="color: red"/>
         <br/>

@@ -1,12 +1,14 @@
 package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "positions")
 @Table(name = "positions")
 public class Position {
     private int idPosition;
     private String position;
+    private List<User> userList;
 
     public Position() {
     }
@@ -33,23 +35,17 @@ public class Position {
         this.position = position;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Position position1 = (Position) o;
-
-        if (idPosition != position1.idPosition) return false;
-        if (position != null ? !position.equals(position1.position) : position1.position != null) return false;
-
-        return true;
+    @OneToMany(
+            targetEntity = User.class,
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    public List<User> getUserList() {
+        return userList;
     }
 
-    @Override
-    public int hashCode() {
-        int result = idPosition;
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        return result;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
+
 }

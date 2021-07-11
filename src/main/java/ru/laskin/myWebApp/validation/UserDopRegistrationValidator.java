@@ -21,8 +21,8 @@ public class UserDopRegistrationValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "EmptyField");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "EmptyField");
 
-        if (user.getPosition() == null || user.getPosition().equals("")){
-            errors.rejectValue("position", "needToChoosePosition");
-        }
+//        if (user.getPosition() == null || user.getPosition().equals("")){
+//            errors.rejectValue("position", "needToChoosePosition");
+//        }
     }
 }

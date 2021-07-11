@@ -33,7 +33,7 @@
                 <input type="text" id="nameInput" name="name" class="dis" value="${user.name}" disabled>
 
                 <h5 style="width: 300px">Должность</h5>
-                <input type="text" id="position" name="position" class="dis" value="${user.position}" disabled>
+                <input type="text" id="position" name="position" class="dis" value="${user.position.position}" disabled>
 
                 <h5 style="width: 300px">Логин</h5>
                 <input type="text" id="login" name="login" class="dis" value="${user.login}" disabled>

@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS positions;
+DROP TABLE IF EXISTS positions cascade;
 
 CREATE TABLE positions
     (

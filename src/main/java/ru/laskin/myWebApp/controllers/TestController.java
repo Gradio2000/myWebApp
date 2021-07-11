@@ -22,12 +22,13 @@ public class TestController {
     private final ResultTestService resultTestService;
     private final TestService testService;
     private final AttemptTestService attemptTestService;
+    private final UserService userService;
 
-
-    public TestController(ResultTestService resultTestService, TestService testService, AttemptTestService attemptTestService) {
+    public TestController(ResultTestService resultTestService, TestService testService, AttemptTestService attemptTestService, UserService userService) {
         this.resultTestService = resultTestService;
         this.testService = testService;
         this.attemptTestService = attemptTestService;
+        this.userService = userService;
     }
 
     @GetMapping("/getTest")
@@ -35,6 +36,8 @@ public class TestController {
                             Model model, HttpServletRequest request, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
+
+        User user = userService.getUserById(authUser.getUserId());
 
         Test test = testService.getTestById(Integer.parseInt(testId));
 
@@ -55,7 +58,7 @@ public class TestController {
         testService.registerTest(attemptId, test);
 
         session.setAttribute("tests", test);
-        model.addAttribute("users", authUser);
+        model.addAttribute("user", user);
         model.addAttribute("attemptId", attemptId);
         return "testProcessing";
     }

@@ -34,7 +34,7 @@ public class Main {
 //        saveTest();
 //        getTestByGroupId(1);
 //        printUser();
-//        getUserById(1);
+        getUserById(1);
 //        saveuser();
 //        getUserByLogin("login");
 //        deleteUser(2);
@@ -43,7 +43,7 @@ public class Main {
 //        getUserByEmail("aa@aa.aa");
 //        getAllAttempt();
 //        getAllAttemptByUserId(1);
-        getAttemptById(1);
+//        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
 //        getAllPosition();
@@ -113,6 +113,7 @@ public class Main {
         AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
 
         AttemptTest attemptTest = attemptTestDao.getAttemptById(i);
+        System.out.println(attemptTest.getUserId());
 
         return attemptTest;
     }
@@ -177,7 +178,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         UserHiberDao userHiberDao = appCont.getBean(UserHiberDao.class);
         User user = userHiberDao.getUserById(i);
-        System.out.println(user.getName());
+        System.out.println(user.getPosition().getPosition());
         return user;
     }
 
