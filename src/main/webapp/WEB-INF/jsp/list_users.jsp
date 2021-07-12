@@ -26,7 +26,7 @@
                     <c:forEach var='user' items='${users}'>
                         <tr>
                             <td><c:out value="${user.userId}"></c:out></td>
-                            <td><c:out value="${user.position}"></c:out></td>
+                            <td><c:out value="${user.position.position}"></c:out></td>
                             <td><c:out value="${user.name}"></c:out></td>
                             <td><c:out value="${user.email}"></c:out></td>
                             <td><c:out value="${user.adminRole}"></c:out></td>

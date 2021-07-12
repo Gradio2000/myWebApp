@@ -173,7 +173,7 @@
 </head>
 
 <body bgcolor="#d3d3d3">
-    <h1 id="center">Автоматизированная система "Зачётка"</h1>
+    <h1 id="center">Автоматизированная система тестирования работников предприятия</h1>
 
         <div class="center">
             <button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>
@@ -193,14 +193,14 @@
                     <input type="password" placeholder="Введите пароль" name="password" required>
 
                     <button type="submit">Войти</button>
-                    <label>
-                        <input type="checkbox" checked="checked" name="remember">Запомнить меня
-                    </label>
+<%--                    <label>--%>
+<%--                        <input type="checkbox" checked="checked" name="remember">Запомнить меня--%>
+<%--                    </label>--%>
                 </div>
 
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
-                    <a href="/registration">Зарегистрироваться</a>
+                    <a href="/registration" style="padding: 10px">Зарегистрироваться</a>
                     <button class="btn info" style="width: auto; margin-left: auto; margin-right: 10px;" type="button" onclick="document.location='/rememberPassword'">Вспомнить пароль</button>
                 </div>
             </form>

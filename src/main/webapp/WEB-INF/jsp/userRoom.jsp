@@ -29,11 +29,19 @@
                 <sf:hidden path="userId"/>
                 <sf:hidden path="email"/>
                 <sf:hidden path="adminRole"/>
+                <sf:hidden path="password"/>
+                <sf:hidden path="key"/>
+<%--                <sf:hidden path="position"/>--%>
                 <h5 style="width: 300px">Фамилия Имя Отчество</h5>
                 <input type="text" id="nameInput" name="name" class="dis" value="${user.name}" disabled>
 
                 <h5 style="width: 300px">Должность</h5>
-                <input type="text" id="position" name="position" class="dis" value="${user.position.position}" disabled>
+                <select name="pos_id" disabled class="dis">
+                    <option value="${user.position.idPosition}">${user.position.position}</option>
+                    <c:forEach var="posit" items="${positionList}">
+                        <option value="${posit.idPosition}">${posit.position}</option>
+                    </c:forEach>
+                </select>
 
                 <h5 style="width: 300px">Логин</h5>
                 <input type="text" id="login" name="login" class="dis" value="${user.login}" disabled>

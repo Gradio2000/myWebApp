@@ -104,18 +104,12 @@ public class UserController {
 
     @PostMapping("/reUpdate")
     public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, Model model, HttpServletRequest request){
-       Integer pos_id = Integer.valueOf(request.getParameter("pos_id"));
-       Position position = positionService.getPositionById(pos_id);
-       user.setPosition(position);
         userDopRegistrationValidator.validate(user, bindingResult);
 
-//        if (bindingResult.hasErrors()){
-//            model.addAttribute("user", user);
-//            //получаем из бд список должностей и передаем в модель представления
-//            List<Position> listPosition = positionService.getAllPosition();
-//            model.addAttribute("listPosition", listPosition);
-//            return "greeting";
-//        }
+        String pos_id = request.getParameter("pos_id");
+
+        Position position = positionService.getPositionById(Integer.valueOf(pos_id));
+        user.setPosition(position);
 
         //регистрируем пользователя
         userService.updateUser(user);
@@ -155,12 +149,17 @@ public class UserController {
     public String enteringRoom(Model model){
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(principal.getUserId());
+        List<Position> positionList = positionService.getAllPosition();
+        model.addAttribute("positionList", positionList);
         model.addAttribute("user", user);
         return "userRoom";
     }
 
     @PostMapping("editUser")
-    public String editUser(@ModelAttribute User user){
+    public String editUser(@ModelAttribute User user, HttpServletRequest request){
+        String pos_id = request.getParameter("pos_id");
+        Position position = positionService.getPositionById(Integer.valueOf(pos_id));
+        user.setPosition(position);
         userService.updateUser(user);
         return "redirect:/logout";
     }

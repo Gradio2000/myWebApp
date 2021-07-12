@@ -161,7 +161,7 @@
 
         <div class="custom-select" style="width:200px;">
             <label>
-                <select name="pos_id">
+                <select name="pos_id" required>
                     <option value="">Выберите должность</option>
                     <c:forEach var="position" items="${listPosition}">
                         <option value="${position.idPosition}">${position.position}</option>
