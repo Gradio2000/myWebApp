@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="itext-2.1.7">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/itext-2.1.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/flying-saucer-core-9.1.20.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/flying-saucer-pdf-9.1.20.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/bcprov-jdk14-1.64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/bctsp-jdk14-1.46.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/bcpkix-jdk14-1.64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/jar_files (1)/bcmail-jdk14-1.64.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -77,13 +77,16 @@ public class ResultController {
     }
 
     @GetMapping("users/statistic")
-    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session, Model model){
+    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
         testService.getStatistic(id, session);
         return "statistic";
     }
+
+
+
 }
 
 

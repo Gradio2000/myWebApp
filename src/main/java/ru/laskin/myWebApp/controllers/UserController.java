@@ -187,11 +187,12 @@ public class UserController {
     public String sendInfoForRememberUserPassword(@RequestParam String email, HttpServletRequest request){
         User user = userService.getUserByEmail(email);
         if (user == null){
-            String text = "Пользователь с email '" + email +"' не зарегистрирован!";
+            String text = "Пользователь с email '" + email +"' не зарегистрирован в системе!";
             request.setAttribute("text", text);
         }
         else {
             if (user.isRegistered() == null){
+                UserService.sendEmail(user, 1);
                 String text = "Пользователь с email '" + email +"' найден, но email не подтвержден! " +
                         "Мы повторно отправили Вам письмо для подтверждения email. Перейдите по ссылке в письме " +
                         "и после того, как подтвердите email повторно пройдите процедуру восстановления пароля!";

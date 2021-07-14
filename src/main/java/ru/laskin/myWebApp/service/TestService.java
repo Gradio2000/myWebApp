@@ -1,12 +1,15 @@
 package ru.laskin.myWebApp.service;
 
+import com.lowagie.text.DocumentException;
 import org.springframework.stereotype.Service;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
@@ -33,16 +36,16 @@ public class TestService {
         this.resultTestService = resultTestService;
     }
 
-    public List<Test> getAllTests(){
+    public List<Test> getAllTests() {
         return testHiberDao.getAllTests();
     }
 
-    public Test getTestById(int testId){
+    public Test getTestById(int testId) {
         return testHiberDao.getTestById(testId);
     }
 
-    public void updateTest(Test test, HttpServletRequest request){
-        Map <String, String[]> parameterMap = request.getParameterMap();
+    public void updateTest(Test test, HttpServletRequest request) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
         String[] answersName = parameterMap.get("answer");
         String[] answerId = parameterMap.get("answerId");
         String[] isRight = parameterMap.get("isRight");
@@ -61,30 +64,30 @@ public class TestService {
             question.setQuestionName(questionName[i]);
 
             List<Answer> answerList = new ArrayList<>();
-            if (answersName != null){
+            if (answersName != null) {
                 for (int j = 0; j < answersName.length; j++) {
                     Answer answer = new Answer();
                     if (j < answerId.length) {
                         answer.setAnswerId(Integer.parseInt(answerId[j]));
                     }
                     answer.setAnswerName(answersName[j]);
-                    if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))){
+                    if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))) {
                         answer.setRight(true);
                     }
-                    if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])){
+                    if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])) {
                         answerList.add(answer);
                     }
                 }
             }
 
-            if (newAnswer != null){
+            if (newAnswer != null) {
                 for (int j = 0; j < newAnswer.length; j++) {
                     Answer answer = new Answer();
                     answer.setAnswerName(newAnswer[j]);
-                    if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))){
+                    if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))) {
                         answer.setRight(true);
                     }
-                    if (questionId[i].equals(quesIdForNewAnswer[j])){
+                    if (questionId[i].equals(quesIdForNewAnswer[j])) {
                         answerList.add(answer);
                     }
                 }
@@ -97,31 +100,31 @@ public class TestService {
         test.setGroupTest(getGroupTestById(Integer.parseInt(groupId[0])));
         test.setQuestions(questionList);
 
-        if (test.getCriteria() == null){
+        if (test.getCriteria() == null) {
             test.setCriteria(0.0);
         }
-        if (test.getTime() == null){
+        if (test.getTime() == null) {
             test.setTime(0.0);
         }
 
         testHiberDao.updateTest(test);
     }
 
-    public Integer saveTest(Test test){
-        if (test.getCriteria() == null){
+    public Integer saveTest(Test test) {
+        if (test.getCriteria() == null) {
             test.setCriteria(0.0);
         }
-        if (test.getTime() == null){
+        if (test.getTime() == null) {
             test.setTime(0.0);
         }
         return testHiberDao.saveTest(test);
     }
 
-    public void deleteTestById(int id){
+    public void deleteTestById(int id) {
         testHiberDao.deleteTestById(id);
     }
 
-    public List<GroupTest> getAllGroupTest(){
+    public List<GroupTest> getAllGroupTest() {
         return testHiberDao.getAllGroup();
     }
 
@@ -183,7 +186,7 @@ public class TestService {
 
         double result = getResult(trueAnswers, questionList.size());
 
-        String testResult = getTestResult(result, test.getCriteria())? "Тест пройден" : "Тест не пройден";
+        String testResult = getTestResult(result, test.getCriteria()) ? "Тест пройден" : "Тест не пройден";
 
         List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
 
@@ -204,11 +207,11 @@ public class TestService {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-        for (AttemptTest attemptTest : attemptTestList){
-          String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
-          Test test = getTestById(attemptTest.getTestId());
+        for (AttemptTest attemptTest : attemptTestList) {
+            String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
+            Test test = getTestById(attemptTest.getTestId());
 
-          //Это список заданных вопросов для попытки
+            //Это список заданных вопросов для попытки
             List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
 
             List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
@@ -218,12 +221,11 @@ public class TestService {
             int trueAnswer = quesList.size() - falseAnswerSet.size();
             String testResult;
             double result = 0;
-            if (test.getCriteria() != null){
+            if (test.getCriteria() != null) {
                 result = getResult(trueAnswer, quesList.size());
-                testResult  = getTestResult(result, test.getCriteria()) ?
+                testResult = getTestResult(result, test.getCriteria()) ?
                         "Тест пройден" : "Тест не пройден";
-            }
-            else testResult = "Не задан критерий в настройках теста";
+            } else testResult = "Не задан критерий в настройках теста";
 
             String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
 
@@ -235,9 +237,9 @@ public class TestService {
         session.setAttribute("statisticList", statisticList);
     }
 
-    public Map<Integer, List<Integer>> getMapOfAnswers (List<ResultTest> resultTestList){
+    public Map<Integer, List<Integer>> getMapOfAnswers(List<ResultTest> resultTestList) {
         Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
-        for (ResultTest resultTest : resultTestList){
+        for (ResultTest resultTest : resultTestList) {
             List<Integer> answersIdList = mapOfUserAnswers.get(resultTest.getQuestionId());
             if (answersIdList == null) answersIdList = new ArrayList<>();
             answersIdList.add(resultTest.getAnswerId());
@@ -246,34 +248,31 @@ public class TestService {
         return mapOfUserAnswers;
     }
 
-    public Set<Integer> getFalseAnswerSet(Map<Integer, List<Integer>> mapOfUserAnswers, List<Question> questionList){
+    public Set<Integer> getFalseAnswerSet(Map<Integer, List<Integer>> mapOfUserAnswers, List<Question> questionList) {
         Set<Integer> falseAnswerSet = new HashSet<>();
-        if (mapOfUserAnswers.size() != 0){
-            for (Question question : questionList){
+        if (mapOfUserAnswers.size() != 0) {
+            for (Question question : questionList) {
                 List<Answer> answerList = question.getAnswers();
-                for (Answer answer : answerList){
+                for (Answer answer : answerList) {
                     List<Integer> questionsIdList = mapOfUserAnswers.get(question.getQuestionId());
-                    if (questionsIdList == null){
+                    if (questionsIdList == null) {
                         falseAnswerSet.add(question.getQuestionId());
-                    }
-                    else {
-                        if (answer.isRight()){
-                            if (!questionsIdList.contains(answer.getAnswerId())){
+                    } else {
+                        if (answer.isRight()) {
+                            if (!questionsIdList.contains(answer.getAnswerId())) {
                                 falseAnswerSet.add(question.getQuestionId());
                                 break;
                             }
-                        }
-                        else {
-                            if (questionsIdList.contains(answer.getAnswerId())){
+                        } else {
+                            if (questionsIdList.contains(answer.getAnswerId())) {
                                 falseAnswerSet.add(question.getQuestionId());
                             }
                         }
                     }
                 }
             }
-        }
-        else {
-            for (Question question : questionList){
+        } else {
+            for (Question question : questionList) {
                 falseAnswerSet.add(question.getQuestionId());
                 falseAnswerSet.add(question.getQuestionId());
             }
@@ -283,13 +282,13 @@ public class TestService {
 
     public List<Integer> getListOfUsersAnswers(Map<Integer, List<Integer>> mapOfUserAnswers) {
         List<Integer> listOfUsersAnswers = new ArrayList<>();
-        for (Integer key : mapOfUserAnswers.keySet()){
+        for (Integer key : mapOfUserAnswers.keySet()) {
             listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
         }
         return listOfUsersAnswers;
     }
 
-    public  Double getResult(int trueCountAnswers, int totalCountAnswers){
+    public Double getResult(int trueCountAnswers, int totalCountAnswers) {
         BigDecimal bigDecimal1 = new BigDecimal(trueCountAnswers);
         BigDecimal bigDecimal2 = new BigDecimal(totalCountAnswers);
         return bigDecimal2.compareTo(BigDecimal.ZERO) == 0 ? 0 : bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
@@ -311,7 +310,7 @@ public class TestService {
     }
 
     public void registerTest(int attemptId, Test test) {
-        for (Question question : test.getQuestions()){
+        for (Question question : test.getQuestions()) {
             testHiberDao.registerTest(attemptId, question.getQuestionId());
         }
 

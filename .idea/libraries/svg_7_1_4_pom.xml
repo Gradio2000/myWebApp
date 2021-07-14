@@ -1,0 +1,58 @@
+<component name="libraryTable">
+  <library name="svg-7.1.4.pom">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/styled-xml-parser-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/styled-xml-parser-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/styled-xml-parser-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/styled-xml-parser-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/sign-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/sign-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/sign-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/sign-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/root-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdftest-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdftest-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdftest-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdftest-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdfa-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdfa-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdfa-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/pdfa-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/layout-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/layout-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/layout-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/layout-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/kernel-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/kernel-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/kernel-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/kernel-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/itext7-core-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/io-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/io-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/io-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/io-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/hyph-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/hyph-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/forms-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/forms-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/forms-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/forms-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/font-asian-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/font-asian-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/barcodes-7.1.4.pom.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/barcodes-7.1.4.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/barcodes-7.1.4-sources.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/barcodes-7.1.4-javadoc.jar.sha1" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4.pom.md5" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4.jar.md5" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4-sources.jar.md5" />
+      <root url="file://$USER_HOME$/Downloads/iText7-Core-7.1.4/svg-7.1.4-javadoc.jar.md5" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

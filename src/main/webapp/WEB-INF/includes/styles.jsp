@@ -156,6 +156,16 @@
     }
     .cancelbtn:hover {background: #da190b;}
 
+    .infolbtn {
+        border: none;
+        color: white;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: dodgerblue;
+    }
+    .infolbtn:hover {background: #2e73b4;}
+
     .footer{
         position: relative;
         left:0px;

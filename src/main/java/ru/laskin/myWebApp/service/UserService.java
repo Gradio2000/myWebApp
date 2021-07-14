@@ -79,12 +79,12 @@ public class UserService {
 
         String textMessage1 = "Здравствуйте, " +
                 user.getName() + "!\n" +
-                "Вы воспользовались процедурой восстановления логина в системе Тест\n" +
+                "Вы воспользовались процедурой восстановления логина в системе QТест\n" +
                 "\n" +
                 "Ваш логин: " + user.getLogin() + "\n" +
                 "\n" +
                 "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n" +
-                "https://qtests.herokuapp.com/recovery/?userId=" +
+                "или перейдите по ссылке https://localhost:8081/recovery/?userId=" +
                 user.getUserId();
 
         final Properties properties = new Properties();
@@ -94,7 +94,7 @@ public class UserService {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(properties.getProperty("mail.smtps.user"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
-            message.setSubject("Test");
+            message.setSubject("QTest регистрация/восстановление пароля");
 
             if (kod == 1) {
                 message.setText(textMessage);
