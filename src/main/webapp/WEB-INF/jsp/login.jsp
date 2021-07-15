@@ -19,6 +19,8 @@
 <head>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <jsp:include page="../includes/settingsHeader.jsp"/>
+
     <style>
         body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -176,10 +178,15 @@
 <body bgcolor="#d3d3d3">
     <h1 id="center">Система тестирования работников</h1>
 
+
         <div class="center">
             <button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>
         </div>
-
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <div class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150" style="margin-left: auto; margin-right: auto">
+                <img src="${pageContext.request.contextPath}/resources/logo.png" class="u-logo-image u-logo-image-1" data-image-width="97" style="width: 150px; margin-top: 10px">
+            </div>
+        </div>
         <div id="id01" class="modal">
             <form class="modal-content animate" action="/login/process" method="post">
                 <div class="imgcontainer">
@@ -201,7 +208,8 @@
 
                 <div class="container" style="background-color:#f1f1f1">
                     <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отмена</button>
-                    <a href="/registration" style="padding: 10px">Зарегистрироваться</a>
+<%--                    <a href="/registration" style="padding: 10px">Зарегистрироваться</a>--%>
+                    <button class="btn info" style="width: auto; margin-left: auto" type="button" onclick="document.location='/registration'">Зарегистрироваться</button>
                     <button class="btn info" style="width: auto; margin-left: auto; margin-right: 10px;" type="button" onclick="document.location='/rememberPassword'">Вспомнить пароль</button>
                 </div>
             </form>

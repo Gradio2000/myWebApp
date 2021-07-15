@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class UserController {
@@ -109,6 +110,8 @@ public class UserController {
 
         Position position = positionService.getPositionById(Integer.valueOf(pos_id));
         user.setPosition(position);
+
+        user.setEmail(user.getEmail().toLowerCase(Locale.ROOT));
 
         //регистрируем пользователя
         userService.updateUser(user);

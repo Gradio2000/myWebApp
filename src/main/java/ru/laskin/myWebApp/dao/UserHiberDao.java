@@ -9,6 +9,7 @@ import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 public class UserHiberDao {
@@ -81,7 +82,7 @@ public class UserHiberDao {
     public User getUserByEmail(String email) {
         em = EntityFactoryUtil.getEntityManager();
         User user = (User) em.createQuery("select u from users u where email = :email")
-                .setParameter("email", email)
+                .setParameter("email", email.toLowerCase(Locale.ROOT))
                 .getSingleResult();
         em.close();
         return user;
