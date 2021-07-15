@@ -22,4 +22,10 @@ public class PositionService {
     public Position getPositionById(Integer pos_id) {
         return positionDao.getPositionById(pos_id);
     }
+
+    public void updateAllPosition(List<Position> positionList) {
+        for (Position position : positionList){
+            positionDao.updatePosition(position);
+        }
+    }
 }

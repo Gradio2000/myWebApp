@@ -1,5 +1,6 @@
 package ru.laskin.myWebApp.dao;
 
+import org.hibernate.Session;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -26,5 +27,15 @@ public class PositionDao {
         Position position = em.find(Position.class, pos_id);
         em.close();
         return position;
+    }
+
+    public void updatePosition(Position position) {
+        em = EntityFactoryUtil.getEntityManager();
+        Session session = em.unwrap(Session.class);
+        session.beginTransaction();
+        session.saveOrUpdate(position);
+        session.getTransaction().commit();
+        session.flush();
+        session.close();
     }
 }

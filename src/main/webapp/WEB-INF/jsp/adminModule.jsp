@@ -24,6 +24,9 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
+        <div class="my-box my-box-hover" style="text-align: center" data-href="/allPosition">
+            <h4 class="u-text u-text-1">ДОЛЖНОСТИ</h4>
+        </div>
         <div class="my-box my-box-hover" style="text-align: center" data-href="/allUsers">
             <h4 class="u-text u-text-1">ПОЛЬЗОВАТЕЛИ</h4>
         </div>

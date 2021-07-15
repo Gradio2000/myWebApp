@@ -128,4 +128,8 @@ public class UserService {
     public User getUserByEmail(String email) {
        return userHiberDao.getUserByEmail(email);
     }
+
+    public List<User> getUserByPositionId(int posId) {
+        return userHiberDao.getUserByPositionId(posId);
+    }
 }

@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
+import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
@@ -86,5 +87,14 @@ public class UserHiberDao {
                 .getSingleResult();
         em.close();
         return user;
+    }
+
+    public List<User> getUserByPositionId(int posId) {
+        em = EntityFactoryUtil.getEntityManager();
+        Query query = em.createQuery("from users where position.idPosition = :id ORDER BY userId");
+        query.setParameter ("id", posId);
+        List<User> userList = query.getResultList();
+        em.close();
+        return userList;
     }
 }

@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -183,12 +185,36 @@ public class AdminController {
             groupTest.setGroupTestId(Integer.parseInt(id[i]));
             groupTest.setName(name[i]);
             groupTest.setTestList(testService.getTestsByGroupId(Integer.parseInt(id[i])));
-
-
             groupTests.add(groupTest);
         }
-
         testService.updateAllGroup(groupTests);
+        return "redirect:/greeting";
+    }
+
+    @GetMapping("/allPosition")
+    public String getAllPositions(Model model, HttpServletRequest request, HttpSession session){
+        session.setAttribute("positions", positionService.getAllPosition());
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("authUser", authUser.getName());
+        request.setAttribute("user", authUser);
+        return "list_positions";
+    }
+
+    @PostMapping("/editPosition")
+    public String editPositions(HttpServletRequest request, HttpSession session){
+        Map<String, String[]> map = request.getParameterMap();
+        String[] idPosition = map.get("idPosition");
+        String[] positionName = map.get("position");
+        Map<Integer, String> positionMapFromView = new HashMap<>();
+        for (int i = 0; i < idPosition.length; i++) {
+            positionMapFromView.put(Integer.parseInt(idPosition[i]), positionName[i]);
+        }
+
+        List<Position> positionList = (List<Position>) session.getAttribute("positions");
+        for (Position position : positionList){
+            position.setPosition(positionMapFromView.get(position.getIdPosition()));
+        }
+        positionService.updateAllPosition(positionList);
         return "redirect:/greeting";
     }
 
