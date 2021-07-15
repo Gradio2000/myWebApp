@@ -60,7 +60,7 @@ public class TestService {
         List<Question> questionList = new ArrayList<>();
         for (int i = 0; i < questionName.length; i++) {
             Question question = new Question();
-            question.setQuestionId(Integer.parseInt(questionId[i]));
+//            question.setQuestionId(Integer.parseInt(questionId[i]));
             question.setQuestionName(questionName[i]);
 
             List<Answer> answerList = new ArrayList<>();

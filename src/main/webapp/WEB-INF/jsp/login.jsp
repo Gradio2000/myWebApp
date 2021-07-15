@@ -17,6 +17,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {font-family: Arial, Helvetica, sans-serif;}
@@ -173,7 +174,7 @@
 </head>
 
 <body bgcolor="#d3d3d3">
-    <h1 id="center">Автоматизированная система тестирования работников предприятия</h1>
+    <h1 id="center">Система тестирования работников</h1>
 
         <div class="center">
             <button onclick="document.getElementById('id01').style.display='block'" style="width:10%;">Войти</button>

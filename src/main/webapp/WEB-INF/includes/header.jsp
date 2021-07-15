@@ -2,7 +2,7 @@
 <header class="u-clearfix u-grey-15 u-header u-sticky u-header" id="sec-1274">
   <div class="u-clearfix u-sheet u-sheet-1">
     <div class="u-image u-logo u-image-1" data-image-width="330" data-image-height="150">
-    <img src="${pageContext.request.contextPath}/resources/Site2/images/horizontal_on_white_by_logaster.png" class="u-logo-image u-logo-image-1" data-image-width="97">
+    <img src="${pageContext.request.contextPath}/resources/logo.png" class="u-logo-image u-logo-image-1" data-image-width="97">
   </div>
       <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
         <div class="u-custom-menu u-nav-container">

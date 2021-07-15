@@ -103,14 +103,14 @@
 
             <label><b>Логин</b></label>
             <input type="text" placeholder="Придумайте логин" name="login" required>
-            <sf:errors path="login"/><br/>
+            <sf:errors path="login" cssStyle="color: #CE272D"/><br/>
 
             <label><b>Пароль</b></label>
             <input type="password" placeholder="Придумайте пароль" name="password" required>
 
             <label><b>Повторите пароль</b></label>
             <input type="password" placeholder="Введите пароль ещё раз" name="confirmPassword" required>
-            <sf:errors path="confirmPassword"/>
+            <sf:errors path="confirmPassword" cssStyle="color: #CE272D"/>
 
             <div class="clearfix" style="margin-top: 10px">
                 <button type="button" class="cancelbtn" onclick="document.location='/login'">Отмена</button>

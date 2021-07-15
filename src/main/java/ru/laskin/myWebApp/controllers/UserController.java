@@ -103,9 +103,8 @@ public class UserController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, Model model, HttpServletRequest request){
+    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request){
         userDopRegistrationValidator.validate(user, bindingResult);
-
         String pos_id = request.getParameter("pos_id");
 
         Position position = positionService.getPositionById(Integer.valueOf(pos_id));
