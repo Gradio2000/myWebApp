@@ -28,4 +28,12 @@ public class PositionService {
             positionDao.updatePosition(position);
         }
     }
+
+    public void deletePosition(int id) {
+        positionDao.deletePosition(id);
+    }
+
+    public void addPosition(Position position) {
+        positionDao.addPosition(position);
+    }
 }

@@ -37,18 +37,46 @@
                         <td>${position.idPosition}</td>
                         <td><input type="text" name="position" value="${position.position}"/>
                         </td>
-                        <td><button class="btn danger" style="margin-right: initial" onclick="document.location = ''">Удалить</button></td>
+                        <td><a href="/deletePosition?posId=${position.idPosition}">Удалить</a></td>
                     </tr>
                 </c:forEach>
             </table><br/>
             <!-- Button trigger modal -->
             <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Добавить новую группу
+                Добавить должность
             </button>
             <button class="btn info" type="submit">Сохранить и закрыть</button>
         </form>
     </div>
 </div>
+
+<%--модальная форма--%>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Добавление должности</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <sf:form class="validForm" id="myForm" name="formName" action="/addPosition" method="POST" modelAttribute="pos">
+                    <div class="form-floating">
+                        <textarea name="position" class="form-control" placeholder="Введите должность" id="floatingTextarea" style="height: 100px" required></textarea>
+                        <label for="floatingTextarea">Новая должность</label>
+                    </div>
+
+                    <br/>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn close" data-bs-dismiss="modal">Закрыть</button>
+                        <button type="submit" class="btn info">Добавить</button>
+                    </div>
+                </sf:form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <jsp:include page="../includes/footer.jsp"/>
 </body>
 <jsp:include page="../includes/styles.jsp"/>

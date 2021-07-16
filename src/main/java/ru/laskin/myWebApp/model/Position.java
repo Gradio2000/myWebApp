@@ -47,5 +47,4 @@ public class Position {
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
-
 }

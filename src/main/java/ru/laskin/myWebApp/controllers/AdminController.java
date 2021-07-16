@@ -14,11 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
@@ -218,5 +214,16 @@ public class AdminController {
         return "redirect:/greeting";
     }
 
+    @GetMapping("/deletePosition")
+    public String deletePosition(@RequestParam String posId){
+        positionService.deletePosition(Integer.parseInt(posId));
+        return "redirect:/allPosition";
+    }
+
+    @PostMapping("/addPosition")
+    public String addPosition(@ModelAttribute Position pos){
+        positionService.addPosition(pos);
+        return "redirect:/allPosition";
+    }
 
 }

@@ -51,6 +51,13 @@ public class Main {
 //        generatePdfFromHtml();
 //        createPDF();
 //        getPdf();
+        deletePosition(6);
+    }
+
+    private static void deletePosition(int i) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        PositionDao positionDao = appCont.getBean(PositionDao.class);
+        positionDao.deletePosition(i);
     }
 
     public static void getPdf(){
