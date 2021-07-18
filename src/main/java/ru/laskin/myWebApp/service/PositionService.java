@@ -4,7 +4,11 @@ import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.dao.PositionDao;
 import ru.laskin.myWebApp.model.Position;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PositionService {
@@ -23,7 +27,20 @@ public class PositionService {
         return positionDao.getPositionById(pos_id);
     }
 
-    public void updateAllPosition(List<Position> positionList) {
+    public void updateAllPosition(HttpServletRequest request, HttpSession session) {
+        Map<String, String[]> map = request.getParameterMap();
+        String[] idPosition = map.get("idPosition");
+        String[] positionName = map.get("position");
+        Map<Integer, String> positionMapFromView = new HashMap<>();
+        for (int i = 0; i < idPosition.length; i++) {
+            positionMapFromView.put(Integer.parseInt(idPosition[i]), positionName[i]);
+        }
+
+        List<Position> positionList = (List<Position>) session.getAttribute("positions");
+        for (Position position : positionList){
+            position.setPosition(positionMapFromView.get(position.getIdPosition()));
+        }
+
         for (Position position : positionList){
             positionDao.updatePosition(position);
         }

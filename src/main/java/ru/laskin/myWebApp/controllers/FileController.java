@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.laskin.myWebApp.model.Answer;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
+import ru.laskin.myWebApp.service.FileLoadService;
 import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +21,11 @@ import java.util.List;
 public class FileController {
 
     private final TestService testService;
+    private final FileLoadService fileLoadService;
 
-    public FileController(TestService testService) {
+    public FileController(TestService testService, FileLoadService fileLoadService) {
         this.testService = testService;
+        this.fileLoadService = fileLoadService;
     }
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.GET)
@@ -33,66 +36,9 @@ public class FileController {
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String uploadFile(@RequestParam MultipartFile file, @RequestParam Integer id) throws IOException {
-
-
         try {
-            File newFile = File.createTempFile("temp", null, null);
-            file.transferTo(newFile);
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(newFile)));
-
-            String line;
-            Question question;
-            Answer answer;
-            List<Question> questionList = new ArrayList<>();
-            List<Answer> answerList;
-
-            int i = 0;
-            while ((line = reader.readLine()) != null) {
-                String[] lineMass = line.split(";");
-
-                //проверяем первую ячейку
-                if (!lineMass[0].equals("")){
-                    question = new Question();
-                    question.setQuestionName(lineMass[0]);
-                    answerList = new ArrayList<>();
-                    i++;
-                }
-                else {
-                    if (questionList.size() != 0){
-                        question = questionList.remove(i - 1);
-                        answerList = question.getAnswers();
-                    }
-                    else {
-                        question = new Question();
-                        answerList = new ArrayList<>();
-                    }
-                }
-
-                answer = new Answer();
-
-                //проверяем вторую ячейку
-                if (!lineMass[1].equals("")){
-                    answer.setAnswerName(lineMass[1]);
-                }
-
-                //проверяем третью ячейку
-                if (lineMass.length == 3) {
-                    answer.setRight(true);
-                }
-
-                answerList.add(answer);
-                question.setAnswers(answerList);
-                questionList.add(question);
-            }
-            reader.close();
-
-            Test test = testService.getTestById(id);
-            test.setQuestions(questionList);
-            testService.updateTest(test);
-
-            newFile.deleteOnExit();
-        } catch (IOException | IllegalStateException e) {
+            fileLoadService.loadFile(file, id);
+        } catch (IllegalStateException e) {
             return "errors/error";
         } catch (ArrayIndexOutOfBoundsException e){
             return "errors/error_array";

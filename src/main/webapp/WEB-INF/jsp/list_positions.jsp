@@ -23,7 +23,7 @@
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
     <div class="content">
-        <form action="/editPosition" method="post">
+        <sf:form action="/editPosition" method="post">
             <table style="margin-left: auto;margin-right: auto;">
                 <tr>
                     <th>id</th>
@@ -31,22 +31,23 @@
                     <th></th>
                     <th></th>
                 </tr>
-                <c:forEach var="position" items="${positions}">
+                <jsp:useBean id="positions" scope="session" type="java.util.List"/>
+                <c:forEach var="position" items="${positions}" varStatus="count">
                     <input name="idPosition" hidden value="${position.idPosition}"/>
                     <tr>
                         <td>${position.idPosition}</td>
-                        <td><input type="text" name="position" value="${position.position}"/>
-                        </td>
-                        <td><a href="/deletePosition?posId=${position.idPosition}">Удалить</a></td>
+                        <td><input type="text" name="position" value="${position.position}"/></td>
+                        <td><button type="button" id="${count.count}" class="btn danger" onclick="document.location = '/deletePosition?posId=${position.idPosition}'">Удалить</button> </td>
                     </tr>
                 </c:forEach>
             </table><br/>
+            <p>${errorMessage}</p>
             <!-- Button trigger modal -->
             <button type="button" class="btn success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Добавить должность
             </button>
             <button class="btn info" type="submit">Сохранить и закрыть</button>
-        </form>
+        </sf:form>
     </div>
 </div>
 
@@ -59,6 +60,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <%--@elvariable id="pos" type="ru.laskin.myWebApp.model.Position"--%>
                 <sf:form class="validForm" id="myForm" name="formName" action="/addPosition" method="POST" modelAttribute="pos">
                     <div class="form-floating">
                         <textarea name="position" class="form-control" placeholder="Введите должность" id="floatingTextarea" style="height: 100px" required></textarea>

@@ -4,11 +4,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
+import ru.laskin.myWebApp.validation.DeletePositionValidation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +25,14 @@ public class AdminController {
     private final UserService userService;
     private final PositionService positionService;
     private final TestService testService;
+    private final DeletePositionValidation deletePositionValidation;
 
 
-    public AdminController(UserService userService, PositionService positionService, TestService testService) {
+    public AdminController(UserService userService, PositionService positionService, TestService testService, DeletePositionValidation deletePositionValidation) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
+        this.deletePositionValidation = deletePositionValidation;
     }
 
     @GetMapping("/allUsers")
@@ -171,19 +175,7 @@ public class AdminController {
 
     @PostMapping("/updateGroup")
     public String updateGroup(HttpServletRequest request){
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String[] id = parameterMap.get("grouptestId");
-        String[] name = parameterMap.get("name");
-
-        List<GroupTest> groupTests = new ArrayList<>();
-        for (int i = 0; i < id.length; i++) {
-            GroupTest groupTest = new GroupTest();
-            groupTest.setGroupTestId(Integer.parseInt(id[i]));
-            groupTest.setName(name[i]);
-            groupTest.setTestList(testService.getTestsByGroupId(Integer.parseInt(id[i])));
-            groupTests.add(groupTest);
-        }
-        testService.updateAllGroup(groupTests);
+        testService.updateAllGroup(request);
         return "redirect:/greeting";
     }
 
@@ -198,24 +190,17 @@ public class AdminController {
 
     @PostMapping("/editPosition")
     public String editPositions(HttpServletRequest request, HttpSession session){
-        Map<String, String[]> map = request.getParameterMap();
-        String[] idPosition = map.get("idPosition");
-        String[] positionName = map.get("position");
-        Map<Integer, String> positionMapFromView = new HashMap<>();
-        for (int i = 0; i < idPosition.length; i++) {
-            positionMapFromView.put(Integer.parseInt(idPosition[i]), positionName[i]);
-        }
-
-        List<Position> positionList = (List<Position>) session.getAttribute("positions");
-        for (Position position : positionList){
-            position.setPosition(positionMapFromView.get(position.getIdPosition()));
-        }
-        positionService.updateAllPosition(positionList);
+        positionService.updateAllPosition(request, session);
         return "redirect:/greeting";
     }
 
     @GetMapping("/deletePosition")
-    public String deletePosition(@RequestParam String posId){
+    public String deletePosition(@RequestParam String posId, HttpServletRequest request){
+        Position position = positionService.getPositionById(Integer.parseInt(posId));
+        if (deletePositionValidation.validate(position)){
+            request.setAttribute("errorMessage", "Внимание! Эту должность удалять нельзя, т.к. за ней закреплен пользователь!");
+            return "list_positions";
+        }
         positionService.deletePosition(Integer.parseInt(posId));
         return "redirect:/allPosition";
     }
@@ -225,5 +210,4 @@ public class AdminController {
         positionService.addPosition(pos);
         return "redirect:/allPosition";
     }
-
 }

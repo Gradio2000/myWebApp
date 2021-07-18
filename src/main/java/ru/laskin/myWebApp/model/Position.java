@@ -9,6 +9,7 @@ public class Position {
     private int idPosition;
     private String position;
     private List<User> userList;
+    String checkDelete;
 
     public Position() {
     }
@@ -39,12 +40,21 @@ public class Position {
             targetEntity = User.class,
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "pos_id")
     public List<User> getUserList() {
         return userList;
     }
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    @Transient
+    public String getCheckDelete() {
+        return checkDelete;
+    }
+
+    public void setCheckDelete(String checkDelete) {
+        this.checkDelete = checkDelete;
     }
 }

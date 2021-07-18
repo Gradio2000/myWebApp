@@ -28,19 +28,20 @@ CREATE TABLE tests
     criteria double precision,
     time double precision,
     ques_amount int,
-    deleted boolean
+    deleted boolean,
+    ques_mix boolean default true
 );
 
 CREATE UNIQUE INDEX tests_test_id_uindex
     on tests ("test_id");
 
-INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
+INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Знание установленного нормативными актами Банка России порядка ' ||
                                       'ведения эмиссионных и кассовых операций, хранения и перевозки ' ||
                                       'банкнот и монеты резервных фондов, наличных денег и ценностей, ' ||
-                                      'обслуживания банкоматов', 1, 30, 0, false);
-INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Для ревизии', 2, 30, 0, false);
-INSERT INTO tests (test_name, group_id, criteria, time, deleted) VALUES ('Совместный', 3, 30, 0, false);
-
+                                      'обслуживания банкоматов', 1, 30, 0, false, true);
+INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Для ревизии', 2, 30, 0, false, false);
+INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Совместный', 3, 30, 0, false, true);
+--
 
 DROP TABLE IF EXISTS questions CASCADE ;
 

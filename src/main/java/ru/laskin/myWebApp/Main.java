@@ -44,14 +44,14 @@ public class Main {
 //        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
-//        getAllPosition();
+        getAllPosition();
 //        saveQuestion();
 //        getAllResultByAttempt();
 //        saveResultTest();
 //        generatePdfFromHtml();
 //        createPDF();
 //        getPdf();
-        deletePosition(6);
+//        deletePosition(6);
     }
 
     private static void deletePosition(int i) {
@@ -298,7 +298,7 @@ public class Main {
 
         List<Position> positionList = positionDao.getAllPosition();
         for (Position position : positionList){
-            System.out.println(position.getPosition());
+            System.out.println(position.getUserList().size());
         }
     }
 

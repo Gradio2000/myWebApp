@@ -136,7 +136,19 @@ public class TestService {
         testHiberDao.addGroup(groupTest);
     }
 
-    public void updateAllGroup(List<GroupTest> groupTests) {
+    public void updateAllGroup(HttpServletRequest request) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        String[] id = parameterMap.get("grouptestId");
+        String[] name = parameterMap.get("name");
+
+        List<GroupTest> groupTests = new ArrayList<>();
+        for (int i = 0; i < id.length; i++) {
+            GroupTest groupTest = new GroupTest();
+            groupTest.setGroupTestId(Integer.parseInt(id[i]));
+            groupTest.setName(name[i]);
+            groupTest.setTestList(getTestsByGroupId(Integer.parseInt(id[i])));
+            groupTests.add(groupTest);
+        }
         testHiberDao.updateAllGroup(groupTests);
     }
 
