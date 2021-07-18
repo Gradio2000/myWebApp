@@ -20,9 +20,6 @@ create unique index resulttests_resulttest_id_uindex
     on resulttests (resulttest_id);
 
 
-INSERT INTO resultTests (attempt_id, question_id, answer_id) VALUES
-    (1, 1, 1);
-
 
 
 DROP TABLE IF EXISTS registr_test CASCADE ;

@@ -11,10 +11,7 @@ create unique index "group_test_id_groupTest_uindex"
 
 
 INSERT INTO group_test (name) VALUES ('Эмиссионная и кассовая работа');
-INSERT INTO group_test (name) VALUES ('Информационная безопасность');
-INSERT INTO group_test (name) VALUES ('Операционная деятельность');
-
-
+INSERT INTO group_test (name) VALUES ('Тесты на логику');
 
 
 DROP TABLE IF EXISTS tests CASCADE ;
@@ -39,8 +36,7 @@ INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUE
                                       'ведения эмиссионных и кассовых операций, хранения и перевозки ' ||
                                       'банкнот и монеты резервных фондов, наличных денег и ценностей, ' ||
                                       'обслуживания банкоматов', 1, 30, 0, false, true);
-INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Для ревизии', 2, 30, 0, false, false);
-INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Совместный', 3, 30, 0, false, true);
+INSERT INTO tests (test_name, group_id, criteria, time, deleted, ques_mix) VALUES ('Тест на логичское мышление (М. Войнаровский)', 2, 0, 0, false, false);
 --
 
 DROP TABLE IF EXISTS questions CASCADE ;
@@ -59,13 +55,6 @@ create table questions
 
 create unique index questions_question_id_uindex
     on questions ("question_id");
-
-INSERT INTO questions (question_id, question_name) VALUES (0, '');
-INSERT INTO questions (question_name, test_id) VALUES ('Сколько ног у осла?', 1);
-INSERT INTO questions (question_name, test_id) VALUES ('Сколько ног у коровы?', 1);
-INSERT INTO questions (question_name, test_id) VALUES ('Сколько ног у колобка?', 1);
-INSERT INTO questions (question_name, test_id) VALUES ('Вопрос 4', 2);
-INSERT INTO questions (question_name, test_id) VALUES ('Вопрос 5', 3);
 
 
 DROP TABLE IF EXISTS answers CASCADE ;
@@ -87,10 +76,3 @@ create table answers
 
 create unique index answers_answer_id_uindex on answers (answer_id);
 
-INSERT INTO answers (answer_name, question_id, is_right)
-VALUES ('У осла 4 ноги', 1, true),('У осла 5 ног', 1, false), ('У осла 3 ноги', 1, false),
-       ('У коровы 4 ноги', 2, true),('У коровы 5 ног', 2, false), ('У коровы 3 ноги', 2, false),
-       ('У колобка нет ног', 3, true),('У колобка 5 ног', 3, false), ('У колобка 3 ноги', 3, false),
-
-       ('Ответ на вопрос 4', 4, false), ('Ответ на вопрос 4', 4, true), ('Ответ на вопрос 4', 4, false),
-       ('Ответ на вопрос 5', 5, false), ('Ответ на вопрос 5', 5, false), ('Ответ на вопрос 5', 5, true);

@@ -43,7 +43,9 @@ public class TestController {
 
         if (test.getQuesAmount() != null){
             //выбрать случайные вопросы в заданном в настройках теста количестве
-            test = testService.getShuffleTest(test);
+            if (test.isQuesMix()){
+                test = testService.getShuffleTest(test);
+            }
         }
 
         Map<String, String[]> map = request.getParameterMap();

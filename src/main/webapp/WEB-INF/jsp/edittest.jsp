@@ -66,6 +66,14 @@
                                     <input id="quesAcc" name="quesAmount" value="${test.quesAmount}"/>
                                 </td>
                             </tr>
+                            <tr class="mytr">
+                                <td>
+                                    <label> Предоставить вопросы в случайном порядке</label>
+                                </td>
+                                <td>
+                                    <input type="checkbox" id="quesMix" name="quesMix" value="${test.quesMix}" checked/>
+                                </td>
+                            </tr>
                         </table>
 
                         <button type="button" class="btn info" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" style="margin-top: 20px">Загрузить вопросы</button>

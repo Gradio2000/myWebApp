@@ -40,7 +40,7 @@
 
             <div class="tab">
                 <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-                    <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})">Вопрос ${count.count}</button>
+                    <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})" style="width: 150px;">Вопрос ${count.count}</button>
                 </c:forEach>
             </div>
 

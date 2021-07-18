@@ -14,3 +14,4 @@ INSERT INTO positions (position) VALUES ('Начальник кассы');
 INSERT INTO positions (position) VALUES ('Ведущий экономист');
 INSERT INTO positions (position) VALUES ('Экономист 1 категории');
 INSERT INTO positions (position) VALUES ('Ведущий инженер');
+INSERT INTO positions (position) VALUES ('Администратор');

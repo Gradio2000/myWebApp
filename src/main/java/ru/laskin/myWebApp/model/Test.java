@@ -14,6 +14,7 @@ public class Test {
     private List<Question> questions;
     private Integer quesAmount;
     private boolean deleted;
+    private boolean quesMix;
 
     public Test() {
     }
@@ -104,5 +105,14 @@ public class Test {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    @Column(name = "ques_mix")
+    public boolean isQuesMix() {
+        return quesMix;
+    }
+
+    public void setQuesMix(boolean quesMix) {
+        this.quesMix = quesMix;
     }
 }

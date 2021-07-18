@@ -74,7 +74,7 @@
     }
 </style>
 <body>
-<div class="col-md-12 text-right mb-3">
+<div style="position: fixed">
     <button class="btn infolbtn" id="download">Сохранить pdf</button>
     <button class="btn cancelbtn" onclick="document.location='/allUsers'">Вернуться</button>
 </div>
