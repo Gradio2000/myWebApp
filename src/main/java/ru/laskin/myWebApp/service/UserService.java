@@ -82,7 +82,7 @@ public class UserService {
                 "Ваш логин: " + user.getLogin() + "\n" +
                 "\n" +
                 "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n" +
-                "или перейдите по ссылке https://localhost:8081/recovery/?userId=" +
+                "Для восстановления пароля перейдите по ссылке https://qtests.herokuapp.com/recovery/?userId=" +
                 user.getUserId();
 
         final Properties properties = new Properties();
