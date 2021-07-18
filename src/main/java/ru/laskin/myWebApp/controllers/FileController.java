@@ -5,17 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import ru.laskin.myWebApp.model.Answer;
-import ru.laskin.myWebApp.model.Question;
-import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.service.FileLoadService;
 import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
 @Controller
 public class FileController {

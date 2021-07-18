@@ -2,8 +2,6 @@ package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Session;
 import org.springframework.stereotype.Component;
-import ru.laskin.myWebApp.model.Position;
-import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 

@@ -1,15 +1,11 @@
 package ru.laskin.myWebApp.dao;
 
 import org.hibernate.Session;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package ru.laskin.myWebApp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.Main;
@@ -14,7 +13,6 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;

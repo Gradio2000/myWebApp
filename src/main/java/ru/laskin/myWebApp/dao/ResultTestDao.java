@@ -5,7 +5,6 @@ import ru.laskin.myWebApp.model.ResultTest;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.util.List;
 
 @Component

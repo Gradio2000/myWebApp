@@ -1,18 +1,11 @@
 package ru.laskin.myWebApp.dao;
 
-import org.hibernate.SQLQuery;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.laskin.myWebApp.model.AttemptTest;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class AttemptTestDao {

@@ -1,25 +1,23 @@
 package ru.laskin.myWebApp;
 
 
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.html.simpleparser.HTMLWorker;
-import com.itextpdf.text.pdf.PdfDocument;
-import com.itextpdf.text.pdf.PdfWriter;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import ru.laskin.myWebApp.dao.*;
 import ru.laskin.myWebApp.model.*;
 
-
 import java.awt.print.PrinterJob;
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException, DocumentException, com.lowagie.text.DocumentException {

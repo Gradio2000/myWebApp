@@ -3,11 +3,16 @@ package ru.laskin.myWebApp.controllers;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.AttemptTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
-import ru.laskin.myWebApp.service.*;
+import ru.laskin.myWebApp.service.AttemptTestService;
+import ru.laskin.myWebApp.service.ResultTestService;
+import ru.laskin.myWebApp.service.TestService;
+import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

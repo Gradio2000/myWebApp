@@ -1,10 +1,7 @@
 package ru.laskin.myWebApp.dao;
 
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.postgresql.core.NativeQuery;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;

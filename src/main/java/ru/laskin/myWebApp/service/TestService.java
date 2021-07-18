@@ -1,15 +1,12 @@
 package ru.laskin.myWebApp.service;
 
-import com.lowagie.text.DocumentException;
 import org.springframework.stereotype.Service;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
