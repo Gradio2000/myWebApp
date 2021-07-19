@@ -1,5 +1,6 @@
 package ru.laskin.myWebApp.controllers;
 
+import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class UserController {
+    private static final Logger logger = Logger.getLogger(ResultController.class.getName());
 
     private final UserService userService;
     private final PositionService positionService;
@@ -44,10 +48,10 @@ public class UserController {
 
     @GetMapping("/greeting")
     public String greeting(Model model, HttpServletRequest request, HttpSession session){
-
+        logger.info("Вход");
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+        logger.info("принципал " + authUser.getName());
         //Получаем из БД юзера, того, кто принципал (это нужно для того, что
         //у авторизированного пользователя не будут заполнены поля имя и т.п.
         User user = userService.getUserById(authUser.getUserId());
@@ -64,27 +68,34 @@ public class UserController {
 
         //если у пользователя есть незаполненные поля - отправляем его дальше регистрироваться
         if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
+            logger.info("продолжение регистрации " + user.getName());
             //получаем из бд список должностей и передаем в модель представления
             List<Position> listPosition = positionService.getAllPosition();
             model.addAttribute("listPosition", listPosition);
+            logger.info("завершил регистрацию " + user.getName());
             return "greeting";
         }
 
         session.setAttribute("allTestGroup",testService.getAllGroupTest());
+        logger.info("выход");
         return "testPage";
     }
 
     @GetMapping("/new_user")
     public String formUser(Model model){
+        logger.info("вход");
         //передаем пустого пользователя, чтобы там его наполнить
         model.addAttribute("user", new User());
+        logger.info("выход");
         return "registration";
     }
 
     @PostMapping("/new_user")
     public String formUser (HttpServletRequest request, @ModelAttribute User user, BindingResult bindingResult) {
+        logger.info("вход");
         userValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()){
+            logger.info("вернулась ошибка регистрации пользователя");
             return "registration";
         }
 
@@ -99,14 +110,16 @@ public class UserController {
         try {
             request.login(login, pass);
         } catch (ServletException e) {
-            e.printStackTrace();
+            logger.severe("ошибка автологина. см. стек");
+            logger.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
         }
-
+        logger.info("выход");
         return "redirect:greeting";
     }
 
     @PostMapping("/reUpdate")
     public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request){
+        logger.info("вход");
         userDopRegistrationValidator.validate(user, bindingResult);
         String pos_id = request.getParameter("pos_id");
 
@@ -119,15 +132,15 @@ public class UserController {
         userService.updateUser(user);
         //отправляем письмо
         UserService.sendEmail(user, 1);
-
+        logger.info("выход");
         return "confirmEmail";
-
     }
 
     @GetMapping("/confirmEmail")
     public String confirmEmail(@RequestParam("userId") Integer userId, @RequestParam("key") String key, Model model){
-
+        logger.info("вход");
         if (userService.getUserById(userId) == null){
+            logger.info("выход. userId == null");
             return "confirmEmailNotSuccess";
         }
 
@@ -137,58 +150,71 @@ public class UserController {
             //проверка uuid пользователя
             if (userService.checkUuid(userId, key)){
                 model.addAttribute("user", user);
+                logger.info("выход. проверка uuid пользователя проведена");
                 return "confirmEmailSuccess";
             }
             else {
+                logger.info("выход. проверка uuid пользователя не успешно");
                 return "confirmEmailNotSuccess";
             }
         }
         else {
             model.addAttribute("user", user);
+            logger.info("выход");
             return "confirmEmailAlready";
         }
     }
 
     @GetMapping("/room")
     public String enteringRoom(Model model){
+        logger.info("вход");
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(principal.getUserId());
         List<Position> positionList = positionService.getAllPosition();
         model.addAttribute("positionList", positionList);
         model.addAttribute("user", user);
+        logger.info("выход");
         return "userRoom";
     }
 
     @PostMapping("editUser")
     public String editUser(@ModelAttribute User user, HttpServletRequest request){
+        logger.info("вход");
         String pos_id = request.getParameter("pos_id");
         Position position = positionService.getPositionById(Integer.valueOf(pos_id));
         user.setPosition(position);
         userService.updateUser(user);
+        logger.info("выход");
         return "redirect:/logout";
     }
 
     @GetMapping("changePassword")
     public String changePassword(HttpServletRequest request){
+        logger.info("вход");
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", user);
+        logger.info("выход");
         return "changePassword";
     }
 
     @PostMapping("changePassword")
     public String changePassword(@RequestParam String password){
+        logger.info("вход");
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         userService.changePassword(user.getUserId(), password);
+        logger.info("выход");
         return "redirect:/room";
     }
 
     @GetMapping("/rememberPassword")
     public String rememberPassword(){
+        logger.info("вход и выход");
         return "rememberPassword";
     }
 
     @GetMapping("/rememberPassProcess")
     public String sendInfoForRememberUserPassword(@RequestParam String email, HttpServletRequest request){
+        logger.info("вход");
         User user = userService.getUserByEmail(email);
         if (user == null){
             String text = "Пользователь с email '" + email +"' не зарегистрирован в системе!";
@@ -209,21 +235,25 @@ public class UserController {
                 request.setAttribute("text", text);
             }
         }
-
+        logger.info("выход");
         return "info";
     }
 
     @GetMapping("/recovery")
     public String recoveryPassword(@RequestParam Integer userId, HttpSession session){
+        logger.info("вход");
         User user = userService.getUserById(userId);
         session.setAttribute("user", user);
+        logger.info("выход");
         return "changePasswordForUser";
     }
 
     @PostMapping("changePasswordForUser")
     public String changePasswordForUser(@RequestParam String password, HttpSession session){
+        logger.info("вход");
         User user = (User) session.getAttribute("user");
         userService.changePassword(user.getUserId(), password);
+        logger.info("выход");
         return "login";
     }
 }
