@@ -1,20 +1,28 @@
 package ru.laskin.myWebApp.service;
 
+import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.stereotype.Service;
+import ru.laskin.myWebApp.controllers.ResultController;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
 @Service
 public class TestService {
+    private static final Logger logger = Logger.getLogger(ResultController.class.getName());
 
     private final TestHiberDao testHiberDao;
     private final QuestionHiberDao questionHiberDao;
@@ -179,30 +187,44 @@ public class TestService {
     }
 
     //основной метод проверки ответов пользователя и вывода результата теста
-    public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) {
-        AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
+    public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) throws IOException {
+        logger.log(Level.INFO, "вход");
 
-        List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
-        Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+        String date = null;
+        Set<Integer> falseAnswerSet = null;
+        int trueAnswers = 0;
+        double result = 0;
+        String testResult = null;
+        List<Integer> listOfUsersAnswers = null;
+        String time = null;
+        List<Question> quesList = null;
 
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-        String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
+        try {
+            AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
 
-        List<Question> questionList = test.getQuestions();
-        Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);
+            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
+            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
 
-        int trueAnswers = questionList.size() - falseAnswerSet.size();
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+            date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
 
-        double result = getResult(trueAnswers, questionList.size());
-
-        String testResult = getTestResult(result, test.getCriteria()) ? "Тест пройден" : "Тест не пройден";
-
-        List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-
-        String time = attemptTestService.getTime(timeOfAttempt);
-
-        List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-
+            List<Question> questionList = test.getQuestions();
+            falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, questionList);
+            trueAnswers = questionList.size() - falseAnswerSet.size();
+            result = getResult(trueAnswers, questionList.size());
+            testResult = getTestResult(result, test.getCriteria()) ? "Тест пройден" : "Тест не пройден";
+            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+            time = attemptTestService.getTime(timeOfAttempt);
+            quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+            throw new ArithmeticException(date);
+//            logger.log(Level.INFO, "выход");
+        } catch (Exception e) {
+            FileHandler fh = new FileHandler("your_log.txt", false);   // true forces append mode
+            SimpleFormatter sf = new SimpleFormatter();
+            fh.setFormatter(sf);
+            logger.addHandler(fh);
+            logger.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
+        }
         return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time, quesList);
     }
 
@@ -323,5 +345,22 @@ public class TestService {
             testHiberDao.registerTest(attemptId, question.getQuestionId());
         }
 
+    }
+
+    public Statistic recordAttemptAndCheckResults(Integer attemptId, HttpServletRequest request, HttpSession session) throws IOException {
+        logger.log(Level.INFO, "вход");
+        int timeOfAttempt = 0;
+        Test test = null;
+        try {
+            timeOfAttempt = request.getParameter("timeOfAttempt").equals("") ?
+                    0 : Integer.parseInt(request.getParameter("timeOfAttempt"));
+            test = (Test) session.getAttribute("tests");
+            attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
+            logger.log(Level.INFO, "выход");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            logger.log(Level.SEVERE, e.toString());
+        }
+        return mainCheck(attemptId, test, timeOfAttempt);
     }
 }

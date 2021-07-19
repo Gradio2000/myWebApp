@@ -3,11 +3,11 @@ package ru.laskin.myWebApp.controllers;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.Statistic;
-import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
-import ru.laskin.myWebApp.service.AttemptTestService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
@@ -15,45 +15,42 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @Controller
 public class ResultController {
+    private static final Logger logger = Logger.getLogger(ResultController.class.getName());
 
     private final TestService testService;
-    private final AttemptTestService attemptTestService;
     private final UserService userService;
 
-    public ResultController( TestService testService, AttemptTestService attemptTestService, UserService userService) {
+    public ResultController(TestService testService, UserService userService) {
         this.testService = testService;
-        this.attemptTestService = attemptTestService;
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/finish", method = RequestMethod.POST)
-    public String testFinish(@RequestParam Integer attemptId,
-                             HttpServletRequest request,
-                             HttpSession session){
-        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUserById(authUser.getUserId());
-        request.setAttribute("user", user);
+    @PostMapping("/finish")
+    public String finish(@RequestParam Integer attemptId, HttpServletRequest request, HttpSession session){
+        logger.log(Level.INFO, "вход");
+        try {
+            User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User user = userService.getUserById(authUser.getUserId());
 
-        int timeOfAttempt;
-        if (request.getParameter("timeOfAttempt").equals("")){
-            timeOfAttempt = 0;
-        }
-        else {
-            timeOfAttempt = Integer.parseInt(request.getParameter("timeOfAttempt"));
-        }
+            Statistic statistic = testService.recordAttemptAndCheckResults(attemptId, request, session);
 
-        Test test = (Test) session.getAttribute("tests");
-        attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-        Statistic statistic = testService.mainCheck(attemptId, test, timeOfAttempt);
-        session.setAttribute("statistic", statistic);
+            request.setAttribute("user", user);
+            session.setAttribute("statistic", statistic);
+
+            logger.log(Level.INFO, "выход");
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.toString());
+        }
         return "testResult";
     }
 
-    @RequestMapping(value = "detailResult", method = RequestMethod.POST)
+    @PostMapping("/detailResult")
     public String detailResult(HttpSession session, HttpServletRequest request, Model model){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(authUser.getUserId());
@@ -84,9 +81,6 @@ public class ResultController {
         testService.getStatistic(id, session);
         return "statistic";
     }
-
-
-
 }
 
 

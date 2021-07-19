@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2021-07-19T10:16:17.384997Z</date>
+  <millis>1626689777384</millis>
+  <nanos>997000</nanos>
+  <sequence>0</sequence>
+  <logger>global</logger>
+  <level>INFO</level>
+  <class>ru.laskin.myWebApp.Main</class>
+  <method>getAllPosition</method>
+  <thread>1</thread>
+  <message>My first log</message>
+</record>
+<record>
+  <date>2021-07-19T10:16:17.397459Z</date>
+  <millis>1626689777397</millis>
+  <nanos>459000</nanos>
+  <sequence>1</sequence>
+  <logger>global</logger>
+  <level>FINE</level>
+  <class>ru.laskin.myWebApp.Main</class>
+  <method>getAllPosition</method>
+  <thread>1</thread>
+  <message>My second log</message>
+</record>
+<record>
+  <date>2021-07-19T10:16:22.158386Z</date>
+  <millis>1626689782158</millis>
+  <nanos>386000</nanos>
+  <sequence>19</sequence>
+  <logger>global</logger>
+  <level>SEVERE</level>
+  <class>ru.laskin.myWebApp.Main</class>
+  <method>getAllPosition</method>
+  <thread>1</thread>
+  <message>A fake error occurred mate!</message>
+</record>
+</log>

@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class Main {
+
+
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
 
 //        printGroup();
@@ -62,204 +64,6 @@ public class Main {
 
     }
 
-//    private static void createPDF() throws IOException, DocumentException, com.lowagie.text.DocumentException {
-////        Document doc = new Document(PageSize.A4);
-////        FileOutputStream outputStream = new FileOutputStream("/Users/aleksejlaskin/Documents/1/1.pdf");
-////        PdfWriter.getInstance(doc, outputStream);
-////        doc.open();
-////        HTMLWorker hw = new HTMLWorker(doc);
-////        hw.parse(new StringReader("/Users/aleksejlaskin/IdeaProjects/myWebApp/src/main/webapp/WEB-INF/jsp/testResult.jsp"));
-////        doc.close();
-//
-//
-//
-//    }
-
-//    public static void generatePdfFromHtml() throws IOException, DocumentException, com.lowagie.text.DocumentException {
-////        String outputFolder = System.getProperty("user.home") + File.separator + "thymeleaf.pdf";
-//        String html = "\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"<html>\\n\" +\n" +
-//                "                \"<head>\\n\" +\n" +
-//                "                \"    <title>Детализация</title>\\n\" +\n" +
-//                "                \"</head>\\n\" +\n" +
-//                "                \"<style>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"    table{\\n\" +\n" +
-//                "                \"        border-collapse: collapse;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"    tr{\\n\" +\n" +
-//                "                \"        height: 10mm;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"    td{\\n\" +\n" +
-//                "                \"        text-align: justify;\\n\" +\n" +
-//                "                \"        padding: 1mm;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"    .cont{\\n\" +\n" +
-//                "                \"        /*height:297mm;*/\\n\" +\n" +
-//                "                \"        width:240mm;\\n\" +\n" +
-//                "                \"        margin-left: auto;\\n\" +\n" +
-//                "                \"        margin-right: auto;\\n\" +\n" +
-//                "                \"        background-color: #fbfbfb;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"    .list{\\n\" +\n" +
-//                "                \"        /*width:220mm;*/\\n\" +\n" +
-//                "                \"        padding: 10mm;\\n\" +\n" +
-//                "                \"        margin-left: auto;\\n\" +\n" +
-//                "                \"        margin-right: auto;\\n\" +\n" +
-//                "                \"        background-color: whitesmoke;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"    .bigth{\\n\" +\n" +
-//                "                \"        width: 170mm;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"    .smallth{\\n\" +\n" +
-//                "                \"        width: 22mm;\\n\" +\n" +
-//                "                \"        text-align: center;\\n\" +\n" +
-//                "                \"    }\\n\" +\n" +
-//                "                \"</style>\\n\" +\n" +
-//                "                \"<body>\\n\" +\n" +
-//                "                \"<div class=\\\"wrapper\\\" style=\\\"background-color: #d6d6d6\\\">\\n\" +\n" +
-//                "                \"    <div class=\\\"cont\\\">\\n\" +\n" +
-//                "                \"        <div class=\\\"list\\\">\\n\" +\n" +
-//                "                \"            <h3 align=\\\"center\\\">Результаты тестирования</h3>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"            <table>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td style=\\\"width: 70mm\\\">Тестируемый</td>\\n\" +\n" +
-//                "                \"                    <td>vvvv vvvv vvvv1</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Должность</td>\\n\" +\n" +
-//                "                \"                    <td>Заместитель начальника банка</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Дата и время</td>\\n\" +\n" +
-//                "                \"                    <td>13.07.2021 09:13</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Наименование теста</td>\\n\" +\n" +
-//                "                \"                    <td>Для ревизии</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Затраченное время</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">Не учитывалось</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Количество заданных вопросов</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">1</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Количество правильных ответов</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">0</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Количество неправильных ответов</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">1</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Критерий прохождения теста</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">30.0%</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"                <tr>\\n\" +\n" +
-//                "                \"                    <td>Результат</td>\\n\" +\n" +
-//                "                \"                    <td class=\\\"mytd\\\">0.0%</td>\\n\" +\n" +
-//                "                \"                </tr>\\n\" +\n" +
-//                "                \"            </table>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"                \\n\" +\n" +
-//                "                \"                    <table style=\\\"margin-top: 15mm\\\">\\n\" +\n" +
-//                "                \"                        <tr>\\n\" +\n" +
-//                "                \"                            <td style=\\\"width: 70mm\\\"><h4/>Вопрос № 1:</td>\\n\" +\n" +
-//                "                \"                            <td>\\n\" +\n" +
-//                "                \"                                <h4>\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                        <p class=\\\"false\\\">Неправильный ответ</p>\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </h4>\\n\" +\n" +
-//                "                \"                            </td>\\n\" +\n" +
-//                "                \"                        </tr>\\n\" +\n" +
-//                "                \"                        <table>\\n\" +\n" +
-//                "                \"                            <tr>\\n\" +\n" +
-//                "                \"                                <td><h4>Вопрос 4</h4></td>\\n\" +\n" +
-//                "                \"                            </tr>\\n\" +\n" +
-//                "                \"                        </table>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"                    </table>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"                    <table style=\\\"margin-top: 5mm\\\" border=\\\"1\\\">\\n\" +\n" +
-//                "                \"                        <tr>\\n\" +\n" +
-//                "                \"                            <th class=\\\"bigth\\\">Варианты ответов</th>\\n\" +\n" +
-//                "                \"                            <th class=\\\"smallth\\\">Ваши ответы</th>\\n\" +\n" +
-//                "                \"                            <th class=\\\"smallth\\\">Правильные ответы</th>\\n\" +\n" +
-//                "                \"                        </tr>\\n\" +\n" +
-//                "                \"                        \\n\" +\n" +
-//                "                \"                            <tr>\\n\" +\n" +
-//                "                \"                                <td class=\\\"bigth\\\">Ответ на вопрос 4</td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                            </tr>\\n\" +\n" +
-//                "                \"                        \\n\" +\n" +
-//                "                \"                            <tr>\\n\" +\n" +
-//                "                \"                                <td class=\\\"bigth\\\">Ответ на вопрос 4</td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                        <p>V</p>\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                            </tr>\\n\" +\n" +
-//                "                \"                        \\n\" +\n" +
-//                "                \"                            <tr>\\n\" +\n" +
-//                "                \"                                <td class=\\\"bigth\\\">Ответ на вопрос 4</td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                                <td class=\\\"smallth\\\">\\n\" +\n" +
-//                "                \"                                    \\n\" +\n" +
-//                "                \"                                </td>\\n\" +\n" +
-//                "                \"                            </tr>\\n\" +\n" +
-//                "                \"                        \\n\" +\n" +
-//                "                \"                    </table>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"                \\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"        </div>\\n\" +\n" +
-//                "                \"\\n\" +\n" +
-//                "                \"    </div>\\n\" +\n" +
-//                "                \"</div>\\n\" +\n" +
-//                "                \"</body>\\n\" +\n" +
-//                "                \"</html>\\n";
-//        String outputFolder = "/Users/aleksejlaskin/Documents/1/1.pdf";
-//        OutputStream outputStream = new FileOutputStream(outputFolder);
-//
-//        ITextRenderer renderer = new ITextRenderer();
-//        renderer.setDocumentFromString(html);
-//        renderer.layout();
-//        renderer.createPDF(outputStream);
-//
-//        outputStream.close();
-//    }
-
     private static void saveResultTest() {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         ResultTestDao resultTestDao = appCont.getBean(ResultTestDao.class);
@@ -287,14 +91,17 @@ public class Main {
         questionHiberDao.saveQuestion(question);
     }
 
-    private static void getAllPosition() {
+    private static void getAllPosition() throws IOException {
+
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         PositionDao positionDao = appCont.getBean(PositionDao.class);
 
         List<Position> positionList = positionDao.getAllPosition();
-        for (Position position : positionList){
+        for (Position position : positionList) {
             System.out.println(position.getUserList().size());
         }
+//        logr.log(Level.SEVERE, "A fake error occurred mate!");
+
     }
 
 
@@ -353,7 +160,6 @@ public class Main {
 
         System.out.println(userHiberDao.getUserByEmail(s).getName());
     }
-
 
     private static void changePassword(int i, String ddd) {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");

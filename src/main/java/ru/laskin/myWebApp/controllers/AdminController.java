@@ -20,10 +20,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
+    private static Logger log = Logger.getLogger(AdminController.class.getName());
 
     private final UserService userService;
     private final PositionService positionService;
@@ -40,10 +43,16 @@ public class AdminController {
 
     @GetMapping("/allUsers")
     public String getStart(Model model, HttpServletRequest request) {
-        model.addAttribute("users", userService.getAllUsers());
-        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("authUser", authUser.getName());
-        request.setAttribute("user", authUser);
+        log.info("Старт /allUsers");
+        try {
+            model.addAttribute("users", userService.getAllUsers());
+            User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("authUser", authUser.getName());
+            request.setAttribute("user", authUser);
+            log.info("Конец /allUsers");
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "ошибка в контроллере /allUsers", e);
+        }
         return "list_users";
     }
 
@@ -144,7 +153,7 @@ public class AdminController {
         try {
             response.sendRedirect("/tests/update?id=" + testId);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.SEVERE, "Exception: ", e);
         }
     }
 
@@ -170,6 +179,7 @@ public class AdminController {
         return "redirect:/groupTests";
     }
 
+
     @PostMapping("/addGroup")
     public String addGroup(@ModelAttribute GroupTest groupTest){
         testService.addGroup(groupTest);
@@ -184,6 +194,7 @@ public class AdminController {
 
     @GetMapping("/allPosition")
     public String getAllPositions(Model model, HttpServletRequest request, HttpSession session){
+        log.log(Level.INFO, "вход в метод getAllPositions");
         session.setAttribute("positions", positionService.getAllPosition());
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("authUser", authUser.getName());

@@ -28,6 +28,14 @@
 
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.31</version>
+    </dependency>
+
+
     <!-- https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging -->
     <dependency>
       <groupId>org.jboss.logging</groupId>
