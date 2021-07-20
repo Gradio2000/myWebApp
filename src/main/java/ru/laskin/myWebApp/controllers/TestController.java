@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Map;
 
 
 @Controller
@@ -37,10 +36,10 @@ public class TestController {
     }
 
     @GetMapping("/getTest")
-    public String testStart(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
-                            Model model, HttpServletRequest request, HttpSession session){
+    public String getTest(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
+                          Model model, HttpServletRequest request, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        request.setAttribute("user", authUser);
+//        request.setAttribute("user", authUser);
 
         User user = userService.getUserById(authUser.getUserId());
 
@@ -53,7 +52,6 @@ public class TestController {
             }
         }
 
-        Map<String, String[]> map = request.getParameterMap();
         //записываем в БД новую попытку
         if (attemptId == null) {
             Timestamp timestamp = new Timestamp(new Date().getTime());

@@ -2,15 +2,15 @@
 
 <html>
 <head>
-    <jsp:include page="../includes/settingsHeader.jsp"/>
-    <title>Статистика</title>
+  <jsp:include page="../includes/settingsHeader.jsp"/>
+  <title>Статистика</title>
 </head>
 <body>
 <jsp:include page="../includes/header.jsp"/>
 <div class="wrapper">
-    <div class="content">
-
-    </div>
+  <div class="content">
+    <p>В методе ${method} произошла ошибка. Сообщите администратору!</p>
+  </div>
 </div>
 <jsp:include page="../includes/footer.jsp"/>
 </body>

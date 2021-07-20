@@ -49,6 +49,8 @@ public class TestService {
         return testHiberDao.getTestById(testId);
     }
 
+    /*  Этот метод собирает ListQuestion и ListAnswers для Test
+    и отправляет Test в БД для обновления                            */
     public void updateTest(Test test, HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         String[] answersName = parameterMap.get("answer");
@@ -165,7 +167,10 @@ public class TestService {
         return testHiberDao.getTestsByGroupId(groupId);
     }
 
-    public void saveQuestion(Question question, String[] answersName, String[] rightAnswer) {
+    public void saveQuestion(Question question, String[] answersName, String[] rightAnswer, int testId) {
+        //получаем из БД question по id
+        question.setTest(getTestById(testId));
+
         //собираем list answers
         List<Answer> answers = new ArrayList<>();
         for (int i = 0; i < answersName.length; i++) {
@@ -216,8 +221,7 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             time = attemptTestService.getTime(timeOfAttempt);
             quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-            throw new ArithmeticException(date);
-//            logger.log(Level.INFO, "выход");
+            logger.log(Level.INFO, "выход");
         } catch (Exception e) {
             FileHandler fh = new FileHandler("your_log.txt", false);   // true forces append mode
             SimpleFormatter sf = new SimpleFormatter();
