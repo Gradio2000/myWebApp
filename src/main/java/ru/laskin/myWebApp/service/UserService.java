@@ -77,13 +77,13 @@ public class UserService {
 
         String textMessage1 = "Здравствуйте, " +
                 user.getName() + "!\n" +
-                "Вы воспользовались процедурой восстановления логина в системе QТест\n" +
+                "Вы воспользовались процедурой восстановления пароля в системе QТест\n" +
                 "\n" +
                 "Ваш логин: " + user.getLogin() + "\n" +
                 "\n" +
                 "Если Вы не обращались к процедуре восстановления пароля - просто проигнорируйте данное сообщение.\n" +
                 "Для восстановления пароля перейдите по ссылке https://qtests.herokuapp.com/recovery/?userId=" +
-                user.getUserId();
+                user.getUserId() +  "&key=" + user.getKey();
 
         final Properties properties = new Properties();
         try {
@@ -124,10 +124,33 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-       return userHiberDao.getUserByEmail(email);
+       List<User> userList = userHiberDao.getUserByEmail(email);
+       if (userList.isEmpty()){
+           return null;
+       }
+       return userList.get(0);
     }
 
     public List<User> getUserByPositionId(int posId) {
         return userHiberDao.getUserByPositionId(posId);
+    }
+
+    public String prepareEmailTextForUser(String email) {
+        User user = getUserByEmail(email);
+        if (user == null){
+            return  "Пользователь с email '" + email +"' не зарегистрирован в системе!";
+        }
+        else {
+            if (user.isRegistered() == null || !user.isRegistered()){
+                UserService.sendEmail(user, 1);
+                return  "Пользователь с email '" + email +"' найден, но email не подтвержден! " +
+                        "Мы повторно отправили Вам письмо для подтверждения email. Перейдите по ссылке в письме " +
+                        "и после того, как подтвердите email повторно пройдите процедуру восстановления пароля!";
+            }
+            else {
+                UserService.sendEmail(user, 2);
+                return "На адрес Вашей электронной почты отправлено письмо, содержащее дальнейшие инструкции";
+            }
+        }
     }
 }

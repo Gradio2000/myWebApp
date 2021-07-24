@@ -158,7 +158,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         UserHiberDao userHiberDao = appCont.getBean(UserHiberDao.class);
 
-        System.out.println(userHiberDao.getUserByEmail(s).getName());
+
     }
 
     private static void changePassword(int i, String ddd) {

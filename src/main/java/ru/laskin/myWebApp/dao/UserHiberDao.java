@@ -78,13 +78,12 @@ public class UserHiberDao {
         em.close();
     }
 
-    public User getUserByEmail(String email) {
+    public List<User> getUserByEmail(String email) {
         em = EntityFactoryUtil.getEntityManager();
-        User user = (User) em.createQuery("select u from users u where email = :email")
-                .setParameter("email", email.toLowerCase(Locale.ROOT))
-                .getSingleResult();
+        List<User> userList = em.createQuery("select u from users u where email = :email")
+                    .setParameter("email", email.toLowerCase(Locale.ROOT)).getResultList();
         em.close();
-        return user;
+        return userList;
     }
 
     public List<User> getUserByPositionId(int posId) {
