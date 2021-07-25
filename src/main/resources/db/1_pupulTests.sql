@@ -1,17 +1,35 @@
+DROP TABLE IF EXISTS companies CASCADE;
+
+create table companies
+(
+    id_company serial not null,
+    company_name varchar
+);
+
+create unique index companies_id_company_uindex
+    on companies (id_company);
+
+alter table companies
+    add constraint companies_pk
+        primary key (id_company);
+
+INSERT INTO companies (company_name) VALUES ('Новая компания');
+
 DROP TABLE IF EXISTS group_test CASCADE;
 
 create table group_test
 (
     groupTest_id serial  not null primary key,
-    name varchar not null
+    name varchar not null,
+    company_id   integer
 );
 
 create unique index "group_test_id_groupTest_uindex"
     on group_test (groupTest_id);
 
 
-INSERT INTO group_test (name) VALUES ('Эмиссионная и кассовая работа');
-INSERT INTO group_test (name) VALUES ('Тесты на логику');
+INSERT INTO group_test (name, company_id) VALUES ('Эмиссионная и кассовая работа', '1');
+INSERT INTO group_test (name, company_id) VALUES ('Тесты на логику', 1);
 
 
 DROP TABLE IF EXISTS tests CASCADE ;

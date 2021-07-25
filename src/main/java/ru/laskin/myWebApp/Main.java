@@ -21,6 +21,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
 
+        getCompany(1);
 //        printGroup();
 //        printGroupById(1);
 //        printTest();
@@ -41,7 +42,7 @@ public class Main {
 //        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
-        getAllPosition();
+//        getAllPosition();
 //        saveQuestion();
 //        getAllResultByAttempt();
 //        saveResultTest();
@@ -49,6 +50,22 @@ public class Main {
 //        createPDF();
 //        getPdf();
 //        deletePosition(6);
+    }
+
+    private static void getCompany(int i) {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        CompanyDao companyDao = appCont.getBean(CompanyDao.class);
+
+        List<Company> companyList = companyDao.getAllCompany();
+        for (Company company : companyList){
+            System.out.println(company.getCompanyName());
+            List<GroupTest> groupTestList = company.getGroupTestList();
+            for (GroupTest groupTest : groupTestList){
+                System.out.println(groupTest.getName());
+            }
+        }
+
+
     }
 
     private static void deletePosition(int i) {

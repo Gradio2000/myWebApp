@@ -11,11 +11,21 @@ import java.util.List;
 public class GroupTest {
     private int groupTestId;
     private String name;
+    private Company company;
     private List<Test> testList;
 
     public GroupTest() {
     }
 
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Company.class)
+    @JoinColumn(name = "company_id", referencedColumnName = "id_company")
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     @OneToMany(targetEntity = Test.class,
                cascade = CascadeType.ALL)
@@ -51,6 +61,7 @@ public class GroupTest {
     public void setName(String name) {
         this.name = name;
     }
+
 
     @Override
     public boolean equals(Object o) {
