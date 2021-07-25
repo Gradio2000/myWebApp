@@ -129,8 +129,7 @@ public class AdminController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
-            model.addAttribute("alltests", testService.getAllTests());
-            model.addAttribute("allgrouptest", testService.getAllGroupTest());
+            model.addAttribute("allgrouptest", testService.getAllGroupTest(authUser.getCompany_id()));
             model.addAttribute("test", new Test());
             log.info("Выход");
         } catch (Exception e) {
@@ -141,14 +140,14 @@ public class AdminController {
     }
 
     @GetMapping("/tests/update")
-    public String showEditTestForm(@RequestParam Integer id, Model model, HttpServletRequest request){
+    public String showEditTestForm(@RequestParam Integer id, Model model, HttpServletRequest request, HttpSession session){
         log.info("Вход");
         try {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
             model.addAttribute("test", testService.getTestById(id));
-            model.addAttribute("questions", testService.getTestById(id).getQuestions());
+            session.setAttribute("questions", testService.getTestById(id).getQuestions());
             model.addAttribute("newAnswerList", new ArrayList<>());
             log.info("Выход");
         } catch (Exception e) {
@@ -159,13 +158,13 @@ public class AdminController {
     }
 
     @PostMapping("/updateTest")
-    public String updateTest(@ModelAttribute Test test, HttpServletRequest request){
+    public String updateTest(@ModelAttribute Test test, HttpServletRequest request, HttpSession session){
         try {
             log.info("Вход");
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
-            testService.updateTest(test, request);
+            testService.updateTest(test, request, session);
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
@@ -228,7 +227,7 @@ public class AdminController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
-            model.addAttribute("groupTests", testService.getAllGroupTest());
+            model.addAttribute("groupTests", testService.getAllGroupTest(authUser.getCompany_id()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
@@ -253,6 +252,8 @@ public class AdminController {
     @PostMapping("/addGroup")
     public String addGroup(@ModelAttribute GroupTest groupTest, HttpServletRequest request){
         log.info("Вход");
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        groupTest.setCompanyId(authUser.getCompany_id());
         try {
             testService.addGroup(groupTest);
             log.info("Выход");
@@ -266,10 +267,11 @@ public class AdminController {
     @PostMapping("/updateGroup")
     public String updateGroup(@RequestParam(name = "grouptestId") Integer[] id,
                               @RequestParam(name = "name") String[] name,
+                              @RequestParam(name = "companyId") Integer[] companyId,
                               HttpServletRequest request){
         log.info("Вход");
         try {
-            testService.updateAllGroup(id, name);
+            testService.updateAllGroup(id, name, companyId);
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);

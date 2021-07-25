@@ -21,13 +21,13 @@ public class Main {
 
     public static void main(String[] args) throws SQLException, IOException, DocumentException {
 
-        getCompany(1);
+//        getCompany(1);
 //        printGroup();
 //        printGroupById(1);
 //        printTest();
 //        printTestById(10);
 //        deletetest(10);
-//        saveTest();
+        saveTest();
 //        getTestByGroupId(1);
 //        printUser();
 //        getUserById(1);
@@ -64,8 +64,6 @@ public class Main {
                 System.out.println(groupTest.getName());
             }
         }
-
-
     }
 
     private static void deletePosition(int i) {
@@ -267,10 +265,19 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
 
-        List<Question> questionList = new ArrayList<>();
-        Test test = new Test("qqqqq", questionList);
+        List<GroupTest> groupTestList = testHiberDao.getAllGroup(1);
 
-        testHiberDao.saveTest(test);
+        GroupTest groupTest = groupTestList.get(0);
+        List<Test> testList = groupTest.getTestList();
+        Test test = testList.get(0);
+        List<Question> questionList = test.getQuestions();
+        Question question = questionList.remove(0);
+        System.out.println(question.getQuestionId() + " = " + question.getQuestionName());
+        question.setQuestionId(0);
+        System.out.println(question.getQuestionId() + " = " + question.getQuestionName());
+        questionList.add(0, question);
+
+        testHiberDao.updateTest(test);
     }
 
     public static void printTestById(int id){
@@ -284,7 +291,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         TestHiberDao testHiberDao = appCont.getBean(TestHiberDao.class);
 
-        List<GroupTest> groupTestList = testHiberDao.getAllGroup();
+        List<GroupTest> groupTestList = testHiberDao.getAllGroup(1);
         for (GroupTest groupTest : groupTestList){
             System.out.println(groupTest.getName());
             List<Test> testList = groupTest.getTestList();

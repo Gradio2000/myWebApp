@@ -20,13 +20,14 @@ public class User {
     @Column
     private Boolean registered;
     private UUID key;
+    private int company_id;
 
     public User() {
     }
 
     public User(int userId, String name, String login,
                 String password, String email, String adminRole,
-                Position position, String confirmPassword, Boolean registered, UUID key) {
+                Position position, String confirmPassword, Boolean registered, UUID key, int company_id) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -37,6 +38,16 @@ public class User {
         this.confirmPassword = confirmPassword;
         this.registered = registered;
         this.key = key;
+        this.company_id = company_id;
+    }
+
+    @Column(name = "company_id")
+    public int getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(int company_id) {
+        this.company_id = company_id;
     }
 
     @Transient

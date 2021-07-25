@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "tests")
 @Table(name = "tests")
@@ -114,5 +115,18 @@ public class Test {
 
     public void setQuesMix(boolean quesMix) {
         this.quesMix = quesMix;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Test test = (Test) o;
+        return deleted == test.deleted && quesMix == test.quesMix && testName.equals(test.testName) && groupTest.equals(test.groupTest) && criteria.equals(test.criteria) && time.equals(test.time) && Objects.equals(questions, test.questions) && quesAmount.equals(test.quesAmount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(testName, groupTest, criteria, time, questions, quesAmount, deleted, quesMix);
     }
 }

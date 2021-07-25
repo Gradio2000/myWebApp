@@ -32,13 +32,15 @@
             <th></th>
             <th></th>
         </tr>
-        <c:forEach var='test' items='${alltests}'>
-            <tr>
-                <td><c:out value="${test.testId}"></c:out></td>
-                <td><c:out value="${test.testName}"></c:out></td>
-                <td><button class="btn warning" onclick="document.location = 'tests/update?id=${test.testId}'">Редактировать</button></td>
-                <td><button class="btn danger" onclick="document.location = 'tests/delete?id=${test.testId}'">Удалить</button></td>
-            </tr>
+        <c:forEach var='groupTest' items='${allgrouptest}'>
+            <c:forEach var="test" items="${groupTest.testList}">
+                <tr>
+                    <td><c:out value="${test.testId}"></c:out></td>
+                    <td><c:out value="${test.testName}"></c:out></td>
+                    <td><button class="btn warning" onclick="document.location = 'tests/update?id=${test.testId}'">Редактировать</button></td>
+                    <td><button class="btn danger" onclick="document.location = 'tests/delete?id=${test.testId}'">Удалить</button></td>
+                </tr>
+            </c:forEach>
         </c:forEach>
     </table>
 

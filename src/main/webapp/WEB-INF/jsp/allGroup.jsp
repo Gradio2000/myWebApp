@@ -32,6 +32,7 @@
                     </tr>
                     <c:forEach var='group' items='${groupTests}'>
                         <input hidden name="grouptestId" value="${group.groupTestId}"/>
+                        <input type="hidden" name="companyId" value="${group.companyId}"/>
                         <tr>
                             <td><c:out value="${group.groupTestId}"/></td>
                             <td width=100><textarea class="my-input" name="name">${group.name}</textarea></td>

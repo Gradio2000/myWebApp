@@ -23,9 +23,11 @@ public class TestHiberDao {
     }
 
 
-    public List<GroupTest> getAllGroup(){
+    public List<GroupTest> getAllGroup(int company_id){
         em = EntityFactoryUtil.getEntityManager();
-        List<GroupTest> groupTestList = em.createQuery("select g from group_test g order by groupTestId", GroupTest.class).getResultList();
+        List<GroupTest> groupTestList = em.createQuery("select g from group_test g where companyId = :id order by groupTestId", GroupTest.class)
+                .setParameter("id", company_id)
+                .getResultList();
         em.close();
         return groupTestList;
     }
@@ -99,7 +101,7 @@ public class TestHiberDao {
         Session session = em.unwrap(Session.class);
         for (GroupTest groupTest : groupTests){
             session.getTransaction().begin();
-            session.merge(groupTest);
+            session.update(groupTest);
             session.getTransaction().commit();
         }
         session.close();

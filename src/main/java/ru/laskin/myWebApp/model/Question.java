@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "questions")
 @Table(name = "questions")
@@ -69,4 +70,19 @@ public class Question {
         this.questionName = questionName;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return questionId == question.questionId && Objects.equals(questionName, question.questionName) && Objects.equals(answers, question.answers);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = questionId;
+        result = 31 * result + (questionName != null ? questionName.hashCode() : 0);
+        return result;
+    }
 }

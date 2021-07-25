@@ -53,9 +53,8 @@ public class TestService {
 
     /*  Этот метод собирает ListQuestion и ListAnswers для Test
     и отправляет Test в БД для обновления                            */
-    public void updateTest(Test test, HttpServletRequest request) {
+    public void updateTest(Test test, HttpServletRequest request, HttpSession session) {
         log.info("Вход");
-
             Map<String, String[]> parameterMap = request.getParameterMap();
             String[] answersName = parameterMap.get("answer");
             String[] answerId = parameterMap.get("answerId");
@@ -71,6 +70,7 @@ public class TestService {
             List<Question> questionList = new ArrayList<>();
             for (int i = 0; i < questionName.length; i++) {
                 Question question = new Question();
+                question.setQuestionId(Integer.parseInt(questionId[i]));
                 question.setQuestionName(questionName[i]);
 
                 List<Answer> answerList = new ArrayList<>();
@@ -104,6 +104,17 @@ public class TestService {
                 }
 
                 question.setAnswers(answerList);
+
+                //проверяем, есть ли изменение в вопросах теста.
+                //если есть - обнуляем id и при обновлении в БД у него будет новый id
+                List<Question> etalonQuestions = (List<Question>) session.getAttribute("questions");
+                Question etalonQues = etalonQuestions.stream()
+                        .filter(s -> s.getQuestionId() == question.getQuestionId())
+                        .findAny().orElse(null);
+                if (!question.equals(etalonQues)){
+                    question.setQuestionId(0);
+                }
+
                 questionList.add(question);
             }
 
@@ -138,9 +149,9 @@ public class TestService {
         testHiberDao.deleteTestById(id);
     }
 
-    public List<GroupTest> getAllGroupTest() {
+    public List<GroupTest> getAllGroupTest(int company_id) {
         log.info("Вход и выход");
-        return testHiberDao.getAllGroup();
+        return testHiberDao.getAllGroup(company_id);
     }
 
     public void deleteGroupTest(Integer id) {
@@ -153,7 +164,7 @@ public class TestService {
         testHiberDao.addGroup(groupTest);
     }
 
-    public void updateAllGroup(Integer[] id, String[] name) {
+    public void updateAllGroup(Integer[] id, String[] name, Integer[] companyId) {
         log.info("Вход");
         List<GroupTest> groupTests = new ArrayList<>();
         for (int i = 0; i < id.length; i++) {
@@ -161,6 +172,7 @@ public class TestService {
             groupTest.setGroupTestId(id[i]);
             groupTest.setName(name[i]);
             groupTest.setTestList(getTestsByGroupId(id[i]));
+            groupTest.setCompanyId(companyId[i]);
             groupTests.add(groupTest);
         }
         testHiberDao.updateAllGroup(groupTests);

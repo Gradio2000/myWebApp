@@ -80,7 +80,7 @@ public class UserController {
             return "greeting";
         }
 
-        session.setAttribute("allTestGroup",testService.getAllGroupTest());
+        session.setAttribute("allTestGroup",testService.getAllGroupTest(user.getCompany_id()));
         log.info("выход");
         return "testPage";
     }
