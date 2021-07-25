@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
@@ -265,10 +264,12 @@ public class AdminController {
     }
 
     @PostMapping("/updateGroup")
-    public String updateGroup(HttpServletRequest request){
+    public String updateGroup(@RequestParam(name = "grouptestId") Integer[] id,
+                              @RequestParam(name = "name") String[] name,
+                              HttpServletRequest request){
         log.info("Вход");
         try {
-            testService.updateAllGroup(request);
+            testService.updateAllGroup(id, name);
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
@@ -279,7 +280,7 @@ public class AdminController {
 
     @GetMapping("/allPosition")
     public String getAllPositions(Model model, HttpServletRequest request, HttpSession session){
-        log.log(Level.INFO, "вход");
+        log.info("Вход");
         try {
             session.setAttribute("positions", positionService.getAllPosition());
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

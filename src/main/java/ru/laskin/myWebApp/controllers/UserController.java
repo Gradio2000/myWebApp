@@ -251,7 +251,7 @@ public class UserController {
             else throw new Exception("Ошибка смены пароля. Проверка ID пользователя и его KEY не успешна.");
 
         } catch (Exception e) {
-            exceptionController.printException(request, log, e);
+            exceptionController.printException(request,  log, e);
             return "exception";
         }
         return "login";

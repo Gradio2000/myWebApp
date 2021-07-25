@@ -131,10 +131,6 @@ public class UserService {
        return userList.get(0);
     }
 
-    public List<User> getUserByPositionId(int posId) {
-        return userHiberDao.getUserByPositionId(posId);
-    }
-
     public String prepareEmailTextForUser(String email) {
         User user = getUserByEmail(email);
         if (user == null){

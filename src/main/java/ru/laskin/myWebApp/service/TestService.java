@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class TestService {
-    private static final Logger logger = Logger.getLogger(ResultController.class.getName());
+    private static final Logger log = Logger.getLogger(ResultController.class.getName());
 
     private final TestHiberDao testHiberDao;
     private final QuestionHiberDao questionHiberDao;
@@ -42,132 +42,143 @@ public class TestService {
     }
 
     public List<Test> getAllTests() {
+        log.info("Вход и выход");
         return testHiberDao.getAllTests();
     }
 
     public Test getTestById(int testId) {
+        log.info("Вход и выход");
         return testHiberDao.getTestById(testId);
     }
 
     /*  Этот метод собирает ListQuestion и ListAnswers для Test
     и отправляет Test в БД для обновления                            */
     public void updateTest(Test test, HttpServletRequest request) {
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String[] answersName = parameterMap.get("answer");
-        String[] answerId = parameterMap.get("answerId");
-        String[] isRight = parameterMap.get("isRight");
-        String[] questionName = parameterMap.get("question");
-        String[] questionId = parameterMap.get("questionId");
-        String[] quesAnsId = parameterMap.get("quesAnsId");
-        String[] newAnswer = parameterMap.get("newAnswer");
-        String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
-        String[] groupId = parameterMap.get("groupId");
-        String[] isRightForNewAnswer = parameterMap.get("isRightForNewAnswer");
+        log.info("Вход");
 
-        List<Question> questionList = new ArrayList<>();
-        for (int i = 0; i < questionName.length; i++) {
-            Question question = new Question();
-//            question.setQuestionId(Integer.parseInt(questionId[i]));
-            question.setQuestionName(questionName[i]);
+            Map<String, String[]> parameterMap = request.getParameterMap();
+            String[] answersName = parameterMap.get("answer");
+            String[] answerId = parameterMap.get("answerId");
+            String[] isRight = parameterMap.get("isRight");
+            String[] questionName = parameterMap.get("question");
+            String[] questionId = parameterMap.get("questionId");
+            String[] quesAnsId = parameterMap.get("quesAnsId");
+            String[] newAnswer = parameterMap.get("newAnswer");
+            String[] quesIdForNewAnswer = parameterMap.get("quesIdForNewAnswer");
+            String[] groupId = parameterMap.get("groupId");
+            String[] isRightForNewAnswer = parameterMap.get("isRightForNewAnswer");
 
-            List<Answer> answerList = new ArrayList<>();
-            if (answersName != null) {
-                for (int j = 0; j < answersName.length; j++) {
-                    Answer answer = new Answer();
-                    if (j < answerId.length) {
-                        answer.setAnswerId(Integer.parseInt(answerId[j]));
-                    }
-                    answer.setAnswerName(answersName[j]);
-                    if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))) {
-                        answer.setRight(true);
-                    }
-                    if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])) {
-                        answerList.add(answer);
-                    }
-                }
-            }
+            List<Question> questionList = new ArrayList<>();
+            for (int i = 0; i < questionName.length; i++) {
+                Question question = new Question();
+                question.setQuestionName(questionName[i]);
 
-            if (newAnswer != null) {
-                for (int j = 0; j < newAnswer.length; j++) {
-                    Answer answer = new Answer();
-                    answer.setAnswerName(newAnswer[j]);
-                    if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))) {
-                        answer.setRight(true);
-                    }
-                    if (questionId[i].equals(quesIdForNewAnswer[j])) {
-                        answerList.add(answer);
+                List<Answer> answerList = new ArrayList<>();
+                if (answersName != null) {
+                    for (int j = 0; j < answersName.length; j++) {
+                        Answer answer = new Answer();
+                        if (j < answerId.length) {
+                            answer.setAnswerId(Integer.parseInt(answerId[j]));
+                        }
+                        answer.setAnswerName(answersName[j]);
+                        if (isRight != null && Arrays.asList(isRight).contains(String.valueOf(j))) {
+                            answer.setRight(true);
+                        }
+                        if (j < quesAnsId.length && quesAnsId[j].equals(questionId[i])) {
+                            answerList.add(answer);
+                        }
                     }
                 }
+
+                if (newAnswer != null) {
+                    for (int j = 0; j < newAnswer.length; j++) {
+                        Answer answer = new Answer();
+                        answer.setAnswerName(newAnswer[j]);
+                        if (isRightForNewAnswer != null && Arrays.asList(isRightForNewAnswer).contains(String.valueOf(j))) {
+                            answer.setRight(true);
+                        }
+                        if (questionId[i].equals(quesIdForNewAnswer[j])) {
+                            answerList.add(answer);
+                        }
+                    }
+                }
+
+                question.setAnswers(answerList);
+                questionList.add(question);
             }
 
-            question.setAnswers(answerList);
-            questionList.add(question);
-        }
+            test.setGroupTest(getGroupTestById(Integer.parseInt(groupId[0])));
+            test.setQuestions(questionList);
 
-        test.setGroupTest(getGroupTestById(Integer.parseInt(groupId[0])));
-        test.setQuestions(questionList);
+            if (test.getCriteria() == null) {
+                test.setCriteria(0.0);
+            }
+            if (test.getTime() == null) {
+                test.setTime(0.0);
+            }
 
-        if (test.getCriteria() == null) {
-            test.setCriteria(0.0);
-        }
-        if (test.getTime() == null) {
-            test.setTime(0.0);
-        }
-
-        testHiberDao.updateTest(test);
+            testHiberDao.updateTest(test);
+            log.info("Выход");
     }
 
     public Integer saveTest(Test test) {
+        log.info("Вход");
         if (test.getCriteria() == null) {
             test.setCriteria(0.0);
         }
         if (test.getTime() == null) {
             test.setTime(0.0);
         }
+        log.info("Выход");
         return testHiberDao.saveTest(test);
     }
 
     public void deleteTestById(int id) {
+        log.info("Вход и выход");
         testHiberDao.deleteTestById(id);
     }
 
     public List<GroupTest> getAllGroupTest() {
+        log.info("Вход и выход");
         return testHiberDao.getAllGroup();
     }
 
     public void deleteGroupTest(Integer id) {
+        log.info("Вход и выход");
         testHiberDao.deleteGroupTest(id);
     }
 
     public void addGroup(GroupTest groupTest) {
+        log.info("Вход и выход");
         testHiberDao.addGroup(groupTest);
     }
 
-    public void updateAllGroup(HttpServletRequest request) {
-        Map<String, String[]> parameterMap = request.getParameterMap();
-        String[] id = parameterMap.get("grouptestId");
-        String[] name = parameterMap.get("name");
-
+    public void updateAllGroup(Integer[] id, String[] name) {
+        log.info("Вход");
         List<GroupTest> groupTests = new ArrayList<>();
         for (int i = 0; i < id.length; i++) {
             GroupTest groupTest = new GroupTest();
-            groupTest.setGroupTestId(Integer.parseInt(id[i]));
+            groupTest.setGroupTestId(id[i]);
             groupTest.setName(name[i]);
-            groupTest.setTestList(getTestsByGroupId(Integer.parseInt(id[i])));
+            groupTest.setTestList(getTestsByGroupId(id[i]));
             groupTests.add(groupTest);
         }
         testHiberDao.updateAllGroup(groupTests);
+        log.info("Выход");
     }
 
     public GroupTest getGroupTestById(int groupId) {
+        log.info("Вход и выход");
         return testHiberDao.getGroupById(groupId);
     }
 
     public List<Test> getTestsByGroupId(int groupId) {
+        log.info("Вход и выход");
         return testHiberDao.getTestsByGroupId(groupId);
     }
 
     public void saveQuestion(Question question, String[] answersName, String[] rightAnswer, int testId) {
+        log.info("Вход");
         //получаем из БД question по id
         question.setTest(getTestById(testId));
 
@@ -189,11 +200,12 @@ public class TestService {
 
         question.setAnswers(answers);
         questionHiberDao.saveQuestion(question);
+        log.info("Выход");
     }
 
     //основной метод проверки ответов пользователя и вывода результата теста
     public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) throws IOException {
-        logger.log(Level.INFO, "вход");
+        log.log(Level.INFO, "вход");
 
         String date = null;
         Set<Integer> falseAnswerSet = null;
@@ -221,19 +233,21 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             time = attemptTestService.getTime(timeOfAttempt);
             quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-            logger.log(Level.INFO, "выход");
+            log.log(Level.INFO, "выход");
         } catch (Exception e) {
             FileHandler fh = new FileHandler("your_log.txt", false);   // true forces append mode
             SimpleFormatter sf = new SimpleFormatter();
             fh.setFormatter(sf);
-            logger.addHandler(fh);
-            logger.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
+            log.addHandler(fh);
+            log.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
         }
+        log.info("Выход");
         return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time, quesList);
     }
 
     //метод для отображения детализации теста пользователя
     public void getStatistic(Integer id, HttpSession session) {
+        log.info("Вход");
         User userforStatisic = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
@@ -270,9 +284,11 @@ public class TestService {
 
         session.setAttribute("userForStatistic", userforStatisic);
         session.setAttribute("statisticList", statisticList);
+        log.info("Выход");
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers(List<ResultTest> resultTestList) {
+        log.info("Вход");
         Map<Integer, List<Integer>> mapOfUserAnswers = new HashMap<>();
         for (ResultTest resultTest : resultTestList) {
             List<Integer> answersIdList = mapOfUserAnswers.get(resultTest.getQuestionId());
@@ -280,10 +296,12 @@ public class TestService {
             answersIdList.add(resultTest.getAnswerId());
             mapOfUserAnswers.put(resultTest.getQuestionId(), answersIdList);
         }
+        log.info("Выход");
         return mapOfUserAnswers;
     }
 
     public Set<Integer> getFalseAnswerSet(Map<Integer, List<Integer>> mapOfUserAnswers, List<Question> questionList) {
+        log.info("Вход");
         Set<Integer> falseAnswerSet = new HashSet<>();
         if (mapOfUserAnswers.size() != 0) {
             for (Question question : questionList) {
@@ -312,20 +330,25 @@ public class TestService {
                 falseAnswerSet.add(question.getQuestionId());
             }
         }
+        log.info("Выход");
         return falseAnswerSet;
     }
 
     public List<Integer> getListOfUsersAnswers(Map<Integer, List<Integer>> mapOfUserAnswers) {
+        log.info("Вход");
         List<Integer> listOfUsersAnswers = new ArrayList<>();
         for (Integer key : mapOfUserAnswers.keySet()) {
             listOfUsersAnswers.addAll(mapOfUserAnswers.get(key));
         }
+        log.info("Выход");
         return listOfUsersAnswers;
     }
 
     public Double getResult(int trueCountAnswers, int totalCountAnswers) {
+        log.info("Вход");
         BigDecimal bigDecimal1 = new BigDecimal(trueCountAnswers);
         BigDecimal bigDecimal2 = new BigDecimal(totalCountAnswers);
+        log.info("Выход");
         return bigDecimal2.compareTo(BigDecimal.ZERO) == 0 ? 0 : bigDecimal1.divide(bigDecimal2, 2, RoundingMode.DOWN).multiply(new BigDecimal("100")).doubleValue();
     }
 
@@ -334,25 +357,29 @@ public class TestService {
     }
 
     public Test getShuffleTest(Test test) {
+        log.info("Вход");
         List<Question> questionList = test.getQuestions();
         Collections.shuffle(questionList);
         test.setQuestions(questionList.stream().limit(test.getQuesAmount()).collect(Collectors.toList()));
+        log.info("Выход");
         return test;
     }
 
     public void updateTest(Test test) {
+        log.info("Вход и выход");
         testHiberDao.updateTest(test);
     }
 
     public void registerTest(int attemptId, Test test) {
+        log.info("Вход");
         for (Question question : test.getQuestions()) {
             testHiberDao.registerTest(attemptId, question.getQuestionId());
         }
-
+        log.info("Выход");
     }
 
     public Statistic recordAttemptAndCheckResults(Integer attemptId, HttpServletRequest request, HttpSession session) throws IOException {
-        logger.log(Level.INFO, "вход");
+        log.log(Level.INFO, "Вход");
         int timeOfAttempt = 0;
         Test test = null;
         try {
@@ -360,11 +387,12 @@ public class TestService {
                     0 : Integer.parseInt(request.getParameter("timeOfAttempt"));
             test = (Test) session.getAttribute("tests");
             attemptTestService.saveTimeOfAttempt(attemptId, timeOfAttempt);
-            logger.log(Level.INFO, "выход");
+            log.log(Level.INFO, "выход");
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            logger.log(Level.SEVERE, e.toString());
+            log.log(Level.SEVERE, e.toString());
         }
+        log.info("Выход");
         return mainCheck(attemptId, test, timeOfAttempt);
     }
 }
