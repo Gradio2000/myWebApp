@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.laskin.myWebApp.dao.CompanyDao;
-import ru.laskin.myWebApp.model.*;
+import ru.laskin.myWebApp.model.Position;
+import ru.laskin.myWebApp.model.Question;
+import ru.laskin.myWebApp.model.Test;
+import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
-import ru.laskin.myWebApp.validation.DeletePositionValidation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,25 +26,20 @@ import java.util.logging.Logger;
 @Controller
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-    private static Logger log = Logger.getLogger(AdminController.class.getName());
+    private static final Logger log = Logger.getLogger(AdminController.class.getName());
 
     private final UserService userService;
     private final PositionService positionService;
     private final TestService testService;
-    private final DeletePositionValidation deletePositionValidation;
     private final ExceptionController exceptionController;
-    private final CompanyDao companyDao;
 
 
     public AdminController(UserService userService, PositionService positionService, TestService testService,
-                           DeletePositionValidation deletePositionValidation, ExceptionController exceptionController,
-                           CompanyDao companyDao) {
+                           ExceptionController exceptionController) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
-        this.deletePositionValidation = deletePositionValidation;
         this.exceptionController = exceptionController;
-        this.companyDao = companyDao;
     }
 
     @GetMapping("/allUsers")
@@ -207,140 +203,5 @@ public class AdminController {
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
         }
-    }
-
-    @PostMapping("/addTest")
-    public String addTest(@ModelAttribute Test test, @RequestParam String groupId, HttpServletRequest request){
-        log.info("Вход");
-        int id;
-        try {
-            test.setGroupTest(testService.getGroupTestById(Integer.parseInt(groupId)));
-            id = testService.saveTest(test);
-            log.info("Выход");
-        } catch (NumberFormatException e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/tests/update?id=" + id;
-    }
-
-    @GetMapping("/groupTests")
-    public String groupTests(Model model, HttpServletRequest request){
-        log.info("Вход");
-        try {
-            User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            request.setAttribute("user", authUser);
-
-            model.addAttribute("groupTests", testService.getAllGroupTest(authUser.getCompany().getIdCompany()));
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "allGroup";
-    }
-
-    @GetMapping("/group/delete")
-    public String deleteGroup(@RequestParam Integer id, HttpServletRequest request){
-        log.info("Вход");
-        try {
-            testService.deleteGroupTest(id);
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/groupTests";
-    }
-
-    @PostMapping("/addGroup")
-    public String addGroup(@ModelAttribute GroupTest groupTest, HttpServletRequest request){
-        log.info("Вход");
-        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        groupTest.setCompany(companyDao.getCompanyById(authUser.getCompany().getIdCompany()));
-        try {
-            testService.addGroup(groupTest);
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/groupTests";
-    }
-
-    @PostMapping("/updateGroup")
-    public String updateGroup(@RequestParam(name = "grouptestId") Integer[] id,
-                              @RequestParam(name = "name") String[] name,
-                              @RequestParam(name = "companyId") Integer[] companyId,
-                              HttpServletRequest request){
-        log.info("Вход");
-        try {
-            testService.updateAllGroup(id, name, companyId);
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/greeting";
-    }
-
-    @GetMapping("/allPosition")
-    public String getAllPositions(Model model, HttpServletRequest request, HttpSession session){
-        log.info("Вход");
-        try {
-            User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user", authUser);
-
-            session.setAttribute("positions", positionService.getAllPosition(authUser.getCompany().getIdCompany()));
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "list_positions";
-    }
-
-    @PostMapping("/editPosition")
-    public String editPositions(HttpServletRequest request, HttpSession session){
-        log.info("Вход");
-        try {
-            positionService.updateAllPosition(request, session);
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/greeting";
-    }
-
-    @GetMapping("/deletePosition")
-    public String deletePosition(@RequestParam String posId, HttpServletRequest request){
-        log.info("Вход");
-        try {
-            Position position = positionService.getPositionById(Integer.parseInt(posId));
-            if (deletePositionValidation.validate(position)){
-                request.setAttribute("errorMessage", "Внимание! Эту должность удалять нельзя, т.к. за ней закреплен пользователь!");
-                return "list_positions";
-            }
-            positionService.deletePosition(Integer.parseInt(posId));
-            log.info("Выход");
-        } catch (NumberFormatException e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/allPosition";
-    }
-
-    @PostMapping("/addPosition")
-    public String addPosition(@ModelAttribute Position pos, HttpServletRequest request){
-        log.info("Вход");
-        try {
-            positionService.addPosition(pos);
-            log.info("Выход");
-        } catch (Exception e) {
-            exceptionController.printException(request, log, e);
-            return "exception";
-        }
-        return "redirect:/allPosition";
     }
 }

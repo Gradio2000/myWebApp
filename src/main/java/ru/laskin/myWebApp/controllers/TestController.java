@@ -39,8 +39,6 @@ public class TestController {
     public String getTest(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
                           Model model, HttpServletRequest request, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        request.setAttribute("user", authUser);
-
         User user = userService.getUserById(authUser.getUserId());
 
         Test test = testService.getTestById(Integer.parseInt(testId));
