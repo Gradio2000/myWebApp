@@ -3,6 +3,7 @@ package ru.laskin.myWebApp.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -17,17 +18,17 @@ public class User {
     private String adminRole;
     private Position position;
     private String confirmPassword;
-    @Column
     private Boolean registered;
     private UUID key;
-    private int company_id;
+    private Company company;
 
     public User() {
     }
 
     public User(int userId, String name, String login,
                 String password, String email, String adminRole,
-                Position position, String confirmPassword, Boolean registered, UUID key, int company_id) {
+                Position position, String confirmPassword, Boolean registered,
+                UUID key, Company company) {
         this.userId = userId;
         this.name = name;
         this.login = login;
@@ -38,16 +39,7 @@ public class User {
         this.confirmPassword = confirmPassword;
         this.registered = registered;
         this.key = key;
-        this.company_id = company_id;
-    }
-
-    @Column(name = "company_id")
-    public int getCompany_id() {
-        return company_id;
-    }
-
-    public void setCompany_id(int company_id) {
-        this.company_id = company_id;
+        this.company = company;
     }
 
     @Transient
@@ -59,6 +51,7 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
+    @Column
     public Boolean isRegistered() {
         return registered;
     }
@@ -120,7 +113,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email", nullable = true, length = -1)
+    @Column(name = "email", length = -1)
     public String getEmail() {
         return email;
     }
@@ -130,7 +123,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "admin_role", length = -1, nullable = true)
+    @Column(name = "admin_role", length = -1)
     public String getAdminRole() {
         return adminRole;
     }
@@ -156,7 +149,15 @@ public class User {
         return registered;
     }
 
+    @OneToOne(targetEntity = Company.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id", referencedColumnName = "id_company")
+    public Company getCompany() {
+        return company;
+    }
 
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -166,13 +167,11 @@ public class User {
         User user = (User) o;
 
         if (userId != user.userId) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (adminRole != null ? !adminRole.equals(user.adminRole) : user.adminRole != null) return false;
-
-        return true;
+        if (!Objects.equals(name, user.name)) return false;
+        if (!Objects.equals(login, user.login)) return false;
+        if (!Objects.equals(password, user.password)) return false;
+        if (!Objects.equals(email, user.email)) return false;
+        return Objects.equals(adminRole, user.adminRole);
     }
 
     @Override

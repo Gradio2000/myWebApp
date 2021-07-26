@@ -106,7 +106,7 @@ public class Main {
         questionHiberDao.saveQuestion(question);
     }
 
-    private static void getAllPosition() throws IOException {
+    private static void getAllPosition(){
 
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         PositionDao positionDao = appCont.getBean(PositionDao.class);
@@ -226,7 +226,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         UserHiberDao userHiberDao = appCont.getBean(UserHiberDao.class);
 
-        List<User> userList = userHiberDao.getAllUsers();
+        List<User> userList = userHiberDao.getAllUsers(1);
         for (User user : userList){
             System.out.println(user.getName());
         }

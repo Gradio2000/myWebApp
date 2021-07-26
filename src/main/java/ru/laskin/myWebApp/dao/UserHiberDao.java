@@ -15,9 +15,11 @@ public class UserHiberDao {
 
     public EntityManager em;
 
-    public List<User> getAllUsers () {
+    public List<User> getAllUsers (int companyId) {
         em = EntityFactoryUtil.getEntityManager();
-        List<User> userList = em.createQuery("select u from users u order by userId").getResultList();
+        List<User> userList = em.createQuery("select u from users u where company.idCompany = :id order by userId")
+                .setParameter("id", companyId)
+                .getResultList();
         em.close();
         return userList;
     }

@@ -50,10 +50,10 @@ public class AdminController {
     public String getAllUsers(Model model, HttpServletRequest request) {
         log.info("Вход");
         try {
-            model.addAttribute("users", userService.getAllUsers());
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("authUser", authUser.getName());
             request.setAttribute("user", authUser);
+            model.addAttribute("users", userService.getAllUsers(authUser.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
@@ -72,7 +72,7 @@ public class AdminController {
             int id = Integer.parseInt(request.getParameter("id"));
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
-            List<Position> positionSet = positionService.getAllPosition(user.getCompany_id());
+            List<Position> positionSet = positionService.getAllPosition(user.getCompany().getIdCompany());
             model.addAttribute("posSet", positionSet);
             log.info("Выход");
         } catch (NumberFormatException e) {
@@ -133,7 +133,7 @@ public class AdminController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
-            model.addAttribute("allgrouptest", testService.getAllGroupTest(authUser.getCompany_id()));
+            model.addAttribute("allgrouptest", testService.getAllGroupTest(authUser.getCompany().getIdCompany()));
             model.addAttribute("test", new Test());
             log.info("Выход");
         } catch (Exception e) {
@@ -212,7 +212,7 @@ public class AdminController {
     @PostMapping("/addTest")
     public String addTest(@ModelAttribute Test test, @RequestParam String groupId, HttpServletRequest request){
         log.info("Вход");
-        int id = 0;
+        int id;
         try {
             test.setGroupTest(testService.getGroupTestById(Integer.parseInt(groupId)));
             id = testService.saveTest(test);
@@ -231,7 +231,7 @@ public class AdminController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             request.setAttribute("user", authUser);
 
-            model.addAttribute("groupTests", testService.getAllGroupTest(authUser.getCompany_id()));
+            model.addAttribute("groupTests", testService.getAllGroupTest(authUser.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
@@ -257,7 +257,7 @@ public class AdminController {
     public String addGroup(@ModelAttribute GroupTest groupTest, HttpServletRequest request){
         log.info("Вход");
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        groupTest.setCompany(companyDao.getCompanyById(authUser.getCompany_id()));
+        groupTest.setCompany(companyDao.getCompanyById(authUser.getCompany().getIdCompany()));
         try {
             testService.addGroup(groupTest);
             log.info("Выход");
@@ -291,7 +291,7 @@ public class AdminController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("user", authUser);
 
-            session.setAttribute("positions", positionService.getAllPosition(authUser.getCompany_id()));
+            session.setAttribute("positions", positionService.getAllPosition(authUser.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);

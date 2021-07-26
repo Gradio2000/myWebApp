@@ -28,8 +28,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public List<User> getAllUsers() {
-        return userHiberDao.getAllUsers();
+    public List<User> getAllUsers(int company_id) {
+        return userHiberDao.getAllUsers(company_id);
     }
 
     public void saveUser(User user){
