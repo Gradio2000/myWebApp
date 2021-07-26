@@ -9,7 +9,8 @@ public class Position {
     private int idPosition;
     private String position;
     private List<User> userList;
-    String checkDelete;
+    private String checkDelete;
+    private Integer companyId;
 
     public Position() {
     }
@@ -49,6 +50,15 @@ public class Position {
         this.userList = userList;
     }
 
+    @Column(name = "company_id")
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
     @Transient
     public String getCheckDelete() {
         return checkDelete;
@@ -57,4 +67,6 @@ public class Position {
     public void setCheckDelete(String checkDelete) {
         this.checkDelete = checkDelete;
     }
+
+
 }

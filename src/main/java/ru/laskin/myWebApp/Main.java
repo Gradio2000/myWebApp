@@ -111,7 +111,7 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         PositionDao positionDao = appCont.getBean(PositionDao.class);
 
-        List<Position> positionList = positionDao.getAllPosition();
+        List<Position> positionList = positionDao.getAllPosition(1);
         for (Position position : positionList) {
             System.out.println(position.getUserList().size());
         }

@@ -12,6 +12,7 @@ public class Company {
     private int idCompany;
     private String companyName;
     private List<GroupTest> groupTestList;
+    private List<Position> positionList;
 
     @Id
     @Column(name = "id_company", nullable = false)
@@ -36,8 +37,7 @@ public class Company {
         this.companyName = companyName;
     }
 
-    @OneToMany(targetEntity = GroupTest.class,
-            cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = GroupTest.class, cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name = "company_id")
     public List<GroupTest> getGroupTestList() {
@@ -46,6 +46,17 @@ public class Company {
 
     public void setGroupTestList(List<GroupTest> groupTestList) {
         this.groupTestList = groupTestList;
+    }
+
+    @OneToMany(targetEntity = Position.class, cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinColumn(name = "company_id")
+    public List<Position> getPositionList() {
+        return positionList;
+    }
+
+    public void setPositionList(List<Position> positionList) {
+        this.positionList = positionList;
     }
 
     @Override

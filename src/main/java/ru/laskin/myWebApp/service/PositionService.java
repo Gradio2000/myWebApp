@@ -19,8 +19,8 @@ public class PositionService {
         this.positionDao = positionDao;
     }
 
-    public List<Position> getAllPosition(){
-       return positionDao.getAllPosition();
+    public List<Position> getAllPosition(int company_id){
+       return positionDao.getAllPosition(company_id);
     }
 
     public Position getPositionById(Integer pos_id) {

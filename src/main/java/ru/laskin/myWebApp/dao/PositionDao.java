@@ -14,9 +14,11 @@ public class PositionDao {
 
    private EntityManager em;
 
-    public List<Position> getAllPosition(){
+    public List<Position> getAllPosition(int company_id){
         em = EntityFactoryUtil.getEntityManager();
-        List<Position> positionList = em.createQuery("select p from positions p order by idPosition").getResultList();
+        List<Position> positionList = em.createQuery("select p from positions p where companyId = :id order by idPosition")
+                .setParameter("id", company_id)
+                .getResultList();
         em.close();
         return positionList;
     }

@@ -74,7 +74,7 @@ public class UserController {
         if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
             log.info("продолжение регистрации " + user.getName());
             //получаем из бд список должностей и передаем в модель представления
-            List<Position> listPosition = positionService.getAllPosition();
+            List<Position> listPosition = positionService.getAllPosition(user.getCompany_id());
             model.addAttribute("listPosition", listPosition);
             log.info("завершил регистрацию " + user.getName());
             return "greeting";
@@ -174,7 +174,7 @@ public class UserController {
         log.info("вход");
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(principal.getUserId());
-        List<Position> positionList = positionService.getAllPosition();
+        List<Position> positionList = positionService.getAllPosition(user.getCompany_id());
         model.addAttribute("positionList", positionList);
         model.addAttribute("user", user);
         log.info("выход");

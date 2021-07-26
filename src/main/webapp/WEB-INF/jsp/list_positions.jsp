@@ -33,6 +33,7 @@
                 </tr>
                 <jsp:useBean id="positions" scope="session" type="java.util.List"/>
                 <c:forEach var="position" items="${positions}" varStatus="count">
+                    <input name="companyId" type="hidden" value="${position.companyId}"/>
                     <input name="idPosition" hidden value="${position.idPosition}"/>
                     <tr>
                         <td>${position.idPosition}</td>
@@ -62,6 +63,7 @@
             <div class="modal-body">
                 <%--@elvariable id="pos" type="ru.laskin.myWebApp.model.Position"--%>
                 <sf:form class="validForm" id="myForm" name="formName" action="/addPosition" method="POST" modelAttribute="pos">
+                    <input name="companyId" type="hidden" value="${user.company_id}"/>
                     <div class="form-floating">
                         <textarea name="position" class="form-control" placeholder="Введите должность" id="floatingTextarea" style="height: 100px" required></textarea>
                         <label for="floatingTextarea">Новая должность</label>

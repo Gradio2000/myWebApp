@@ -72,7 +72,7 @@ public class AdminController {
             int id = Integer.parseInt(request.getParameter("id"));
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
-            List<Position> positionSet = positionService.getAllPosition();
+            List<Position> positionSet = positionService.getAllPosition(user.getCompany_id());
             model.addAttribute("posSet", positionSet);
             log.info("Выход");
         } catch (NumberFormatException e) {
@@ -288,10 +288,10 @@ public class AdminController {
     public String getAllPositions(Model model, HttpServletRequest request, HttpSession session){
         log.info("Вход");
         try {
-            session.setAttribute("positions", positionService.getAllPosition());
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("authUser", authUser.getName());
-            request.setAttribute("user", authUser);
+            model.addAttribute("user", authUser);
+
+            session.setAttribute("positions", positionService.getAllPosition(authUser.getCompany_id()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
