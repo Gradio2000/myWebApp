@@ -27,7 +27,7 @@ public class Main {
 //        printTest();
 //        printTestById(10);
 //        deletetest(10);
-        saveTest();
+//        saveTest();
 //        getTestByGroupId(1);
 //        printUser();
 //        getUserById(1);
@@ -42,7 +42,7 @@ public class Main {
 //        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
-//        getAllPosition();
+        getAllPosition();
 //        saveQuestion();
 //        getAllResultByAttempt();
 //        saveResultTest();

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.dao.CompanyDao;
 import ru.laskin.myWebApp.model.*;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
@@ -31,15 +32,18 @@ public class AdminController {
     private final TestService testService;
     private final DeletePositionValidation deletePositionValidation;
     private final ExceptionController exceptionController;
+    private final CompanyDao companyDao;
 
 
     public AdminController(UserService userService, PositionService positionService, TestService testService,
-                           DeletePositionValidation deletePositionValidation, ExceptionController exceptionController) {
+                           DeletePositionValidation deletePositionValidation, ExceptionController exceptionController,
+                           CompanyDao companyDao) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.deletePositionValidation = deletePositionValidation;
         this.exceptionController = exceptionController;
+        this.companyDao = companyDao;
     }
 
     @GetMapping("/allUsers")
@@ -253,7 +257,7 @@ public class AdminController {
     public String addGroup(@ModelAttribute GroupTest groupTest, HttpServletRequest request){
         log.info("Вход");
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        groupTest.setCompanyId(authUser.getCompany_id());
+        groupTest.setCompany(companyDao.getCompanyById(authUser.getCompany_id()));
         try {
             testService.addGroup(groupTest);
             log.info("Выход");

@@ -25,7 +25,7 @@ public class TestHiberDao {
 
     public List<GroupTest> getAllGroup(int company_id){
         em = EntityFactoryUtil.getEntityManager();
-        List<GroupTest> groupTestList = em.createQuery("select g from group_test g where companyId = :id order by groupTestId", GroupTest.class)
+        List<GroupTest> groupTestList = em.createQuery("select g from group_test g where company.idCompany = :id order by groupTestId", GroupTest.class)
                 .setParameter("id", company_id)
                 .getResultList();
         em.close();

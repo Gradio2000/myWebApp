@@ -18,4 +18,11 @@ public class CompanyDao {
         em.close();
         return companyList;
     }
+
+    public Company getCompanyById(Integer id) {
+        em = EntityFactoryUtil.getEntityManager();
+        Company company = em.find(Company.class, id);
+        em.close();
+        return company;
+    }
 }

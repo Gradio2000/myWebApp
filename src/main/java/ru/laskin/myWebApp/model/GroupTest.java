@@ -11,32 +11,32 @@ import java.util.List;
 public class GroupTest {
     private int groupTestId;
     private String name;
-//    private Company company;
-    private int companyId;
+    private Company company;
+//    private int companyId;
     private List<Test> testList;
 
     public GroupTest() {
     }
 
-//    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Company.class)
-//    @JoinColumn(name = "company_id", referencedColumnName = "id_company")
-//    public Company getCompany() {
-//        return company;
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Company.class)
+    @JoinColumn(name = "company_id", referencedColumnName = "id_company")
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+//
+//    @Column(name = "company_id")
+//    public int getCompanyId() {
+//        return companyId;
 //    }
 //
-//    public void setCompany(Company company) {
-//        this.company = company;
+//    public void setCompanyId(int companyId) {
+//        this.companyId = companyId;
 //    }
-
-
-    @Column(name = "company_id")
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
 
     @OneToMany(targetEntity = Test.class,
                cascade = CascadeType.ALL)

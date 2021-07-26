@@ -17,13 +17,18 @@ create table users
     company_id int not null
 );
 
+alter table users
+    add constraint users_positions_id_position_fk
+        foreign key (pos_id) references positions
+            on update cascade;
 
 create unique index users_user_id_uindex on users ("user_id");
 
 INSERT INTO users (name, login, password, email, admin_role, pos_id, registered, key, company_id)
-    VALUES ('Администратор', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', 7, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '1');
+    VALUES ('Админ1', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', 7, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '1');
 
-
+INSERT INTO users (name, login, password, email, admin_role, pos_id, registered, key, company_id)
+VALUES ('Админ2', 'login', '$2a$10$PgHc1un9pFF8EaF254lixOGvCiZTAEOt1tE6dmbvA4qdlBKTJ98Ji', 'aa@aa.aa', 'ADMIN', 7, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '2');
 
 
 

@@ -3,6 +3,7 @@ package ru.laskin.myWebApp.service;
 import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.stereotype.Service;
 import ru.laskin.myWebApp.controllers.ResultController;
+import ru.laskin.myWebApp.dao.CompanyDao;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;
 import ru.laskin.myWebApp.model.*;
@@ -29,16 +30,18 @@ public class TestService {
     private final UserService userService;
     private final AttemptTestService attemptTestService;
     private final ResultTestService resultTestService;
+    private CompanyDao companyDao;
 
 
     public TestService(TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao,
                        UserService userService, AttemptTestService attemptTestService,
-                       ResultTestService resultTestService) {
+                       ResultTestService resultTestService, CompanyDao companyDao) {
         this.testHiberDao = testHiberDao;
         this.questionHiberDao = questionHiberDao;
         this.userService = userService;
         this.attemptTestService = attemptTestService;
         this.resultTestService = resultTestService;
+        this.companyDao = companyDao;
     }
 
     public List<Test> getAllTests() {
@@ -172,7 +175,7 @@ public class TestService {
             groupTest.setGroupTestId(id[i]);
             groupTest.setName(name[i]);
             groupTest.setTestList(getTestsByGroupId(id[i]));
-            groupTest.setCompanyId(companyId[i]);
+            groupTest.setCompany(companyDao.getCompanyById(companyId[i]));
             groupTests.add(groupTest);
         }
         testHiberDao.updateAllGroup(groupTests);
