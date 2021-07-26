@@ -1,4 +1,4 @@
-package ru.laskin.myWebApp.controllers;
+package ru.laskin.myWebApp.controllers.userModule;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -21,14 +21,14 @@ import java.util.Date;
 
 
 @Controller
-public class TestController {
+public class TestProcessingController {
 
     private final ResultTestService resultTestService;
     private final TestService testService;
     private final AttemptTestService attemptTestService;
     private final UserService userService;
 
-    public TestController(ResultTestService resultTestService, TestService testService, AttemptTestService attemptTestService, UserService userService) {
+    public TestProcessingController(ResultTestService resultTestService, TestService testService, AttemptTestService attemptTestService, UserService userService) {
         this.resultTestService = resultTestService;
         this.testService = testService;
         this.attemptTestService = attemptTestService;

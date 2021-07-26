@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.controllers.userModule.ResultController;
 import ru.laskin.myWebApp.model.User;
 
 import java.util.logging.Logger;

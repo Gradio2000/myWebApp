@@ -1,5 +1,6 @@
-package ru.laskin.myWebApp.controllers;
+package ru.laskin.myWebApp.controllers.adminModule;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.controllers.ExceptionController;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import java.util.logging.Logger;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 public class PositionController {
     private static final Logger log = Logger.getLogger(AdminController.class.getName());
 

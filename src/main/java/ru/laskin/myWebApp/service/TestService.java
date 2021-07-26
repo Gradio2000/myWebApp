@@ -2,7 +2,7 @@ package ru.laskin.myWebApp.service;
 
 import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.stereotype.Service;
-import ru.laskin.myWebApp.controllers.ResultController;
+import ru.laskin.myWebApp.controllers.userModule.ResultController;
 import ru.laskin.myWebApp.dao.CompanyDao;
 import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.TestHiberDao;

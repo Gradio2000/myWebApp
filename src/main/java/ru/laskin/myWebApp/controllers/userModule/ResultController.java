@@ -1,4 +1,4 @@
-package ru.laskin.myWebApp.controllers;
+package ru.laskin.myWebApp.controllers.userModule;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

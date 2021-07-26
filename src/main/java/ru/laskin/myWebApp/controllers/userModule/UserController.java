@@ -1,4 +1,4 @@
-package ru.laskin.myWebApp.controllers;
+package ru.laskin.myWebApp.controllers.userModule;
 
 import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.controllers.ExceptionController;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;

@@ -1,5 +1,6 @@
-package ru.laskin.myWebApp.controllers;
+package ru.laskin.myWebApp.controllers.adminModule;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Controller
+@PreAuthorize("hasAuthority('ADMIN')")
 public class FileController {
 
     private final TestService testService;
