@@ -4,8 +4,10 @@ import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.controllers.ExceptionController;
 import ru.laskin.myWebApp.model.Company;
 import ru.laskin.myWebApp.model.Position;
@@ -14,7 +16,6 @@ import ru.laskin.myWebApp.service.CompanyService;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
-import ru.laskin.myWebApp.validation.UserDopRegistrationValidator;
 import ru.laskin.myWebApp.validation.UserValidator;
 
 import javax.servlet.ServletException;
@@ -35,20 +36,17 @@ public class UserThemselfController {
     private final PositionService positionService;
     private final TestService testService;
     private final UserValidator userValidator;
-    private final UserDopRegistrationValidator userDopRegistrationValidator;
     private final ExceptionController exceptionController;
     private final CompanyService companyService;
 
 
     public UserThemselfController(UserService userService, PositionService positionService,
                                   TestService testService, UserValidator userValidator,
-                                  UserDopRegistrationValidator userDopRegistrationValidator,
                                   ExceptionController exceptionController, CompanyService companyService) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.userValidator = userValidator;
-        this.userDopRegistrationValidator = userDopRegistrationValidator;
         this.exceptionController = exceptionController;
         this.companyService = companyService;
     }
@@ -78,10 +76,9 @@ public class UserThemselfController {
         if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
             log.info("продолжение регистрации " + user.getName());
             //получаем из бд список компаний и передаем в модель представления
-//            List<Position> listPosition = positionService.getAllPosition(user.getCompany().getIdCompany());
             List<Company> companyList = companyService.getAllCompanies();
             model.addAttribute("companyList", companyList);
-            log.info("завершил регистрацию " + user.getName());
+            log.info(user.getName() + "завершает регистрацию");
             return "greeting";
         }
 
@@ -91,10 +88,8 @@ public class UserThemselfController {
     }
 
     @GetMapping("/new_user")
-    public String newUser(Model model){
+    public String newUser(){
         log.info("вход");
-        //передаем пустого пользователя, чтобы там его наполнить
-//        model.addAttribute("user", new User());
         log.info("выход");
         return "registration";
     }
@@ -104,8 +99,7 @@ public class UserThemselfController {
                           @RequestParam (required = false) String admin,
                           @RequestParam String login,
                           @RequestParam String password,
-                          @RequestParam String confirmPassword,
-                          @RequestParam String companyName) {
+                          @RequestParam String confirmPassword) {
         log.info("вход");
         User user = new User();
         user.setLogin(login);
@@ -143,11 +137,10 @@ public class UserThemselfController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
+    public String reUpdate(@ModelAttribute User user,
                            @RequestParam Integer pos_id,
                            @RequestParam Integer company_id){
         log.info("вход");
-        userDopRegistrationValidator.validate(user, bindingResult);
 
         Position position = positionService.getPositionById(pos_id);
         user.setPosition(position);
@@ -166,7 +159,7 @@ public class UserThemselfController {
     }
 
     @GetMapping("/confirmEmail")
-    public String confirmEmail(@RequestParam("userId") Integer userId, @RequestParam("key") String key, Model model){
+    public String confirmEmail(@RequestParam Integer userId, @RequestParam String key, Model model){
         log.info("вход");
         if (userService.getUserById(userId) == null){
             log.info("выход. userId == null");
@@ -264,8 +257,6 @@ public class UserThemselfController {
                                         @RequestParam Integer userId,
                                         @RequestParam UUID key,
                                         HttpServletRequest request){
-
-        Map<String, String[]> map = request.getParameterMap();
         log.info("вход");
         try {
             User user = userService.getUserById(userId);
@@ -281,5 +272,4 @@ public class UserThemselfController {
         }
         return "login";
     }
-
 }

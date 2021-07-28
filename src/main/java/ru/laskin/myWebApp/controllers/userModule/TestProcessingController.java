@@ -37,7 +37,7 @@ public class TestProcessingController {
 
     @GetMapping("/getTest")
     public String getTest(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
-                          Model model, HttpServletRequest request, HttpSession session){
+                          Model model, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(authUser.getUserId());
 
