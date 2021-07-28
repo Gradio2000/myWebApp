@@ -7,6 +7,9 @@ import org.springframework.validation.Validator;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Component
 public class UserValidator implements Validator {
@@ -37,5 +40,16 @@ public class UserValidator implements Validator {
         if (userService.checkUserRegistration(user)){
             errors.rejectValue("login", "UserExists");
         }
+    }
+
+    public Map<String, String> validate(User user) {
+        Map<String, String> errorMap = new HashMap<>();
+        if (userService.checkUserRegistration(user)){
+            errorMap.put("loginError", "Пользователь с таким логином зарегистрирован ранее");
+        }
+        if (!user.getPassword().equals(user.getConfirmPassword())){
+            errorMap.put("confirmPassword", "Пароль и подтверждение не совпадают");
+        }
+        return errorMap;
     }
 }

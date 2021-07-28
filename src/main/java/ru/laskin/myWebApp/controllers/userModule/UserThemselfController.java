@@ -5,13 +5,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.laskin.myWebApp.controllers.ExceptionController;
+import ru.laskin.myWebApp.model.Company;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.service.CompanyService;
 import ru.laskin.myWebApp.service.PositionService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
@@ -29,7 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Controller
-public class UserController {
+public class UserThemselfController {
     private static final Logger log = Logger.getLogger(ResultController.class.getName());
 
     private final UserService userService;
@@ -38,17 +37,20 @@ public class UserController {
     private final UserValidator userValidator;
     private final UserDopRegistrationValidator userDopRegistrationValidator;
     private final ExceptionController exceptionController;
+    private final CompanyService companyService;
 
 
-    public UserController(UserService userService, PositionService positionService,
-                          TestService testService, UserValidator userValidator,
-                          UserDopRegistrationValidator userDopRegistrationValidator, ExceptionController exceptionController) {
+    public UserThemselfController(UserService userService, PositionService positionService,
+                                  TestService testService, UserValidator userValidator,
+                                  UserDopRegistrationValidator userDopRegistrationValidator,
+                                  ExceptionController exceptionController, CompanyService companyService) {
         this.userService = userService;
         this.positionService = positionService;
         this.testService = testService;
         this.userValidator = userValidator;
         this.userDopRegistrationValidator = userDopRegistrationValidator;
         this.exceptionController = exceptionController;
+        this.companyService = companyService;
     }
 
     @GetMapping("/greeting")
@@ -57,6 +59,7 @@ public class UserController {
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         log.info("принципал " + authUser.getName());
+
         //Получаем из БД юзера, того, кто принципал (это нужно для того, что
         //у авторизированного пользователя не будут заполнены поля имя и т.п.
         User user = userService.getUserById(authUser.getUserId());
@@ -74,9 +77,10 @@ public class UserController {
         //если у пользователя есть незаполненные поля - отправляем его дальше регистрироваться
         if (user.getName() == null || user.getName().equals("") || user.getEmail() == null || user.getEmail().equals("")) {
             log.info("продолжение регистрации " + user.getName());
-            //получаем из бд список должностей и передаем в модель представления
-            List<Position> listPosition = positionService.getAllPosition(user.getCompany().getIdCompany());
-            model.addAttribute("listPosition", listPosition);
+            //получаем из бд список компаний и передаем в модель представления
+//            List<Position> listPosition = positionService.getAllPosition(user.getCompany().getIdCompany());
+            List<Company> companyList = companyService.getAllCompanies();
+            model.addAttribute("companyList", companyList);
             log.info("завершил регистрацию " + user.getName());
             return "greeting";
         }
@@ -90,30 +94,46 @@ public class UserController {
     public String newUser(Model model){
         log.info("вход");
         //передаем пустого пользователя, чтобы там его наполнить
-        model.addAttribute("user", new User());
+//        model.addAttribute("user", new User());
         log.info("выход");
         return "registration";
     }
 
     @PostMapping("/new_user")
-    public String newUser(HttpServletRequest request, @ModelAttribute User user, BindingResult bindingResult) {
+    public String newUser(HttpServletRequest request,
+                          @RequestParam (required = false) String admin,
+                          @RequestParam String login,
+                          @RequestParam String password,
+                          @RequestParam String confirmPassword,
+                          @RequestParam String companyName) {
         log.info("вход");
-        userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()){
+        User user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        user.setConfirmPassword(confirmPassword);
+
+        Map<String, String> errorMap = userValidator.validate(user);
+        if (!errorMap.isEmpty()){
             log.info("вернулась ошибка регистрации пользователя");
+            request.setAttribute("loginError", errorMap.get("loginError"));
+            request.setAttribute("confirmPassword", errorMap.get("confirmPassword"));
             return "registration";
         }
 
-        //эти переменные нужны для автологина
-        //пароль ещё не закодирован
-        String login = user.getLogin();
-        String pass = user.getPassword();
+
+        //проверяем нового пользователя на admin
+        if (admin != null && admin.equals("on")){
+            user.setAdminRole("ADMIN");
+        }
+        else {
+            user.setAdminRole("USER");
+        }
 
         userService.saveUser(user);
 
         //автологин, если регистрация прошла успешно
         try {
-            request.login(login, pass);
+            request.login(login, password);
         } catch (ServletException e) {
             log.severe("ошибка автологина. см. стек");
             log.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
@@ -123,13 +143,17 @@ public class UserController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request){
+    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request,
+                           @RequestParam Integer pos_id,
+                           @RequestParam Integer company_id){
         log.info("вход");
         userDopRegistrationValidator.validate(user, bindingResult);
-        String pos_id = request.getParameter("pos_id");
 
-        Position position = positionService.getPositionById(Integer.valueOf(pos_id));
+        Position position = positionService.getPositionById(pos_id);
         user.setPosition(position);
+
+        Company company = companyService.getCompanyById(company_id);
+        user.setCompany(company);
 
         user.setEmail(user.getEmail().toLowerCase(Locale.ROOT));
 
@@ -257,4 +281,5 @@ public class UserController {
         }
         return "login";
     }
+
 }

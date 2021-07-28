@@ -53,4 +53,13 @@ public class PositionService {
     public void addPosition(Position position) {
         positionDao.addPosition(position);
     }
+
+    public Map<Integer, String> getNamesAllPosition(Integer id) {
+        List<Position> positionList = positionDao.getAllPosition(id);
+        Map<Integer, String> positionNamesMap = new HashMap<>();
+        for (Position position : positionList){
+            positionNamesMap.put(position.getIdPosition(), position.getPosition());
+        }
+        return positionNamesMap;
+    }
 }

@@ -12,6 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 
 <html>
@@ -40,7 +41,7 @@
     }
 
     /* Set a style for all buttons */
-    button {
+    .but {
         background-color: #4CAF50;
         color: white;
         padding: 14px 20px;
@@ -51,7 +52,7 @@
         opacity: 0.9;
     }
 
-    button:hover {
+    .but:hover {
         opacity:1;
     }
 
@@ -73,6 +74,18 @@
         margin-right: auto;
         margin-left: auto;
         padding: 16px;
+        position: relative;
+
+        /*display: block;*/
+
+        /*padding-left: 35px;*/
+        /*margin-bottom: 12px;*/
+        /*cursor: pointer;*/
+        /*font-size: 22px;*/
+        /*-webkit-user-select: none;*/
+        /*-moz-user-select: none;*/
+        /*-ms-user-select: none;*/
+        /*user-select: none;*/
     }
 
     /* Clear floats */
@@ -81,20 +94,55 @@
         clear: both;
         display: table;
     }
-
-    /* Change styles for cancel button and signup button on extra small screens */
-    @media screen and (max-width: 300px) {
-        .cancelbtn, .signupbtn {
-            width: 100%;
-        }
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
     }
+
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .container .check {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
 </style>
 <body>
-    <sf:form action="/new_user" method="post" modelAttribute="user">
-        <sf:hidden path="userId"/>
-        <sf:hidden path="email"/>
-        <sf:hidden path="adminRole"/>
-        <sf:hidden path="name"/>
+
+    <sf:form action="/new_user" method="post">
 
         <div class="container">
             <h1>Регистрация</h1>
@@ -103,21 +151,38 @@
 
             <label><b>Логин</b></label>
             <input type="text" placeholder="Придумайте логин" name="login" required>
-            <sf:errors path="login" cssStyle="color: #CE272D"/><br/>
+<%--            <sf:errors path="login" cssStyle="color: #CE272D"/><br/>--%>
+            <label style="color: #da190b">${loginError}</label><br/>
 
             <label><b>Пароль</b></label>
             <input type="password" placeholder="Придумайте пароль" name="password" required>
 
             <label><b>Повторите пароль</b></label>
             <input type="password" placeholder="Введите пароль ещё раз" name="confirmPassword" required>
-            <sf:errors path="confirmPassword" cssStyle="color: #CE272D"/>
+<%--            <sf:errors path="confirmPassword" cssStyle="color: #CE272D"/><br/>--%>
+            <label style="color: #da190b">${confirmPassword}</label><br/>
+
+            <input id="checkbox" type="checkbox" name="admin">
+            <label for="checkbox"><b> Администратор</b> (новая компания)</label><br/>
+
+            <label hidden><b>Название организации</b></label>
+            <input id="text" type="text" placeholder="Введите на звание вашей организации " name="companyName" style="display: none">
 
             <div class="clearfix" style="margin-top: 10px">
-                <button type="button" class="cancelbtn" onclick="document.location='/login'">Отмена</button>
-                <button type="submit" class="signupbtn">Зарегистрироваться</button>
+                <button type="button" class="cancelbtn but" onclick="document.location='/login'">Отмена</button>
+                <button type="submit" class="signupbtn but">Зарегистрироваться</button>
             </div>
         </div>
     </sf:form>
 
 </body>
+<script>
+    $('#checkbox').click(function(){
+        if ($(this).is(':checked')){
+            $('#text').show();
+        } else {
+            $('#text').hide().val();
+        }
+    });
+</script>
 </html>

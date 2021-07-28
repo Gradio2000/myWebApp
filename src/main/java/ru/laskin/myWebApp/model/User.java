@@ -83,7 +83,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "name", nullable = false, length = -1)
+    @Column(name = "name", length = -1)
     public String getName() {
         return name;
     }
@@ -132,6 +132,8 @@ public class User {
         this.adminRole = adminRole;
     }
 
+//    @JsonBackReference
+//    @JsonIgnore
     @ManyToOne(targetEntity = Position.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "pos_id", referencedColumnName = "id_position")
     public Position getPosition() {

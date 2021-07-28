@@ -33,11 +33,8 @@ public class UserService {
     }
 
     public void saveUser(User user){
+        //шифруем пароль
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        if (!user.getAdminRole().equals("ADMIN")){
-            user.setAdminRole("USER");
-        }
-
         //присваиваем пользователю ключ
         user.setKey(UUID.randomUUID());
         userHiberDao.saveUser(user);

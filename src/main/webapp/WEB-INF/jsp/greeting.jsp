@@ -15,6 +15,7 @@
 <jsp:useBean id="user" scope="request" class="ru.laskin.myWebApp.model.User"/>
 <jsp:useBean id="position" scope="request" class="ru.laskin.myWebApp.model.Position"/>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <html>
 <style>
@@ -144,6 +145,21 @@
     .select-items div:hover, .same-as-selected {
         background-color: rgba(0, 0, 0, 0.1);
     }
+    * {
+        outline: 0;
+        font-family: sans-serif
+    }
+    body {
+        background-color: #fafafa
+    }
+    span.msg,
+    span.choose {
+        color: #555;
+        padding: 5px 0 10px;
+        display: inherit
+    }
+
+
 </style>
 <body>
 
@@ -159,13 +175,22 @@
         <p>Пожалуйста, заполните все поля для завершения регистрации в системе</p>
         <hr>
 
-        <div class="custom-select" style="width:200px;">
+
+        <div style="width:200px; margin-top: 15px">
             <label>
-                <select name="pos_id" required>
-                    <option value="" disabled selected>Выберите должность</option>
-                    <c:forEach var="position" items="${listPosition}">
-                        <option value="${position.idPosition}">${position.position}</option>
+                <select id="select" name="company_id" required onchange="sel()">
+                    <option value="" disabled selected>Выберите компанию</option>
+                    <c:forEach var="company" items="${companyList}">
+                        <option value="${company.idCompany}">${company.companyName}</option>
                     </c:forEach>
+                </select>
+            </label>
+        </div>
+
+        <div style="width:200px;">
+            <label>
+                <select id="selectPosition" name="pos_id" required>
+                    <option value="" disabled selected>Выберите должность</option>
                 </select>
             </label>
         </div>
@@ -184,83 +209,32 @@
     </div>
 </sf:form>
 
-
+</body>
 <script>
-    var x, i, j, selElmnt, a, b, c;
-    /*look for any elements with the class "custom-select":*/
-    x = document.getElementsByClassName("custom-select");
-    for (i = 0; i < x.length; i++) {
-        selElmnt = x[i].getElementsByTagName("select")[0];
-        /*for each element, create a new DIV that will act as the selected item:*/
-        a = document.createElement("DIV");
-        a.setAttribute("class", "select-selected");
-        a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-        x[i].appendChild(a);
-        /*for each element, create a new DIV that will contain the option list:*/
-        b = document.createElement("DIV");
-        b.setAttribute("class", "select-items select-hide");
-        for (j = 0; j < selElmnt.length; j++) {
-            /*for each option in the original select element,
-            create a new DIV that will act as an option item:*/
-            c = document.createElement("DIV");
-            c.innerHTML = selElmnt.options[j].innerHTML;
-            c.addEventListener("click", function(e) {
-                /*when an item is clicked, update the original select box,
-                and the selected item:*/
-                var y, i, k, s, h;
-                s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                h = this.parentNode.previousSibling;
-                for (i = 0; i < s.length; i++) {
-                    if (s.options[i].innerHTML === this.innerHTML) {
-                        s.selectedIndex = i;
-                        h.innerHTML = this.innerHTML;
-                        y = this.parentNode.getElementsByClassName("same-as-selected");
-                        for (k = 0; k < y.length; k++) {
-                            y[k].removeAttribute("class");
-                        }
-                        this.setAttribute("class", "same-as-selected");
-                        break;
-                    }
+    var value = 0;
+    function sel(){
+        value = $('#select').val();
+        console.log(value)
+        send();
+    }
+
+    function send (){
+        $.ajax({
+            url: "/allPositionByCompanyId/" + value,
+            dataType: 'json',
+            type: 'get',
+            encoding: 'identity',
+            success: function (e) {
+                $('.item').remove();
+                for (const key in e){
+                    $('#selectPosition').append($('<option class="item" value=' + key +'>' + e[key] + '</option>'));
                 }
-                h.click();
-            });
-            b.appendChild(c);
-        }
-        x[i].appendChild(b);
-        a.addEventListener("click", function(e) {
-            /*when the select box is clicked, close any other select boxes,
-            and open/close the current select box:*/
-            e.stopPropagation();
-            closeAllSelect(this);
-            this.nextSibling.classList.toggle("select-hide");
-            this.classList.toggle("select-arrow-active");
+            },
+            error: function () {
+                alert("Ошибка получения данных!")
+            }
         });
     }
-    function closeAllSelect(elmnt) {
-        /*a function that will close all select boxes in the document,
-        except the current select box:*/
-        var x, y, i, arrNo = [];
-        x = document.getElementsByClassName("select-items");
-        y = document.getElementsByClassName("select-selected");
-        for (i = 0; i < y.length; i++) {
-            if (elmnt === y[i]) {
-                arrNo.push(i)
-            } else {
-                y[i].classList.remove("select-arrow-active");
-            }
-        }
-        for (i = 0; i < x.length; i++) {
-            if (arrNo.indexOf(i)) {
-                x[i].classList.add("select-hide");
-            }
-        }
-    }
-    /*if the user clicks anywhere outside the select box,
-    then close all select boxes:*/
-    document.addEventListener("click", closeAllSelect);
+
 </script>
-
-
-
-</body>
 </html>

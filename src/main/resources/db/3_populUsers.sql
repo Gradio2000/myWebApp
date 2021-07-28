@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS users CASCADE ;
 create table users
 (
     user_id serial not null primary key ,
-    name VARCHAR not null,
+    name VARCHAR,
     login VARCHAR not null,
     password VARCHAR not null,
     email VARCHAR,
@@ -14,7 +14,7 @@ create table users
             on update cascade on delete cascade,
     registered boolean default false,
     key uuid not null,
-    company_id int not null
+    company_id int
 );
 
 alter table users

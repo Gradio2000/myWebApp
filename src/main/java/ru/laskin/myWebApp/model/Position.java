@@ -1,5 +1,7 @@
 package ru.laskin.myWebApp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -37,6 +39,8 @@ public class Position {
         this.position = position;
     }
 
+
+    @JsonIgnore
     @OneToMany(
             targetEntity = User.class,
             fetch = FetchType.EAGER,
