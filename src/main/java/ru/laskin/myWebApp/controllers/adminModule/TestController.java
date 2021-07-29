@@ -13,6 +13,7 @@ import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.TestService;
+import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,10 +28,12 @@ public class TestController {
 
     private final TestService testService;
     private final ExceptionController exceptionController;
+    private final UserService userService;
 
-    public TestController(TestService testService, ExceptionController exceptionController) {
+    public TestController(TestService testService, ExceptionController exceptionController, UserService userService) {
         this.testService = testService;
         this.exceptionController = exceptionController;
+        this.userService = userService;
     }
 
     @GetMapping("/allTests")
@@ -38,9 +41,10 @@ public class TestController {
         log.info("Вход");
         try {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            request.setAttribute("user", authUser);
+            User user = userService.getUserById(authUser.getUserId());
+            request.setAttribute("user", user);
 
-            model.addAttribute("allgrouptest", testService.getAllGroupTest(authUser.getCompany().getIdCompany()));
+            model.addAttribute("allgrouptest", testService.getAllGroupTest(user.getCompany().getIdCompany()));
             model.addAttribute("test", new Test());
             log.info("Выход");
         } catch (Exception e) {

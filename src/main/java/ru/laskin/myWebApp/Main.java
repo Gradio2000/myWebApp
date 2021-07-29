@@ -42,7 +42,7 @@ public class Main {
 //        getAttemptById(1);
 //        updateAttemptTest();
 //        saveAttemptTest();
-        getAllPosition();
+//        getAllPosition();
 //        saveQuestion();
 //        getAllResultByAttempt();
 //        saveResultTest();
@@ -50,6 +50,15 @@ public class Main {
 //        createPDF();
 //        getPdf();
 //        deletePosition(6);
+        saveCompany();
+    }
+
+    private static void saveCompany() {
+        ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
+        CompanyDao companyDao = appCont.getBean(CompanyDao.class);
+        Company company = new Company();
+        company.setCompanyName("aaaaaa");
+        companyDao.saveCompany(company);
     }
 
     private static void getCompany(int i) {

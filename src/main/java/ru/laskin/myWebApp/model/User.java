@@ -132,8 +132,7 @@ public class User {
         this.adminRole = adminRole;
     }
 
-//    @JsonBackReference
-//    @JsonIgnore
+
     @ManyToOne(targetEntity = Position.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "pos_id", referencedColumnName = "id_position")
     public Position getPosition() {

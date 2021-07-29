@@ -38,9 +38,10 @@ public class UserController {
         log.info("Вход");
         try {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("authUser", authUser.getName());
-            request.setAttribute("user", authUser);
-            model.addAttribute("users", userService.getAllUsers(authUser.getCompany().getIdCompany()));
+            User user = userService.getUserById(authUser.getUserId());
+            request.setAttribute("user", user);
+
+            model.addAttribute("users", userService.getAllUsers(user.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);

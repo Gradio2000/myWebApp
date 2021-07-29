@@ -12,6 +12,7 @@ import ru.laskin.myWebApp.controllers.ExceptionController;
 import ru.laskin.myWebApp.model.Position;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.PositionService;
+import ru.laskin.myWebApp.service.UserService;
 import ru.laskin.myWebApp.validation.DeletePositionValidation;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,15 +24,18 @@ import java.util.logging.Logger;
 public class PositionController {
     private static final Logger log = Logger.getLogger(AdminController.class.getName());
 
-    public PositionController(PositionService positionService, DeletePositionValidation deletePositionValidation, ExceptionController exceptionController) {
-        this.positionService = positionService;
-        this.deletePositionValidation = deletePositionValidation;
-        this.exceptionController = exceptionController;
-    }
-
     private final PositionService positionService;
     private final DeletePositionValidation deletePositionValidation;
     private final ExceptionController exceptionController;
+    private final UserService userService;
+
+    public PositionController(PositionService positionService, DeletePositionValidation deletePositionValidation,
+                              ExceptionController exceptionController, UserService userService) {
+        this.positionService = positionService;
+        this.deletePositionValidation = deletePositionValidation;
+        this.exceptionController = exceptionController;
+        this.userService = userService;
+    }
 
 
     @GetMapping("/allPosition")
@@ -39,9 +43,10 @@ public class PositionController {
         log.info("Вход");
         try {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user", authUser);
+            User user = userService.getUserById(authUser.getUserId());
+            model.addAttribute("user", user);
 
-            session.setAttribute("positions", positionService.getAllPosition(authUser.getCompany().getIdCompany()));
+            session.setAttribute("positions", positionService.getAllPosition(user.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);

@@ -1,5 +1,6 @@
 package ru.laskin.myWebApp.dao;
 
+import org.hibernate.Session;
 import org.springframework.stereotype.Component;
 import ru.laskin.myWebApp.model.Company;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
@@ -24,5 +25,16 @@ public class CompanyDao {
         Company company = em.find(Company.class, id);
         em.close();
         return company;
+    }
+
+    public void saveCompany(Company company) {
+        em = EntityFactoryUtil.getEntityManager();
+        Session session = em.unwrap(Session.class);
+        session.beginTransaction();
+        session.saveOrUpdate(company);
+        session.getTransaction().commit();
+        em.clear();
+        session.flush();
+        session.close();
     }
 }

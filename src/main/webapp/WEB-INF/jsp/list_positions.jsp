@@ -63,7 +63,7 @@
             <div class="modal-body">
                 <%--@elvariable id="pos" type="ru.laskin.myWebApp.model.Position"--%>
                 <sf:form class="validForm" id="myForm" name="formName" action="/addPosition" method="POST" modelAttribute="pos">
-                    <input name="companyId" type="hidden" value="${user.company_id}"/>
+                    <input name="companyId" type="hidden" value="${user.company.idCompany}"/>
                     <div class="form-floating">
                         <textarea name="position" class="form-control" placeholder="Введите должность" id="floatingTextarea" style="height: 100px" required></textarea>
                         <label for="floatingTextarea">Новая должность</label>

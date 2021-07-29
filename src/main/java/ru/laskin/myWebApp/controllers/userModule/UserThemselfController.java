@@ -4,6 +4,7 @@ import org.codehaus.plexus.util.ExceptionUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +53,7 @@ public class UserThemselfController {
     }
 
     @GetMapping("/greeting")
-    public String greeting(Model model, HttpServletRequest request, HttpSession session){
+    public String greeting(Model model, HttpSession session){
         log.info("Вход");
         //получаем авторизованного пользователя (принципала) из контекста безопасности
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -61,13 +62,7 @@ public class UserThemselfController {
         //Получаем из БД юзера, того, кто принципал (это нужно для того, что
         //у авторизированного пользователя не будут заполнены поля имя и т.п.
         User user = userService.getUserById(authUser.getUserId());
-
-        //если пользователь - админ, переходим на нужную страницу
-        if (user.getAdminRole().equals("ADMIN")){
-            request.setAttribute("user", user);
-            return "adminModule";
-        }
-
+        
         //если роль пользователя - USER,
         //добавляем авторизованного пользователя в модель представления
         model.addAttribute("user", user);
@@ -80,6 +75,11 @@ public class UserThemselfController {
             model.addAttribute("companyList", companyList);
             log.info(user.getName() + "завершает регистрацию");
             return "greeting";
+        }
+
+        //если пользователь - админ,
+        if (user.getAdminRole().equals("ADMIN")){
+            return "adminModule";
         }
 
         session.setAttribute("allTestGroup",testService.getAllGroupTest(user.getCompany().getIdCompany()));
@@ -99,8 +99,13 @@ public class UserThemselfController {
                           @RequestParam (required = false) String admin,
                           @RequestParam String login,
                           @RequestParam String password,
-                          @RequestParam String confirmPassword) {
+                          @RequestParam String confirmPassword,
+                          @RequestParam (required = false) String companyName) {
         log.info("вход");
+
+        if (companyName != null){
+            companyService.saveCompany(companyName);
+        }
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
@@ -137,7 +142,7 @@ public class UserThemselfController {
     }
 
     @PostMapping("/reUpdate")
-    public String reUpdate(@ModelAttribute User user,
+    public String reUpdate(@ModelAttribute User user, BindingResult bindingResult, //пытался убрать binding - выдает ошибку 400
                            @RequestParam Integer pos_id,
                            @RequestParam Integer company_id){
         log.info("вход");

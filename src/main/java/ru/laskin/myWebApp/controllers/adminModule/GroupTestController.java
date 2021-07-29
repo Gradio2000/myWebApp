@@ -14,6 +14,7 @@ import ru.laskin.myWebApp.model.GroupTest;
 import ru.laskin.myWebApp.model.Test;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.TestService;
+import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.logging.Logger;
@@ -26,11 +27,14 @@ public class GroupTestController {
     private final TestService testService;
     private final ExceptionController exceptionController;
     private final CompanyDao companyDao;
+    private final UserService userService;
 
-    public GroupTestController(TestService testService, ExceptionController exceptionController, CompanyDao companyDao) {
+    public GroupTestController(TestService testService, ExceptionController exceptionController,
+                               CompanyDao companyDao, UserService userService) {
         this.testService = testService;
         this.exceptionController = exceptionController;
         this.companyDao = companyDao;
+        this.userService = userService;
     }
 
     @PostMapping("/addTest")
@@ -53,9 +57,9 @@ public class GroupTestController {
         log.info("Вход");
         try {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            request.setAttribute("user", authUser);
-
-            model.addAttribute("groupTests", testService.getAllGroupTest(authUser.getCompany().getIdCompany()));
+            User user = userService.getUserById(authUser.getUserId());
+            request.setAttribute("user", user);
+            model.addAttribute("groupTests", testService.getAllGroupTest(user.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);
