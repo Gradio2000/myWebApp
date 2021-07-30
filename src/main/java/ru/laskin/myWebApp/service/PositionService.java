@@ -23,6 +23,10 @@ public class PositionService {
        return positionDao.getAllPosition(company_id);
     }
 
+    public List<Position> getAllPositionWithoutAdminRole(int company_id){
+        return positionDao.getAllPositionWithoutAdminRole(company_id);
+    }
+
     public Position getPositionById(Integer pos_id) {
         return positionDao.getPositionById(pos_id);
     }
@@ -55,7 +59,7 @@ public class PositionService {
     }
 
     public Map<Integer, String> getNamesAllPosition(Integer id) {
-        List<Position> positionList = positionDao.getAllPosition(id);
+        List<Position> positionList = positionDao.getAllPositionWithoutAdminRole(id);
         Map<Integer, String> positionNamesMap = new HashMap<>();
         for (Position position : positionList){
             positionNamesMap.put(position.getIdPosition(), position.getPosition());

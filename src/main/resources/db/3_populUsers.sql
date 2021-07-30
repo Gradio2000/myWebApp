@@ -8,10 +8,7 @@ create table users
     password VARCHAR not null,
     email VARCHAR,
     admin_role VARCHAR,
-    pos_id Integer
-        constraint users_positions_id_position_fk
-            references positions
-            on update cascade on delete cascade,
+    pos_id Integer,
     registered boolean default false,
     key uuid not null,
     company_id int

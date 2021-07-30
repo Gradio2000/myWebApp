@@ -18,11 +18,90 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <html>
+
+<body>
+
+<sf:form action="/reUpdate" method="post" modelAttribute="user">
+    <sf:hidden path="userId"/>
+    <sf:hidden path="login"/>
+    <sf:hidden path="adminRole"/>
+    <sf:hidden path="password"/>
+    <sf:hidden path="key"/>
+    <sf:hidden path="position"/>
+    <div class="container">
+        <h1>Завершение регистрации</h1>
+        <p>Пожалуйста, заполните все поля для завершения регистрации в системе</p>
+        <hr>
+
+
+        <div style="width:200px; margin-top: 15px">
+            <label>
+                <select id="select" name="company_id" required onchange="sel()">
+                    <option value="" disabled selected>Выберите компанию</option>
+                    <c:forEach var="company" items="${companyList}">
+                        <option value="${company.idCompany}">${company.companyName}</option>
+                    </c:forEach>
+                </select>
+            </label>
+        </div>
+
+        <br/>
+
+        <div style="width:200px;">
+            <label>
+                <select id="selectPosition" name="pos_id" required>
+                    <option value="" disabled selected>Выберите должность</option>
+                </select>
+            </label>
+        </div>
+        <sf:errors id="err" path="position" cssStyle="color: red"/>
+        <br/>
+        <label><b>Фамилия, имя, отчество</b></label>
+        <input type="text" placeholder="Фамилия Имя Отчество" name="name" required>
+        <label><b>Email</b></label>
+        <input type="email" placeholder="Email" name="email" required>
+
+
+        <div class="clearfix" style="margin-top: 10px">
+            <button type="button" class="cancelbtn" onclick="document.location='/logout'">Отмена</button>
+            <button type="submit" class="signupbtn">Зарегистрироваться</button>
+        </div>
+    </div>
+</sf:form>
+
+</body>
+<script>
+    var value = 0;
+    function sel(){
+        value = $('#select').val();
+        console.log(value)
+        send();
+    }
+
+    function send (){
+        $.ajax({
+            url: "/allPositionByCompanyId/" + value,
+            dataType: 'json',
+            type: 'get',
+            encoding: 'identity',
+            success: function (e) {
+                $('.item').remove();
+                for (const key in e){
+                    $('#selectPosition').append($('<option class="item" value=' + key +'>' + e[key] + '</option>'));
+                }
+            },
+            error: function () {
+                alert("Ошибка получения данных!")
+            }
+        });
+    }
+
+</script>
 <style>
     body {font-family: Arial, Helvetica, sans-serif;}
     * {box-sizing: border-box}
 
-     /*Full-width input fields*/
+    /*Full-width input fields*/
     input[type=text], input[type=email] {
         width: 100%;
         padding: 15px;
@@ -161,80 +240,4 @@
 
 
 </style>
-<body>
-
-<sf:form action="/reUpdate" method="post" modelAttribute="user">
-    <sf:hidden path="userId"/>
-    <sf:hidden path="login"/>
-    <sf:hidden path="adminRole"/>
-    <sf:hidden path="password"/>
-    <sf:hidden path="key"/>
-    <sf:hidden path="position"/>
-    <div class="container">
-        <h1>Завершение регистрации</h1>
-        <p>Пожалуйста, заполните все поля для завершения регистрации в системе</p>
-        <hr>
-
-
-        <div style="width:200px; margin-top: 15px">
-            <label>
-                <select id="select" name="company_id" required onchange="sel()">
-                    <option value="" disabled selected>Выберите компанию</option>
-                    <c:forEach var="company" items="${companyList}">
-                        <option value="${company.idCompany}">${company.companyName}</option>
-                    </c:forEach>
-                </select>
-            </label>
-        </div>
-
-        <div style="width:200px;">
-            <label>
-                <select id="selectPosition" name="pos_id" required>
-                    <option value="" disabled selected>Выберите должность</option>
-                </select>
-            </label>
-        </div>
-        <sf:errors id="err" path="position" cssStyle="color: red"/>
-        <br/>
-        <label><b>Фамилия, имя, отчество</b></label>
-        <input type="text" placeholder="Фамилия Имя Отчество" name="name" required>
-        <label><b>Email</b></label>
-        <input type="email" placeholder="Email" name="email" required>
-
-
-        <div class="clearfix" style="margin-top: 10px">
-            <button type="button" class="cancelbtn" onclick="document.location='/logout'">Отмена</button>
-            <button type="submit" class="signupbtn">Зарегистрироваться</button>
-        </div>
-    </div>
-</sf:form>
-
-</body>
-<script>
-    var value = 0;
-    function sel(){
-        value = $('#select').val();
-        console.log(value)
-        send();
-    }
-
-    function send (){
-        $.ajax({
-            url: "/allPositionByCompanyId/" + value,
-            dataType: 'json',
-            type: 'get',
-            encoding: 'identity',
-            success: function (e) {
-                $('.item').remove();
-                for (const key in e){
-                    $('#selectPosition').append($('<option class="item" value=' + key +'>' + e[key] + '</option>'));
-                }
-            },
-            error: function () {
-                alert("Ошибка получения данных!")
-            }
-        });
-    }
-
-</script>
 </html>

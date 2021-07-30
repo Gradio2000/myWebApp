@@ -14,6 +14,15 @@ public class PositionDao {
 
    private EntityManager em;
 
+    public List<Position> getAllPositionWithoutAdminRole(int company_id){
+        em = EntityFactoryUtil.getEntityManager();
+        List<Position> positionList = em.createQuery("select p from positions p where companyId = :id and p.position != 'Администратор' order by idPosition")
+                .setParameter("id", company_id)
+                .getResultList();
+        em.close();
+        return positionList;
+    }
+
     public List<Position> getAllPosition(int company_id){
         em = EntityFactoryUtil.getEntityManager();
         List<Position> positionList = em.createQuery("select p from positions p where companyId = :id order by idPosition")

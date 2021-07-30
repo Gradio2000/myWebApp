@@ -46,7 +46,7 @@ public class PositionController {
             User user = userService.getUserById(authUser.getUserId());
             model.addAttribute("user", user);
 
-            session.setAttribute("positions", positionService.getAllPosition(user.getCompany().getIdCompany()));
+            session.setAttribute("positions", positionService.getAllPositionWithoutAdminRole(user.getCompany().getIdCompany()));
             log.info("Выход");
         } catch (Exception e) {
             exceptionController.printException(request, log, e);

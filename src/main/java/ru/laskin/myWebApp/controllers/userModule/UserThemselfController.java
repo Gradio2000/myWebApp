@@ -204,7 +204,7 @@ public class UserThemselfController {
         log.info("вход");
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(principal.getUserId());
-        List<Position> positionList = positionService.getAllPosition(user.getCompany().getIdCompany());
+        List<Position> positionList = positionService.getAllPositionWithoutAdminRole(user.getCompany().getIdCompany());
         model.addAttribute("positionList", positionList);
         model.addAttribute("user", user);
         log.info("выход");

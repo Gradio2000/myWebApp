@@ -60,7 +60,7 @@ public class UserController {
             int id = Integer.parseInt(request.getParameter("id"));
             User user = userService.getUserById(id);
             model.addAttribute("user", user);
-            List<Position> positionSet = positionService.getAllPosition(user.getCompany().getIdCompany());
+            List<Position> positionSet = positionService.getAllPositionWithoutAdminRole(user.getCompany().getIdCompany());
             model.addAttribute("posSet", positionSet);
             log.info("Выход");
         } catch (NumberFormatException e) {
