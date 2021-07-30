@@ -62,7 +62,7 @@ public class UserThemselfController {
         //Получаем из БД юзера, того, кто принципал (это нужно для того, что
         //у авторизированного пользователя не будут заполнены поля имя и т.п.
         User user = userService.getUserById(authUser.getUserId());
-        
+
         //если роль пользователя - USER,
         //добавляем авторизованного пользователя в модель представления
         model.addAttribute("user", user);
@@ -95,17 +95,14 @@ public class UserThemselfController {
     }
 
     @PostMapping("/new_user")
-    public String newUser(HttpServletRequest request,
+    public String newUser(Model model, HttpServletRequest request,
                           @RequestParam (required = false) String admin,
                           @RequestParam String login,
                           @RequestParam String password,
                           @RequestParam String confirmPassword,
                           @RequestParam (required = false) String companyName) {
         log.info("вход");
-
-        if (companyName != null){
-            companyService.saveCompany(companyName);
-        }
+        
         User user = new User();
         user.setLogin(login);
         user.setPassword(password);
@@ -123,12 +120,22 @@ public class UserThemselfController {
         //проверяем нового пользователя на admin
         if (admin != null && admin.equals("on")){
             user.setAdminRole("ADMIN");
+            Company company = null;
+            if (companyName != null){
+             company = companyService.saveCompany(companyName);
+            }
+            user.setCompany(company);
+            assert company != null;
+            Position position = positionService.getAllPosition(company.getIdCompany()).get(0);
+            user.setPosition(position);
+            userService.saveUser(user);
+            model.addAttribute("user", user);
+            return "greetingAdmin";
         }
         else {
             user.setAdminRole("USER");
+            userService.saveUser(user);
         }
-
-        userService.saveUser(user);
 
         //автологин, если регистрация прошла успешно
         try {
@@ -147,11 +154,11 @@ public class UserThemselfController {
                            @RequestParam Integer company_id){
         log.info("вход");
 
-        Position position = positionService.getPositionById(pos_id);
-        user.setPosition(position);
+            Position position = positionService.getPositionById(pos_id);
+            user.setPosition(position);
+            Company company = companyService.getCompanyById(company_id);
+            user.setCompany(company);
 
-        Company company = companyService.getCompanyById(company_id);
-        user.setCompany(company);
 
         user.setEmail(user.getEmail().toLowerCase(Locale.ROOT));
 

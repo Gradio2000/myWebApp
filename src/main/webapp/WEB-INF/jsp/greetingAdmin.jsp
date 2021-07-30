@@ -1,11 +1,23 @@
 <%--
   Created by IntelliJ IDEA.
   User: aleksejlaskin
-  Date: 11.04.2021
-  Time: 12:06
+  Date: 30.07.2021
+  Time: 18:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"      prefix="c"   %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"       prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql"       prefix="sql" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/xml"       prefix="x"   %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"  %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf"  %>
+<jsp:useBean id="user" scope="request" class="ru.laskin.myWebApp.model.User"/>
+<jsp:useBean id="position" scope="request" class="ru.laskin.myWebApp.model.Position"/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <html>
 <style>
     body {font-family: Arial, Helvetica, sans-serif;}
@@ -134,18 +146,53 @@
     .select-items div:hover, .same-as-selected {
         background-color: rgba(0, 0, 0, 0.1);
     }
-</style>
+    * {
+        outline: 0;
+        font-family: sans-serif
+    }
+    body {
+        background-color: #fafafa
+    }
+    span.msg,
+    span.choose {
+        color: #555;
+        padding: 5px 0 10px;
+        display: inherit
+    }
 
-<head>
-    <title>Подтвердите пароль</title>
-</head>
+
+</style>
 <body>
-<div class="container">
-    <h4 style="text-align: center">Вам отправлено письмо для подтверждения адреса электронной почты!</h4>
-    <div class="clearfix" style="margin-top: 10px">
-        <button style="width: 100%" type="submit" class="signupbtn" onclick="document.location='/greeting'">Вход</button>
+
+<sf:form action="/reUpdate" method="post" modelAttribute="user">
+    <sf:hidden path="userId"/>
+    <sf:hidden path="login"/>
+    <sf:hidden path="adminRole"/>
+    <sf:hidden path="password"/>
+    <sf:hidden path="key"/>
+    <sf:hidden path="position"/>
+    <sf:hidden path="company"/>
+    <input type="hidden" name="pos_id" value="${user.position.idPosition}">
+    <input type="hidden" name="company_id" value="${user.company.idCompany}">
+    <div class="container">
+        <h1>Завершение регистрации Администратора</h1>
+        <p>Пожалуйста, заполните все поля для завершения регистрации Администратора в системе</p>
+        <hr>
+
+        <sf:errors id="err" path="position" cssStyle="color: red"/>
+        <br/>
+        <label><b>Фамилия, имя, отчество</b></label>
+        <input type="text" placeholder="Фамилия Имя Отчество" name="name" required>
+        <label><b>Email</b></label>
+        <input type="email" placeholder="Email" name="email" required>
+
+
+        <div class="clearfix" style="margin-top: 10px">
+            <button type="button" class="cancelbtn" onclick="document.location='/logout'">Отмена</button>
+            <button type="submit" class="signupbtn">Зарегистрироваться</button>
+        </div>
     </div>
-</div>
+</sf:form>
 
 </body>
 </html>

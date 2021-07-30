@@ -25,13 +25,16 @@ public class CompanyService {
         return companyDao.getCompanyById(company_id);
     }
 
-    public void saveCompany(String companyName) {
+    public Company saveCompany(String companyName) {
         Company company = new Company();
         company.setCompanyName(companyName);
         companyDao.saveCompany(company);
+
         Position position = new Position();
         position.setPosition("Администратор");
         position.setCompanyId(company.getIdCompany());
         positionService.addPosition(position);
+
+        return company;
     }
 }
