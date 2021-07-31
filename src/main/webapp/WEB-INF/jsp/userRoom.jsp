@@ -31,6 +31,7 @@
                 <sf:hidden path="adminRole"/>
                 <sf:hidden path="password"/>
                 <sf:hidden path="key"/>
+                <input type="hidden" name="company_id" value="${user.company.idCompany}"/>
 <%--                <sf:hidden path="position"/>--%>
                 <h5 style="width: 300px">Фамилия Имя Отчество</h5>
                 <input type="text" id="nameInput" name="name" class="dis" value="${user.name}" disabled>

@@ -212,11 +212,14 @@ public class UserThemselfController {
     }
 
     @PostMapping("editUser")
-    public String editUser(@ModelAttribute User user, HttpServletRequest request){
+    public String editUser(@ModelAttribute User user,
+                           @RequestParam Integer pos_id,
+                           @RequestParam Integer company_id){
         log.info("вход");
-        String pos_id = request.getParameter("pos_id");
-        Position position = positionService.getPositionById(Integer.valueOf(pos_id));
+        Position position = positionService.getPositionById(pos_id);
+        Company company = companyService.getCompanyById(company_id);
         user.setPosition(position);
+        user.setCompany(company);
         userService.updateUser(user);
         log.info("выход");
         return "redirect:/logout";
