@@ -13,8 +13,8 @@ alter table companies
     add constraint companies_pk
         primary key (id_company);
 
+INSERT INTO companies (company_name) VALUES ('Наша компания');
 INSERT INTO companies (company_name) VALUES ('Новая компания');
-INSERT INTO companies (company_name) VALUES ('Новая компания 2');
 
 DROP TABLE IF EXISTS group_test CASCADE;
 

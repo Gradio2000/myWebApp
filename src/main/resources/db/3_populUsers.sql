@@ -22,10 +22,10 @@ alter table users
 create unique index users_user_id_uindex on users ("user_id");
 
 INSERT INTO users (name, login, password, email, admin_role, pos_id, registered, key, company_id)
-    VALUES ('Админ1', 'login', '$2a$10$GnnBWLO8WT8iwXSmrfr6dOZzlpK8MJkKh9.NkOlml/LsQdBSgGxR.', 'aa@aa.aa', 'ADMIN', 7, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '1');
+    VALUES ('Админ1', '1', '$2a$10$q2wdxC5m1aynNFEDUyxYE.3WO.WYX0izrfo/ApGEd7DudkmvCewya', 'aa@aa.aa', 'ADMIN', 1, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '1');
 
 INSERT INTO users (name, login, password, email, admin_role, pos_id, registered, key, company_id)
-VALUES ('Админ2', 'login', '$2a$10$PgHc1un9pFF8EaF254lixOGvCiZTAEOt1tE6dmbvA4qdlBKTJ98Ji', 'aa@aa.aa', 'ADMIN', 7, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '2');
+VALUES ('Админ2', '2', '$2a$10$UrMRLmIoZIpUUWQStQp/.OzF1SeSf8gY7n977EeRFc408KAIelYGa', 'aa@aa.aa', 'ADMIN', 1, true, '36e88c7b-5bd2-4075-be86-f23eccf244b9', '2');
 
 
 

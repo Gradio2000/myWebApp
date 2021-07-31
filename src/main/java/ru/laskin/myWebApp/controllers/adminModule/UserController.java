@@ -63,7 +63,7 @@ public class UserController {
             List<Position> positionSet = positionService.getAllPositionWithoutAdminRole(user.getCompany().getIdCompany());
             model.addAttribute("posSet", positionSet);
             log.info("Выход");
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             exceptionController.printException(request, log, e);
             return "exception";
         }
