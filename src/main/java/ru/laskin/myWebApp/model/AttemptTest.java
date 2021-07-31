@@ -2,6 +2,7 @@ package ru.laskin.myWebApp.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity(name = "attempttests")
 @Table(name = "attempttests")
@@ -20,6 +21,14 @@ public class AttemptTest {
     }
 
     public AttemptTest() {
+    }
+
+    //конструктор для теста
+    public AttemptTest(int testId, int userId, Timestamp dateTime, Integer timeAttempt) {
+        this.testId = testId;
+        this.userId = userId;
+        this.dateTime = dateTime;
+        this.timeAttempt = timeAttempt;
     }
 
     @Id
@@ -74,4 +83,16 @@ public class AttemptTest {
         this.userId = userId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AttemptTest that = (AttemptTest) o;
+        return attemptId == that.attemptId && testId == that.testId && userId == that.userId && Objects.equals(dateTime, that.dateTime) && Objects.equals(timeAttempt, that.timeAttempt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(attemptId, testId, userId, dateTime, timeAttempt);
+    }
 }

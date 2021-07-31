@@ -55,4 +55,15 @@ public class AttemptTestDao {
         return attemptTestList;
     }
 
+    //метод удаления для теста
+    public void deleteAttempt(AttemptTest attemptTest){
+        em = EntityFactoryUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.createQuery("delete from attempttests where attemptId = :id")
+                .setParameter("id", attemptTest.getAttemptId())
+                .executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }
