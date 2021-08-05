@@ -50,7 +50,7 @@ public class Main {
 //        createPDF();
 //        getPdf();
 //        deletePosition(6);
-        saveCompany();
+//        saveCompany();
     }
 
     private static void saveCompany() {
