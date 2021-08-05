@@ -37,7 +37,7 @@ public class AttemptTestDao {
 
     public AttemptTest getAttemptById(int id){
         em = EntityFactoryUtil.getEntityManager();
-        var attemptTest = em.find(AttemptTest.class, id);
+        AttemptTest attemptTest = em.find(AttemptTest.class, id);
         em.close();
         return attemptTest;
     }
