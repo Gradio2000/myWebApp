@@ -42,6 +42,8 @@ public class User {
         this.company = company;
     }
 
+
+
     @Transient
     public String getConfirmPassword() {
         return confirmPassword;

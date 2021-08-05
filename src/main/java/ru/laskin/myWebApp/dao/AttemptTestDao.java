@@ -9,6 +9,9 @@ import java.util.List;
 
 @Component
 public class AttemptTestDao {
+    public AttemptTestDao() {
+    }
+
     private EntityManager em;
 
     //запись в таблицу с возвратом последнего id
@@ -34,7 +37,7 @@ public class AttemptTestDao {
 
     public AttemptTest getAttemptById(int id){
         em = EntityFactoryUtil.getEntityManager();
-        AttemptTest attemptTest = em.find(AttemptTest.class, id);
+        var attemptTest = em.find(AttemptTest.class, id);
         em.close();
         return attemptTest;
     }
