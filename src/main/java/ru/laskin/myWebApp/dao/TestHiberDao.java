@@ -62,7 +62,7 @@ public class TestHiberDao {
     public void deleteTestById(int id){
         em = EntityFactoryUtil.getEntityManager();
         em.getTransaction().begin();
-        Query query = em.createNativeQuery("UPDATE postgres.public.tests SET group_id=null, deleted=true WHERE test_id = ?")
+        Query query = em.createNativeQuery("UPDATE tests SET group_id=null, deleted=true WHERE test_id = ?")
                 .setParameter(1, id);
         query.executeUpdate();
         em.getTransaction().commit();
