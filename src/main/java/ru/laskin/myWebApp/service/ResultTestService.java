@@ -7,7 +7,6 @@ import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.ResultTest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,11 +39,6 @@ public class ResultTestService {
     }
 
     public List<Question> getRegistredQuestionByattempt(int attemptId) {
-        List<Integer> integerList = resultTestDao.getRegistredQuestionByattempt(attemptId);
-        List<Question> questionList = new ArrayList<>();
-        for (Integer questionId : integerList){
-            questionList.add(questionHiberDao.getQuestionById(questionId));
-        }
-        return questionList;
+        return resultTestDao.getRegistredQuestionByattempt(attemptId);
     }
 }

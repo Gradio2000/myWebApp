@@ -220,7 +220,8 @@ public class TestService {
 
     //основной метод проверки ответов пользователя и вывода результата теста
     public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) throws IOException {
-        log.log(Level.INFO, "вход");
+        Date date1 = new Date();
+        log.log(Level.INFO, "вход " + date1.getTime());
 
         String date = null;
         Set<Integer> falseAnswerSet = null;
@@ -248,7 +249,6 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             time = attemptTestService.getTime(timeOfAttempt);
             quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-            log.log(Level.INFO, "выход");
         } catch (Exception e) {
             FileHandler fh = new FileHandler("your_log.txt", false);   // true forces append mode
             SimpleFormatter sf = new SimpleFormatter();
@@ -256,13 +256,15 @@ public class TestService {
             log.addHandler(fh);
             log.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
         }
-        log.info("Выход");
+        Date date2 = new Date();
+        log.info("Выход " + date2.getTime() + "затрачено " + (date2.getTime() - date1.getTime()));
         return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time, quesList);
     }
 
     //метод для отображения детализации теста пользователя
     public void getStatistic(Integer id, HttpSession session) {
-        log.info("Вход");
+        Date date1 = new Date();
+        log.info("Вход " + date1);
         User userforStatisic = userService.getUserById(id);
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
@@ -299,7 +301,8 @@ public class TestService {
 
         session.setAttribute("userForStatistic", userforStatisic);
         session.setAttribute("statisticList", statisticList);
-        log.info("Выход");
+        Date date2 = new Date();
+        log.info("Выход. Затрачено " + (date2.getTime() - date1.getTime()) + " млсек");
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers(List<ResultTest> resultTestList) {

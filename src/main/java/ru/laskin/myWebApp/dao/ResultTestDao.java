@@ -1,6 +1,7 @@
 package ru.laskin.myWebApp.dao;
 
 import org.springframework.stereotype.Component;
+import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.ResultTest;
 import ru.laskin.myWebApp.utils.EntityFactoryUtil;
 
@@ -29,10 +30,10 @@ public class ResultTestDao {
         return resultTestList;
     }
 
-    public List<Integer> getRegistredQuestionByattempt(int attemptId) {
+    public List<Question> getRegistredQuestionByattempt(int attemptId) {
         em = EntityFactoryUtil.getEntityManager();
-        List<Integer> list = em.createQuery("select quesId from registrTest where attemptId = :a")
-                .setParameter("a", attemptId)
+        List<Question> list = em.createNativeQuery
+                ("SELECT questions.question_id, question_name, test_id from questions INNER JOIN registr_test r on questions.question_id = r.ques_id WHERE attempt_id  =" + attemptId, Question.class)
                 .getResultList();
         em.close();
         return list;
