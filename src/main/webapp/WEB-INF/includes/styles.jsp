@@ -91,6 +91,7 @@
     /* Green */
     .success {
         color: green;
+
     }
 
     .success:hover {
@@ -123,7 +124,7 @@
     }
 
     .warning:hover {
-        background: #ff9800;
+        background: #d57e00;
         color: white;
     }
 
@@ -280,6 +281,26 @@
         margin-top: 6px;
         margin-bottom: 16px;
         resize: vertical;
+    }
+
+    .quesLinkBtn{
+
+        width: 2em;
+        height: 2em;
+        border: none;
+        vertical-align: middle;
+        text-align: center;
+        text-decoration: none;
+        background-color: inherit;
+        cursor: pointer;
+        display: inline-block;
+    }
+    .borderSuccses{
+        background-color: #bbbbbb;
+    }
+    .borderWarning{
+        color: white;
+        background-color: orange;
     }
 
 </style>

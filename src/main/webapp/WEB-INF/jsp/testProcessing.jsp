@@ -40,7 +40,8 @@
 
             <div class="tab">
                 <c:forEach var="quest" items="${tests.questions}" varStatus="count">
-                    <button id="${count.count}" class="tablinks btn info" onclick="openCity(event, ${count.count})" style="width: 150px;">Вопрос ${count.count}</button>
+<%--                    <button id="${count.count}" class="quesLinkBtn" onclick="openCity(event, ${count.count})" >${count.count}</button>--%>
+                    <button id="${count.count}" class="tablinks quesLinkBtn" onclick="openCity(event, ${count.count})">${count.count}</button>
                 </c:forEach>
             </div>
 
@@ -149,11 +150,10 @@
                 checkElem[i].setAttribute("disabled", "disabled");
             }
 
-            //пометить кнопку с вопросом зеленым
+            //пометить кнопку с вопросом серым
             const el = document.getElementById(id);
-            el.className = el.className.replace(" info", "");
-            el.className = el.className.replace(" warning", "");
-            el.className += " success";
+            el.className = el.className.replace(" warning borderWarning", "");
+            el.className += " success borderSuccses";
 
             //перейти к следующему вопросу
             id++;
@@ -173,8 +173,7 @@
 
         //пометить кнопку желтым
         const el = document.getElementById(divId);
-        el.className = el.className.replace(" info", "");
-        el.className += " warning";
+        el.className += " warning borderWarning";
 
         //перейти к следующему элементу, если он не последний
         if (divId < document.getElementsByClassName("tablinks").length) {
@@ -221,7 +220,6 @@
 
         function updateClock() {
             var t = getTimeRemaining(endtime);
-            // daysSpan.innerHTML = t.days;
             hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
             minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
             secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
