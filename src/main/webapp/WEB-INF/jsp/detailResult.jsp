@@ -93,35 +93,35 @@
                     </tr>
                     <tr>
                         <td>Дата и время</td>
-                        <td>${statistic.date}</td>
+                        <td>${newStatistic.date}</td>
                     </tr>
                     <tr>
                         <td>Наименование теста</td>
-                        <td>${statistic.test.testName}</td>
+                        <td>${newStatistic.testName}</td>
                     </tr>
                     <tr>
                         <td>Затраченное время</td>
-                        <td class="mytd">${statistic.time}</td>
+                        <td class="mytd">${newStatistic.time}</td>
                     </tr>
                     <tr>
                         <td>Количество заданных вопросов</td>
-                        <td class="mytd">${statistic.quesList.size()}</td>
+                        <td class="mytd">${newStatistic.amountQues}</td>
                     </tr>
                     <tr>
                         <td>Количество правильных ответов</td>
-                        <td class="mytd">${statistic.trueAnswer}</td>
+                        <td class="mytd">${newStatistic.amountTrueAnswer}</td>
                     </tr>
                     <tr>
                         <td>Количество неправильных ответов</td>
-                        <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                        <td class="mytd">${newStatistic.amountFalseAnswers}</td>
                     </tr>
                     <tr>
                         <td>Критерий прохождения теста</td>
-                        <td class="mytd">${statistic.test.criteria}%</td>
+                        <td class="mytd">${newStatistic.criteria}%</td>
                     </tr>
                     <tr>
                         <td>Результат</td>
-                        <td class="mytd">${statistic.result}%</td>
+                        <td class="mytd">${newStatistic.result}%</td>
                     </tr>
                 </table>
                     <c:forEach var="ques" items="${statistic.quesList}" varStatus="count">

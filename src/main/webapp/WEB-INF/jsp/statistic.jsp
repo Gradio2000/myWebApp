@@ -12,7 +12,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"           prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
-<jsp:useBean id="userForStatistic"  scope="session" type="ru.laskin.myWebApp.model.User"/>
+<%--<jsp:useBean id="userForStatistic"  scope="session" type="ru.laskin.myWebApp.model.User"/>--%>
 
 
 <html>
@@ -39,8 +39,7 @@
                 <a onclick="stepRight()">&raquo;</a>
         </div>
 
-        <form action="/detailResultForAdmin" method="post">
-            <input id="statisticId" hidden name="statisticId" />
+<%--        <form action="/detailResultForAdmin" method="post">--%>
             <table id="table0">
                 <tr>
                     <th>Дата и время</th>
@@ -48,6 +47,7 @@
                     <th>Результат</th>
                 </tr>
                 <c:forEach var="statistic" items="${newStatisticList}" varStatus="count">
+                    <input type="hidden" name="attemptId"/>
                     <tr id="line${count.count}" class="line" hidden>
                         <td>${statistic.date}</td>
                         <td>${statistic.testName}</td>
@@ -86,7 +86,13 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <button class="tr${count.count} btn info" type="submit" hidden>Еще подробнее</button>
+                                                    <button class="tr${count.count} btn info" onclick="document.location = '/detailResultForAdmin/' +
+                                                            '?userId=${userForStatistic.userId}&date=${statistic.date}'+
+                                                            '&testName=${statistic.testName}&amountFalseAnswers=${statistic.amountFalseAnswers}'+
+                                                            '&amountTrueAnswer=${statistic.amountTrueAnswer}&testResult=${statistic.testResult}'+
+                                                            '&time=${statistic.time}&amountQues=${statistic.amountQues}&result=${statistic.result}'+
+                                                            '&criteria=${statistic.criteria}&attemptId=${statistic.attemptId}'"
+                                                            hidden>Еще подробнее</button>
                                                 </td>
                                             </tr>
                                         </table>
@@ -98,7 +104,7 @@
                     <tr></tr>
                 </c:forEach>
             </table>
-        </form>
+<%--        </form>--%>
     </div>
 </div>
 
@@ -120,7 +126,6 @@
             }
         }
     }
-
 
     function getActive(id){
         const el = document.getElementsByClassName("active")[0];
@@ -164,9 +169,8 @@
         }
     }
 
-
     function openDetail(count){
-        document.getElementById("statisticId").setAttribute("value", count-1);
+        // document.getElementById("statisticId").setAttribute("value", count-1);
         const button = document.getElementById("btn" + count);
         if (button.innerText === "Подробнее"){
             button.innerText = "Скрыть";

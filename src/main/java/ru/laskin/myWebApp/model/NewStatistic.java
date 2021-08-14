@@ -11,9 +11,11 @@ public class NewStatistic {
     private int amountQues;
     private double result;
     private double criteria;
+    private int attemptId;
 
-    public NewStatistic(String date, String testName, int amountFalseAnswers, int amountTrueAnswer, String testResult,
-                        int time, int amountQues, double result, double criteria) {
+    public NewStatistic(String date, String testName, int amountFalseAnswers,
+                        int amountTrueAnswer, String testResult, int time, int amountQues,
+                        double result, double criteria, int attemptId) {
         this.date = date;
         this.testName = testName;
         this.amountFalseAnswers = amountFalseAnswers;
@@ -23,6 +25,7 @@ public class NewStatistic {
         this.amountQues = amountQues;
         this.result = result;
         this.criteria = criteria;
+        this.attemptId = attemptId;
     }
 
     public String getDate() {
@@ -95,5 +98,13 @@ public class NewStatistic {
 
     public void setCriteria(double criteria) {
         this.criteria = criteria;
+    }
+
+    public int getAttemptId() {
+        return attemptId;
+    }
+
+    public void setAttemptId(int attemptId) {
+        this.attemptId = attemptId;
     }
 }

@@ -271,7 +271,7 @@ public class TestService {
     }
 
     //метод для отображения детализации теста пользователя
-    public void getStatistic(Integer id, HttpSession session, HttpServletRequest request) {
+    public void getStatistic(Integer id, HttpServletRequest request) {
         Date date1 = new Date();
         log.info("Вход " + date1);
         //это пользователь
@@ -304,9 +304,10 @@ public class TestService {
             int amountQues = attemptTest.getAmountQues();
             double result = attemptTest.getResult();
             double criteria = testHashMap.get(attemptTest.getTestId()).getCriteria();
+            int attemptId = attemptTest.getAttemptId();
 
             newStatisticList.add(new NewStatistic(date, testName, amountFalseAnswers,
-                    amountTrueAnswer, testResult, time, amountQues, result, criteria));
+                    amountTrueAnswer, testResult, time, amountQues, result, criteria, attemptId));
 
 
 //            //Все это для детализации
@@ -334,8 +335,7 @@ public class TestService {
         }
 
         request.setAttribute("newStatisticList", newStatisticList);
-        session.setAttribute("userForStatistic", userforStatisic);
-//        session.setAttribute("statisticList", statisticList);
+        request.setAttribute("userForStatistic", userforStatisic);
 
         Date date2 = new Date();
         log.info("Выход. " + date2 + " Затрачено " + (date2.getTime() - date1.getTime())/1000.0 + " сек");

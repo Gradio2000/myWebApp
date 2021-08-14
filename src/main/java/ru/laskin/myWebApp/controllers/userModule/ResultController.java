@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.laskin.myWebApp.model.NewStatistic;
 import ru.laskin.myWebApp.model.Statistic;
 import ru.laskin.myWebApp.model.User;
 import ru.laskin.myWebApp.service.TestService;
@@ -13,8 +14,6 @@ import ru.laskin.myWebApp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,24 +60,34 @@ public class ResultController {
         return "detailResult";
     }
 
-    @PostMapping("detailResultForAdmin")
-    public String detailResultForAdmin(Model model, HttpSession session, HttpServletRequest request){
-        List<Statistic> statisticList = (List<Statistic>) session.getAttribute("statisticList");
-        User user = (User) session.getAttribute("userForStatistic");
-        Map<String, String[]> map = request.getParameterMap();
-        String statisticId = map.get("statisticId")[0];
-        Statistic statistic = statisticList.get(Integer.parseInt(statisticId));
-        model.addAttribute(statistic);
-        model.addAttribute(user);
+    @GetMapping("detailResultForAdmin")
+    public String detailResultForAdmin(HttpServletRequest request,
+                                       @RequestParam String date,
+                                       @RequestParam String testName,
+                                       @RequestParam  int amountFalseAnswers,
+                                       @RequestParam  int amountTrueAnswer,
+                                       @RequestParam  String testResult,
+                                       @RequestParam  int time,
+                                       @RequestParam  int amountQues,
+                                       @RequestParam  double result,
+                                       @RequestParam  double criteria,
+                                       @RequestParam  int attemptId,
+                                       @RequestParam int userId
+                                       ){
+        User user = userService.getUserById(userId);
+        NewStatistic newStatistic = new NewStatistic(date, testName, amountFalseAnswers, amountTrueAnswer, testResult,
+                time, amountQues, result, criteria, attemptId);
+        request.setAttribute("newStatistic", newStatistic);
+        request.setAttribute("user", user);
         return "detailResult";
     }
 
     @GetMapping("users/statistic")
-    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id, HttpSession session){
+    public String statisticOfUser(HttpServletRequest request, @RequestParam Integer id){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
-        testService.getStatistic(id, session, request);
+        testService.getStatistic(id, request);
         return "statistic";
     }
 }
