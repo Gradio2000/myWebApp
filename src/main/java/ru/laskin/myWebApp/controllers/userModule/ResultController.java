@@ -78,7 +78,7 @@ public class ResultController {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
-        testService.getStatistic(id, session);
+        testService.getStatistic(id, session, request);
         return "statistic";
     }
 }

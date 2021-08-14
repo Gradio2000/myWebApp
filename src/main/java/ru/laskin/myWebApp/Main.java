@@ -10,9 +10,7 @@ import ru.laskin.myWebApp.model.*;
 import java.awt.print.PrinterJob;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -133,9 +131,9 @@ public class Main {
         ApplicationContext appCont = new ClassPathXmlApplicationContext("spring/applicationContext.xml", "spring/dispatcher-servlet.xml");
         AttemptTestDao attemptTestDao = appCont.getBean(AttemptTestDao.class);
 
-        AttemptTest attemptTest = new AttemptTest(new Timestamp(new Date().getTime()), 1, 1, 222, 333);
-        int i = attemptTestDao.saveAttemptTest(attemptTest);
-        System.out.println(i);
+//        AttemptTest attemptTest = new AttemptTest(new Timestamp(new Date().getTime()), 1, 1, 222, 333);
+//        int i = attemptTestDao.saveAttemptTest(attemptTest);
+//        System.out.println(i);
     }
 
 

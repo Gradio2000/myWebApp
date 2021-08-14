@@ -108,8 +108,8 @@ public class TestService {
 
                 question.setAnswers(answerList);
 
-                //проверяем, есть ли изменение в вопросах теста.
-                //если есть - обнуляем id и при обновлении в БД у него будет новый id
+                //Проверяем, есть ли изменение в вопросах теста.
+                //Если есть - обнуляем id и при обновлении в БД у него будет новый id
                 List<Question> etalonQuestions = (List<Question>) session.getAttribute("questions");
                 Question etalonQues = etalonQuestions.stream()
                         .filter(s -> s.getQuestionId() == question.getQuestionId())
@@ -218,10 +218,9 @@ public class TestService {
         log.info("Выход");
     }
 
-    //основной метод проверки ответов пользователя и вывода результата теста
+    //основной метод проверки ответов пользователя и вывода результата теста после его прохождения
     public Statistic mainCheck(Integer attemptId, Test test, Integer timeOfAttempt) throws IOException {
-        Date date1 = new Date();
-        log.log(Level.INFO, "вход " + date1.getTime());
+        log.log(Level.INFO, "вход");
 
         String date = null;
         Set<Integer> falseAnswerSet = null;
@@ -249,6 +248,16 @@ public class TestService {
             listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
             time = attemptTestService.getTime(timeOfAttempt);
             quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+
+            //Ок. А теперь кое-что запишем в бд, чтоб админ мог использовать
+            attemptTest.setAmountQues(quesList.size());
+            attemptTest.setAmountFalseAnswer(falseAnswerSet.size());
+            attemptTest.setAmountTrueAnswer(trueAnswers);
+            attemptTest.setResult(result);
+            attemptTest.setTestResult(testResult);
+            attemptTestService.updateAttempt(attemptTest);
+
+
         } catch (Exception e) {
             FileHandler fh = new FileHandler("your_log.txt", false);   // true forces append mode
             SimpleFormatter sf = new SimpleFormatter();
@@ -256,53 +265,80 @@ public class TestService {
             log.addHandler(fh);
             log.log(Level.SEVERE, ExceptionUtils.getStackTrace(e));
         }
-        Date date2 = new Date();
-        log.info("Выход " + date2.getTime() + "затрачено " + (date2.getTime() - date1.getTime()));
+
+        log.info("Выход");
         return new Statistic(date, test, falseAnswerSet, trueAnswers, testResult, listOfUsersAnswers, result, time, quesList);
     }
 
     //метод для отображения детализации теста пользователя
-    public void getStatistic(Integer id, HttpSession session) {
+    public void getStatistic(Integer id, HttpSession session, HttpServletRequest request) {
         Date date1 = new Date();
         log.info("Вход " + date1);
+        //это пользователь
         User userforStatisic = userService.getUserById(id);
+        //это все его попытки сдачт тестов
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
-        List<Statistic> statisticList = new ArrayList<>();
-        List<Integer> listOfUsersAnswers;
+
+
+        /* получим список всех тестов, который проходил наш пользователь
+        и преобразуем в Map для удобства последующего поиска */
+        Set<Test> tests = new HashSet<>(testHiberDao.getAllTestsOfUser(id));
+        Map<Integer, Test> testHashMap = new HashMap<>();
+        for (Test test : tests){
+            testHashMap.put(test.getTestId(), test);
+        }
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
+        //сюда будем складывать результаты сдачи тестов и отправим в представление
+        List<NewStatistic> newStatisticList = new ArrayList<>();
+
         for (AttemptTest attemptTest : attemptTestList) {
             String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
-            Test test = getTestById(attemptTest.getTestId());
+            String testName = testHashMap.get(attemptTest.getTestId()).getTestName();
+            int amountFalseAnswers = attemptTest.getAmountFalseAnswer();
+            int amountTrueAnswer = attemptTest.getAmountTrueAnswer();
+            String testResult = attemptTest.getTestResult();
+            int time = attemptTest.getTimeAttempt();
+            int amountQues = attemptTest.getAmountQues();
+            double result = attemptTest.getResult();
+            double criteria = testHashMap.get(attemptTest.getTestId()).getCriteria();
 
-            //Это список заданных вопросов для попытки
-            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+            newStatisticList.add(new NewStatistic(date, testName, amountFalseAnswers,
+                    amountTrueAnswer, testResult, time, amountQues, result, criteria));
 
-            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
-            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
-            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
-            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-            int trueAnswer = quesList.size() - falseAnswerSet.size();
-            String testResult;
-            double result = 0;
-            if (test.getCriteria() != null) {
-                result = getResult(trueAnswer, quesList.size());
-                testResult = getTestResult(result, test.getCriteria()) ?
-                        "Тест пройден" : "Тест не пройден";
-            } else testResult = "Не задан критерий в настройках теста";
 
-            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
-
-            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
-                    testResult, listOfUsersAnswers, result, time, quesList));
+//            //Все это для детализации
+//            //Это список заданных вопросов для попытки
+//            List<Integer> listOfUsersAnswers;
+//            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+//
+//            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
+//            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+//            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
+//            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+//            int trueAnswer = quesList.size() - falseAnswerSet.size();
+//            String testResult;
+//            double result = 0;
+//            if (test.getCriteria() != null) {
+//                result = getResult(trueAnswer, quesList.size());
+//                testResult = getTestResult(result, test.getCriteria()) ?
+//                        "Тест пройден" : "Тест не пройден";
+//            } else testResult = "Не задан критерий в настройках теста";
+//
+//            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
+//
+//            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
+//                    testResult, listOfUsersAnswers, result, time, quesList));
         }
 
+        request.setAttribute("newStatisticList", newStatisticList);
         session.setAttribute("userForStatistic", userforStatisic);
-        session.setAttribute("statisticList", statisticList);
+//        session.setAttribute("statisticList", statisticList);
+
         Date date2 = new Date();
-        log.info("Выход. Затрачено " + (date2.getTime() - date1.getTime()) + " млсек");
+        log.info("Выход. " + date2 + " Затрачено " + (date2.getTime() - date1.getTime())/1000.0 + " сек");
     }
 
     public Map<Integer, List<Integer>> getMapOfAnswers(List<ResultTest> resultTestList) {

@@ -46,4 +46,8 @@ public class AttemptTestService {
             return hours + " : " + minutes + " : " + seconds;
         }
     }
+
+    public void updateAttempt(AttemptTest attemptTest) {
+        attemptTestDao.updateAttemptTest(attemptTest);
+    }
 }

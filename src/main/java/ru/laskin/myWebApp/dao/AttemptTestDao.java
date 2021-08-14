@@ -69,4 +69,11 @@ public class AttemptTestDao {
         em.close();
     }
 
+    public void updateAttemptTest(AttemptTest attemptTest) {
+        em = EntityFactoryUtil.getEntityManager();
+        em.getTransaction().begin();
+        em.merge(attemptTest);
+        em.getTransaction().commit();
+        em.close();
+    }
 }

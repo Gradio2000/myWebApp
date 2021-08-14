@@ -126,4 +126,12 @@ public class TestHiberDao {
         em.getTransaction().commit();
         em.close();
     }
+
+    public List<Test> getAllTestsOfUser(Integer id) {
+        em = EntityFactoryUtil.getEntityManager();
+        Query query = em.createNativeQuery("select * from tests join attempttests a on tests.test_id = a.test_id", Test.class);
+        List<Test> testList = query.getResultList();
+        em.close();
+        return testList;
+    }
 }

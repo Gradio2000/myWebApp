@@ -36,12 +36,12 @@ public class TestProcessingController {
     }
 
     @GetMapping("/getTest")
-    public String getTest(@RequestParam String testId, @RequestParam(required = false) Integer attemptId,
+    public String getTest(@RequestParam Integer testId, @RequestParam(required = false) Integer attemptId,
                           Model model, HttpSession session){
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserById(authUser.getUserId());
 
-        Test test = testService.getTestById(Integer.parseInt(testId));
+        Test test = testService.getTestById(testId);
 
         if (test.getQuesAmount() != null){
             //выбрать случайные вопросы в заданном в настройках теста количестве
@@ -53,11 +53,14 @@ public class TestProcessingController {
         //записываем в БД новую попытку
         if (attemptId == null) {
             Timestamp timestamp = new Timestamp(new Date().getTime());
-            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(), authUser.getUserId(), 0, test.getQuestions().size());
+            AttemptTest attemptTest = new AttemptTest(timestamp, test.getTestId(),
+                    authUser.getUserId(), 0, test.getQuestions().size(), "Пользователь не завершил попытку");
             attemptId = attemptTestService.saveAttemptTest(attemptTest);
         }
 
         //записываем в бд заданные юзеру вопросы
+        //зачем, если есть таблица resulttests?
+        //потому что в resulttests записываются только те вопросы, на которые пользователь дал ответы
         testService.registerTest(attemptId, test);
 
         session.setAttribute("tests", test);

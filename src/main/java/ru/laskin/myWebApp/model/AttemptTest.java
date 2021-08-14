@@ -12,24 +12,25 @@ public class AttemptTest {
     private int userId;
     private Timestamp dateTime;
     private Integer timeAttempt;
+    private int amountQues;
+    private int amountFalseAnswer;
+    private int amountTrueAnswer;
+    private double result;
+    private String testResult;
 
-    public AttemptTest(Timestamp dateTime, int testId, int userId, int timeAttempt, int quesAmount) {
+
+    public AttemptTest(Timestamp dateTime, int testId, int userId, int timeAttempt, int amountQues, String testResult) {
         this.dateTime = dateTime;
         this.testId = testId;
         this.userId = userId;
         this.timeAttempt = timeAttempt;
+        this.amountQues = amountQues;
+        this.testResult = testResult;
     }
 
     public AttemptTest() {
     }
 
-    //конструктор для теста
-    public AttemptTest(int testId, int userId, Timestamp dateTime, Integer timeAttempt) {
-        this.testId = testId;
-        this.userId = userId;
-        this.dateTime = dateTime;
-        this.timeAttempt = timeAttempt;
-    }
 
     @Id
     @Column(name = "attempt_id", nullable = false)
@@ -81,6 +82,50 @@ public class AttemptTest {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Column(name = "amount_ques")
+    public int getAmountQues() {
+        return amountQues;
+    }
+
+    public void setAmountQues(int amountQues) {
+        this.amountQues = amountQues;
+    }
+
+    @Column(name = "amount_false_answers")
+    public int getAmountFalseAnswer() {
+        return amountFalseAnswer;
+    }
+
+    public void setAmountFalseAnswer(int amountFalseAnswer) {
+        this.amountFalseAnswer = amountFalseAnswer;
+    }
+    @Column(name = "amount_true_answers")
+    public int getAmountTrueAnswer() {
+        return amountTrueAnswer;
+    }
+
+    public void setAmountTrueAnswer(int amountTrueAnswer) {
+        this.amountTrueAnswer = amountTrueAnswer;
+    }
+
+    @Column(name="result")
+    public double getResult() {
+        return result;
+    }
+
+    public void setResult(double result) {
+        this.result = result;
+    }
+
+    @Column(name = "testresult")
+    public String getTestResult() {
+        return testResult;
+    }
+
+    public void setTestResult(String testResult) {
+        this.testResult = testResult;
     }
 
     @Override

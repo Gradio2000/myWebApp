@@ -12,7 +12,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/xml"           prefix="x"   %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"     prefix="fn"  %>
 <%@ taglib uri="http://www.springframework.org/tags/form"   prefix="sf"  %>
-<jsp:useBean id="statisticList" scope="session" type="java.util.List"/>
 <jsp:useBean id="userForStatistic"  scope="session" type="ru.laskin.myWebApp.model.User"/>
 
 
@@ -32,7 +31,7 @@
 
         <div class="pagination" style="display: block">
                 <a onclick="stepLeft()">&laquo;</a>
-                <c:forEach var="f" items="${statisticList}" step="10" varStatus="count">
+                <c:forEach var="f" items="${newStatisticList}" step="10" varStatus="count">
                     <div class="div-pag">
                         <a class="pag" id="${count.count}" onclick="getActive(this.id)">${count.count}</a>
                     </div>
@@ -48,10 +47,10 @@
                     <th>Название теста</th>
                     <th>Результат</th>
                 </tr>
-                <c:forEach var="statistic" items="${statisticList}" varStatus="count">
+                <c:forEach var="statistic" items="${newStatisticList}" varStatus="count">
                     <tr id="line${count.count}" class="line" hidden>
                         <td>${statistic.date}</td>
-                        <td>${statistic.test.testName}</td>
+                        <td>${statistic.testName}</td>
                         <td class="mytd">${statistic.testResult}</td>
                         <td><button type="button" id="btn${count.count}" class="btn info" onclick="openDetail(${count.count})">Подробнее</button> </td>
                     </tr>
@@ -67,19 +66,19 @@
                                             </tr>
                                             <tr>
                                                 <td>Количество заданных вопросов</td>
-                                                <td class="mytd">${statistic.quesList.size()}</td>
+                                                <td class="mytd">${statistic.amountQues}</td>
                                             </tr>
                                             <tr>
                                                 <td>Количество правильных ответов</td>
-                                                <td class="mytd">${statistic.trueAnswer}</td>
+                                                <td class="mytd">${statistic.amountTrueAnswer}</td>
                                             </tr>
                                             <tr>
                                                 <td>Количество неправильных ответов</td>
-                                                <td class="mytd">${statistic.falseAnswerSet.size()}</td>
+                                                <td class="mytd">${statistic.amountFalseAnswers}</td>
                                             </tr>
                                             <tr>
                                                 <td>Критерий прохождения теста</td>
-                                                <td class="mytd">${statistic.test.criteria}%</td>
+                                                <td class="mytd">${statistic.criteria}%</td>
                                             </tr>
                                             <tr>
                                                 <td>Результат</td>
