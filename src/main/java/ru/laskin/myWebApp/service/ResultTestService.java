@@ -1,7 +1,6 @@
 package ru.laskin.myWebApp.service;
 
 import org.springframework.stereotype.Service;
-import ru.laskin.myWebApp.dao.QuestionHiberDao;
 import ru.laskin.myWebApp.dao.ResultTestDao;
 import ru.laskin.myWebApp.model.Question;
 import ru.laskin.myWebApp.model.ResultTest;
@@ -14,11 +13,9 @@ import java.util.Map;
 public class ResultTestService {
 
     private ResultTestDao resultTestDao;
-    private QuestionHiberDao questionHiberDao;
 
-    public ResultTestService(ResultTestDao resultTestDao, QuestionHiberDao questionHiberDao) {
+    public ResultTestService(ResultTestDao resultTestDao) {
         this.resultTestDao = resultTestDao;
-        this.questionHiberDao = questionHiberDao;
     }
 
     public List<ResultTest> getResultTest(Integer attemptId) {

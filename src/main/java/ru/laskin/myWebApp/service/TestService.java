@@ -30,7 +30,7 @@ public class TestService {
     private final UserService userService;
     private final AttemptTestService attemptTestService;
     private final ResultTestService resultTestService;
-    private CompanyDao companyDao;
+    private final CompanyDao companyDao;
 
 
     public TestService(TestHiberDao testHiberDao, QuestionHiberDao questionHiberDao,
@@ -274,27 +274,23 @@ public class TestService {
     public void getStatistic(Integer id, HttpServletRequest request) {
         Date date1 = new Date();
         log.info("Вход " + date1);
+
         //это пользователь
-        User userforStatisic = userService.getUserById(id);
-        //это все его попытки сдачт тестов
+        User userForStatistic = userService.getUserById(id);
+
+        //это все его попытки сдачи тестов
         List<AttemptTest> attemptTestList = attemptTestService.getAllAttemptByUserId(id);
 
-
-
-        /* получим список всех тестов, который проходил наш пользователь
-        и преобразуем в Map для удобства последующего поиска */
-        Set<Test> tests = new HashSet<>(testHiberDao.getAllTestsOfUser(id));
-        Map<Integer, Test> testHashMap = new HashMap<>();
-        for (Test test : tests){
-            testHashMap.put(test.getTestId(), test);
-        }
-
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+        /* получим map всех тестов без дубликатов, который проходил наш пользователь */
+        Map<Integer, Test> testHashMap = testHiberDao.getAllTestsOfUser(id).stream()
+                .distinct()
+                .collect(Collectors.toMap(Test::getTestId, test -> test));
 
         //сюда будем складывать результаты сдачи тестов и отправим в представление
         List<NewStatistic> newStatisticList = new ArrayList<>();
 
         for (AttemptTest attemptTest : attemptTestList) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
             String testName = testHashMap.get(attemptTest.getTestId()).getTestName();
             int amountFalseAnswers = attemptTest.getAmountFalseAnswer();
@@ -308,34 +304,10 @@ public class TestService {
 
             newStatisticList.add(new NewStatistic(date, testName, amountFalseAnswers,
                     amountTrueAnswer, testResult, time, amountQues, result, criteria, attemptId));
-
-
-//            //Все это для детализации
-//            //Это список заданных вопросов для попытки
-//            List<Integer> listOfUsersAnswers;
-//            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-//
-//            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
-//            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
-//            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
-//            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-//            int trueAnswer = quesList.size() - falseAnswerSet.size();
-//            String testResult;
-//            double result = 0;
-//            if (test.getCriteria() != null) {
-//                result = getResult(trueAnswer, quesList.size());
-//                testResult = getTestResult(result, test.getCriteria()) ?
-//                        "Тест пройден" : "Тест не пройден";
-//            } else testResult = "Не задан критерий в настройках теста";
-//
-//            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
-//
-//            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
-//                    testResult, listOfUsersAnswers, result, time, quesList));
         }
 
         request.setAttribute("newStatisticList", newStatisticList);
-        request.setAttribute("userForStatistic", userforStatisic);
+        request.setAttribute("userForStatistic", userForStatistic);
 
         Date date2 = new Date();
         log.info("Выход. " + date2 + " Затрачено " + (date2.getTime() - date1.getTime())/1000.0 + " сек");
@@ -448,5 +420,31 @@ public class TestService {
         }
         log.info("Выход");
         return mainCheck(attemptId, test, timeOfAttempt);
+    }
+
+    public Statistic getDetailResult() {
+            //Все это для детализации
+            //Это список заданных вопросов для попытки
+//            List<Integer> listOfUsersAnswers;
+//            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+//
+//            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
+//            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+//            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
+//            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+//            int trueAnswer = quesList.size() - falseAnswerSet.size();
+//            String testResult;
+//            double result = 0;
+//            if (test.getCriteria() != null) {
+//                result = getResult(trueAnswer, quesList.size());
+//                testResult = getTestResult(result, test.getCriteria()) ?
+//                        "Тест пройден" : "Тест не пройден";
+//            } else testResult = "Не задан критерий в настройках теста";
+//
+//            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
+//
+//            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
+//                    testResult, listOfUsersAnswers, result, time, quesList));
+        return null;
     }
 }

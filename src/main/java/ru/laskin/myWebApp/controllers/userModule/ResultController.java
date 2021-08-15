@@ -57,7 +57,7 @@ public class ResultController {
         Statistic statistic = (Statistic) session.getAttribute("statistic");
         model.addAttribute(statistic);
         request.setAttribute("user", user);
-        return "detailResult";
+        return "detailResultForUser";
     }
 
     @GetMapping("detailResultForAdmin")
@@ -75,11 +75,13 @@ public class ResultController {
                                        @RequestParam int userId
                                        ){
         User user = userService.getUserById(userId);
+        Statistic statistic = testService.getDetailResult();
         NewStatistic newStatistic = new NewStatistic(date, testName, amountFalseAnswers, amountTrueAnswer, testResult,
                 time, amountQues, result, criteria, attemptId);
         request.setAttribute("newStatistic", newStatistic);
         request.setAttribute("user", user);
-        return "detailResult";
+        request.setAttribute("statistic", statistic);
+        return "detailResultForAdmin";
     }
 
     @GetMapping("users/statistic")
