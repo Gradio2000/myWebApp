@@ -75,7 +75,7 @@ public class ResultController {
                                        @RequestParam int userId
                                        ){
         User user = userService.getUserById(userId);
-        Statistic statistic = testService.getDetailResult();
+        Statistic statistic = testService.getDetailResultForAdmin(attemptId);
         NewStatistic newStatistic = new NewStatistic(date, testName, amountFalseAnswers, amountTrueAnswer, testResult,
                 time, amountQues, result, criteria, attemptId);
         request.setAttribute("newStatistic", newStatistic);

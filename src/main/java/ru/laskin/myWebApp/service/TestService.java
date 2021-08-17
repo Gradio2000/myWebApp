@@ -292,7 +292,8 @@ public class TestService {
         for (AttemptTest attemptTest : attemptTestList) {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
             String date = attemptTest.getDateTime().toLocalDateTime().format(dateTimeFormatter);
-            String testName = testHashMap.get(attemptTest.getTestId()).getTestName();
+            Test test = testHashMap.get(attemptTest.getTestId());
+            String testName = test.getTestName();
             int amountFalseAnswers = attemptTest.getAmountFalseAnswer();
             int amountTrueAnswer = attemptTest.getAmountTrueAnswer();
             String testResult = attemptTest.getTestResult();
@@ -302,8 +303,10 @@ public class TestService {
             double criteria = testHashMap.get(attemptTest.getTestId()).getCriteria();
             int attemptId = attemptTest.getAttemptId();
 
+
             newStatisticList.add(new NewStatistic(date, testName, amountFalseAnswers,
-                    amountTrueAnswer, testResult, time, amountQues, result, criteria, attemptId));
+                    amountTrueAnswer, testResult, time, amountQues, result, criteria, attemptId,
+                    test));
         }
 
         request.setAttribute("newStatisticList", newStatisticList);
@@ -422,29 +425,17 @@ public class TestService {
         return mainCheck(attemptId, test, timeOfAttempt);
     }
 
-    public Statistic getDetailResult() {
-            //Все это для детализации
-            //Это список заданных вопросов для попытки
-//            List<Integer> listOfUsersAnswers;
-//            List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
-//
-//            List<ResultTest> resultTestList = resultTestService.getResultTest(attemptTest.getAttemptId());
-//            Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
-//            Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
-//            listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
-//            int trueAnswer = quesList.size() - falseAnswerSet.size();
-//            String testResult;
-//            double result = 0;
-//            if (test.getCriteria() != null) {
-//                result = getResult(trueAnswer, quesList.size());
-//                testResult = getTestResult(result, test.getCriteria()) ?
-//                        "Тест пройден" : "Тест не пройден";
-//            } else testResult = "Не задан критерий в настройках теста";
-//
-//            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
-//
-//            statisticList.add(new Statistic(date, test, falseAnswerSet, trueAnswer,
-//                    testResult, listOfUsersAnswers, result, time, quesList));
-        return null;
+    public Statistic getDetailResultForAdmin(int attemptId) {
+
+        AttemptTest attemptTest = attemptTestService.getAttemptById(attemptId);
+        List<ResultTest> resultTestList = resultTestService.getResultTest(attemptId);
+        Map<Integer, List<Integer>> mapOfUserAnswers = getMapOfAnswers(resultTestList);
+
+        List<Integer> listOfUsersAnswers = getListOfUsersAnswers(mapOfUserAnswers);
+        List<Question> quesList = resultTestService.getRegistredQuestionByattempt(attemptTest.getAttemptId());
+
+        Set<Integer> falseAnswerSet = getFalseAnswerSet(mapOfUserAnswers, quesList);
+
+        return new Statistic(falseAnswerSet, listOfUsersAnswers, quesList);
     }
 }

@@ -28,17 +28,23 @@ public class Statistic {
         this.quesList = quesList;
     }
 
-    public Statistic(String date, Test test, Set<Integer> falseAnswerSet,
-                     int trueAnswers, String testResult, List<Integer> listOfUsersAnswers,
-                     double result, String time) {
-        this.date = date;
-        this.test = test;
+//    public Statistic(String date, Test test, Set<Integer> falseAnswerSet,
+//                     int trueAnswers, String testResult, List<Integer> listOfUsersAnswers,
+//                     double result, String time) {
+//        this.date = date;
+//        this.test = test;
+//        this.falseAnswerSet = falseAnswerSet;
+//        this.trueAnswer = trueAnswer;
+//        this.testResult = testResult;
+//        this.listOfUserAnswer = listOfUserAnswer;
+//        this.result = result;
+//        this.time = time;
+//    }
+
+    public Statistic(Set<Integer> falseAnswerSet, List<Integer> listOfUsersAnswers, List<Question> quesList) {
         this.falseAnswerSet = falseAnswerSet;
-        this.trueAnswer = trueAnswer;
-        this.testResult = testResult;
-        this.listOfUserAnswer = listOfUserAnswer;
-        this.result = result;
-        this.time = time;
+        this.listOfUserAnswer = listOfUsersAnswers;
+        this.quesList = quesList;
     }
 
     public List<Integer> getListOfUserAnswer() {
