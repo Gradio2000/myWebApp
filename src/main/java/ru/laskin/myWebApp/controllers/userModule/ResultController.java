@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.laskin.myWebApp.model.NewStatistic;
 import ru.laskin.myWebApp.model.Statistic;
 import ru.laskin.myWebApp.model.User;
+import ru.laskin.myWebApp.service.ResultTestService;
 import ru.laskin.myWebApp.service.TestService;
 import ru.laskin.myWebApp.service.UserService;
 
@@ -24,10 +25,12 @@ public class ResultController {
 
     private final TestService testService;
     private final UserService userService;
+    private final ResultTestService resultTestService;
 
-    public ResultController(TestService testService, UserService userService) {
+    public ResultController(TestService testService, UserService userService, ResultTestService resultTestService) {
         this.testService = testService;
         this.userService = userService;
+        this.resultTestService = resultTestService;
     }
 
     @PostMapping("/finish")
@@ -37,7 +40,7 @@ public class ResultController {
             User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userService.getUserById(authUser.getUserId());
 
-            Statistic statistic = testService.recordAttemptAndCheckResults(attemptId, request, session);
+            Statistic statistic = resultTestService.recordAttemptAndCheckResults(attemptId, request, session);
 
             request.setAttribute("user", user);
             session.setAttribute("statistic", statistic);
@@ -75,7 +78,7 @@ public class ResultController {
                                        @RequestParam int userId
                                        ){
         User user = userService.getUserById(userId);
-        Statistic statistic = testService.getDetailResultForAdmin(attemptId);
+        Statistic statistic = resultTestService.getDetailResultForAdmin(attemptId);
         NewStatistic newStatistic = new NewStatistic(date, testName, amountFalseAnswers, amountTrueAnswer, testResult,
                 time, amountQues, result, criteria, attemptId);
         request.setAttribute("newStatistic", newStatistic);
@@ -89,7 +92,7 @@ public class ResultController {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         request.setAttribute("user", authUser);
 
-        testService.getStatistic(id, request);
+        resultTestService.getStatistic(id, request);
         return "statistic";
     }
 }
