@@ -10,7 +10,7 @@ public class NewStatistic {
     private int amountFalseAnswers;
     private int amountTrueAnswer;
     private String testResult;
-    private int time;
+    private String time;
     private int amountQues;
     private double result;
     private double criteria;
@@ -22,7 +22,7 @@ public class NewStatistic {
 
 
     public NewStatistic(String date, String testName, int amountFalseAnswers,
-                        int amountTrueAnswer, String testResult, int time, int amountQues,
+                        int amountTrueAnswer, String testResult, String time, int amountQues,
                         double result, double criteria, int attemptId) {
         this.date = date;
         this.testName = testName;
@@ -37,7 +37,7 @@ public class NewStatistic {
     }
 
     public NewStatistic(String date, String testName, int amountFalseAnswers,
-                        int amountTrueAnswer, String testResult, int time, int amountQues,
+                        int amountTrueAnswer, String testResult, String time, int amountQues,
                         double result, double criteria, int attemptId, Test test) {
         this.date = date;
         this.testName = testName;
@@ -92,11 +92,11 @@ public class NewStatistic {
         this.testResult = testResult;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

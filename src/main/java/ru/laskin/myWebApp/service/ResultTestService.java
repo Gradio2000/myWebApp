@@ -136,7 +136,7 @@ public class ResultTestService {
             int amountFalseAnswers = attemptTest.getAmountFalseAnswer();
             int amountTrueAnswer = attemptTest.getAmountTrueAnswer();
             String testResult = attemptTest.getTestResult();
-            int time = attemptTest.getTimeAttempt();
+            String time = attemptTestService.getTime(attemptTest.getTimeAttempt());
             int amountQues = attemptTest.getAmountQues();
             double result = attemptTest.getResult();
             double criteria = testHashMap.get(attemptTest.getTestId()).getCriteria();

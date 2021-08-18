@@ -70,7 +70,7 @@ public class ResultController {
                                        @RequestParam  int amountFalseAnswers,
                                        @RequestParam  int amountTrueAnswer,
                                        @RequestParam  String testResult,
-                                       @RequestParam  int time,
+                                       @RequestParam String time,
                                        @RequestParam  int amountQues,
                                        @RequestParam  double result,
                                        @RequestParam  double criteria,
