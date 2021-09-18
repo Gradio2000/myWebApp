@@ -32,35 +32,9 @@
     <bean id="passwordEncoder" class=
                 "org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="maxUploadSize" value="200000" />
+        <property name="maxUploadSize" value="500000" />
     </bean>
 
-
-
-
-<!--    <bean id="conversionService"-->
-<!--          class="org.springframework.context.support.ConversionServiceFactoryBean">-->
-<!--        <property name="converters">-->
-<!--            <list>-->
-<!--                <ref bean="convert" />-->
-<!--            </list>-->
-<!--        </property>-->
-<!--    </bean>-->
-
-<!--    <bean id="contentNegotiationManager"  class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">-->
-<!--        <property name="favorPathExtension" value="true" />-->
-<!--        <property name="ignoreAcceptHeader" value="true"/>-->
-<!--        <property name="useJaf" value="false"/>-->
-<!--        <property name="defaultContentType" value="text/html" />-->
-
-<!--        <property name="mediaTypes">-->
-<!--            <map>-->
-<!--                <entry key="html" value="text/html"/>-->
-<!--                <entry key="json" value="application/json"/>-->
-<!--            </map>-->
-<!--        </property>-->
-<!--    </bean>-->
 
 </beans>

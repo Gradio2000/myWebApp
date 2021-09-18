@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import ru.laskin.myWebApp.service.FileLoadService;
-import ru.laskin.myWebApp.service.TestService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -16,11 +15,9 @@ import java.io.IOException;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class FileController {
 
-    private final TestService testService;
     private final FileLoadService fileLoadService;
 
-    public FileController(TestService testService, FileLoadService fileLoadService) {
-        this.testService = testService;
+    public FileController(FileLoadService fileLoadService) {
         this.fileLoadService = fileLoadService;
     }
 

@@ -5,7 +5,7 @@
         <class>ru.laskin.myWebApp.model.RegistrTest</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5433/postgres"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/postgres"/>
             <property name="hibernate.connection.username" value="user"/>
             <property name="hibernate.connection.password" value="password"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
